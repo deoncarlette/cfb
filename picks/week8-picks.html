@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 8 Picks — Quick Tool</title>
+<script>
+  (function () {
+    try {
+      var pref = localStorage.getItem('picks-theme') || 'system';
+      var systemLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      var effective = pref === 'system' ? (systemLight ? 'light' : 'dark') : pref;
+      document.documentElement.setAttribute('data-theme', effective);
+    } catch (e) {}
+  })();
+</script>
+<style>
+  :root{
+    --bg:#15171c; --surface:#1f222a; --surface-2:#282c36; --text:#f5f5f6;
+    --muted:#a7acb5; --accent:#6d9bf5; --accent-text:#eaf0fe; --border:#3c414b;
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f5f7; --surface:#ffffff; --surface-2:#e9ebef; --text:#14161a;
+    --muted:#4b505a; --accent:#2f5fc7; --accent-text:#0d1a3d; --border:#c7cbd3;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; padding-bottom:100px;}
+  header{padding:16px; text-align:center; border-bottom:1px solid var(--border); position:relative;}
+  header h1{font-size:19px; margin:0 0 4px;}
+  header p{margin:0; color:var(--muted); font-size:13px;}
+  .theme-btn{
+    position:absolute; top:12px; right:14px; background:var(--surface-2); color:var(--text);
+    border:1px solid var(--border); border-radius:8px; padding:6px 10px; font-size:12px; cursor:pointer;
+  }
+  main{max-width:480px; margin:0 auto; padding:14px;}
+  .rank-label{text-align:center; color:var(--muted); font-size:12px; font-weight:600; margin:10px 0;}
+  .combo-card{
+    display:flex; align-items:stretch; gap:8px;
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:8px; margin-bottom:8px;
+  }
+  .combo-card.unpicked{border-style:dashed; opacity:0.9;}
+  .combo-card.dragging{opacity:0.5;}
+  .combo-card.over{border-color:var(--accent); border-width:2px;}
+  .drag-handle{
+    display:flex; align-items:center; justify-content:center; width:26px;
+    color:var(--muted); font-size:18px; cursor:grab; touch-action:none; user-select:none;
+  }
+  .combo-body{flex:1; display:flex; align-items:center;}
+  .teams-row{display:flex; gap:8px; width:100%;}
+  .team-toggle{
+    flex:1; background:var(--surface-2); border:1px solid var(--border); color:var(--text);
+    padding:10px 6px; border-radius:8px; font-weight:600; font-size:13px; cursor:pointer;
+  }
+  .team-toggle.sel{background:var(--accent); border-color:var(--accent); color:var(--accent-text);}
+  .combo-side{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; min-width:48px;}
+  .pts-input{
+    width:42px; text-align:center; font-weight:700; font-size:14px;
+    background:var(--surface-2); border:1px solid var(--border); color:var(--text);
+    border-radius:6px; padding:4px 2px;
+  }
+  .pts-input:focus{outline:2px solid var(--accent); outline-offset:1px;}
+  .arrows{display:flex; flex-direction:column; gap:2px;}
+  .arrows button{
+    padding:2px 7px; font-size:11px; background:var(--surface-2); border:1px solid var(--border);
+    color:var(--text); border-radius:5px; cursor:pointer;
+  }
+  .arrows button:disabled{opacity:0.3;}
+  .toolbar{
+    position:fixed; bottom:0; left:0; right:0; background:var(--surface);
+    border-top:1px solid var(--border); padding:10px 14px; display:flex; gap:8px;
+  }
+  .toolbar button{
+    flex:1; padding:12px; border-radius:8px; border:1px solid var(--border);
+    background:var(--accent); color:var(--accent-text); font-weight:700; font-size:14px; cursor:pointer;
+  }
+  .toolbar .count{
+    display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:12px; flex:1;
+  }
+  #summaryBox{
+    display:none; background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:12px; margin-top:12px; font-size:13px; white-space:pre-wrap; font-family:monospace;
+  }
+</style>
+</head>
+<body>
+<header>
+  <button class="theme-btn" id="themeBtn">Theme</button>
+  <h1>Week 8 Picks</h1>
+  <p>Pick a winner on each card, then drag, use the arrows, or type a number to set confidence.</p>
+</header>
+<main>
+  <div class="rank-label">&uarr; Most confident</div>
+  <div id="list"></div>
+  <div class="rank-label">&darr; Least confident</div>
+  <div id="summaryBox"></div>
+</main>
+<div class="toolbar">
+  <div class="count" id="count">0 of 0 picked</div>
+  <button id="summaryBtn">Show my picks</button>
+</div>
+
+<script>
+// ---- Theme toggle: cycles System -> Light -> Dark -> System, saved in localStorage ----
+const themeBtn = document.getElementById('themeBtn');
+function currentMode(){ try { return localStorage.getItem('picks-theme') || 'system'; } catch(e){ return 'system'; } }
+function applyTheme(mode){
+  const systemLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  const effective = mode === 'system' ? (systemLight ? 'light' : 'dark') : mode;
+  document.documentElement.setAttribute('data-theme', effective);
+  themeBtn.textContent = mode === 'system' ? '\u{1F5A5}\uFE0F System' : mode === 'light' ? '\u2600\uFE0F Light' : '\u{1F319} Dark';
+}
+themeBtn.onclick = () => {
+  const mode = currentMode();
+  const next = mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system';
+  try { localStorage.setItem('picks-theme', next); } catch(e){}
+  applyTheme(next);
+};
+applyTheme(currentMode());
+
+// ---- Games (this week's full slate — page 2 of the form is confidence points only) ----
+const games = [
+  ["Alabama","Texas A&M"],
+  ["Auburn","LSU"],
+  ["Clemson","VA Tech"],
+  ["Colorado","OK State"],
+  ["Duke","UVA"],
+  ["Houston","Utah"],
+  ["Howard","Morgan State"],
+  ["Oregon","Illinois"],
+  ["Indiana","Michigan"],
+  ["Iowa","Minnesota"],
+  ["Kentucky","Vanderbilt"],
+  ["UMiami","Pitt"],
+  ["Michigan State","UCLA"],
+  ["Oklahoma","MS State"],
+  ["Northwestern","Rutgers"],
+  ["Ole Miss","UTexas"],
+  ["South Carolina","Tennessee"],
+  ["Texas Tech","Cincinnati"],
+  ["UNC","Syracuse"],
+  ["Wisconsin","USC"]
+].map((pair, i) => ({ id: 'g' + i, team1: pair[0], team2: pair[1] }));
+
+let order = games.map(g => g.id);
+let winners = {};
+let dragSrc = null;
+
+const list = document.getElementById('list');
+const countEl = document.getElementById('count');
+const summaryBox = document.getElementById('summaryBox');
+const summaryBtn = document.getElementById('summaryBtn');
+
+function gameById(id){ return games.find(g => g.id === id); }
+
+// Top of the list = most confident = highest number. idx is 0-based from the top.
+function confidenceFor(idx){ return order.length - idx; }
+
+function moveToConfidence(id, val){
+  const n = order.length;
+  val = Math.max(1, Math.min(n, Math.round(val)));
+  const targetIdx = n - val;
+  const curIdx = order.indexOf(id);
+  if (targetIdx === curIdx) return;
+  order.splice(curIdx, 1);
+  order.splice(targetIdx, 0, id);
+}
+
+function render(){
+  const activeEl = document.activeElement;
+  const hadFocusOnInput = activeEl && activeEl.classList && activeEl.classList.contains('pts-input');
+  const activeId = hadFocusOnInput ? activeEl.dataset.id : null;
+
+  list.innerHTML = '';
+  order.forEach((id, idx) => {
+    const g = gameById(id);
+    const picked = winners[id];
+    const card = document.createElement('div');
+    card.className = 'combo-card' + (!picked ? ' unpicked' : '');
+    card.draggable = true;
+    card.dataset.id = id;
+
+    card.addEventListener('dragstart', () => { dragSrc = id; card.classList.add('dragging'); });
+    card.addEventListener('dragend', () => { card.classList.remove('dragging'); });
+    card.addEventListener('dragover', (e) => { e.preventDefault(); card.classList.add('over'); });
+    card.addEventListener('dragleave', () => card.classList.remove('over'));
+    card.addEventListener('drop', (e) => {
+      e.preventDefault();
+      card.classList.remove('over');
+      if (!dragSrc || dragSrc === id) return;
+      const from = order.indexOf(dragSrc);
+      const to = order.indexOf(id);
+      order.splice(from, 1);
+      order.splice(to, 0, dragSrc);
+      render();
+    });
+
+    const handle = document.createElement('div');
+    handle.className = 'drag-handle';
+    handle.textContent = '\u22ee\u22ee';
+
+    const body = document.createElement('div');
+    body.className = 'combo-body';
+    const teamsRow = document.createElement('div');
+    teamsRow.className = 'teams-row';
+    [g.team1, g.team2].forEach(t => {
+      const b = document.createElement('button');
+      b.className = 'team-toggle' + (picked === t ? ' sel' : '');
+      b.textContent = t;
+      b.onclick = () => { winners[id] = t; render(); };
+      teamsRow.appendChild(b);
+    });
+    body.appendChild(teamsRow);
+
+    const side = document.createElement('div');
+    side.className = 'combo-side';
+
+    const ptsInput = document.createElement('input');
+    ptsInput.type = 'number';
+    ptsInput.className = 'pts-input';
+    ptsInput.dataset.id = id;
+    ptsInput.min = '1'; ptsInput.max = String(order.length);
+    ptsInput.value = confidenceFor(idx);
+    ptsInput.addEventListener('change', () => {
+      const val = parseInt(ptsInput.value, 10);
+      if (!isNaN(val)) moveToConfidence(id, val);
+      render();
+    });
+
+    const arrows = document.createElement('div');
+    arrows.className = 'arrows';
+    const up = document.createElement('button');
+    up.textContent = '\u2191';
+    up.disabled = idx === 0;
+    up.onclick = () => { move(id, -1); };
+    const down = document.createElement('button');
+    down.textContent = '\u2193';
+    down.disabled = idx === order.length - 1;
+    down.onclick = () => { move(id, 1); };
+    arrows.appendChild(up); arrows.appendChild(down);
+
+    side.appendChild(ptsInput); side.appendChild(arrows);
+
+    card.appendChild(handle);
+    card.appendChild(body);
+    card.appendChild(side);
+    list.appendChild(card);
+  });
+
+  if (activeId) {
+    const el = list.querySelector('.pts-input[data-id="' + activeId + '"]');
+    if (el) el.focus();
+  }
+
+  const pickedCount = games.filter(g => winners[g.id]).length;
+  countEl.textContent = pickedCount + ' of ' + games.length + ' picked';
+
+  if (summaryBox.style.display === 'block') showSummary();
+}
+
+function move(id, dir){
+  const idx = order.indexOf(id);
+  const swap = idx + dir;
+  if (swap < 0 || swap >= order.length) return;
+  [order[idx], order[swap]] = [order[swap], order[idx]];
+  render();
+}
+
+function showSummary(){
+  const lines = order.map((id, idx) => {
+    const g = gameById(id);
+    const w = winners[id] || '(not picked)';
+    return confidenceFor(idx) + ' pts — ' + w + ' (' + g.team1 + ' vs ' + g.team2 + ')';
+  });
+  summaryBox.textContent = lines.join('\n');
+  summaryBox.style.display = 'block';
+}
+
+summaryBtn.onclick = () => {
+  if (summaryBox.style.display === 'block') {
+    summaryBox.style.display = 'none';
+    summaryBtn.textContent = 'Show my picks';
+  } else {
+    showSummary();
+    summaryBtn.textContent = 'Hide my picks';
+  }
+};
+
+render();
+</script>
+</body>
+</html>

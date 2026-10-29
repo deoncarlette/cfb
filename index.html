@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Week 8 Picks — Quick Tool</title>
+<title>Week 9 Picks — Quick Tool</title>
 <script>
   (function () {
     try {
@@ -86,7 +86,7 @@
 <body>
 <header>
   <button class="theme-btn" id="themeBtn">Theme</button>
-  <h1>Week 8 Picks</h1>
+  <h1>Week 9 Picks</h1>
   <p>Pick a winner on each card, then drag, use the arrows, or type a number to set confidence.</p>
 </header>
 <main>
@@ -120,26 +120,26 @@ applyTheme(currentMode());
 
 // ---- Games (this week's full slate — page 2 of the form is confidence points only) ----
 const games = [
-  ["Alabama","Texas A&M"],
-  ["Auburn","LSU"],
-  ["Clemson","VA Tech"],
-  ["Colorado","OK State"],
-  ["Duke","UVA"],
-  ["Houston","Utah"],
-  ["Howard","Morgan State"],
-  ["Oregon","Illinois"],
-  ["Indiana","Michigan"],
-  ["Iowa","Minnesota"],
-  ["Kentucky","Vanderbilt"],
-  ["UMiami","Pitt"],
-  ["Michigan State","UCLA"],
-  ["Oklahoma","MS State"],
-  ["Northwestern","Rutgers"],
-  ["Ole Miss","UTexas"],
-  ["South Carolina","Tennessee"],
-  ["Texas Tech","Cincinnati"],
-  ["UNC","Syracuse"],
-  ["Wisconsin","USC"]
+  ["Arkansas","Missouri"],
+  ["Auburn","Ole Miss"],
+  ["Clemson","FSU"],
+  ["Colorado","KS State"],
+  ["Duke","Boston College"],
+  ["Florida","Georgia"],
+  ["Howard","NC Central"],
+  ["Maryland","Illinois"],
+  ["Indiana","Minnesota"],
+  ["Iowa","Wisconsin"],
+  ["UMiami","UNC"],
+  ["Michigan","Rutgers"],
+  ["Mississippi State","UTexas"],
+  ["Nebraska","Washington"],
+  ["Notre Dame","Navy"],
+  ["Northwestern","Oregon"],
+  ["Ohio State","USC"],
+  ["Oklahoma","South Carolina"],
+  ["Penn State","Purdue"],
+  ["TX Tech","Arizona"]
 ].map((pair, i) => ({ id: 'g' + i, team1: pair[0], team2: pair[1] }));
 
 let order = games.map(g => g.id);
