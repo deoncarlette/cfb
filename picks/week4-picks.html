@@ -16,30 +16,35 @@
 </script>
 <style>
   :root{
-    --bg:#15171c; --surface:#1f222a; --surface-2:#282c36; --text:#f5f5f6;
-    --muted:#a7acb5; --accent:#6d9bf5; --accent-text:#eaf0fe; --border:#3c414b;
+    --bg:#0b0d11; --bg-glow:#1a2440; --surface:#181c24; --surface-2:#2a303c; --text:#ffffff;
+    --muted:#c3c8d2; --accent:#8db4ff; --accent-text:#071230; --border:#4a5263;
+    --shadow:0 1px 0 rgba(255,255,255,.07) inset, 0 6px 16px rgba(0,0,0,.55);
+    --pick-bg:rgba(141,180,255,.10);
   }
   :root[data-theme="light"]{
-    --bg:#f4f5f7; --surface:#ffffff; --surface-2:#e9ebef; --text:#14161a;
-    --muted:#4b505a; --accent:#2f5fc7; --accent-text:#0d1a3d; --border:#c7cbd3;
+    --bg:#eef0f4; --bg-glow:#dfe6f7; --surface:#ffffff; --surface-2:#e6e9ef; --text:#14161a;
+    --muted:#4b505a; --accent:#2f5fc7; --accent-text:#ffffff; --border:#c0c5ce;
+    --shadow:0 1px 2px rgba(20,30,60,.10), 0 4px 12px rgba(20,30,60,.08);
+    --pick-bg:rgba(47,95,199,.07);
   }
   *{box-sizing:border-box;}
-  body{margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; padding-bottom:100px;}
-  header{padding:16px; text-align:center; border-bottom:1px solid var(--border); position:relative;}
-  header h1{font-size:19px; margin:0 0 4px;}
-  header p{margin:0; color:var(--muted); font-size:13px;}
+  body{margin:0; background:var(--bg) radial-gradient(900px 420px at 50% -80px, var(--bg-glow), transparent) no-repeat; color:var(--text); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; padding-bottom:100px; min-height:100vh;}
+  header{padding:18px 16px 14px; text-align:center; border-bottom:1px solid var(--border); position:relative;}
+  header h1{font-size:22px; font-weight:700; letter-spacing:-.01em; margin:0 0 4px;}
+  header p{margin:0 auto; max-width:380px; color:var(--muted); font-size:13px; line-height:1.4;}
   .theme-btn{
-    position:absolute; top:12px; right:14px; background:var(--surface-2); color:var(--text);
-    border:1px solid var(--border); border-radius:8px; padding:6px 10px; font-size:12px; cursor:pointer;
+    position:absolute; top:12px; right:14px; background:var(--surface); color:var(--text);
+    border:1px solid var(--border); border-radius:999px; padding:6px 12px; font-size:12px; cursor:pointer; box-shadow:var(--shadow);
   }
   main{max-width:480px; margin:0 auto; padding:14px;}
-  .rank-label{text-align:center; color:var(--muted); font-size:12px; font-weight:600; margin:10px 0;}
+  .rank-label{text-align:center; color:var(--accent); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin:12px 0;}
   .combo-card{
     display:flex; align-items:stretch; gap:8px;
-    background:var(--surface); border:1px solid var(--border); border-radius:10px;
-    padding:8px; margin-bottom:8px;
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:10px; margin-bottom:10px; box-shadow:var(--shadow);
   }
-  .combo-card.unpicked{border-style:dashed; opacity:0.9;}
+  .combo-card:not(.unpicked){border-left:4px solid var(--accent); background:linear-gradient(var(--pick-bg),var(--pick-bg)),var(--surface);}
+  .combo-card.unpicked{border-style:dashed;}
   .combo-card.dragging{opacity:0.5;}
   .combo-card.over{border-color:var(--accent); border-width:2px;}
   .drag-handle{
@@ -50,36 +55,39 @@
   .teams-row{display:flex; gap:8px; width:100%;}
   .team-toggle{
     flex:1; background:var(--surface-2); border:1px solid var(--border); color:var(--text);
-    padding:10px 6px; border-radius:8px; font-weight:600; font-size:13px; cursor:pointer;
+    padding:12px 6px; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer;
+    box-shadow:0 1px 0 rgba(255,255,255,.06) inset;
   }
-  .team-toggle.sel{background:var(--accent); border-color:var(--accent); color:var(--accent-text);}
-  .combo-side{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; min-width:48px;}
+  .team-toggle.sel{background:var(--accent); border-color:var(--accent); color:var(--accent-text); font-weight:700; box-shadow:0 0 0 3px var(--pick-bg), 0 4px 12px rgba(0,0,0,.35);}
+  .team-toggle.sel::before{content:"\2713\00a0";}
+  .combo-side{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-width:48px;}
   .pts-input{
-    width:42px; text-align:center; font-weight:700; font-size:14px;
-    background:var(--surface-2); border:1px solid var(--border); color:var(--text);
-    border-radius:6px; padding:4px 2px;
+    width:46px; text-align:center; font-weight:800; font-size:16px;
+    background:var(--bg); border:1px solid var(--border); color:var(--accent);
+    border-radius:8px; padding:5px 2px;
   }
   .pts-input:focus{outline:2px solid var(--accent); outline-offset:1px;}
-  .arrows{display:flex; flex-direction:column; gap:2px;}
+  .arrows{display:flex; flex-direction:row; gap:4px;}
   .arrows button{
-    padding:2px 7px; font-size:11px; background:var(--surface-2); border:1px solid var(--border);
-    color:var(--text); border-radius:5px; cursor:pointer;
+    padding:3px 9px; font-size:12px; background:var(--surface-2); border:1px solid var(--border);
+    color:var(--text); border-radius:6px; cursor:pointer;
   }
   .arrows button:disabled{opacity:0.3;}
   .toolbar{
     position:fixed; bottom:0; left:0; right:0; background:var(--surface);
     border-top:1px solid var(--border); padding:10px 14px; display:flex; gap:8px;
+    box-shadow:0 -6px 18px rgba(0,0,0,.35);
   }
   .toolbar button{
-    flex:1; padding:12px; border-radius:8px; border:1px solid var(--border);
+    flex:1; padding:12px; border-radius:10px; border:1px solid var(--accent);
     background:var(--accent); color:var(--accent-text); font-weight:700; font-size:14px; cursor:pointer;
   }
   .toolbar .count{
-    display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:12px; flex:1;
+    display:flex; align-items:center; justify-content:center; color:var(--text); font-size:13px; font-weight:600; flex:1;
   }
   #summaryBox{
-    display:none; background:var(--surface); border:1px solid var(--border); border-radius:10px;
-    padding:12px; margin-top:12px; font-size:13px; white-space:pre-wrap; font-family:monospace;
+    display:none; background:var(--surface); border:1px solid var(--border); border-radius:12px;
+    padding:12px; margin-top:12px; font-size:13px; white-space:pre-wrap; font-family:monospace; box-shadow:var(--shadow);
   }
 </style>
 </head>
