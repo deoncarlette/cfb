@@ -94,12 +94,24 @@ export function parseSummary(data) {
   const w = data.gameInfo?.weather;
   return {
     away, home, winProb, odds, ats, lastFive, stats, leaders, scoring,
-    // Every drive's team and game-clock window (used by the test replay to know who has the ball).
-    drives: [...(data.drives?.previous || []), ...(data.drives?.current ? [data.drives.current] : [])].map(d => ({
-      teamId: String(d.team?.id ?? ''),
-      start: { period: d.start?.period?.number, clock: d.start?.clock?.displayValue },
-      end: { period: d.end?.period?.number, clock: d.end?.clock?.displayValue }
-    })).filter(d => d.teamId && d.start.period),
+    // Every drive's team and game-clock window, and every snap's down & distance — used by the
+    // test replay to show who has the ball and the situation at the replayed moment.
+    ...(() => {
+      const all = [...(data.drives?.previous || []), ...(data.drives?.current ? [data.drives.current] : [])];
+      const drives = all.map(d => ({
+        teamId: String(d.team?.id ?? ''),
+        start: { period: d.start?.period?.number, clock: d.start?.clock?.displayValue },
+        end: { period: d.end?.period?.number, clock: d.end?.clock?.displayValue }
+      })).filter(d => d.teamId && d.start.period);
+      const plays = all.flatMap(d => (d.plays || []).map(p => ({
+        teamId: String(p.start?.team?.id ?? d.team?.id ?? ''),
+        period: p.period?.number,
+        clock: p.clock?.displayValue,
+        downDistance: p.start?.downDistanceText || null,
+        yardsToEndzone: p.start?.yardsToEndzone ?? null
+      }))).filter(p => p.teamId && p.period && p.downDistance);
+      return { drives, plays };
+    })(),
     // Home win % after each play, in order (used by the test replay to rewind win probability).
     winTimeline: (data.winprobability || []).map(w => w.homeWinPercentage).filter(v => v != null),
     broadcast: b?.media?.shortName || b?.names?.[0] || null,

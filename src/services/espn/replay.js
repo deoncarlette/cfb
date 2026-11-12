@@ -34,8 +34,18 @@ function playElapsed(p) {
   return ((p.period || 1) - 1) * QUARTER_SECS + (QUARTER_SECS - ((m || 0) * 60 + (s || 0)));
 }
 
-// Who has the ball at a moment: the drive whose window contains it. Without drive data,
-// alternate every ~4 minutes of game clock so the possession icon can still be tested.
+// The situation at a moment: the last snap at or before it, from ESPN's play-by-play —
+// who has the ball, down & distance ("2nd & 7 at OSU 14"), and red zone. Falls back to the
+// drive chart (possession only), then to alternating every ~4 minutes of game clock.
+function situationAt(summary, game, elapsed) {
+  const snaps = (summary?.plays || []).filter(p => playElapsed(p) <= elapsed);
+  const snap = snaps[snaps.length - 1];
+  if (snap) {
+    return { possession: snap.teamId, downDistance: snap.downDistance, redZone: snap.yardsToEndzone != null && snap.yardsToEndzone <= 20 };
+  }
+  return { possession: possessionAt(summary, game, elapsed), downDistance: null, redZone: false };
+}
+
 function possessionAt(summary, game, elapsed) {
   const drive = (summary?.drives || []).find(d =>
     playElapsed(d.start) <= elapsed && elapsed <= playElapsed(d.end || d.start));
@@ -139,7 +149,7 @@ export function replayGames(games, now = new Date()) {
     const rewound = real && rewindSummary(real, f);
     return {
       ...base, completed: false, state: 'in', status: clockAt(f),
-      situation: { possession: possessionAt(real, g, f * 4 * QUARTER_SECS), downDistance: null, redZone: false },
+      situation: situationAt(real, g, f * 4 * QUARTER_SECS),
       competitors: g.competitors.map(c => ({
         ...c, winner: false,
         score: rewound
