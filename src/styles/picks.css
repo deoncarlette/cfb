@@ -161,9 +161,7 @@
 .player-picker label{margin:0; flex-shrink:0;}
 .player-picker select{margin:0;}
 
-/* Possession football (live games), next to the score */
-/* Sits just above that team's score, so it takes no room from the name. */
-.team-score .possession{position:absolute; left:50%; top:-13px; transform:translateX(-50%); display:inline-flex; filter:drop-shadow(0 1px 1px rgba(0,0,0,.5));}
-.possession.red-zone{filter:drop-shadow(0 0 4px var(--danger));}
-.down-distance{margin-left:10px; font-weight:600; color:var(--text);}
-@media (max-width:440px){ .team-score .possession{top:-11px;} .possession svg{width:15px; height:10px;} }
+/* Possession: who has the ball + down & distance, after the clock */
+.possession{margin-left:10px; color:var(--text);}
+.possession strong{font-weight:700;}
+.possession.red-zone{color:var(--danger);}

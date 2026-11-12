@@ -16,8 +16,6 @@ export function MatchupPill({ game, picked, disabled, onPick }) {
       selected={picked === team.id}
       lost={!!winner && winner !== team.id}
       score={started ? team.score : null}
-      hasBall={game.state === 'in' && game.situation?.possession === team.id}
-      redZone={!!game.situation?.redZone}
       disabled={disabled}
       onClick={() => onPick(team.id)}
     />

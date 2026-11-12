@@ -18,7 +18,7 @@ export function GameCard({ game, index, total, points, result, live, picked, loc
         {game.completed
           ? <span><strong className="game-final">Final</strong> {formatGameDay(game.date)}</span>
           : isLive
-            ? <span><strong className="live-badge">Live</strong> {game.status}{game.situation?.downDistance && <span className="down-distance">{game.situation.downDistance}</span>}</span>
+            ? <span><strong className="live-badge">Live</strong> {game.status}<Possession game={game} /></span>
             : <span>{formatKickoff(game.date)}</span>}
         {line && (
           <span className="game-line">
@@ -46,5 +46,18 @@ export function GameCard({ game, index, total, points, result, live, picked, loc
       />
       {open && <GameDetails game={game} />}
     </div>
+  );
+}
+
+// Who has the ball, with down & distance when ESPN sends it: "MICH 2nd & 7 at OSU 14".
+// Red in the red zone. Without down & distance (e.g. the test replay): "MICH ball".
+function Possession({ game }) {
+  const s = game.situation;
+  const team = s && game.competitors.find(c => c.id === s.possession);
+  if (!team) return null;
+  return (
+    <span className={'possession' + (s.redZone ? ' red-zone' : '')}>
+      <strong>{team.abbr || team.name}</strong> {s.downDistance || 'ball'}
+    </span>
   );
 }
