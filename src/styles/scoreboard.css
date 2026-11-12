@@ -8,3 +8,5 @@ table.board td.num{text-align:right; font-weight:700; font-variant-numeric:tabul
 .move.up{color:var(--success);}
 .move.down{color:var(--danger);}
 .move.same, .move.new{color:var(--muted);}
+table.board td .rank{display:inline-block; min-width:26px; color:var(--muted); font-variant-numeric:tabular-nums;}
+table.board tr.sat-out td{color:var(--muted);}

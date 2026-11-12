@@ -16,7 +16,7 @@ import { SubmitPicks } from './components/SubmitPicks.jsx';
 // Once games go final, each card shows the score and the points you earned.
 export function PicksScreen() {
   const { week, setWeek, weeks } = useWeekSelector(1);
-  const { games, config, loading, error, deadlinePassed } = usePicksWeek(week);
+  const { games, config, sample, loading, error, deadlinePassed } = usePicksWeek(week);
   const { order, setOrder, move, moveToConfidence, dragPropsFor } = useConfidenceOrder();
   const [userName, setUserName] = useStoredState('bb-player-name', '');
   const [winners, setWinners] = useState({});
@@ -24,23 +24,27 @@ export function PicksScreen() {
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState(null);
 
-  // New week loaded → fresh cards, then pull up your saved picks for it (if your name's in).
+  // Show a saved entry's picks (yours, or the sample picks) on the cards; null = blank cards.
+  function showEntry(entry) {
+    if (!entry) { setWinners({}); setOrder(games.map(g => g.id)); return; }
+    const restored = restoreSavedPicks(entry, games);
+    setWinners(restored.winners);
+    setOrder(restored.order);
+  }
+
+  // New week loaded → the sample picks (if this week has them), then yours if you've saved any.
   useEffect(() => {
-    setOrder(games.map(g => g.id));
-    setWinners({});
     setExisting(null);
+    showEntry(sample);
     if (games.length && userName.trim()) loadExistingPicks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [games, setOrder]);
+  }, [games]);
 
   async function loadExistingPicks() {
     if (!userName.trim() || games.length === 0) return;
     const mine = await getMyPicks(week, userName);
     setExisting(mine);
-    if (!mine) return;
-    const restored = restoreSavedPicks(mine, games);
-    setWinners(restored.winners);
-    setOrder(restored.order);
+    showEntry(mine || sample);
   }
 
   async function handleSubmit() {
@@ -58,8 +62,10 @@ export function PicksScreen() {
 
   // Once picks lock, show the confidence you actually submitted (it can differ from card
   // position if a game was dropped from the slate). Before that, position = points.
+  const entry = existing || sample; // what's on the cards
+  const showingSample = !existing && !!sample;
   const pointsFor = gameId => {
-    const saved = existing?.picks?.[gameId]?.confidence;
+    const saved = entry?.picks?.[gameId]?.confidence;
     return deadlinePassed && saved != null ? saved : order.length - order.indexOf(gameId);
   };
   const totals = weekTotals(games, winners, pointsFor);
@@ -78,6 +84,11 @@ export function PicksScreen() {
 
       {!loading && !error && games.length > 0 && (
         <>
+          {showingSample && (
+            <p className="sample-note">
+              Showing {sample.playerName}'s picks{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
+            </p>
+          )}
           {totals.decided > 0 && <WeekResults totals={totals} />}
           {!deadlinePassed && (
             <>
@@ -119,7 +130,6 @@ export function PicksScreen() {
               onSubmit={handleSubmit}
             />
           )}
-          {deadlinePassed && !existing && userName.trim() && <p className="muted small center">No picks saved for {userName} in Week {week}.</p>}
           {deadlinePassed && <p className="muted small center">Picks are locked for this week.</p>}
         </>
       )}

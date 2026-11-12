@@ -67,5 +67,6 @@ directly. That's what lets the preview build swap in browser storage.
 - **Bracket points per round:** `ROUND_POINTS` in `features/bracket/bracketLogic.js`
 - **Power 4 team list:** `P4_TEAMS` in `services/espn/teams.js`
 - **Season year:** `SEASON` in `config.js`
-- **Player roster / weeks 0–2 scores:** `features/scoreboard/seedData.js`
+- **Player roster + weekly scores (sample data):** `features/scoreboard/mockScores.json`
+- **Sample picks (default games + selections for past weeks):** `features/picks/sample/deandra-2026.json`
 - **Colors (light + dark):** `styles/theme.css`

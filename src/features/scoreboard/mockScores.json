@@ -1,0 +1,2398 @@
+{
+  "season": 2026,
+  "league": "College Football Confidence Pool",
+  "fixtureVersion": 1,
+  "description": "App testing fixture: historical recorded/reconciled weekly scores for weeks 0–10; fully simulated Week 11.",
+  "disclaimer": "Not an authoritative official ledger. Some prior weekly recaps conflict; the scores were reconciled to match the latest Week 10 cumulative standings. Do not publish as certified results.",
+  "includesPreseasonWeekZero": true,
+  "players": [
+    {
+      "id": "bean",
+      "name": "Bean"
+    },
+    {
+      "id": "brian",
+      "name": "Brian"
+    },
+    {
+      "id": "cynthia",
+      "name": "Cynthia"
+    },
+    {
+      "id": "deandra",
+      "name": "Deandra"
+    },
+    {
+      "id": "joseph",
+      "name": "Joseph"
+    },
+    {
+      "id": "lucy",
+      "name": "Lucy"
+    },
+    {
+      "id": "luis",
+      "name": "Luis"
+    },
+    {
+      "id": "madelyn",
+      "name": "Madelyn"
+    },
+    {
+      "id": "mary",
+      "name": "Mary"
+    },
+    {
+      "id": "morgan",
+      "name": "Morgan"
+    },
+    {
+      "id": "nicole",
+      "name": "Nicole"
+    },
+    {
+      "id": "savannah",
+      "name": "Savannah"
+    },
+    {
+      "id": "sedrick",
+      "name": "Sedrick"
+    },
+    {
+      "id": "tara",
+      "name": "Tara"
+    },
+    {
+      "id": "vinny",
+      "name": "Vinny"
+    }
+  ],
+  "weekMaxPoints": {
+    "0": null,
+    "1": 496,
+    "2": 465,
+    "3": 378,
+    "4": 300,
+    "5": 190,
+    "6": 210,
+    "7": 253,
+    "8": 210,
+    "9": 210,
+    "10": 300,
+    "11": 300
+  },
+  "scoresByPlayer": {
+    "Bean": {
+      "0": 10,
+      "1": 484,
+      "2": 382,
+      "3": 0,
+      "4": 223,
+      "5": 0,
+      "6": 126,
+      "7": 133,
+      "8": 92,
+      "9": 171,
+      "10": 241,
+      "11": 241
+    },
+    "Brian": {
+      "0": 0,
+      "1": 406,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0
+    },
+    "Cynthia": {
+      "0": 10,
+      "1": 427,
+      "2": 270,
+      "3": 348,
+      "4": 0,
+      "5": 154,
+      "6": 94,
+      "7": 0,
+      "8": 140,
+      "9": 175,
+      "10": 0,
+      "11": 190
+    },
+    "Deandra": {
+      "0": 0,
+      "1": 414,
+      "2": 448,
+      "3": 354,
+      "4": 253,
+      "5": 163,
+      "6": 143,
+      "7": 172,
+      "8": 117,
+      "9": 182,
+      "10": 188,
+      "11": 231
+    },
+    "Joseph": {
+      "0": 9,
+      "1": 479,
+      "2": 429,
+      "3": 346,
+      "4": 237,
+      "5": 148,
+      "6": 114,
+      "7": 147,
+      "8": 128,
+      "9": 166,
+      "10": 190,
+      "11": 223
+    },
+    "Lucy": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 195,
+      "5": 91,
+      "6": 94,
+      "7": 143,
+      "8": 80,
+      "9": 0,
+      "10": 220,
+      "11": 223
+    },
+    "Luis": {
+      "0": 10,
+      "1": 479,
+      "2": 432,
+      "3": 357,
+      "4": 231,
+      "5": 0,
+      "6": 135,
+      "7": 1,
+      "8": 35,
+      "9": 157,
+      "10": 196,
+      "11": 202
+    },
+    "Madelyn": {
+      "0": 11,
+      "1": 462,
+      "2": 0,
+      "3": 323,
+      "4": 229,
+      "5": 161,
+      "6": 135,
+      "7": 0,
+      "8": 122,
+      "9": 0,
+      "10": 200,
+      "11": 230
+    },
+    "Mary": {
+      "0": 10,
+      "1": 460,
+      "2": 304,
+      "3": 0,
+      "4": 0,
+      "5": 131,
+      "6": 131,
+      "7": 0,
+      "8": 101,
+      "9": 167,
+      "10": 223,
+      "11": 215
+    },
+    "Morgan": {
+      "0": 14,
+      "1": 481,
+      "2": 423,
+      "3": 328,
+      "4": 231,
+      "5": 139,
+      "6": 125,
+      "7": 127,
+      "8": 150,
+      "9": 156,
+      "10": 207,
+      "11": 236
+    },
+    "Nicole": {
+      "0": 0,
+      "1": 457,
+      "2": 388,
+      "3": 291,
+      "4": 212,
+      "5": 159,
+      "6": 114,
+      "7": 122,
+      "8": 140,
+      "9": 158,
+      "10": 210,
+      "11": 218
+    },
+    "Savannah": {
+      "0": 10,
+      "1": 470,
+      "2": 360,
+      "3": 0,
+      "4": 238,
+      "5": 129,
+      "6": 116,
+      "7": 153,
+      "8": 168,
+      "9": 179,
+      "10": 168,
+      "11": 214
+    },
+    "Sedrick": {
+      "0": 11,
+      "1": 486,
+      "2": 0,
+      "3": 311,
+      "4": 186,
+      "5": 107,
+      "6": 127,
+      "7": 167,
+      "8": 109,
+      "9": 115,
+      "10": 0,
+      "11": 0
+    },
+    "Tara": {
+      "0": 8,
+      "1": 486,
+      "2": 391,
+      "3": 0,
+      "4": 215,
+      "5": 140,
+      "6": 164,
+      "7": 133,
+      "8": 125,
+      "9": 170,
+      "10": 221,
+      "11": 227
+    },
+    "Vinny": {
+      "0": 0,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0
+    }
+  },
+  "weeks": [
+    {
+      "week": 0,
+      "label": "Preseason",
+      "possiblePoints": null,
+      "status": "completed",
+      "source": "historical_app_seed",
+      "notes": "Preseason/bonus points present in older app data; included because season cumulative totals include these points.",
+      "standings": [
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 14,
+          "cumulativeScore": 14,
+          "weeklyRank": 1,
+          "overallRank": 1,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 11,
+          "cumulativeScore": 11,
+          "weeklyRank": 2,
+          "overallRank": 2,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 11,
+          "cumulativeScore": 11,
+          "weeklyRank": 2,
+          "overallRank": 2,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 10,
+          "cumulativeScore": 10,
+          "weeklyRank": 4,
+          "overallRank": 4,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 10,
+          "cumulativeScore": 10,
+          "weeklyRank": 4,
+          "overallRank": 4,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 10,
+          "cumulativeScore": 10,
+          "weeklyRank": 4,
+          "overallRank": 4,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 10,
+          "cumulativeScore": 10,
+          "weeklyRank": 4,
+          "overallRank": 4,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 10,
+          "cumulativeScore": 10,
+          "weeklyRank": 4,
+          "overallRank": 4,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 9,
+          "cumulativeScore": 9,
+          "weeklyRank": 9,
+          "overallRank": 9,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 8,
+          "cumulativeScore": 8,
+          "weeklyRank": 10,
+          "overallRank": 10,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 11,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 11,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 11,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 11,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 11,
+          "entered": null,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        }
+      ]
+    },
+    {
+      "week": 1,
+      "label": "Week 1",
+      "possiblePoints": 496,
+      "status": "completed",
+      "source": "historical_app_seed",
+      "notes": "Recorded weekly points, confidence picks remain as originally submitted.",
+      "standings": [
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 486,
+          "cumulativeScore": 497,
+          "weeklyRank": 1,
+          "overallRank": 1,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 481,
+          "cumulativeScore": 495,
+          "weeklyRank": 4,
+          "overallRank": 2,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 486,
+          "cumulativeScore": 494,
+          "weeklyRank": 1,
+          "overallRank": 3,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 484,
+          "cumulativeScore": 494,
+          "weeklyRank": 3,
+          "overallRank": 3,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 479,
+          "cumulativeScore": 489,
+          "weeklyRank": 5,
+          "overallRank": 5,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 479,
+          "cumulativeScore": 488,
+          "weeklyRank": 5,
+          "overallRank": 6,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 470,
+          "cumulativeScore": 480,
+          "weeklyRank": 7,
+          "overallRank": 7,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 462,
+          "cumulativeScore": 473,
+          "weeklyRank": 8,
+          "overallRank": 8,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 460,
+          "cumulativeScore": 470,
+          "weeklyRank": 9,
+          "overallRank": 9,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 457,
+          "cumulativeScore": 457,
+          "weeklyRank": 10,
+          "overallRank": 10,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 427,
+          "cumulativeScore": 437,
+          "weeklyRank": 11,
+          "overallRank": 11,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 414,
+          "cumulativeScore": 414,
+          "weeklyRank": 12,
+          "overallRank": 12,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 406,
+          "cumulativeScore": 406,
+          "weeklyRank": 13,
+          "overallRank": 13,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 14,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 14,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "label": "Week 2",
+      "possiblePoints": 465,
+      "status": "completed",
+      "source": "historical_app_seed",
+      "notes": "Recorded weekly points from archived app.",
+      "standings": [
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 432,
+          "cumulativeScore": 921,
+          "weeklyRank": 2,
+          "overallRank": 1,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 423,
+          "cumulativeScore": 918,
+          "weeklyRank": 4,
+          "overallRank": 2,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 429,
+          "cumulativeScore": 917,
+          "weeklyRank": 3,
+          "overallRank": 3,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 391,
+          "cumulativeScore": 885,
+          "weeklyRank": 5,
+          "overallRank": 4,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 382,
+          "cumulativeScore": 876,
+          "weeklyRank": 7,
+          "overallRank": 5,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 448,
+          "cumulativeScore": 862,
+          "weeklyRank": 1,
+          "overallRank": 6,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 388,
+          "cumulativeScore": 845,
+          "weeklyRank": 6,
+          "overallRank": 7,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 360,
+          "cumulativeScore": 840,
+          "weeklyRank": 8,
+          "overallRank": 8,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 304,
+          "cumulativeScore": 774,
+          "weeklyRank": 9,
+          "overallRank": 9,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 270,
+          "cumulativeScore": 707,
+          "weeklyRank": 10,
+          "overallRank": 10,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 0,
+          "cumulativeScore": 497,
+          "weeklyRank": null,
+          "overallRank": 11,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 0,
+          "cumulativeScore": 473,
+          "weeklyRank": null,
+          "overallRank": 12,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": 406,
+          "weeklyRank": null,
+          "overallRank": 13,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 14,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 14,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "label": "Week 3",
+      "possiblePoints": 378,
+      "status": "completed",
+      "source": "historical_app_seed",
+      "notes": "Some rows were missing from an archived partial screenshot; unlisted users recorded as 0, consistent with Week 4 cumulative totals.",
+      "standings": [
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 357,
+          "cumulativeScore": 1278,
+          "weeklyRank": 1,
+          "overallRank": 1,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 346,
+          "cumulativeScore": 1263,
+          "weeklyRank": 4,
+          "overallRank": 2,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 328,
+          "cumulativeScore": 1246,
+          "weeklyRank": 5,
+          "overallRank": 3,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 354,
+          "cumulativeScore": 1216,
+          "weeklyRank": 2,
+          "overallRank": 4,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 291,
+          "cumulativeScore": 1136,
+          "weeklyRank": 8,
+          "overallRank": 5,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 348,
+          "cumulativeScore": 1055,
+          "weeklyRank": 3,
+          "overallRank": 6,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 0,
+          "cumulativeScore": 885,
+          "weeklyRank": null,
+          "overallRank": 7,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 0,
+          "cumulativeScore": 876,
+          "weeklyRank": null,
+          "overallRank": 8,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 0,
+          "cumulativeScore": 840,
+          "weeklyRank": null,
+          "overallRank": 9,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 311,
+          "cumulativeScore": 808,
+          "weeklyRank": 7,
+          "overallRank": 10,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 323,
+          "cumulativeScore": 796,
+          "weeklyRank": 6,
+          "overallRank": 11,
+          "entered": true,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 0,
+          "cumulativeScore": 774,
+          "weeklyRank": null,
+          "overallRank": 12,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": 406,
+          "weeklyRank": null,
+          "overallRank": 13,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 14,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 14,
+          "entered": false,
+          "scoreSource": "historical_app_seed",
+          "isMock": false
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "label": "Week 4",
+      "possiblePoints": 300,
+      "status": "completed",
+      "source": "historical_postgame_final",
+      "notes": "Computed from final Week 4 cumulative scores minus Weeks 0–3.",
+      "standings": [
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 231,
+          "cumulativeScore": 1509,
+          "weeklyRank": 4,
+          "overallRank": 1,
+          "entered": true,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 237,
+          "cumulativeScore": 1500,
+          "weeklyRank": 3,
+          "overallRank": 2,
+          "entered": true,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 231,
+          "cumulativeScore": 1477,
+          "weeklyRank": 4,
+          "overallRank": 3,
+          "entered": true,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 253,
+          "cumulativeScore": 1469,
+          "weeklyRank": 1,
+          "overallRank": 4,
+          "entered": true,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 212,
+          "cumulativeScore": 1348,
+          "weeklyRank": 9,
+          "overallRank": 5,
+          "entered": true,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 215,
+          "cumulativeScore": 1100,
+          "weeklyRank": 8,
+          "overallRank": 6,
+          "entered": true,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 223,
+          "cumulativeScore": 1099,
+          "weeklyRank": 7,
+          "overallRank": 7,
+          "entered": true,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 238,
+          "cumulativeScore": 1078,
+          "weeklyRank": 2,
+          "overallRank": 8,
+          "entered": true,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 0,
+          "cumulativeScore": 1055,
+          "weeklyRank": null,
+          "overallRank": 9,
+          "entered": false,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 229,
+          "cumulativeScore": 1025,
+          "weeklyRank": 6,
+          "overallRank": 10,
+          "entered": true,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 186,
+          "cumulativeScore": 994,
+          "weeklyRank": 11,
+          "overallRank": 11,
+          "entered": true,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 0,
+          "cumulativeScore": 774,
+          "weeklyRank": null,
+          "overallRank": 12,
+          "entered": false,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": 406,
+          "weeklyRank": null,
+          "overallRank": 13,
+          "entered": false,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 195,
+          "cumulativeScore": 195,
+          "weeklyRank": 10,
+          "overallRank": 14,
+          "entered": true,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 15,
+          "entered": false,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "label": "Week 5",
+      "possiblePoints": 190,
+      "status": "completed",
+      "source": "derived_from_week6_totals",
+      "notes": "Computed from Week 6 final cumulative minus Week 6 weekly minus Week 4 cumulative.",
+      "standings": [
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 148,
+          "cumulativeScore": 1648,
+          "weeklyRank": 5,
+          "overallRank": 1,
+          "entered": true,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 163,
+          "cumulativeScore": 1632,
+          "weeklyRank": 1,
+          "overallRank": 2,
+          "entered": true,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 139,
+          "cumulativeScore": 1616,
+          "weeklyRank": 7,
+          "overallRank": 3,
+          "entered": true,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 0,
+          "cumulativeScore": 1509,
+          "weeklyRank": null,
+          "overallRank": 4,
+          "entered": false,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 159,
+          "cumulativeScore": 1507,
+          "weeklyRank": 3,
+          "overallRank": 5,
+          "entered": true,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 140,
+          "cumulativeScore": 1240,
+          "weeklyRank": 6,
+          "overallRank": 6,
+          "entered": true,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 154,
+          "cumulativeScore": 1209,
+          "weeklyRank": 4,
+          "overallRank": 7,
+          "entered": true,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 129,
+          "cumulativeScore": 1207,
+          "weeklyRank": 9,
+          "overallRank": 8,
+          "entered": true,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 161,
+          "cumulativeScore": 1186,
+          "weeklyRank": 2,
+          "overallRank": 9,
+          "entered": true,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 107,
+          "cumulativeScore": 1101,
+          "weeklyRank": 10,
+          "overallRank": 10,
+          "entered": true,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 0,
+          "cumulativeScore": 1099,
+          "weeklyRank": null,
+          "overallRank": 11,
+          "entered": false,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 131,
+          "cumulativeScore": 905,
+          "weeklyRank": 8,
+          "overallRank": 12,
+          "entered": true,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": 406,
+          "weeklyRank": null,
+          "overallRank": 13,
+          "entered": false,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 91,
+          "cumulativeScore": 286,
+          "weeklyRank": 11,
+          "overallRank": 14,
+          "entered": true,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 15,
+          "entered": false,
+          "scoreSource": "derived_from_week6_totals",
+          "isMock": false
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "label": "Week 6",
+      "possiblePoints": 210,
+      "status": "completed",
+      "source": "historical_postgame_final",
+      "notes": "Reported final Week 6 weekly scores.",
+      "standings": [
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 143,
+          "cumulativeScore": 1775,
+          "weeklyRank": 2,
+          "overallRank": 1,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 114,
+          "cumulativeScore": 1762,
+          "weeklyRank": 10,
+          "overallRank": 2,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 125,
+          "cumulativeScore": 1741,
+          "weeklyRank": 8,
+          "overallRank": 3,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 135,
+          "cumulativeScore": 1644,
+          "weeklyRank": 3,
+          "overallRank": 4,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 114,
+          "cumulativeScore": 1621,
+          "weeklyRank": 10,
+          "overallRank": 5,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 164,
+          "cumulativeScore": 1404,
+          "weeklyRank": 1,
+          "overallRank": 6,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 116,
+          "cumulativeScore": 1323,
+          "weeklyRank": 9,
+          "overallRank": 7,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 135,
+          "cumulativeScore": 1321,
+          "weeklyRank": 3,
+          "overallRank": 8,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 94,
+          "cumulativeScore": 1303,
+          "weeklyRank": 12,
+          "overallRank": 9,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 127,
+          "cumulativeScore": 1228,
+          "weeklyRank": 6,
+          "overallRank": 10,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 126,
+          "cumulativeScore": 1225,
+          "weeklyRank": 7,
+          "overallRank": 11,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 131,
+          "cumulativeScore": 1036,
+          "weeklyRank": 5,
+          "overallRank": 12,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": 406,
+          "weeklyRank": null,
+          "overallRank": 13,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 94,
+          "cumulativeScore": 380,
+          "weeklyRank": 12,
+          "overallRank": 14,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 15,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "label": "Week 7",
+      "possiblePoints": 253,
+      "status": "completed",
+      "source": "reconciled_from_week8_final",
+      "notes": "Derived by subtraction from Week 8 scoreboard to maintain continuous totals. Some earlier recaps contain conflicting values.",
+      "standings": [
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 172,
+          "cumulativeScore": 1947,
+          "weeklyRank": 1,
+          "overallRank": 1,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 147,
+          "cumulativeScore": 1909,
+          "weeklyRank": 4,
+          "overallRank": 2,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 127,
+          "cumulativeScore": 1868,
+          "weeklyRank": 8,
+          "overallRank": 3,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 122,
+          "cumulativeScore": 1743,
+          "weeklyRank": 9,
+          "overallRank": 4,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 1,
+          "cumulativeScore": 1645,
+          "weeklyRank": 10,
+          "overallRank": 5,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 133,
+          "cumulativeScore": 1537,
+          "weeklyRank": 6,
+          "overallRank": 6,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 153,
+          "cumulativeScore": 1476,
+          "weeklyRank": 3,
+          "overallRank": 7,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 167,
+          "cumulativeScore": 1395,
+          "weeklyRank": 2,
+          "overallRank": 8,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 133,
+          "cumulativeScore": 1358,
+          "weeklyRank": 6,
+          "overallRank": 9,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 0,
+          "cumulativeScore": 1321,
+          "weeklyRank": null,
+          "overallRank": 10,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 0,
+          "cumulativeScore": 1303,
+          "weeklyRank": null,
+          "overallRank": 11,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 0,
+          "cumulativeScore": 1036,
+          "weeklyRank": null,
+          "overallRank": 12,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 143,
+          "cumulativeScore": 523,
+          "weeklyRank": 5,
+          "overallRank": 13,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": 406,
+          "weeklyRank": null,
+          "overallRank": 14,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 15,
+          "entered": null,
+          "scoreSource": "reconciled_from_week8_final",
+          "isMock": false
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "label": "Week 8",
+      "possiblePoints": 210,
+      "status": "completed",
+      "source": "historical_postgame_final",
+      "notes": "Reported final Week 8 weekly scores.",
+      "standings": [
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 117,
+          "cumulativeScore": 2064,
+          "weeklyRank": 8,
+          "overallRank": 1,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 128,
+          "cumulativeScore": 2037,
+          "weeklyRank": 5,
+          "overallRank": 2,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 150,
+          "cumulativeScore": 2018,
+          "weeklyRank": 2,
+          "overallRank": 3,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 140,
+          "cumulativeScore": 1883,
+          "weeklyRank": 3,
+          "overallRank": 4,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 35,
+          "cumulativeScore": 1680,
+          "weeklyRank": 13,
+          "overallRank": 5,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 125,
+          "cumulativeScore": 1662,
+          "weeklyRank": 6,
+          "overallRank": 6,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 168,
+          "cumulativeScore": 1644,
+          "weeklyRank": 1,
+          "overallRank": 7,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 109,
+          "cumulativeScore": 1504,
+          "weeklyRank": 9,
+          "overallRank": 8,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 92,
+          "cumulativeScore": 1450,
+          "weeklyRank": 11,
+          "overallRank": 9,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 140,
+          "cumulativeScore": 1443,
+          "weeklyRank": 3,
+          "overallRank": 10,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 122,
+          "cumulativeScore": 1443,
+          "weeklyRank": 7,
+          "overallRank": 10,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 101,
+          "cumulativeScore": 1137,
+          "weeklyRank": 10,
+          "overallRank": 12,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 80,
+          "cumulativeScore": 603,
+          "weeklyRank": 12,
+          "overallRank": 13,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": 406,
+          "weeklyRank": null,
+          "overallRank": 14,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 15,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        }
+      ]
+    },
+    {
+      "week": 9,
+      "label": "Week 9",
+      "possiblePoints": 210,
+      "status": "completed",
+      "source": "reconciled_from_week10_final",
+      "notes": "Derived by subtraction from final Week 10 scoreboard. Some earlier Week 9 recaps differ by a few points.",
+      "standings": [
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 182,
+          "cumulativeScore": 2246,
+          "weeklyRank": 1,
+          "overallRank": 1,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 166,
+          "cumulativeScore": 2203,
+          "weeklyRank": 7,
+          "overallRank": 2,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 156,
+          "cumulativeScore": 2174,
+          "weeklyRank": 10,
+          "overallRank": 3,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 158,
+          "cumulativeScore": 2041,
+          "weeklyRank": 8,
+          "overallRank": 4,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 157,
+          "cumulativeScore": 1837,
+          "weeklyRank": 9,
+          "overallRank": 5,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 170,
+          "cumulativeScore": 1832,
+          "weeklyRank": 5,
+          "overallRank": 6,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 179,
+          "cumulativeScore": 1823,
+          "weeklyRank": 2,
+          "overallRank": 7,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 171,
+          "cumulativeScore": 1621,
+          "weeklyRank": 4,
+          "overallRank": 8,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 115,
+          "cumulativeScore": 1619,
+          "weeklyRank": 11,
+          "overallRank": 9,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 175,
+          "cumulativeScore": 1618,
+          "weeklyRank": 3,
+          "overallRank": 10,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 0,
+          "cumulativeScore": 1443,
+          "weeklyRank": null,
+          "overallRank": 11,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 167,
+          "cumulativeScore": 1304,
+          "weeklyRank": 6,
+          "overallRank": 12,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 0,
+          "cumulativeScore": 603,
+          "weeklyRank": null,
+          "overallRank": 13,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": 406,
+          "weeklyRank": null,
+          "overallRank": 14,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 15,
+          "entered": null,
+          "scoreSource": "reconciled_from_week10_final",
+          "isMock": false
+        }
+      ]
+    },
+    {
+      "week": 10,
+      "label": "Week 10",
+      "possiblePoints": 300,
+      "status": "completed",
+      "source": "historical_postgame_final",
+      "notes": "Reported final Week 10 weekly scores and season totals.",
+      "standings": [
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 188,
+          "cumulativeScore": 2434,
+          "weeklyRank": 10,
+          "overallRank": 1,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 190,
+          "cumulativeScore": 2393,
+          "weeklyRank": 9,
+          "overallRank": 2,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 207,
+          "cumulativeScore": 2381,
+          "weeklyRank": 6,
+          "overallRank": 3,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 210,
+          "cumulativeScore": 2251,
+          "weeklyRank": 5,
+          "overallRank": 4,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 221,
+          "cumulativeScore": 2053,
+          "weeklyRank": 3,
+          "overallRank": 5,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 196,
+          "cumulativeScore": 2033,
+          "weeklyRank": 8,
+          "overallRank": 6,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 168,
+          "cumulativeScore": 1991,
+          "weeklyRank": 11,
+          "overallRank": 7,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 241,
+          "cumulativeScore": 1862,
+          "weeklyRank": 1,
+          "overallRank": 8,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 200,
+          "cumulativeScore": 1643,
+          "weeklyRank": 7,
+          "overallRank": 9,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 0,
+          "cumulativeScore": 1619,
+          "weeklyRank": null,
+          "overallRank": 10,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 0,
+          "cumulativeScore": 1618,
+          "weeklyRank": null,
+          "overallRank": 11,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 223,
+          "cumulativeScore": 1527,
+          "weeklyRank": 2,
+          "overallRank": 12,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 220,
+          "cumulativeScore": 823,
+          "weeklyRank": 4,
+          "overallRank": 13,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": 406,
+          "weeklyRank": null,
+          "overallRank": 14,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 15,
+          "entered": null,
+          "scoreSource": "historical_postgame_final",
+          "isMock": false
+        }
+      ]
+    },
+    {
+      "week": 11,
+      "label": "Week 11",
+      "possiblePoints": 300,
+      "status": "mock_upcoming",
+      "source": "synthetic_demo",
+      "notes": "Entirely fictional Week 11 scores for display testing; games were not final as of November 12, 2026.",
+      "standings": [
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 231,
+          "cumulativeScore": 2665,
+          "weeklyRank": 3,
+          "overallRank": 1,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 236,
+          "cumulativeScore": 2617,
+          "weeklyRank": 2,
+          "overallRank": 2,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 223,
+          "cumulativeScore": 2616,
+          "weeklyRank": 6,
+          "overallRank": 3,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 218,
+          "cumulativeScore": 2469,
+          "weeklyRank": 8,
+          "overallRank": 4,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 227,
+          "cumulativeScore": 2280,
+          "weeklyRank": 5,
+          "overallRank": 5,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 202,
+          "cumulativeScore": 2235,
+          "weeklyRank": 11,
+          "overallRank": 6,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 214,
+          "cumulativeScore": 2205,
+          "weeklyRank": 10,
+          "overallRank": 7,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 241,
+          "cumulativeScore": 2103,
+          "weeklyRank": 1,
+          "overallRank": 8,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 230,
+          "cumulativeScore": 1873,
+          "weeklyRank": 4,
+          "overallRank": 9,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 190,
+          "cumulativeScore": 1808,
+          "weeklyRank": 12,
+          "overallRank": 10,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 215,
+          "cumulativeScore": 1742,
+          "weeklyRank": 9,
+          "overallRank": 11,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 0,
+          "cumulativeScore": 1619,
+          "weeklyRank": null,
+          "overallRank": 12,
+          "entered": false,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 223,
+          "cumulativeScore": 1046,
+          "weeklyRank": 6,
+          "overallRank": 13,
+          "entered": true,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": 406,
+          "weeklyRank": null,
+          "overallRank": 14,
+          "entered": false,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": 0,
+          "weeklyRank": null,
+          "overallRank": 15,
+          "entered": false,
+          "scoreSource": "synthetic_demo",
+          "isMock": true
+        }
+      ]
+    }
+  ]
+}

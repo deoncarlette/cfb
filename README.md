@@ -73,12 +73,12 @@ confidence picker, timezone-aware date formatting (`SAT, 9/26 12:00 PM EDT`, usi
 viewer's own browser timezone automatically), and the Weekly/Overall scoreboard with movement
 arrows on Overall only.
 
-**Still not built** (same gap as the Canva version had): a real picks-vs-results scoring
-engine. Weeks 0–2 show real recap totals (hardcoded in `WEEKLY_SCORE_SEED` in `src/features/scoreboard/seedData.js`,
-same numbers as before) so the Scoreboard has something real to preview; every other week
-shows genuine submission status (Submitted / not yet) but no score, because nothing yet
-compares a saved pick against a game's actual winner. That's the natural next big feature
-once you want the Scoreboard to be real for weeks beyond the seeded ones.
+**Sample data (for now):** the Scoreboard reads weekly scores for Weeks 0–11 from
+`src/features/scoreboard/mockScores.json` (Week 11 is made up), and past weeks on the Picks
+tab default to Deandra's real picks from `src/features/picks/sample/deandra-2026.json` —
+that week's games become the slate and the picks show until someone saves their own. The
+Picks tab scores picks against ESPN results; the Scoreboard doesn't yet (it still uses the
+file), which is the natural next step.
 
 **New in this version**: real shared persistence via Firestore (localStorage was always
 per-device — this is the actual upgrade React+Firebase buys you), and a real deploy pipeline.
