@@ -24,3 +24,13 @@ export function toDatetimeLocal(iso) {
 export function isPast(iso) {
   return !!iso && Date.now() >= new Date(iso).getTime();
 }
+
+// Short two-line kickoff for the matchup chip: { day: 'SAT', time: '2:30 PM' } in the
+// viewer's own timezone.
+export function kickoffParts(value) {
+  const d = new Date(value);
+  if (isNaN(d.getTime())) return { day: '', time: '' };
+  const day = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(d).toUpperCase();
+  const time = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' }).format(d);
+  return { day, time };
+}

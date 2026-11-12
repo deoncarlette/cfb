@@ -2,7 +2,7 @@ import { ESPN_BASE } from './client.js';
 import { fetchPollRankMap } from './rankings.js';
 import { SEASON, CFP_SWITCH_WEEK } from '@/config.js';
 import { hexColor } from '@/shared/utils/colors.js';
-import { formatKickoff } from '@/shared/utils/dates.js';
+import { formatKickoff, kickoffParts } from '@/shared/utils/dates.js';
 
 // One week's regular-season games. groups: 80 = FBS, 81 = FCS.
 // Each game: { id, date, venue, status, state, completed, competitors: [away, home] }
@@ -60,4 +60,12 @@ export function gameStatusLabel(game) {
   if (game.completed) return 'FINAL';
   if (game.state === 'in') return game.status;
   return formatKickoff(game.date);
+}
+
+// What goes in the little chip between the two teams: FINAL, the live clock, or kickoff.
+export function matchupChip(game) {
+  if (game.completed) return { top: 'Final', bottom: '' };
+  if (game.state === 'in') return { top: 'Live', bottom: game.status };
+  const { day, time } = kickoffParts(game.date);
+  return { top: time, bottom: day };
 }

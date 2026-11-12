@@ -9,8 +9,7 @@ export function BracketAdminPanel() {
 
   return (
     <div className="panel">
-      <p className="section-label">Playoff bracket</p>
-      <h2>Seed the field</h2>
+      <h2>Playoff bracket</h2>
       <p className="muted small">
         Set all 12 seeds after Selection Day (top 4 get byes, no re-seeding). Until then the Bracket tab shows a preview from the current {poll} and submissions stay closed.
       </p>

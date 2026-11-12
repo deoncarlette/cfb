@@ -1,33 +1,66 @@
-/* Picks tab — game cards (features/picks). */
-.combo-card{ display:flex; align-items:stretch; gap:8px; }
-.combo-card.unpicked{ border-style:dashed; opacity:.9; }
-.combo-card.dragging{ border-color:var(--brass); box-shadow:0 4px 14px rgba(0,0,0,.35); }
-.drag-handle{
-  display:flex; align-items:center; justify-content:center; width:26px; color:var(--muted);
-  font-size:16px; letter-spacing:-2px; cursor:grab; touch-action:none; user-select:none;
+/* Picks tab — game cards with the broadcast-style matchup pill (features/picks). */
+.quickpicks{margin:10px 0 16px;}
+
+/* Card grid: [points] [matchup pill] [arrows], venue under the pill. */
+.game-card{
+  display:grid; grid-template-columns:44px minmax(0,1fr) 30px; grid-template-areas:"pts pill arrows" "pts venue arrows";
+  column-gap:10px; row-gap:6px; align-items:center;
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+  padding:10px; margin-bottom:10px; cursor:grab; box-shadow:var(--shadow);
 }
-.combo-body{flex:1; display:flex; flex-direction:column; gap:6px; min-width:0;}
-.game-meta{display:flex; justify-content:space-between; gap:8px; font-size:11px; color:var(--muted); font-family:"Space Mono",monospace;}
-.game-meta span:last-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-.teams-row{display:flex; gap:8px;}
-.team-toggle{
-  flex:1; display:flex; align-items:center; gap:7px; background:var(--input);
-  border:1px solid var(--line); color:var(--input-ink); padding:8px; border-radius:8px;
-  font-weight:700; font-size:13px; text-align:left; min-width:0;
-}
-.team-toggle.sel{ background:var(--brass); border-color:var(--brass); color:#242421; }
-.team-toggle span:last-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-.team-rank{font-family:"Space Mono",monospace; font-size:11px; color:var(--muted); font-weight:800; flex-shrink:0;}
-.team-toggle.sel .team-rank{color:#242421;}
-.combo-side{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; min-width:38px;}
+.game-card:active{cursor:grabbing;}
+.game-venue{grid-area:venue; text-align:center; font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
 .pts-input{
-  width:42px; text-align:center; font-weight:800; font-size:14px; padding:4px 2px; margin:0;
-  font-family:"Space Mono",monospace; background:var(--brass); color:#242421; border-color:var(--brass);
+  grid-area:pts; width:44px; height:44px; margin:0; padding:0; text-align:center;
+  font-family:var(--display); font-weight:800; font-size:24px; font-variant-numeric:tabular-nums;
+  background:var(--raised); color:var(--text); border:1px solid var(--line-strong); border-radius:10px;
+  -moz-appearance:textfield; appearance:textfield;
 }
-.pts-badge{
-  background:var(--brass); color:#242421; font-weight:800; font-size:13px; border-radius:20px;
-  min-width:26px; height:26px; display:flex; align-items:center; justify-content:center;
-  font-family:"Space Mono",monospace;
+.pts-input::-webkit-outer-spin-button, .pts-input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
+.game-card:not(.unpicked) .pts-input{background:var(--accent); border-color:var(--accent); color:var(--accent-ink);}
+.arrows{grid-area:arrows; display:flex; flex-direction:column; gap:4px;}
+.arrows button{padding:5px 0; font-size:12px; line-height:1; border-radius:7px;}
+
+/* The matchup pill */
+.matchup{grid-area:pill; position:relative; display:flex; height:58px; border-radius:999px; overflow:hidden; background:var(--raised);}
+.matchup-side{
+  flex:1; min-width:0; position:relative; display:flex; align-items:center; gap:9px;
+  border:none; border-radius:0; padding:0 14px; background:var(--team); color:var(--ink); text-align:left;
+  transition:filter .18s ease;
 }
-.arrows{display:flex; flex-direction:column; gap:2px;}
-.arrows button{padding:2px 8px; font-size:12px; line-height:1;}
+.matchup-side::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(0,0,0,.2)); pointer-events:none;}
+.matchup-side.away{clip-path:polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%); margin-right:-9px; padding-right:38px;}
+.matchup-side.home{clip-path:polygon(18px 0, 100% 0, 100% 100%, 0 100%); margin-left:-9px; padding-left:38px; flex-direction:row-reverse; text-align:right;}
+.matchup-side:disabled{cursor:default; opacity:1;}
+.matchup.has-pick .matchup-side:not(.sel){filter:var(--dim);}
+.matchup-side .team-logo{width:32px; height:32px; position:relative; z-index:1; filter:drop-shadow(0 1px 2px rgba(0,0,0,.35));}
+.team-text{position:relative; z-index:1; display:flex; flex-direction:column; min-width:0; line-height:1;}
+.team-rank{font-size:11px; font-weight:700; opacity:.85; margin-bottom:2px;}
+.team-name{
+  font-family:var(--display); font-weight:700; font-style:italic; text-transform:uppercase;
+  font-size:20px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.matchup-mid{
+  position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); z-index:2; pointer-events:none;
+  min-width:50px; padding:4px 7px; text-align:center; border-radius:8px;
+  background:var(--bg); color:var(--text); border:1px solid var(--line-strong);
+  font-family:var(--display); font-weight:700; font-size:13px; line-height:1.05; text-transform:uppercase;
+}
+.matchup-mid small{display:block; font-size:10px; font-weight:600; color:var(--muted);}
+
+/* Phones: arrows move under the points so the pill gets the width; chip shows time only. */
+@media (max-width:440px){
+  .game-card{grid-template-columns:40px minmax(0,1fr); grid-template-areas:"pts pill" "arrows venue"; column-gap:8px; row-gap:5px; padding:8px 10px 8px 8px;}
+  .pts-input{width:40px; height:40px; font-size:22px; align-self:end;}
+  .arrows{flex-direction:row; gap:2px; align-self:start;}
+  .arrows button{flex:1; padding:3px 0; font-size:11px;}
+  .matchup{height:52px;}
+  .matchup-side{gap:6px; padding:0 10px;}
+  .matchup-side.away{padding-right:38px;}
+  .matchup-side.home{padding-left:38px;}
+  .matchup-side .team-logo{width:24px; height:24px;}
+  .team-name{font-size:17px;}
+  .matchup-mid{min-width:0; font-size:12px; padding:3px 5px;}
+  .matchup-mid small{display:none;}
+}

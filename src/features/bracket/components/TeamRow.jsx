@@ -7,7 +7,7 @@ export function TeamRow({ team, placeholder, seed, selected, status, disabled, o
   if (!team) {
     return <div className="bk-team empty"><span className="bk-seed">{seed ?? ''}</span><span className="bk-name">{placeholder}</span></div>;
   }
-  const style = selected ? { background: team.color, borderColor: team.color, color: textForBackground(team.color) } : undefined;
+  const style = { '--team': team.color, '--ink': textForBackground(team.color) };
   const mark = selected && status === 'correct' ? '✓' : selected && (status === 'wrong' || status === 'dead') ? '✕' : null;
   return (
     <button

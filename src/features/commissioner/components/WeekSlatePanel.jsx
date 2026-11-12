@@ -17,8 +17,7 @@ export function WeekSlatePanel() {
 
   return (
     <div className="panel">
-      <p className="muted small" style={{ textTransform: 'uppercase', letterSpacing: '.1em', fontWeight: 800, color: 'var(--brass)' }}>Commissioner</p>
-      <h2>Set up this week's slate</h2>
+      <h2>This week's slate</h2>
       <p className="muted small">Pull games from ESPN, choose which count, set when picks lock. No access control yet — see the note in services/data/firebase/weeklyPicks.js.</p>
 
       <WeekSelect week={week} weeks={weeks} onChange={setWeek} />

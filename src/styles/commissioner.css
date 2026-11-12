@@ -1,7 +1,8 @@
 /* Commish tab — game checklist (features/commissioner). */
-.section-count{font-size:12px; color:var(--muted); margin-left:6px;}
-.section-actions button{background:none; border:none; padding:0; font-size:12px; font-weight:700; text-decoration:underline; cursor:pointer;}
-.commish-row{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px; background:var(--card); border:1px solid var(--line); border-radius:8px; margin-bottom:6px;}
-.commish-row label{display:flex; align-items:center; gap:8px; font-weight:700; font-size:13px; flex:1; min-width:0; text-transform:none; letter-spacing:normal; color:var(--chalk); margin:0;}
-.commish-row input[type=checkbox]{width:auto; margin:0;}
-.selected-count{font-weight:800; color:var(--brass); font-size:13px; font-family:"Space Mono",monospace;}
+.section-count{font-size:13px; font-weight:500; color:var(--muted); margin-left:6px;}
+.section-actions{display:flex; gap:14px;}
+.section-actions button{background:none; border:none; padding:0; font-size:13px; color:var(--muted); text-decoration:underline; text-underline-offset:3px;}
+.commish-row{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 12px; background:var(--raised); border-radius:10px; margin-bottom:6px;}
+.commish-row label{display:flex; align-items:center; gap:10px; flex:1; min-width:0; margin:0; font-size:14px; font-weight:600; color:var(--text);}
+.commish-row input[type=checkbox]{width:18px; height:18px; margin:0; accent-color:var(--accent);}
+.selected-count{font-weight:700; font-size:14px; margin:16px 0 4px;}
