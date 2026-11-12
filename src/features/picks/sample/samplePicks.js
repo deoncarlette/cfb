@@ -45,8 +45,20 @@ async function loadFile() {
 // games were found on ESPN (then the normal default slate is used).
 export async function samplePicksForWeek(week, games) {
   const file = await loadFile();
-  const fileWeek = file.weeks.find(w => w.week === week);
-  if (!fileWeek) return null;
+  // Normally the file's Week N is the app's Week N; the neighbors are a safety net in case
+  // the week numbering drifts. Whichever matches the most of these games wins.
+  let best = null;
+  for (const w of [week, week - 1, week + 1]) {
+    const fileWeek = file.weeks.find(fw => fw.week === w);
+    if (!fileWeek) continue;
+    const m = matchWeek(fileWeek, games);
+    if (m && (!best || m.matched > best.matched)) best = m;
+    if (m && m.missing.length === 0) break;
+  }
+  return best && { playerName: file.participant, ...best };
+}
+
+function matchWeek(fileWeek, games) {
   const picks = {}; const gameIds = []; const missing = [];
   fileWeek.picks.forEach(p => {
     const m = findGame(p, games);
@@ -55,6 +67,6 @@ export async function samplePicksForWeek(week, games) {
     gameIds.push(m.game.id);
   });
   if (gameIds.length < fileWeek.picks.length / 2) return null;
-  if (missing.length) console.warn(`Week ${week}: couldn't find these games on ESPN:`, missing);
-  return { playerName: file.participant, gameIds, picks, matched: gameIds.length, total: fileWeek.picks.length, missing };
+  if (missing.length) console.warn(`File week ${fileWeek.week}: couldn't find these games on ESPN:`, missing);
+  return { fileWeek: fileWeek.week, gameIds, picks, matched: gameIds.length, total: fileWeek.picks.length, missing };
 }

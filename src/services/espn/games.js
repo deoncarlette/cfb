@@ -1,6 +1,6 @@
 import { ESPN_BASE } from './client.js';
 import { fetchPollRankMap } from './rankings.js';
-import { SEASON, CFP_SWITCH_WEEK } from '@/config.js';
+import { SEASON, CFP_SWITCH_WEEK, toEspnWeek, fromEspnWeek } from '@/config.js';
 import { hexColor } from '@/shared/utils/colors.js';
 import { formatKickoff } from '@/shared/utils/dates.js';
 
@@ -13,11 +13,11 @@ function parseLine(odds) {
   return spread || overUnder != null ? { spread, overUnder } : null;
 }
 
-// One week's regular-season games. groups: 80 = FBS, 81 = FCS.
+// One POOL week's regular-season games. groups: 80 = FBS, 81 = FCS.
 // Each game: { id, date, venue, status, state, completed, competitors: [away, home] }
 export async function fetchEspnGames(week, groups = [80]) {
   const results = await Promise.all(groups.map(async groupId => {
-    const response = await fetch(`${ESPN_BASE}/scoreboard?limit=500&dates=${SEASON}&seasontype=2&week=${week}&groups=${groupId}`);
+    const response = await fetch(`${ESPN_BASE}/scoreboard?limit=500&dates=${SEASON}&seasontype=2&week=${toEspnWeek(week)}&groups=${groupId}`);
     if (!response.ok) throw new Error('Schedule unavailable');
     const data = await response.json();
     return data.events || [];
@@ -64,7 +64,8 @@ export async function fetchEspnGames(week, groups = [80]) {
 // nothing and every game keeps the rank it already had.
 export async function applyRankOverlay(gamesList, week) {
   if (week <= CFP_SWITCH_WEEK) return gamesList;
-  const cfpMap = (await fetchPollRankMap(week, 'cfp')) || (await fetchPollRankMap(week, 'playoff'));
+  const espnWeek = toEspnWeek(week);
+  const cfpMap = (await fetchPollRankMap(espnWeek, 'cfp')) || (await fetchPollRankMap(espnWeek, 'playoff'));
   if (!cfpMap) return gamesList;
   gamesList.forEach(game => game.competitors.forEach(c => { if (cfpMap.has(c.id)) c.rank = cfpMap.get(c.id); }));
   return gamesList;
@@ -96,13 +97,13 @@ export function gameWinnerId(game) {
   return a.score > b.score ? a.id : b.id;
 }
 
-// ESPN's current regular-season week, or null (offseason / postseason / no answer).
+// The current POOL week (from ESPN's current week), or null (offseason / postseason / no answer).
 export async function fetchCurrentWeek() {
   try {
     const response = await fetch(`${ESPN_BASE}/scoreboard?groups=80&limit=1`);
     if (!response.ok) return null;
     const data = await response.json();
-    return data.season?.type === 2 && data.week?.number ? data.week.number : null;
+    return data.season?.type === 2 && data.week?.number ? fromEspnWeek(data.week.number) : null;
   } catch (e) {
     return null;
   }
