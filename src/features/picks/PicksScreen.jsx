@@ -5,7 +5,7 @@ import { useStoredState } from '@/shared/hooks/useStoredState.js';
 import { Centered } from '@/shared/components/Centered.jsx';
 import { usePicksWeek } from './hooks/usePicksWeek.js';
 import { useConfidenceOrder } from './hooks/useConfidenceOrder.js';
-import { quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals } from './picksLogic.js';
+import { quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding } from './picksLogic.js';
 import { PlayerWeekPanel } from './components/PlayerWeekPanel.jsx';
 import { WeekResults } from './components/WeekResults.jsx';
 import { QuickPicks } from './components/QuickPicks.jsx';
@@ -16,7 +16,7 @@ import { SubmitPicks } from './components/SubmitPicks.jsx';
 // Once games go final, each card shows the score and the points you earned.
 export function PicksScreen() {
   const { week, setWeek, weeks } = useWeekSelector(1);
-  const { games, config, sample, loading, error, deadlinePassed } = usePicksWeek(week);
+  const { games, config, sample, loading, error, deadlinePassed, anyLive, updatedAt, isReplay } = usePicksWeek(week);
   const { order, setOrder, move, moveToConfidence, dragPropsFor } = useConfidenceOrder();
   const [userName, setUserName] = useStoredState('bb-player-name', '');
   const [winners, setWinners] = useState({});
@@ -32,13 +32,15 @@ export function PicksScreen() {
     setOrder(restored.order);
   }
 
-  // New week loaded → the sample picks (if this week has them), then yours if you've saved any.
+  // New week / slate loaded → the sample picks (if this week has them), then yours if you've
+  // saved any. Keyed on the game ids, so live score refreshes don't reset anything.
+  const slateKey = `${week}:${games.map(g => g.id).join(',')}`;
   useEffect(() => {
     setExisting(null);
     showEntry(sample);
     if (games.length && userName.trim()) loadExistingPicks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [games]);
+  }, [slateKey]);
 
   async function loadExistingPicks() {
     if (!userName.trim() || games.length === 0) return;
@@ -89,7 +91,11 @@ export function PicksScreen() {
               Showing {sample.playerName}'s picks{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
             </p>
           )}
-          {totals.decided > 0 && <WeekResults totals={totals} />}
+          {isReplay && <p className="sample-note">Test replay: Week {week}'s games are being re-played today at their real kickoff times.</p>}
+          {(totals.decided > 0 || anyLive) && <WeekResults totals={totals} />}
+          {anyLive && updatedAt && (
+            <p className="muted small center live-updated">Live scores update every 30 seconds. Last updated {updatedAt.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}.</p>
+          )}
           {!deadlinePassed && (
             <>
               <p className="muted small">
@@ -110,6 +116,7 @@ export function PicksScreen() {
                 total={order.length}
                 points={pointsFor(gameId)}
                 result={pickResult(game, winners[gameId], pointsFor(gameId))}
+                live={liveStanding(game, winners[gameId])}
                 picked={winners[gameId]}
                 locked={deadlinePassed}
                 dragProps={dragPropsFor(gameId)}

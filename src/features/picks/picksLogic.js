@@ -75,3 +75,12 @@ export function weekTotals(games, winners, pointsFor) {
   });
   return { earned, right, wrong, decided: right + wrong, maxPossible: earned + stillPossible, total };
 }
+
+// While a game is live: is your pick ahead? 'leading' | 'trailing' | 'tied' | null
+export function liveStanding(game, pickedTeamId) {
+  if (game.state !== 'in' || !pickedTeamId) return null;
+  const mine = game.competitors.find(c => c.id === pickedTeamId);
+  const other = game.competitors.find(c => c.id !== pickedTeamId);
+  if (!mine || !other || mine.score == null || other.score == null) return null;
+  return mine.score > other.score ? 'leading' : mine.score < other.score ? 'trailing' : 'tied';
+}

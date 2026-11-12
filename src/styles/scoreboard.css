@@ -9,4 +9,7 @@ table.board td.num{text-align:right; font-weight:700; font-variant-numeric:tabul
 .move.down{color:var(--danger);}
 .move.same, .move.new{color:var(--muted);}
 table.board td .rank{display:inline-block; min-width:26px; color:var(--muted); font-variant-numeric:tabular-nums;}
-table.board tr.sat-out td{color:var(--muted);}
+table.board td.sat-out{color:var(--muted); font-weight:500;}
+table.standings td.week-pts{font-weight:500; color:var(--muted);}
+table.standings td.week-pts:not(.sat-out){color:var(--text);}
+table.standings .move-cell{width:44px; text-align:right; padding-left:2px;}

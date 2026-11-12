@@ -99,3 +99,14 @@
   .matchup.started .team-name{display:none;}
   .matchup.started .team-abbr{display:block;}
 }
+
+/* Live games */
+.game-card.live{border-color:rgba(229,100,90,.55);}
+.live-badge{display:inline-flex; align-items:center; gap:5px; color:var(--danger); font-weight:700; margin-right:4px;}
+.live-badge::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--danger); animation:live-pulse 1.6s ease-in-out infinite;}
+@keyframes live-pulse{0%,100%{opacity:1;} 50%{opacity:.25;}}
+@media (prefers-reduced-motion: reduce){ .live-badge::before{animation:none;} }
+.pts-badge.live-leading{border-color:var(--success); color:var(--success); background:transparent;}
+.pts-badge.live-trailing{border-color:var(--danger); color:var(--danger); background:transparent;}
+.pts-badge.live-tied{border-color:var(--line-strong);}
+.live-updated{margin:-6px 0 14px;}
