@@ -94,6 +94,12 @@ export function parseSummary(data) {
   const w = data.gameInfo?.weather;
   return {
     away, home, winProb, odds, ats, lastFive, stats, leaders, scoring,
+    // Every drive's team and game-clock window (used by the test replay to know who has the ball).
+    drives: [...(data.drives?.previous || []), ...(data.drives?.current ? [data.drives.current] : [])].map(d => ({
+      teamId: String(d.team?.id ?? ''),
+      start: { period: d.start?.period?.number, clock: d.start?.clock?.displayValue },
+      end: { period: d.end?.period?.number, clock: d.end?.clock?.displayValue }
+    })).filter(d => d.teamId && d.start.period),
     // Home win % after each play, in order (used by the test replay to rewind win probability).
     winTimeline: (data.winprobability || []).map(w => w.homeWinPercentage).filter(v => v != null),
     broadcast: b?.media?.shortName || b?.names?.[0] || null,

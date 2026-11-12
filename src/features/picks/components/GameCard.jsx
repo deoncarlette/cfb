@@ -18,7 +18,7 @@ export function GameCard({ game, index, total, points, result, live, picked, loc
         {game.completed
           ? <span><strong className="game-final">Final</strong> {formatGameDay(game.date)}</span>
           : isLive
-            ? <span><strong className="live-badge">Live</strong> {game.status}</span>
+            ? <span><strong className="live-badge">Live</strong> {game.status}{game.situation?.downDistance && <span className="down-distance">{game.situation.downDistance}</span>}</span>
             : <span>{formatKickoff(game.date)}</span>}
         {line && (
           <span className="game-line">

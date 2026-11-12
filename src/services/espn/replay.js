@@ -34,6 +34,16 @@ function playElapsed(p) {
   return ((p.period || 1) - 1) * QUARTER_SECS + (QUARTER_SECS - ((m || 0) * 60 + (s || 0)));
 }
 
+// Who has the ball at a moment: the drive whose window contains it. Without drive data,
+// alternate every ~4 minutes of game clock so the possession icon can still be tested.
+function possessionAt(summary, game, elapsed) {
+  const drive = (summary?.drives || []).find(d =>
+    playElapsed(d.start) <= elapsed && elapsed <= playElapsed(d.end || d.start));
+  if (drive) return drive.teamId;
+  const [a, b] = game.competitors;
+  return Math.floor(elapsed / 240) % 2 ? b.id : a.id;
+}
+
 // ---- box scores for the replayed week (finals never change, so fetch each once) ----
 
 const summaries = new Map();
@@ -129,6 +139,7 @@ export function replayGames(games, now = new Date()) {
     const rewound = real && rewindSummary(real, f);
     return {
       ...base, completed: false, state: 'in', status: clockAt(f),
+      situation: { possession: possessionAt(real, g, f * 4 * QUARTER_SECS), downDistance: null, redZone: false },
       competitors: g.competitors.map(c => ({
         ...c, winner: false,
         score: rewound

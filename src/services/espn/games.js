@@ -50,9 +50,20 @@ function parseEvents(events) {
       state: event.status?.type?.state || 'pre',
       completed: event.status?.type?.completed === true,
       line: parseLine(competition?.odds?.[0]),
+      situation: parseSituation(competition?.situation),
       competitors
     };
   }).filter(game => game.competitors.length === 2);
+}
+
+// Live game situation: who has the ball, down & distance, red zone. null when not live.
+function parseSituation(s) {
+  if (!s || s.possession == null) return null;
+  return {
+    possession: String(s.possession),
+    downDistance: s.downDistanceText || s.shortDownDistanceText || null,
+    redZone: s.isRedZone === true
+  };
 }
 
 // One week's regular-season games. groups: 80 = FBS, 81 = FCS.
