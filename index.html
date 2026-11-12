@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Week 10 Picks — Quick Tool</title>
+<title>Week 11 Picks — Quick Tool</title>
 <script>
   (function () {
     try {
@@ -96,7 +96,7 @@
 <body>
 <header>
   <button class="theme-btn" id="themeBtn">Theme</button>
-  <h1>Week 10 Picks</h1>
+  <h1>Week 11 Picks</h1>
   <p>Pick a winner on each card, then drag, use the arrows, or type a number to set confidence.</p>
 </header>
 <main>
@@ -130,30 +130,30 @@ applyTheme(currentMode());
 
 // ---- Games (this week's full slate — page 2 of the form is confidence points only) ----
 const games = [
-  ["Alabama","LSU"],
-  ["Arkansas","Auburn"],
-  ["Clemson","Syracuse"],
-  ["Colorado","AZ State"],
-  ["Duke","NC State"],
-  ["Florida","Oklahoma"],
-  ["Georgia","Ole Miss"],
-  ["Houston","Cincinnati"],
-  ["Howard","SC State"],
-  ["Nebraska","Illinois"],
-  ["Iowa","Northwestern"],
-  ["Kentucky","Tennessee"],
-  ["UMiami","Notre Dame"],
-  ["Michigan","Michigan State"],
-  ["UCLA","Minnesota"],
-  ["MS State","Vanderbilt"],
-  ["Ohio State","Oregon"],
-  ["Penn State","Washington"],
-  ["Purdue","Maryland"],
-  ["Texas A&M","South Carolina"],
-  ["TX Tech","West Virginia"],
-  ["UNC","UConn"],
-  ["UTexas","Missouri"],
-  ["Wisconsin","Rutgers"]
+  ["Alabama","Vanderbilt"],
+  ["Arkansas","South Carolina"],
+  ["Auburn","MS State"],
+  ["Clemson","GA Tech"],
+  ["Colorado","Houston"],
+  ["Duke","UMiami"],
+  ["Florida","Kentucky"],
+  ["Georgia","Missouri"],
+  ["Howard","Del State"],
+  ["UCLA","Illinois"],
+  ["Indiana","USC"],
+  ["Iowa","Purdue"],
+  ["LSU","UTexas"],
+  ["Michigan","Oregon"],
+  ["Michigan State","Washington"],
+  ["Minnesota","Penn State"],
+  ["Nebraska","Rutgers"],
+  ["Notre Dame","Boston College"],
+  ["Northwestern","Ohio State"],
+  ["Oklahoma","Ole Miss"],
+  ["Tennessee","Texas A&M"],
+  ["TX Tech","Oklahoma State"],
+  ["UNC","Louisville"],
+  ["Wisconsin","Maryland"]
 ].map((pair, i) => ({ id: 'g' + i, team1: pair[0], team2: pair[1] }));
 
 let order = games.map(g => g.id);
