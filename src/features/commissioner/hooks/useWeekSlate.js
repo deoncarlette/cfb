@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import { fetchEspnGames, applyRankOverlay, isDefaultSlateGame } from '@/services/espn/index.js';
+import { fetchGamesFor, applyRankOverlay, isDefaultSlateGame, POSTSEASON } from '@/services/espn/index.js';
 import { getWeekConfig, saveWeekConfig } from '@/services/data/index.js';
 import { toDatetimeLocal } from '@/shared/utils/dates.js';
+import { weekLabel } from '@/shared/components/WeekSelect.jsx';
 
 // Commissioner's weekly setup: pull games, choose which count, set when picks lock.
 export function useWeekSlate(week) {
@@ -14,17 +15,17 @@ export function useWeekSlate(week) {
 
   const pullGames = useCallback(async () => {
     setPulling(true);
-    setStatus(`Pulling Week ${week} from ESPN…`);
+    setStatus(`Pulling ${weekLabel(week)} from ESPN…`);
     try {
-      let pulled = await fetchEspnGames(week, [80, 81]); // 80 = FBS, 81 = FCS — "all D1"
+      let pulled = await fetchGamesFor(week, [80, 81]); // 80 = FBS, 81 = FCS — "all D1"; bowls for Postseason
       pulled = await applyRankOverlay(pulled, week);
       setGames(pulled);
       const cfg = await getWeekConfig(week);
       // Nothing saved yet for this week → start with the default slate checked
       // (Top 25, Howard, SEC, Big Ten) — the same games the Picks tab shows by default.
-      setIncludedIds(new Set(cfg.includedGameIds ? cfg.includedGameIds : pulled.filter(isDefaultSlateGame).map(g => g.id)));
+      setIncludedIds(new Set(cfg.includedGameIds ? cfg.includedGameIds : (week === POSTSEASON ? pulled : pulled.filter(isDefaultSlateGame)).map(g => g.id)));
       setDeadline(toDatetimeLocal(cfg.deadlineIso));
-      setStatus(`${pulled.length} games pulled for Week ${week}.`);
+      setStatus(`${pulled.length} games pulled for ${weekLabel(week)}.`);
     } catch (e) {
       setGames([]);
       setStatus("Couldn't reach ESPN. Try again in a moment.");
@@ -45,7 +46,7 @@ export function useWeekSlate(week) {
     const includedGameIds = games.length ? Array.from(includedIds) : null;
     const deadlineIso = deadline ? new Date(deadline).toISOString() : null;
     await saveWeekConfig(week, includedGameIds, deadlineIso);
-    setStatus(`Saved. Week ${week}'s Entry card now uses ${includedGameIds ? includedGameIds.length : 'all'} game(s).`);
+    setStatus(`Saved. ${weekLabel(week)} now uses ${includedGameIds ? includedGameIds.length : 'all'} game(s).`);
     setSaving(false);
   }
 

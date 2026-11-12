@@ -83,7 +83,7 @@ file), which is the natural next step.
 **New in this version**: real shared persistence via Firestore (localStorage was always
 per-device — this is the actual upgrade React+Firebase buys you), and a real deploy pipeline.
 
-## CFP bracket (Bracket tab)
+## Postseason: CFP bracket + bowl games (Picks tab → Postseason)
 
 A March Madness–style pool for the 12-team College Football Playoff (seeds 1–4 get byes,
 no re-seeding). Lives alongside the weekly pool, same no-Auth name-slug tradeoff.
@@ -91,7 +91,8 @@ no re-seeding). Lives alongside the weekly pool, same no-Auth name-slug tradeoff
 - **Firestore:** `playoff/{season}` holds the field, lock time, results and the title-game
   total; `playoff/{season}/brackets/{nameSlug}` holds each player's picks + tiebreaker. The
   existing wide-open rules already cover it.
-- **Before Selection Day:** the tab previews a straight 1–12 seeding from ESPN's current CFP
+- **Where:** Picks tab → week list → Postseason, then the CFP Bracket / Bowl Games sub-tabs. The app switches to Postseason on its own once ESPN does. Bowl Games are confidence picks on every bowl except the CFP games.
+- **Before Selection Day:** the bracket previews a straight 1–12 seeding from ESPN's current CFP
   rankings so people can click around. Submitting stays off until the field is saved.
 - **Selection Day (Dec 6):** Commissioner tab → *Playoff bracket* → "Fill 1–12 from
   rankings", then fix seeds for the five conference-champion auto-bids (choosing a team

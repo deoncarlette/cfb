@@ -1,7 +1,8 @@
 import { GAMES } from '../bracketLogic.js';
 import { formatKickoff } from '@/shared/utils/dates.js';
 
-// Name + tiebreaker fields (plus the "preview only" notice before Selection Day).
+// Tiebreaker field (plus the "preview only" notice before Selection Day). Your name comes from
+// the name box at the top of the Picks tab.
 export function BracketEntryForm({ projection, ready, my, locked, lockIso }) {
   return (
     <>
@@ -12,8 +13,6 @@ export function BracketEntryForm({ projection, ready, my, locked, lockIso }) {
       )}
       {ready && (
         <>
-          <label>Your name</label>
-          <input value={my.userName} onChange={e => my.setUserName(e.target.value)} onBlur={my.loadExisting} placeholder="Type your name" disabled={!!projection} />
           <label>Tiebreaker — title game total points</label>
           <input type="number" inputMode="numeric" min={0} value={my.tiebreaker} onChange={e => my.setTiebreaker(e.target.value)} placeholder="e.g. 51" disabled={locked} />
           <p className="muted small">

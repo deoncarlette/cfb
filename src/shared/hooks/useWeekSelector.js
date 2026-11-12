@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { fetchCurrentWeek } from '@/services/espn/index.js';
+import { fetchCurrentWeek, POSTSEASON } from '@/services/espn/index.js';
 
-const WEEKS = Array.from({ length: 16 }, (_, i) => i); // 0..15
+const WEEKS = [...Array.from({ length: 16 }, (_, i) => i), POSTSEASON]; // 0..15, then Postseason
 
 // Asked once per page load and shared by every tab.
 let currentWeek = null;
@@ -12,7 +12,7 @@ let currentWeekPromise = null;
 // currentWeek is null until ESPN answers.
 const SAVED_KEY = 'bb-week';
 function savedWeek() {
-  try { const v = sessionStorage.getItem(SAVED_KEY); return v != null ? Number(v) : null; } catch (e) { return null; }
+  try { const v = sessionStorage.getItem(SAVED_KEY); return v == null ? null : v === POSTSEASON ? POSTSEASON : Number(v); } catch (e) { return null; }
 }
 
 export function useWeekSelector(initial = 1) {

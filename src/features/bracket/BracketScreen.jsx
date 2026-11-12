@@ -13,12 +13,12 @@ import { PlayerBracket } from './components/PlayerBracket.jsx';
 
 const VIEWS = [{ id: 'mine', label: 'My bracket' }, { id: 'standings', label: 'Standings' }];
 
-// Bracket tab: fill out your CFP bracket, or see the standings.
-export function BracketScreen() {
+// CFP Bracket (Picks tab → Postseason): fill out your bracket, or see the standings.
+export function BracketScreen({ userName = '', nameKey = 0 }) {
   const [view, setView] = useState('mine');
   const [viewing, setViewing] = useState(null); // someone else's bracket, after lock
   const data = useBracketData();
-  const my = useMyBracket({ bySeed: data.bySeed, projection: data.projection, locked: data.locked, onSubmitted: data.refreshEntries });
+  const my = useMyBracket({ userName, nameKey, bySeed: data.bySeed, projection: data.projection, locked: data.locked, onSubmitted: data.refreshEntries });
   const { config, seeds, projection, entries, results, anyResults, locked, eliminated } = data;
   const ready = seeds.length === 12;
 

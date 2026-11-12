@@ -11,7 +11,7 @@ export function BracketActions({ my, projection, locked }) {
       </div>
       {showHints && !my.complete && <p className="muted small center">Pick every game to submit.</p>}
       {showHints && my.complete && my.tiebreaker === '' && <p className="muted small center">Add a tiebreaker to submit.</p>}
-      {!projection && my.complete && !my.userName.trim() && <p className="muted small center">Enter your name to submit.</p>}
+      {!projection && my.complete && !my.userName.trim() && <p className="muted small center">Enter your name at the top to submit.</p>}
       {locked && <p className="muted small center">Brackets are locked.</p>}
       {my.savedAt && <p className="muted small center">Saved.</p>}
     </div>

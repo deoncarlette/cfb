@@ -31,3 +31,4 @@
   color:var(--muted); border:1px dashed var(--line-strong); border-radius:10px;
 }
 @media (max-width:640px){ .tabstrip, .preview-banner{margin-left:16px; margin-right:16px;} }
+.pad-head{padding-bottom:0;}

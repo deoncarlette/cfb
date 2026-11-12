@@ -6,7 +6,13 @@ import { weekInfo } from './scoring.js';
 import { StandingsTable } from './components/StandingsTable.jsx';
 
 export function ScoreboardScreen() {
-  const { week, setWeek, weeks, currentWeek } = useWeekSelector(1);
+  const sel = useWeekSelector(1);
+  // Postseason isn't on the scoreboard yet (see README: how bowls/CFP points combine is TBD),
+  // so it shows the last regular-season week.
+  const week = typeof sel.week === 'number' ? sel.week : 15;
+  const { setWeek } = sel;
+  const currentWeek = typeof sel.currentWeek === 'number' ? sel.currentWeek : null;
+  const weeks = sel.weeks.filter(w => typeof w === 'number');
   const { weeklyRecords, overallRecords, priorRanks, loading } = useStandings(week);
   // Only weeks that have happened (through the current one).
   const shownWeeks = currentWeek == null ? weeks : weeks.filter(w => w <= currentWeek);

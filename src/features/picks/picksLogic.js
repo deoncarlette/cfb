@@ -1,10 +1,12 @@
-import { isDefaultSlateGame, gameWinnerId } from '@/services/espn/index.js';
+import { isDefaultSlateGame, gameWinnerId, POSTSEASON } from '@/services/espn/index.js';
 
 // Plain functions for the Picks tab — no React, easy to test.
 
 // Until the commissioner configures a week, default to Top 25 + Howard + SEC + Big Ten
 // (see isDefaultSlateGame) rather than the full slate, which can be 70+ games.
-export function gamesForWeek(allGames, config) {
+// Bowl games: every bowl (the CFP games are already left out).
+export function gamesForWeek(allGames, config, week) {
+  if (!config.includedGameIds && week === POSTSEASON) return allGames;
   return config.includedGameIds
     ? allGames.filter(g => config.includedGameIds.includes(g.id))
     : allGames.filter(isDefaultSlateGame);
