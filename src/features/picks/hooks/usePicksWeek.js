@@ -2,10 +2,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { fetchEspnGames, applyRankOverlay } from '@/services/espn/index.js';
 import { getWeekConfig } from '@/services/data/index.js';
 import { gamesForWeek, isDeadlinePassed } from '../picksLogic.js';
-import { samplePicksForWeek } from '../sample/samplePicks.js';
+import { samplePicksForWeek, firstSampleWeek } from '../sample/samplePicks.js';
 
 // Loads one week: games from ESPN, the commissioner's settings, and — if the commissioner
 // hasn't set the slate — the sample picks for that week, whose games become the slate.
+// No sample picks: Week 0 is empty; later weeks use the default slate (Top 25, Howard, SEC, Big Ten).
 export function usePicksWeek(week) {
   const [games, setGames] = useState([]);
   const [config, setConfig] = useState({ includedGameIds: null, deadlineIso: null });
@@ -22,9 +23,11 @@ export function usePicksWeek(week) {
         getWeekConfig(week)
       ]);
       const sp = cfg.includedGameIds ? null : await samplePicksForWeek(week, fetched);
+      // Weeks before the sample file starts (Week 0) have no slate unless the commissioner sets one.
+      const beforeSample = !cfg.includedGameIds && week < await firstSampleWeek();
       setConfig(cfg);
       setSample(sp);
-      setGames(sp ? fetched.filter(g => sp.gameIds.includes(g.id)) : gamesForWeek(fetched, cfg));
+      setGames(sp ? fetched.filter(g => sp.gameIds.includes(g.id)) : beforeSample ? [] : gamesForWeek(fetched, cfg));
     } catch (e) {
       setError("Couldn't reach ESPN. Try again in a moment.");
       setSample(null);

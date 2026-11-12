@@ -45,17 +45,16 @@ async function loadFile() {
 // games were found on ESPN (then the normal default slate is used).
 export async function samplePicksForWeek(week, games) {
   const file = await loadFile();
-  // Normally the file's Week N is the app's Week N; the neighbors are a safety net in case
-  // the week numbering drifts. Whichever matches the most of these games wins.
-  let best = null;
-  for (const w of [week, week - 1, week + 1]) {
-    const fileWeek = file.weeks.find(fw => fw.week === w);
-    if (!fileWeek) continue;
-    const m = matchWeek(fileWeek, games);
-    if (m && (!best || m.matched > best.matched)) best = m;
-    if (m && m.missing.length === 0) break;
-  }
-  return best && { playerName: file.participant, ...best };
+  // The file's own "week" number, exactly — no shifting.
+  const fileWeek = file.weeks.find(fw => fw.week === week);
+  const m = fileWeek && matchWeek(fileWeek, games);
+  return m ? { playerName: file.participant, ...m } : null;
+}
+
+// The first week the file covers (Week 1). Earlier weeks have no games in the app.
+export async function firstSampleWeek() {
+  const file = await loadFile();
+  return Math.min(...file.weeks.map(w => w.week));
 }
 
 function matchWeek(fileWeek, games) {
