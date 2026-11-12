@@ -1,9 +1,9 @@
 /* Picks tab — game cards with the broadcast-style matchup pill (features/picks). */
 .quickpicks{margin:10px 0 16px;}
 
-/* Card grid: [points] [matchup pill] [arrows], venue under the pill. */
+/* Card grid: [matchup pill] [points], with the venue under the pill and ↑/↓ under the points. */
 .game-card{
-  display:grid; grid-template-columns:44px minmax(0,1fr) 30px; grid-template-areas:"pts pill arrows" "pts venue arrows";
+  display:grid; grid-template-columns:minmax(0,1fr) 44px; grid-template-areas:"pill pts" "venue arrows";
   column-gap:10px; row-gap:6px; align-items:center;
   background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
   padding:10px; margin-bottom:10px; cursor:grab; box-shadow:var(--shadow);
@@ -19,24 +19,34 @@
 }
 .pts-input::-webkit-outer-spin-button, .pts-input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
 .game-card:not(.unpicked) .pts-input{background:var(--accent); border-color:var(--accent); color:var(--accent-ink);}
-.arrows{grid-area:arrows; display:flex; flex-direction:column; gap:4px;}
-.arrows button{padding:5px 0; font-size:12px; line-height:1; border-radius:7px;}
+.arrows{grid-area:arrows; display:flex; gap:3px;}
+.arrows button{flex:1; padding:4px 0; font-size:11px; line-height:1; border-radius:7px;}
 
-/* The matchup pill */
-.matchup{grid-area:pill; position:relative; display:flex; height:58px; border-radius:999px; overflow:hidden; background:var(--raised);}
+/* The matchup pill: black in both themes, like a broadcast graphic.
+   The pill's own background shows through as a thin slanted seam between the two sides. */
+.matchup{grid-area:pill; position:relative; display:flex; height:58px; border-radius:999px; overflow:hidden; background:#3a3d44;}
 .matchup-side{
-  flex:1; min-width:0; position:relative; display:flex; align-items:center; gap:9px;
-  border:none; border-radius:0; padding:0 14px; background:var(--team); color:var(--ink); text-align:left;
-  transition:filter .18s ease;
+  flex:1; min-width:0; position:relative; display:flex; align-items:center; gap:9px; text-align:left;
+  border:none; border-radius:0; padding:0 14px; background:#0c0d0f; color:var(--name);
+  transition:background-color .18s ease, color .18s ease, filter .18s ease;
 }
-.matchup-side::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(0,0,0,.2)); pointer-events:none;}
-.matchup-side.away{clip-path:polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%); margin-right:-9px; padding-right:38px;}
-.matchup-side.home{clip-path:polygon(18px 0, 100% 0, 100% 100%, 0 100%); margin-left:-9px; padding-left:38px; flex-direction:row-reverse; text-align:right;}
+.matchup-side.away{clip-path:polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%); margin-right:-8px; padding-right:38px;}
+.matchup-side.home{clip-path:polygon(18px 0, 100% 0, 100% 100%, 0 100%); margin-left:-8px; padding-left:38px; flex-direction:row-reverse; text-align:right;}
 .matchup-side:disabled{cursor:default; opacity:1;}
-.matchup.has-pick .matchup-side:not(.sel){filter:var(--dim);}
-.matchup-side .team-logo{width:32px; height:32px; position:relative; z-index:1; filter:drop-shadow(0 1px 2px rgba(0,0,0,.35));}
+.matchup-side.sel{background:var(--fill); color:var(--fill-ink);}
+.matchup-side.sel::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(0,0,0,.18)); pointer-events:none;}
+.matchup.has-pick .matchup-side:not(.sel){filter:grayscale(1) brightness(.75);}
+
+.matchup-side .team-logo{width:32px; height:32px; position:relative; z-index:1; filter:drop-shadow(0 1px 2px rgba(0,0,0,.45));}
+/* ✓ on the picked team's logo, so the pick is obvious even when colors are close. */
+.matchup-side.sel .team-logo::after{
+  content:"✓"; position:absolute; right:-5px; bottom:-4px; width:16px; height:16px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; line-height:1;
+  background:#fff; color:#111; box-shadow:0 0 0 2px var(--fill);
+}
 .team-text{position:relative; z-index:1; display:flex; flex-direction:column; min-width:0; line-height:1;}
-.team-rank{font-size:11px; font-weight:700; opacity:.85; margin-bottom:2px;}
+.team-rank{font-size:11px; font-weight:700; color:#9aa0a8; margin-bottom:2px;}
+.matchup-side.sel .team-rank{color:inherit; opacity:.85;}
 .team-name{
   font-family:var(--display); font-weight:700; font-style:italic; text-transform:uppercase;
   font-size:20px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
@@ -44,22 +54,23 @@
 .matchup-mid{
   position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); z-index:2; pointer-events:none;
   min-width:50px; padding:4px 7px; text-align:center; border-radius:8px;
-  background:var(--bg); color:var(--text); border:1px solid var(--line-strong);
+  background:#1c1e22; color:#f2f3f5; border:1px solid #3a3d44;
   font-family:var(--display); font-weight:700; font-size:13px; line-height:1.05; text-transform:uppercase;
 }
-.matchup-mid small{display:block; font-size:10px; font-weight:600; color:var(--muted);}
+.matchup-mid small{display:block; font-size:10px; font-weight:600; color:#9aa0a8;}
 
-/* Phones: arrows move under the points so the pill gets the width; chip shows time only. */
+/* Phones: tighter pill, chip shows time only. */
 @media (max-width:440px){
-  .game-card{grid-template-columns:40px minmax(0,1fr); grid-template-areas:"pts pill" "arrows venue"; column-gap:8px; row-gap:5px; padding:8px 10px 8px 8px;}
+  .game-card{grid-template-columns:minmax(0,1fr) 40px; column-gap:8px; row-gap:5px; padding:8px 8px 8px 10px;}
   .pts-input{width:40px; height:40px; font-size:22px; align-self:end;}
-  .arrows{flex-direction:row; gap:2px; align-self:start;}
-  .arrows button{flex:1; padding:3px 0; font-size:11px;}
+  .arrows{gap:2px; align-self:start;}
+  .arrows button{padding:3px 0;}
   .matchup{height:52px;}
   .matchup-side{gap:6px; padding:0 10px;}
   .matchup-side.away{padding-right:38px;}
   .matchup-side.home{padding-left:38px;}
   .matchup-side .team-logo{width:24px; height:24px;}
+  .matchup-side.sel .team-logo::after{width:14px; height:14px; font-size:9px; right:-5px; bottom:-5px;}
   .team-name{font-size:17px;}
   .matchup-mid{min-width:0; font-size:12px; padding:3px 5px;}
   .matchup-mid small{display:none;}

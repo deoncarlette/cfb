@@ -4,7 +4,7 @@ import { useWeekSelector } from '@/shared/hooks/useWeekSelector.js';
 import { Centered } from '@/shared/components/Centered.jsx';
 import { usePicksWeek } from './hooks/usePicksWeek.js';
 import { useConfidenceOrder } from './hooks/useConfidenceOrder.js';
-import { quickPickWinners, buildPicksMap, restoreSavedPicks } from './picksLogic.js';
+import { quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick } from './picksLogic.js';
 import { PlayerWeekPanel } from './components/PlayerWeekPanel.jsx';
 import { QuickPicks } from './components/QuickPicks.jsx';
 import { GameCard } from './components/GameCard.jsx';
@@ -79,7 +79,7 @@ export function PicksScreen() {
               picked={winners[gameId]}
               locked={deadlinePassed}
               dragProps={dragPropsFor(gameId)}
-              onPick={teamId => setWinners(w => ({ ...w, [gameId]: teamId }))}
+              onPick={teamId => setWinners(w => togglePick(w, gameId, teamId))}
               onMove={dir => move(gameId, dir)}
               onSetPoints={points => moveToConfidence(gameId, points)}
             />

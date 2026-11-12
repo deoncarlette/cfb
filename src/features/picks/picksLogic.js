@@ -17,6 +17,12 @@ export function isDeadlinePassed(config, games) {
   return first ? Date.now() >= new Date(first).getTime() : false;
 }
 
+// Pick a team, or clear the pick if that team was already picked.
+export function togglePick(winners, gameId, teamId) {
+  if (winners[gameId] !== teamId) return { ...winners, [gameId]: teamId };
+  const next = { ...winners }; delete next[gameId]; return next;
+}
+
 // mode: 'home' | 'away' | 'random' → { gameId: teamId }
 export function quickPickWinners(games, mode) {
   const next = {};

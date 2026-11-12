@@ -2,7 +2,7 @@ import { doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from './client.js';
 import { slugify } from '@/shared/utils/slugify.js';
 
-// playoff/{season}                  -> { seeds: [{ seed, id, name, abbr, logo, color, record }] | [],
+// playoff/{season}                  -> { seeds: [{ seed, id, name, abbr, logo, color, altColor, record }] | [],
 //                                        lockIso, results: { [gameKey]: teamId }, championshipTotal }
 // playoff/{season}/brackets/{slug}  -> { user_name, picks: { [gameKey]: teamId }, tiebreaker, submittedAt }
 // Same no-Auth, name-slug tradeoff as weekly picks.

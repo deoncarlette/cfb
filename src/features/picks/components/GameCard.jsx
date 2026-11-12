@@ -1,7 +1,7 @@
 import { MatchupPill } from './MatchupPill.jsx';
 import { ConfidenceControl } from './ConfidenceControl.jsx';
 
-// One draggable game: points on the left, the matchup pill, ↑/↓ on the right, venue below.
+// One draggable game: the matchup pill with the venue under it; points and ↑/↓ on the right.
 // index is the card's position (0 = top); total is how many cards there are.
 export function GameCard({ game, index, total, picked, locked, dragProps, onPick, onMove, onSetPoints }) {
   return (

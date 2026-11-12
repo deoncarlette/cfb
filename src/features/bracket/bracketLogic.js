@@ -79,6 +79,13 @@ export function setPick(picks, gameKey, teamId, bySeed) {
   return pruneInvalidPicks({ ...picks, [gameKey]: teamId }, bySeed);
 }
 
+// Pick a team, or clear the pick (and anything that depended on it) if it was already picked.
+export function togglePick(picks, gameKey, teamId, bySeed) {
+  if (picks[gameKey] !== teamId) return setPick(picks, gameKey, teamId, bySeed);
+  const next = { ...picks }; delete next[gameKey];
+  return pruneInvalidPicks(next, bySeed);
+}
+
 export function isComplete(picks) {
   return GAMES.every(g => !!picks[g.key]);
 }

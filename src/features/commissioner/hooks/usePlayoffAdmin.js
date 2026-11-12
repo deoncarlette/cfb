@@ -85,7 +85,7 @@ export function usePlayoffAdmin() {
 
   async function save() {
     setBusy(true);
-    const toSave = fieldComplete ? seeds.map(({ seed, id, name, abbr, logo, color, record }) => ({ seed, id, name, abbr, logo, color, record })) : [];
+    const toSave = fieldComplete ? seeds.map(({ seed, id, name, abbr, logo, color, altColor, record }) => ({ seed, id, name, abbr, logo, color, altColor: altColor ?? null, record })) : [];
     await savePlayoffConfig(SEASON, {
       seeds: toSave,
       lockIso: lock ? new Date(lock).toISOString() : null,

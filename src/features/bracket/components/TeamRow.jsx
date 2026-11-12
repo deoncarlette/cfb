@@ -1,4 +1,4 @@
-import { textForBackground } from '@/shared/utils/colors.js';
+import { textForBackground, teamFill } from '@/shared/utils/colors.js';
 import { TeamLogo } from '@/shared/components/TeamLogo.jsx';
 
 // One team line inside a bracket game. Shows a placeholder ("Winner 8/9") until known.
@@ -7,7 +7,8 @@ export function TeamRow({ team, placeholder, seed, selected, status, disabled, o
   if (!team) {
     return <div className="bk-team empty"><span className="bk-seed">{seed ?? ''}</span><span className="bk-name">{placeholder}</span></div>;
   }
-  const style = { '--team': team.color, '--ink': textForBackground(team.color) };
+  const fill = teamFill(team);
+  const style = { '--team': fill, '--ink': textForBackground(fill) };
   const mark = selected && status === 'correct' ? '✓' : selected && (status === 'wrong' || status === 'dead') ? '✕' : null;
   return (
     <button

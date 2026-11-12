@@ -28,6 +28,7 @@ function teamFromRankEntry(entry) {
     abbr: t.abbreviation || '',
     logo: t.logo || t.logos?.[0]?.href || '',
     color: hexColor(t.color, '#5b5a55'),
+    altColor: hexColor(t.alternateColor, null),
     record: entry.recordSummary || '',
     rank: entry.current ?? null
   };

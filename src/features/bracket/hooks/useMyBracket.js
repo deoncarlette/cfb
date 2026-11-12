@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { SEASON } from '@/config.js';
 import { getMyBracket, submitBracket } from '@/services/data/index.js';
-import { GAMES, setPick, isComplete } from '../bracketLogic.js';
+import { GAMES, togglePick, isComplete } from '../bracketLogic.js';
 
 // The bracket you're filling out: your name, picks, tiebreaker, and saving it.
 export function useMyBracket({ bySeed, projection, locked, onSubmitted }) {
@@ -12,8 +12,9 @@ export function useMyBracket({ bySeed, projection, locked, onSubmitted }) {
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState(null);
 
+  // Tapping your picked team again clears it.
   function pick(gameKey, teamId) {
-    setPicks(p => setPick(p, gameKey, teamId, bySeed));
+    setPicks(p => togglePick(p, gameKey, teamId, bySeed));
     setSavedAt(null);
   }
 

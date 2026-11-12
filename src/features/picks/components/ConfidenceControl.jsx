@@ -1,5 +1,5 @@
-// The point value on the left of a game card (type a number to jump there) and the ↑/↓
-// arrows on the right. Rendered as two pieces that GameCard's grid places on either side.
+// The point value on the right of a game card (type a number to jump there) and the ↑/↓
+// arrows under it. Rendered as two pieces that GameCard's grid places.
 export function ConfidenceControl({ points, max, canUp, canDown, disabled, onSetPoints, onUp, onDown }) {
   return (
     <>

@@ -27,6 +27,7 @@ export async function fetchEspnGames(week, groups = [80]) {
       homeAway: entry.homeAway || 'away',
       record: entry.records?.find(r => r.type === 'total')?.summary || '',
       color: hexColor(entry.team.color, '#5b5a55'),
+      altColor: hexColor(entry.team.alternateColor, null),
       logo: entry.team.logo || '',
       rank: entry.curatedRank?.current || null
     })).sort((a, b) => a.homeAway === 'away' ? -1 : b.homeAway === 'away' ? 1 : 0);
