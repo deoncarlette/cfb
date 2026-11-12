@@ -1,14 +1,16 @@
-import { bestRealRank, gameCategory } from '@/services/espn/index.js';
+import { bestRealRank, gameCategory, gameConference, rivalryFor, P4_ORDER, OTHER_ORDER, POSTSEASON } from '@/services/espn/index.js';
 import { useWeekSelector } from '@/shared/hooks/useWeekSelector.js';
 import { WeekSelect } from '@/shared/components/WeekSelect.jsx';
 import { useWeekSlate } from '../hooks/useWeekSlate.js';
 import { GameSection } from './GameSection.jsx';
 
 const byKickoff = (a, b) => new Date(a.date) - new Date(b.date);
+// Rivalries are listed on their own AND in their normal section (one checkbox state for both).
 const SECTIONS = [
   { key: 'top25', label: 'Top 25', sort: (a, b) => bestRealRank(a) - bestRealRank(b) || byKickoff(a, b) },
-  { key: 'power4', label: 'Power 4', sort: byKickoff },
-  { key: 'other', label: 'All Other Games', sort: byKickoff }
+  { key: 'rivalry', label: 'Rivalries', sort: byKickoff },
+  { key: 'power4', label: 'Power 4', sort: byKickoff, subgroupOf: g => gameConference(g, true), order: P4_ORDER },
+  { key: 'other', label: 'All Other Games', sort: byKickoff, subgroupOf: g => gameConference(g), order: OTHER_ORDER }
 ];
 
 export function WeekSlatePanel() {
@@ -37,7 +39,10 @@ export function WeekSlatePanel() {
         <GameSection
           key={section.key}
           label={section.label}
-          games={slate.games.filter(g => gameCategory(g) === section.key).sort(section.sort)}
+          games={slate.games.filter(g => section.key === 'rivalry' ? rivalryFor(g, week !== POSTSEASON) : gameCategory(g) === section.key).sort(section.sort)}
+          subgroupOf={section.subgroupOf}
+          order={section.order}
+          noteFor={g => rivalryFor(g, week !== POSTSEASON)}
           includedIds={slate.includedIds}
           onToggle={slate.toggle}
           onSelectAll={slate.selectAll}

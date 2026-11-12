@@ -3,6 +3,7 @@ import { fetchGamesFor, applyRankOverlay, isDefaultSlateGame, POSTSEASON } from 
 import { getWeekConfig, saveWeekConfig } from '@/services/data/index.js';
 import { toDatetimeLocal } from '@/shared/utils/dates.js';
 import { weekLabel } from '@/shared/components/WeekSelect.jsx';
+import { samplePicksForWeek } from '@/features/picks/sample/samplePicks.js';
 
 // Commissioner's weekly setup: pull games, choose which count, set when picks lock.
 export function useWeekSlate(week) {
@@ -21,9 +22,11 @@ export function useWeekSlate(week) {
       pulled = await applyRankOverlay(pulled, week);
       setGames(pulled);
       const cfg = await getWeekConfig(week);
-      // Nothing saved yet for this week → start with the default slate checked
-      // (Top 25, Howard, SEC, Big Ten) — the same games the Picks tab shows by default.
-      setIncludedIds(new Set(cfg.includedGameIds ? cfg.includedGameIds : (week === POSTSEASON ? pulled : pulled.filter(isDefaultSlateGame)).map(g => g.id)));
+      // Nothing saved yet for this week → start with the same games the Picks tab shows: the
+      // sample file's games for weeks it covers, else the default slate (Top 25, Howard, SEC,
+      // Big Ten), or every bowl for Postseason.
+      const sample = cfg.includedGameIds ? null : await samplePicksForWeek(week, pulled);
+      setIncludedIds(new Set(cfg.includedGameIds || sample?.gameIds || (week === POSTSEASON ? pulled : pulled.filter(isDefaultSlateGame)).map(g => g.id)));
       setDeadline(toDatetimeLocal(cfg.deadlineIso));
       setStatus(`${pulled.length} games pulled for ${weekLabel(week)}.`);
     } catch (e) {

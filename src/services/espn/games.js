@@ -34,6 +34,7 @@ function parseEvents(events) {
       logo: entry.team.logo || '',
       rank: entry.curatedRank?.current || null,
       abbr: entry.team.abbreviation || '',
+      conferenceId: entry.team.conferenceId != null ? String(entry.team.conferenceId) : null,
       // Every name ESPN uses for the team — for matching typed names like "UNC".
       altNames: [entry.team.displayName, entry.team.shortDisplayName, entry.team.abbreviation, entry.team.name].filter(Boolean),
       score: entry.score != null && entry.score !== '' ? Number(entry.score) : null,

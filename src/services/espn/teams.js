@@ -52,3 +52,30 @@ export function isDefaultSlateGame(game) {
   return game.competitors.some(c =>
     displayRank(c) || ALWAYS_INCLUDE.has(c.name) || SEC_TEAMS.has(c.name) || BIG_TEN_TEAMS.has(c.name));
 }
+
+// ---- Conferences (for the Commish tab's subgroups) ----
+
+// Power 4 come from the lists above. Everyone else comes from ESPN's conferenceId on the team,
+// using ESPN's commonly cited conference ids — unrecognized ids fall into "FCS & other".
+const CONFERENCE_BY_ESPN_ID = {
+  '151': 'American', '17': 'Mountain West', '37': 'Sun Belt', '15': 'MAC',
+  '12': 'Conference USA', '9': 'Pac-12', '18': 'FBS Independents'
+};
+export const P4_ORDER = ['SEC', 'Big Ten', 'Big 12', 'ACC'];
+export const OTHER_ORDER = ['American', 'Mountain West', 'Sun Belt', 'MAC', 'Conference USA', 'Pac-12', 'FBS Independents', 'FCS & other'];
+
+export function conferenceOf(team) {
+  if (SEC_TEAMS.has(team.name)) return 'SEC';
+  if (BIG_TEN_TEAMS.has(team.name)) return 'Big Ten';
+  if (BIG_12_TEAMS.has(team.name)) return 'Big 12';
+  if (ACC_TEAMS.has(team.name)) return 'ACC';
+  return CONFERENCE_BY_ESPN_ID[team.conferenceId] || null;
+}
+
+// Which conference a game is filed under: the home team's (a Power 4 team's, in the Power 4
+// section), else the away team's, else "FCS & other".
+export function gameConference(game, p4Only = false) {
+  const [away, home] = game.competitors;
+  const pick = t => { const c = conferenceOf(t); return c && (!p4Only || P4_ORDER.includes(c)) ? c : null; };
+  return pick(home) || pick(away) || 'FCS & other';
+}
