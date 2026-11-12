@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { REPLAY_WEEK } from '@/config.js';
 import { fetchEspnGames, applyRankOverlay } from '@/services/espn/index.js';
-import { replayGames } from '@/services/espn/replay.js';
+import { replayGames, loadReplaySummaries } from '@/services/espn/replay.js';
 import { getWeekConfig } from '@/services/data/index.js';
 import { gamesForWeek, isDeadlinePassed } from '../picksLogic.js';
 import { samplePicksForWeek, firstSampleWeek } from '../sample/samplePicks.js';
@@ -11,7 +11,9 @@ const SOON_MS = 15 * 60 * 1000;
 
 async function fetchWeekGames(week) {
   const games = await fetchEspnGames(week, [80, 81]).then(gs => applyRankOverlay(gs, week)); // FCS too, for Howard
-  return week === REPLAY_WEEK ? replayGames(games) : games;
+  if (week !== REPLAY_WEEK) return games;
+  await loadReplaySummaries(games); // real box scores, so replayed scores match ESPN's plays
+  return replayGames(games);
 }
 
 // While a game is live or kicks off within 15 minutes, scores need refreshing.

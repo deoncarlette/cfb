@@ -94,6 +94,8 @@ export function parseSummary(data) {
   const w = data.gameInfo?.weather;
   return {
     away, home, winProb, odds, ats, lastFive, stats, leaders, scoring,
+    // Home win % after each play, in order (used by the test replay to rewind win probability).
+    winTimeline: (data.winprobability || []).map(w => w.homeWinPercentage).filter(v => v != null),
     broadcast: b?.media?.shortName || b?.names?.[0] || null,
     weather: w ? (w.displayValue ? `${w.temperature ?? ''}° ${w.displayValue}`.trim() : w.temperature != null ? `${w.temperature}°` : null) : null,
     attendance: data.gameInfo?.attendance || null

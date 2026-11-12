@@ -1,4 +1,5 @@
 import { useGameSummary } from '../../hooks/useGameSummary.js';
+import { rewindSummary } from '@/services/espn/replay.js';
 import { WinProbability } from './WinProbability.jsx';
 import { CompareRows } from './CompareRows.jsx';
 import { LineScore } from './LineScore.jsx';
@@ -12,7 +13,10 @@ const ml = v => (v == null ? null : v > 0 ? `+${v}` : String(v));
 // Before kickoff: matchup info to help with picks. Live / final: the box score.
 export function GameDetails({ game }) {
   const started = game.completed || game.state === 'in';
-  const { summary: s, error } = useGameSummary(game.id, game.state === 'in');
+  // Test replay: the real box score rewound to the replayed game clock (the card's refresh
+  // moves game.replay.f forward, so this follows along without its own polling).
+  const { summary: raw, error } = useGameSummary(game.id, game.state === 'in' && !game.replay);
+  const s = game.replay && raw ? rewindSummary(raw, game.replay.f) : raw;
   if (error) return <div className="game-details"><p className="muted small center">{error}</p></div>;
   if (!s) return <div className="game-details"><p className="muted small center">Loading…</p></div>;
 
@@ -42,6 +46,9 @@ export function GameDetails({ game }) {
       {started && <LineScore away={s.away} home={s.home} />}
       {s.winProb && (!started || s.winProb.live) && <WinProbability prob={s.winProb} away={away} home={home} />}
       {!started && <CompareRows title="Matchup" rows={pregameRows} />}
+      {s.replay?.estimatedStats && game.state === 'in' && (
+        <p className="gd-note">Test replay: score, quarters and scoring plays are exact to the game clock. Team stats and leaders are the final totals scaled to the share of the game played.</p>
+      )}
       {started && <CompareRows title="Team stats" rows={s.stats} />}
       <Leaders leaders={s.leaders} started={started} />
       {started && <ScoringPlays plays={s.scoring} away={s.away} home={s.home} />}
