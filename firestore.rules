@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // WIDE OPEN ON PURPOSE, for now: no Auth in the app yet, so there's no identity to check
+    // rules against. This means anyone with the deployed URL can read AND write everything —
+    // including deleting other people's picks or a whole week's config. That's acceptable
+    // only while this is you and trusted testers previewing the app. Before real players use
+    // it for real, this needs to be replaced with rules that check request.auth against
+    // Firebase Auth (see the earlier React scaffold's firestore.rules for a worked example
+    // with an isCommissioner flag) — flag it back to me when you're ready for that pass.
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
