@@ -75,7 +75,7 @@ arrows on Overall only.
 
 **Sample data (for now):** the Scoreboard reads weekly scores for Weeks 0–11 from
 `src/features/scoreboard/mockScores.json` (Week 11 is made up), and past weeks on the Picks
-tab default to Deandra's real picks from `src/features/picks/sample/deandra-2026.json` —
+tab default to Deandra's real picks from `src/features/picks/sample/all-picks-2026.json` (every player; some picks simulated) —
 that week's games become the slate and the picks show until someone saves their own. The
 Picks tab scores picks against ESPN results; the Scoreboard doesn't yet (it still uses the
 file), which is the natural next step.

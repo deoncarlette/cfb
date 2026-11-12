@@ -68,5 +68,5 @@ directly. That's what lets the preview build swap in browser storage.
 - **Power 4 team list:** `P4_TEAMS` in `services/espn/teams.js`
 - **Season year:** `SEASON` in `config.js`
 - **Player roster + weekly scores (sample data):** `features/scoreboard/mockScores.json`
-- **Sample picks (default games + selections for past weeks):** `features/picks/sample/deandra-2026.json`
+- **Sample picks (default games + selections for past weeks):** `features/picks/sample/all-picks-2026.json` (all players; replace with a corrected file in the same format)
 - **Colors (light + dark):** `styles/theme.css`

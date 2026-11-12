@@ -106,11 +106,12 @@ export function WeekPicks({ week, userName, nameKey }) {
             />
           )}
           {viewing && deadlinePassed && !viewed && (
-            <p className="sample-note">No picks saved for {viewing} in {label}.</p>
+            <p className="sample-note">{sample?.hidden ? `Everyone's ${label} picks show after 9 PM Saturday.` : `No picks saved for ${viewing} in ${label}.`}</p>
           )}
+          {viewing && viewed?.isMock && <p className="sample-note">Some of {viewing}'s picks are simulated for this preview.</p>}
           {showingSample && (
             <p className="sample-note">
-              {sample.randomized ? 'Showing random sample picks' : `Showing ${sample.playerName}'s picks`}{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
+              {sample.randomized ? 'Showing random sample picks' : `Showing ${sample.playerName}'s picks${sample.isMock ? ' (some simulated for this preview)' : ''}`}{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
             </p>
           )}
           {isReplay && <p className="sample-note">Test replay: {label}'s games are being re-played today at their real kickoff times.</p>}
@@ -127,7 +128,7 @@ export function WeekPicks({ week, userName, nameKey }) {
               <QuickPicks onPick={mode => setWinners(quickPickWinners(games, mode))} disabled={deadlinePassed} />
             </>
           )}
-          {shown.order.map((gameId, idx) => {
+          {!(viewing && deadlinePassed && !viewed) && shown.order.map((gameId, idx) => {
             const game = gameById[gameId];
             if (!game) return null;
             return (

@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { getAllPicksForWeek } from '@/services/data/index.js';
 import { SEASON_ROSTER } from '@/features/scoreboard/scoring.js';
 
-// Everyone's saved picks for a week, for the "Picks shown" selector on locked weeks.
-// Only loads once the week is locked, so nobody's picks are fetched early.
-// Returns { players: [name], entryFor(name) → saved entry or null }.
+// Everyone's picks for a week, for the "Picks shown" selector on locked weeks: picks saved in
+// the app first, then the sample file's ballots. Only loads once the week is locked, so
+// nobody's picks are fetched early. Returns { players: [name], entryFor(name) → entry or null }.
 export function useOtherPlayers(week, locked, sample) {
   const [entries, setEntries] = useState([]);
 
@@ -16,17 +16,14 @@ export function useOtherPlayers(week, locked, sample) {
   }, [week, locked]);
 
   const norm = s => (s || '').trim().toLowerCase();
-  // The sample file's picks count as that player's saved picks (unless still hidden/randomized).
-  const sampleOwner = sample && !sample.randomized ? sample.playerName : null;
+  const sampleBallots = sample?.ballots || new Map();
   const names = new Map();
-  [...SEASON_ROSTER, ...entries.map(e => e.user_name), sampleOwner].filter(Boolean)
-    .forEach(n => { if (!names.has(norm(n))) names.set(norm(n), n.trim()); });
+  [...SEASON_ROSTER, ...entries.map(e => e.user_name), ...[...sampleBallots.values()].map(b => b.user_name)]
+    .filter(Boolean).forEach(n => { if (!names.has(norm(n))) names.set(norm(n), n.trim()); });
   const players = [...names.values()].sort((a, b) => a.localeCompare(b));
 
   function entryFor(name) {
-    const saved = entries.find(e => norm(e.user_name) === norm(name));
-    if (saved) return saved;
-    return sampleOwner && norm(sampleOwner) === norm(name) ? sample : null;
+    return entries.find(e => norm(e.user_name) === norm(name)) || sampleBallots.get(norm(name)) || null;
   }
 
   return { players, entryFor };
