@@ -25,7 +25,7 @@ worked example with an `isCommissioner` flag if you want a head start on that la
    GitHub Action below handles that part).
 4. Project settings → General → "Your apps" → the `</>` (web) icon → register an app → copy
    the `firebaseConfig` object.
-5. Paste those values into `src/firebase.js`, replacing the placeholders at the top. This
+5. Paste those values into `src/services/data/firebase/client.js`, replacing the config there. This
    repo can stay **private** on GitHub — Firebase Hosting doesn't require a public repo the
    way GitHub Pages' free tier does, so there's no exposure concern from committing this.
 6. Put your actual project ID in `.firebaserc` in place of `YOUR_FIREBASE_PROJECT_ID`.
@@ -74,7 +74,7 @@ viewer's own browser timezone automatically), and the Weekly/Overall scoreboard 
 arrows on Overall only.
 
 **Still not built** (same gap as the Canva version had): a real picks-vs-results scoring
-engine. Weeks 0–2 show real recap totals (hardcoded in `WEEKLY_SCORE_SEED` in `App.jsx`,
+engine. Weeks 0–2 show real recap totals (hardcoded in `WEEKLY_SCORE_SEED` in `src/features/scoreboard/seedData.js`,
 same numbers as before) so the Scoreboard has something real to preview; every other week
 shows genuine submission status (Submitted / not yet) but no score, because nothing yet
 compares a saved pick against a game's actual winner. That's the natural next big feature
@@ -100,6 +100,6 @@ no re-seeding). Lives alongside the weekly pool, same no-Auth name-slug tradeoff
 - **During the playoff:** tap winners in the Commissioner bracket, or "Pull results from
   ESPN" (best effort — matches finished postseason games by the two team IDs). Enter the
   title game's combined score for the tiebreaker. Save to publish.
-- **Scoring:** `ROUND_POINTS` in `src/bracket.js` (10/20/40/80, max 280). Scores are computed
+- **Scoring:** `ROUND_POINTS` in `src/features/bracket/bracketLogic.js` (10/20/40/80, max 280). Scores are computed
   live from picks + results, so changing the table rescores everyone. Standings sort by
   points, then max-possible, then tiebreaker. Picks stay hidden until brackets lock.

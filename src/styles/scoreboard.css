@@ -1,0 +1,9 @@
+/* Standings tables (features/scoreboard, also used by the bracket). */
+table.board{width:100%; border-collapse:collapse; margin-top:8px; font-size:14px;}
+table.board th{text-align:left; font-size:11px; color:var(--muted); text-transform:uppercase; padding:6px 4px; border-bottom:1px solid var(--line);}
+table.board td{padding:9px 4px; border-bottom:1px solid var(--line);}
+table.board td.num{text-align:right; font-weight:800; color:var(--brass); font-family:"Space Mono",monospace;}
+.move{font-size:12px; font-weight:800; min-width:2.4rem; display:inline-block; font-family:"Space Mono",monospace;}
+.move.up{color:var(--success);}
+.move.down{color:var(--danger);}
+.move.same, .move.new{color:var(--muted);}

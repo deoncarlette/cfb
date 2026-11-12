@@ -1,0 +1,77 @@
+/* Bracket tab and the Commissioner bracket panel (features/bracket). */
+.bracket-page{padding-bottom:40px;}
+.bracket-pad{padding-bottom:0;}
+.bracket-pad .panel:last-child{margin-bottom:0;}
+.bracket-wrap{max-width:1440px; margin:12px auto; padding:0 16px;}
+.bracket-wrap.in-panel{padding:0; margin:12px 0;}
+.bk-notice{
+  font-size:13px; line-height:1.5; color:var(--copy); background:var(--card);
+  border:1px dashed var(--brass); border-radius:8px; padding:10px 12px; margin:0 0 12px;
+}
+
+.bk-grid{display:grid; gap:14px;}
+/* Phones: one round per swipe, the next round peeking in from the right. */
+.bk-grid.narrow{
+  grid-auto-flow:column; grid-auto-columns:82%; overflow-x:auto;
+  scroll-snap-type:x mandatory; padding-bottom:8px; -webkit-overflow-scrolling:touch;
+}
+.bk-grid.narrow .bk-col{scroll-snap-align:start;}
+/* Wide screens: symmetric, title game in the middle. */
+.bk-grid.wide{grid-template-columns:repeat(3, minmax(0,1fr)) minmax(0,1.15fr) repeat(3, minmax(0,1fr)); gap:12px;}
+
+.bk-col{display:flex; flex-direction:column; min-width:0;}
+.bk-col-head{
+  font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.12em;
+  color:var(--brass); text-align:center; padding:6px 0 10px; border-bottom:1px solid var(--line); margin-bottom:10px;
+}
+/* space-around keeps each later-round game vertically centered between its two feeders. */
+.bk-col-body{flex:1; display:flex; flex-direction:column; justify-content:space-around; gap:12px;}
+.bk-grid.wide .bk-col-body{min-height:520px;}
+.bk-grid.wide .bk-record{display:none;}
+.bk-grid.wide .bk-team{padding:7px 6px; gap:6px;}
+.bk-nc .bk-col-body{justify-content:center; gap:16px;}
+
+.bk-match{
+  display:flex; flex-direction:column; gap:4px; padding:6px;
+  background:var(--panel); border:1px solid var(--line); border-radius:10px;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+}
+:root[data-theme="light"] .bk-match{box-shadow:0 1px 2px rgba(28,25,23,.05), 0 4px 12px rgba(28,25,23,.06);}
+.bk-match.title{border-color:var(--brass);}
+
+.bk-team{
+  display:flex; align-items:center; gap:7px; width:100%; min-width:0; text-align:left;
+  background:var(--input); color:var(--input-ink); border:1px solid var(--line);
+  padding:7px 8px; border-radius:7px; font-size:13px; font-weight:700;
+}
+.bk-team:disabled{cursor:default; opacity:1;}
+.bk-team.empty{background:transparent; color:var(--muted); border-style:dashed; font-weight:600;}
+.bk-seed{font-family:"Space Mono",monospace; font-size:11px; font-weight:700; min-width:16px; text-align:right; opacity:.75;}
+.bk-name{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.bk-record{font-family:"Space Mono",monospace; font-size:10px; opacity:.6; flex-shrink:0;}
+.bk-mark{font-weight:800; font-size:13px; flex-shrink:0;}
+.bk-team.sel.correct{outline:2px solid var(--success); outline-offset:1px;}
+.bk-team.sel.wrong, .bk-team.sel.dead{opacity:.55;}
+.bk-team.sel.wrong .bk-name, .bk-team.sel.dead .bk-name{text-decoration:line-through;}
+
+.bk-champ{
+  display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center;
+  padding:14px 10px; border:1px solid var(--line); border-radius:10px; background:var(--card);
+}
+.bk-champ-label{font-size:11px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--brass);}
+.bk-champ-team{display:flex; flex-direction:column; align-items:center; gap:6px; font-family:"Fraunces",serif; font-weight:800; font-size:18px;}
+.team-logo-swatch.big{width:44px; height:44px;}
+.team-logo-swatch.big img{width:30px; height:30px;}
+
+/* Commissioner seeding */
+.seed-grid{display:grid; grid-template-columns:1fr 1fr; gap:6px 10px; margin:6px 0 12px;}
+.seed-row{display:flex; align-items:center; gap:8px;}
+.seed-row select{margin:0;}
+.seed-num{font-family:"Space Mono",monospace; font-weight:700; color:var(--brass); min-width:20px; text-align:right;}
+@media (max-width:480px){ .seed-grid{grid-template-columns:1fr;} }
+
+/* Bracket standings */
+table.board tr.clickable{cursor:pointer;}
+table.board th.num-h{text-align:right;}
+table.board td.muted-num{color:var(--muted);}
+.bk-champ-cell .team-logo-swatch{display:inline-flex;}

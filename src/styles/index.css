@@ -1,0 +1,8 @@
+/* All styles, in cascade order. main.jsx imports this file. */
+@import './theme.css';
+@import './base.css';
+@import './layout.css';
+@import './picks.css';
+@import './scoreboard.css';
+@import './commissioner.css';
+@import './bracket.css';

@@ -1,0 +1,33 @@
+/* Picks tab — game cards (features/picks). */
+.combo-card{ display:flex; align-items:stretch; gap:8px; }
+.combo-card.unpicked{ border-style:dashed; opacity:.9; }
+.combo-card.dragging{ border-color:var(--brass); box-shadow:0 4px 14px rgba(0,0,0,.35); }
+.drag-handle{
+  display:flex; align-items:center; justify-content:center; width:26px; color:var(--muted);
+  font-size:16px; letter-spacing:-2px; cursor:grab; touch-action:none; user-select:none;
+}
+.combo-body{flex:1; display:flex; flex-direction:column; gap:6px; min-width:0;}
+.game-meta{display:flex; justify-content:space-between; gap:8px; font-size:11px; color:var(--muted); font-family:"Space Mono",monospace;}
+.game-meta span:last-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.teams-row{display:flex; gap:8px;}
+.team-toggle{
+  flex:1; display:flex; align-items:center; gap:7px; background:var(--input);
+  border:1px solid var(--line); color:var(--input-ink); padding:8px; border-radius:8px;
+  font-weight:700; font-size:13px; text-align:left; min-width:0;
+}
+.team-toggle.sel{ background:var(--brass); border-color:var(--brass); color:#242421; }
+.team-toggle span:last-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.team-rank{font-family:"Space Mono",monospace; font-size:11px; color:var(--muted); font-weight:800; flex-shrink:0;}
+.team-toggle.sel .team-rank{color:#242421;}
+.combo-side{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; min-width:38px;}
+.pts-input{
+  width:42px; text-align:center; font-weight:800; font-size:14px; padding:4px 2px; margin:0;
+  font-family:"Space Mono",monospace; background:var(--brass); color:#242421; border-color:var(--brass);
+}
+.pts-badge{
+  background:var(--brass); color:#242421; font-weight:800; font-size:13px; border-radius:20px;
+  min-width:26px; height:26px; display:flex; align-items:center; justify-content:center;
+  font-family:"Space Mono",monospace;
+}
+.arrows{display:flex; flex-direction:column; gap:2px;}
+.arrows button{padding:2px 8px; font-size:12px; line-height:1;}
