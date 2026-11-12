@@ -165,3 +165,8 @@
 .possession{margin-left:10px; color:var(--text);}
 .possession strong{font-weight:700;}
 .possession.red-zone{color:var(--danger);}
+
+/* Live / Completed / Upcoming groups on locked weeks */
+.game-group + .game-group{margin-top:18px;}
+.game-group-head{display:flex; align-items:baseline; gap:8px; margin:0 0 10px; font-size:15px; font-weight:700;}
+.game-group-head span{font-size:13px; font-weight:500; color:var(--muted);}

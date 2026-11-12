@@ -83,6 +83,19 @@ export function WeekPicks({ week, userName, nameKey }) {
   };
   const totals = weekTotals(games, shown.winners, pointsFor);
 
+  // Locked week with games underway or done: group into Live / Completed / Upcoming, each by
+  // points (highest first). Otherwise one list in confidence order (drag-to-rank stays intact).
+  const visible = shown.order.filter(id => gameById[id]);
+  const anyStarted = games.some(g => g.completed || g.state === 'in');
+  const byPoints = ids => [...ids].sort((a, b) => pointsFor(b) - pointsFor(a));
+  const groups = deadlinePassed && anyStarted
+    ? [
+        { id: 'live', label: 'Live', ids: byPoints(visible.filter(id => gameById[id].state === 'in')) },
+        { id: 'done', label: 'Completed', ids: byPoints(visible.filter(id => gameById[id].completed)) },
+        { id: 'next', label: 'Upcoming', ids: byPoints(visible.filter(id => !gameById[id].completed && gameById[id].state !== 'in')) }
+      ].filter(g => g.ids.length)
+    : [{ id: 'all', label: null, ids: visible }];
+
   const label = week === 'bowls' ? 'the bowl games' : weekLabel(week);
   return (
     <>
@@ -128,27 +141,32 @@ export function WeekPicks({ week, userName, nameKey }) {
               <QuickPicks onPick={mode => setWinners(quickPickWinners(games, mode))} disabled={deadlinePassed} />
             </>
           )}
-          {!(viewing && deadlinePassed && !viewed) && shown.order.map((gameId, idx) => {
-            const game = gameById[gameId];
-            if (!game) return null;
-            return (
-              <GameCard
-                key={gameId}
-                game={game}
-                index={idx}
-                total={shown.order.length}
-                points={pointsFor(gameId)}
-                result={pickResult(game, shown.winners[gameId], pointsFor(gameId))}
-                live={liveStanding(game, shown.winners[gameId])}
-                picked={shown.winners[gameId]}
-                locked={deadlinePassed}
-                dragProps={dragPropsFor(gameId)}
-                onPick={teamId => setWinners(w => togglePick(w, gameId, teamId))}
-                onMove={dir => move(gameId, dir)}
-                onSetPoints={points => moveToConfidence(gameId, points)}
-              />
-            );
-          })}
+          {!(viewing && deadlinePassed && !viewed) && groups.map(group => (
+            <section key={group.id} className="game-group">
+              {group.label && <h3 className="game-group-head">{group.label} <span>{group.ids.length}</span></h3>}
+              {group.ids.map(gameId => {
+                const game = gameById[gameId];
+                const idx = shown.order.indexOf(gameId);
+                return (
+                  <GameCard
+                    key={gameId}
+                    game={game}
+                    index={idx}
+                    total={shown.order.length}
+                    points={pointsFor(gameId)}
+                    result={pickResult(game, shown.winners[gameId], pointsFor(gameId))}
+                    live={liveStanding(game, shown.winners[gameId])}
+                    picked={shown.winners[gameId]}
+                    locked={deadlinePassed}
+                    dragProps={dragPropsFor(gameId)}
+                    onPick={teamId => setWinners(w => togglePick(w, gameId, teamId))}
+                    onMove={dir => move(gameId, dir)}
+                    onSetPoints={points => moveToConfidence(gameId, points)}
+                  />
+                );
+              })}
+            </section>
+          ))}
           {!deadlinePassed && (
             <SubmitPicks
               canSubmit={allPicked && !!userName.trim() && !saving}
