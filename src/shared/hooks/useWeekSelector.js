@@ -8,11 +8,17 @@ let currentWeek = null;
 let currentWeekPromise = null;
 
 // Week dropdown state. Starts on ESPN's current week (falls back to `initial`); once someone
-// picks a week themselves, it stays where they put it. currentWeek is null until ESPN answers.
+// picks a week themselves, it stays there — across tabs and through a page reload.
+// currentWeek is null until ESPN answers.
+const SAVED_KEY = 'bb-week';
+function savedWeek() {
+  try { const v = sessionStorage.getItem(SAVED_KEY); return v != null ? Number(v) : null; } catch (e) { return null; }
+}
+
 export function useWeekSelector(initial = 1) {
-  const [week, setWeekState] = useState(currentWeek ?? initial);
+  const [week, setWeekState] = useState(() => savedWeek() ?? currentWeek ?? initial);
   const [current, setCurrent] = useState(currentWeek);
-  const touched = useRef(false);
+  const touched = useRef(savedWeek() != null); // a week picked earlier in this tab survives a reload
 
   useEffect(() => {
     if (!currentWeekPromise) currentWeekPromise = fetchCurrentWeek().then(w => { currentWeek = w; return w; });
@@ -21,6 +27,10 @@ export function useWeekSelector(initial = 1) {
     return () => { alive = false; };
   }, []);
 
-  function setWeek(w) { touched.current = true; setWeekState(w); }
+  function setWeek(w) {
+    touched.current = true;
+    setWeekState(w);
+    try { sessionStorage.setItem(SAVED_KEY, String(w)); } catch (e) {}
+  }
   return { week, setWeek, weeks: WEEKS, currentWeek: current };
 }

@@ -1,11 +1,16 @@
+import { useState } from 'react';
 import { formatKickoff, formatGameDay } from '@/shared/utils/dates.js';
+import { GameDetails } from './details/GameDetails.jsx';
 import { MatchupPill } from './MatchupPill.jsx';
 import { ConfidenceControl } from './ConfidenceControl.jsx';
 
 // One game: kickoff and betting line above the matchup pill, venue below, points on the right.
+// The button under the pill opens the matchup info (before kickoff) or the box score.
 // index is the card's position (0 = top); total is how many cards there are.
 export function GameCard({ game, index, total, points, result, live, picked, locked, dragProps, onPick, onMove, onSetPoints }) {
+  const [open, setOpen] = useState(false);
   const isLive = game.state === 'in';
+  const started = game.completed || isLive;
   const line = !game.completed && !isLive && game.line;
   return (
     <div className={'game-card' + (!picked ? ' unpicked' : '') + (isLive ? ' live' : '')} draggable={!locked} {...(locked ? {} : dragProps)}>
@@ -23,7 +28,10 @@ export function GameCard({ game, index, total, points, result, live, picked, loc
         )}
       </div>
       <MatchupPill game={game} picked={picked} disabled={locked} onPick={onPick} />
-      <span className="game-venue">{game.venue}</span>
+      <button type="button" className="game-venue details-toggle" aria-expanded={open} onClick={() => setOpen(o => !o)}>
+        <span className="venue-name">{game.venue}</span>
+        <span className="details-label">{started ? 'Box score' : 'Matchup'} <span className="chev" aria-hidden="true">▾</span></span>
+      </button>
       <ConfidenceControl
         points={points}
         max={total}
@@ -36,6 +44,7 @@ export function GameCard({ game, index, total, points, result, live, picked, loc
         onUp={() => onMove(-1)}
         onDown={() => onMove(1)}
       />
+      {open && <GameDetails game={game} />}
     </div>
   );
 }

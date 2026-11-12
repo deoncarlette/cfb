@@ -13,6 +13,12 @@
 .game-final{color:var(--text); font-weight:700;}
 .game-line{display:flex; gap:10px; font-weight:600; color:var(--text);}
 .game-venue{grid-area:venue; text-align:center; font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+/* The venue line doubles as the button that opens matchup info / box score. */
+.details-toggle{display:flex; justify-content:center; align-items:center; gap:10px; min-width:0; width:100%; background:none; border:none; padding:2px 4px; border-radius:6px; font-weight:400;}
+.details-toggle .venue-name{min-width:0; overflow:hidden; text-overflow:ellipsis;}
+.details-toggle .details-label{flex-shrink:0; font-weight:600; color:var(--text);}
+.details-toggle .chev{display:inline-block; transition:transform .15s ease;}
+.details-toggle[aria-expanded="true"] .chev{transform:rotate(180deg);}
 
 .pts-input{
   grid-area:pts; width:44px; height:44px; margin:0; padding:0; text-align:center;
@@ -110,3 +116,41 @@
 .pts-badge.live-trailing{border-color:var(--danger); color:var(--danger); background:transparent;}
 .pts-badge.live-tied{border-color:var(--line-strong);}
 .live-updated{margin:-6px 0 14px;}
+
+/* Game details panel (box score / matchup) — spans the whole card. */
+.game-details{grid-column:1 / -1; border-top:1px solid var(--line); margin-top:6px; padding-top:12px; cursor:default;}
+.gd-teams{display:flex; justify-content:space-between; padding:0 4px 6px; font-family:var(--display); font-weight:800; font-style:italic; font-size:18px; text-transform:uppercase;}
+.gd-section{margin-bottom:14px;}
+.gd-section h4{margin:0 0 8px; font-size:12px; font-weight:600; color:var(--muted); text-align:center;}
+.compare{display:flex; flex-direction:column;}
+.compare-row{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:10px; padding:6px 4px; border-bottom:1px solid var(--line); font-size:14px;}
+.compare-row:last-child{border-bottom:none;}
+.compare-row .cl{font-size:12px; color:var(--muted); text-align:center; min-width:84px;}
+.compare-row .cv{font-weight:700; font-variant-numeric:tabular-nums; min-width:0;}
+.compare-row .cv.home{text-align:right;}
+.leaders-row .cv{display:flex; flex-direction:column; line-height:1.2;}
+.leaders-row .cv.home{align-items:flex-end;}
+.leaders-row strong{font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%;}
+.leaders-row small{font-size:12px; font-weight:500; color:var(--muted);}
+.wp-labels{display:flex; justify-content:space-between; font-size:14px; padding:0 4px 4px; font-variant-numeric:tabular-nums;}
+.wp-bar{display:flex; height:10px; border-radius:999px; overflow:hidden; gap:2px; background:var(--raised);}
+.wp-bar span{display:block; height:100%;}
+.linescore{width:100%; border-collapse:collapse; font-size:13px; font-variant-numeric:tabular-nums;}
+.linescore th, .linescore td{padding:5px 4px; text-align:center; border-bottom:1px solid var(--line);}
+.linescore thead th{font-size:11px; font-weight:600; color:var(--muted);}
+.linescore tbody th{text-align:left; font-family:var(--display); font-style:italic; font-weight:800; font-size:15px;}
+.linescore tbody tr:last-child th, .linescore tbody tr:last-child td{border-bottom:none;}
+.linescore .total{font-weight:800;}
+.last5{display:inline-flex; gap:3px;}
+.compare-row .cv.home .last5{justify-content:flex-end;}
+.l5{width:18px; height:18px; border-radius:5px; display:inline-flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; background:var(--raised); color:var(--muted);}
+.l5.w{background:color-mix(in srgb, var(--success) 22%, transparent); color:var(--success);}
+.l5.l{background:color-mix(in srgb, var(--danger) 18%, transparent); color:var(--danger);}
+.scoring{list-style:none; margin:0; padding:0; font-size:13px;}
+.scoring li{display:grid; grid-template-columns:auto auto 1fr auto; gap:8px; padding:6px 4px; border-bottom:1px solid var(--line); align-items:baseline;}
+.scoring li:last-child{border-bottom:none;}
+.sp-when{color:var(--muted); font-size:12px; white-space:nowrap; font-variant-numeric:tabular-nums;}
+.sp-team{font-weight:700;}
+.sp-text{min-width:0;}
+.sp-score{font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap;}
+.gd-facts{display:flex; flex-wrap:wrap; justify-content:center; gap:4px 14px; font-size:12px; color:var(--muted); margin:0 0 4px;}
