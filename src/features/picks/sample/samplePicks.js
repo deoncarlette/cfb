@@ -34,6 +34,30 @@ function findGame(pick, games) {
   return winner ? { game, winnerId: winner.id } : null;
 }
 
+// Weeks whose real picks stay hidden until a set time (so a shared demo doesn't give them away).
+// Before then, the slate is the same games but with random winners and a random order.
+const HIDE_UNTIL = {
+  11: '2026-11-14T21:00:00-06:00' // Week 11: Saturday, Nov 14, 9 PM Central
+};
+
+function shuffled(list) {
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+// Same games, random winners, random confidence order.
+function randomize(m, games) {
+  const byId = new Map(games.map(g => [g.id, g]));
+  const confidences = shuffled(m.gameIds.map((_, i) => i + 1));
+  const picks = {};
+  m.gameIds.forEach((id, i) => {
+    const teams = byId.get(id).competitors;
+    picks[id] = { winner: teams[Math.random() < 0.5 ? 0 : 1].id, confidence: confidences[i] };
+  });
+  return { ...m, picks, randomized: true };
+}
+
 let fileCache = null;
 async function loadFile() {
   if (!fileCache) fileCache = import('./deandra-2026.json').then(m => m.default);
@@ -48,7 +72,9 @@ export async function samplePicksForWeek(week, games) {
   // The file's own "week" number, exactly — no shifting.
   const fileWeek = file.weeks.find(fw => fw.week === week);
   const m = fileWeek && matchWeek(fileWeek, games);
-  return m ? { playerName: file.participant, ...m } : null;
+  if (!m) return null;
+  const hidden = HIDE_UNTIL[week] && Date.now() < new Date(HIDE_UNTIL[week]).getTime();
+  return hidden ? { playerName: null, ...randomize(m, games) } : { playerName: file.participant, ...m };
 }
 
 // The first week the file covers (Week 1). Earlier weeks have no games in the app.

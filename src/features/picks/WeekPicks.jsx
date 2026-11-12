@@ -87,7 +87,7 @@ export function WeekPicks({ week, userName, nameKey }) {
         <>
           {showingSample && (
             <p className="sample-note">
-              Showing {sample.playerName}'s picks{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
+              {sample.randomized ? 'Showing random sample picks' : `Showing ${sample.playerName}'s picks`}{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
             </p>
           )}
           {isReplay && <p className="sample-note">Test replay: {label}'s games are being re-played today at their real kickoff times.</p>}

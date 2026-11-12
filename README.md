@@ -91,6 +91,7 @@ no re-seeding). Lives alongside the weekly pool, same no-Auth name-slug tradeoff
 - **Firestore:** `playoff/{season}` holds the field, lock time, results and the title-game
   total; `playoff/{season}/brackets/{nameSlug}` holds each player's picks + tiebreaker. The
   existing wide-open rules already cover it.
+- **Scoring TBD:** how bowl + CFP points combine with the season. Conference championship week will be scored together with the bowl games under whatever system is chosen.
 - **Where:** Picks tab → week list → Postseason, then the CFP Bracket / Bowl Games sub-tabs. The app switches to Postseason on its own once ESPN does. Bowl Games are confidence picks on every bowl except the CFP games.
 - **Before Selection Day:** the bracket previews a straight 1–12 seeding from ESPN's current CFP
   rankings so people can click around. Submitting stays off until the field is saved.
