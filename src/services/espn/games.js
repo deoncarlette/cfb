@@ -2,7 +2,16 @@ import { ESPN_BASE } from './client.js';
 import { fetchPollRankMap } from './rankings.js';
 import { SEASON, CFP_SWITCH_WEEK } from '@/config.js';
 import { hexColor } from '@/shared/utils/colors.js';
-import { formatKickoff, kickoffParts } from '@/shared/utils/dates.js';
+import { formatKickoff } from '@/shared/utils/dates.js';
+
+// Betting line from ESPN, when they have one (usually just the current week).
+// → { spread: 'MICH -3.5', overUnder: 47.5 } or null
+function parseLine(odds) {
+  if (!odds) return null;
+  const spread = odds.details || null;
+  const overUnder = odds.overUnder ?? null;
+  return spread || overUnder != null ? { spread, overUnder } : null;
+}
 
 // One week's regular-season games. groups: 80 = FBS, 81 = FCS.
 // Each game: { id, date, venue, status, state, completed, competitors: [away, home] }
@@ -29,7 +38,12 @@ export async function fetchEspnGames(week, groups = [80]) {
       color: hexColor(entry.team.color, '#5b5a55'),
       altColor: hexColor(entry.team.alternateColor, null),
       logo: entry.team.logo || '',
-      rank: entry.curatedRank?.current || null
+      rank: entry.curatedRank?.current || null,
+      abbr: entry.team.abbreviation || '',
+      // Every name ESPN uses for the team — for matching typed names like "UNC".
+      altNames: [entry.team.displayName, entry.team.shortDisplayName, entry.team.abbreviation, entry.team.name].filter(Boolean),
+      score: entry.score != null && entry.score !== '' ? Number(entry.score) : null,
+      winner: entry.winner === true
     })).sort((a, b) => a.homeAway === 'away' ? -1 : b.homeAway === 'away' ? 1 : 0);
 
     return {
@@ -39,6 +53,7 @@ export async function fetchEspnGames(week, groups = [80]) {
       status: event.status?.type?.shortDetail || 'Scheduled',
       state: event.status?.type?.state || 'pre',
       completed: event.status?.type?.completed === true,
+      line: parseLine(competition?.odds?.[0]),
       competitors
     };
   }).filter(game => game.competitors.length === 2);
@@ -63,10 +78,32 @@ export function gameStatusLabel(game) {
   return formatKickoff(game.date);
 }
 
-// What goes in the little chip between the two teams: FINAL, the live clock, or kickoff.
+// The chip on the seam between the two teams: FINAL, or the live clock. Nothing before kickoff
+// (the kickoff time shows above the pill instead).
 export function matchupChip(game) {
-  if (game.completed) return { top: 'Final', bottom: '' };
-  if (game.state === 'in') return { top: 'Live', bottom: game.status };
-  const { day, time } = kickoffParts(game.date);
-  return { top: time, bottom: day };
+  if (game.completed) return 'Final';
+  if (game.state === 'in') return game.status;
+  return null;
+}
+
+// Team id of the winner of a finished game, else null.
+export function gameWinnerId(game) {
+  if (!game.completed) return null;
+  const flagged = game.competitors.find(c => c.winner);
+  if (flagged) return flagged.id;
+  const [a, b] = game.competitors;
+  if (a.score == null || b.score == null || a.score === b.score) return null;
+  return a.score > b.score ? a.id : b.id;
+}
+
+// ESPN's current regular-season week, or null (offseason / postseason / no answer).
+export async function fetchCurrentWeek() {
+  try {
+    const response = await fetch(`${ESPN_BASE}/scoreboard?groups=80&limit=1`);
+    if (!response.ok) return null;
+    const data = await response.json();
+    return data.season?.type === 2 && data.week?.number ? data.week.number : null;
+  } catch (e) {
+    return null;
+  }
 }

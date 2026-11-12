@@ -13,6 +13,12 @@ export function formatKickoff(value) {
   return `${weekday}, ${get('month')}/${get('day')} ${get('hour')}:${get('minute')} ${get('dayPeriod')} ${get('timeZoneName')}`;
 }
 
+// "SAT, 9/5" — the day only, for finished games.
+export function formatGameDay(value) {
+  const k = formatKickoff(value);
+  return k ? k.split(' ')[0] + ' ' + k.split(' ')[1] : '';
+}
+
 // ISO string → the "YYYY-MM-DDTHH:MM" format an <input type="datetime-local"> expects.
 export function toDatetimeLocal(iso) {
   if (!iso) return '';
@@ -25,12 +31,3 @@ export function isPast(iso) {
   return !!iso && Date.now() >= new Date(iso).getTime();
 }
 
-// Short two-line kickoff for the matchup chip: { day: 'SAT', time: '2:30 PM' } in the
-// viewer's own timezone.
-export function kickoffParts(value) {
-  const d = new Date(value);
-  if (isNaN(d.getTime())) return { day: '', time: '' };
-  const day = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(d).toUpperCase();
-  const time = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' }).format(d);
-  return { day, time };
-}

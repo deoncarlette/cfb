@@ -5,23 +5,29 @@
 // than live data. Matched against ESPN's team "location" name (the unabbreviated school
 // name, e.g. "Washington State" not "Washington St"). Realignment happens — double check
 // this periodically.
-export const P4_TEAMS = new Set([
-  // SEC
+export const SEC_TEAMS = new Set([
   "Alabama","Arkansas","Auburn","Florida","Georgia","Kentucky","LSU","Mississippi State",
-  "Missouri","Ole Miss","South Carolina","Tennessee","Texas A&M","Vanderbilt","Oklahoma","Texas",
-  // Big Ten
+  "Missouri","Ole Miss","South Carolina","Tennessee","Texas A&M","Vanderbilt","Oklahoma","Texas"
+]);
+export const BIG_TEN_TEAMS = new Set([
   "Illinois","Indiana","Iowa","Maryland","Michigan","Michigan State","Minnesota","Nebraska",
-  "Northwestern","Ohio State","Penn State","Purdue","Rutgers","Wisconsin","UCLA","USC","Oregon","Washington",
-  // Big 12
+  "Northwestern","Ohio State","Penn State","Purdue","Rutgers","Wisconsin","UCLA","USC","Oregon","Washington"
+]);
+export const BIG_12_TEAMS = new Set([
   "Baylor","BYU","Cincinnati","Houston","Iowa State","Kansas","Kansas State","Oklahoma State",
-  "TCU","Texas Tech","UCF","West Virginia","Arizona","Arizona State","Colorado","Utah",
-  // ACC
+  "TCU","Texas Tech","UCF","West Virginia","Arizona","Arizona State","Colorado","Utah"
+]);
+export const ACC_TEAMS = new Set([
   "Boston College","California","Clemson","Duke","Florida State","Georgia Tech","Louisville",
   "Miami","NC State","North Carolina","Pittsburgh","SMU","Stanford","Syracuse","Virginia",
   "Virginia Tech","Wake Forest"
 ]);
+export const P4_TEAMS = new Set([...SEC_TEAMS, ...BIG_TEN_TEAMS, ...BIG_12_TEAMS, ...ACC_TEAMS]);
 
 export function isP4(name) { return P4_TEAMS.has((name || '').trim()); }
+
+// The pool always includes Howard's game, whoever they play.
+export const ALWAYS_INCLUDE = new Set(['Howard']);
 
 // ESPN uses 99 as the "unranked" placeholder in curatedRank — it isn't a real vote count.
 // Treat anything under that as a real, sortable rank even outside the AP top 25, but only
@@ -38,4 +44,11 @@ export function gameCategory(game) {
   if (game.competitors.some(hasRealRank)) return 'top25';
   if (game.competitors.some(c => isP4(c.name))) return 'power4';
   return 'other';
+}
+
+// Default slate before the commissioner picks games: any Top 25 team, Howard, or an SEC or
+// Big Ten team. (The Commish tab still shows every game to choose from.)
+export function isDefaultSlateGame(game) {
+  return game.competitors.some(c =>
+    displayRank(c) || ALWAYS_INCLUDE.has(c.name) || SEC_TEAMS.has(c.name) || BIG_TEN_TEAMS.has(c.name));
 }

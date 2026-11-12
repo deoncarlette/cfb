@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { fetchEspnGames, applyRankOverlay, gameCategory } from '@/services/espn/index.js';
+import { fetchEspnGames, applyRankOverlay, isDefaultSlateGame } from '@/services/espn/index.js';
 import { getWeekConfig, saveWeekConfig } from '@/services/data/index.js';
 import { toDatetimeLocal } from '@/shared/utils/dates.js';
 
@@ -20,8 +20,9 @@ export function useWeekSlate(week) {
       pulled = await applyRankOverlay(pulled, week);
       setGames(pulled);
       const cfg = await getWeekConfig(week);
-      // Nothing saved yet for this week → start with just the Top 25 games checked.
-      setIncludedIds(new Set(cfg.includedGameIds ? cfg.includedGameIds : pulled.filter(g => gameCategory(g) === 'top25').map(g => g.id)));
+      // Nothing saved yet for this week → start with the default slate checked
+      // (Top 25, Howard, SEC, Big Ten) — the same games the Picks tab shows by default.
+      setIncludedIds(new Set(cfg.includedGameIds ? cfg.includedGameIds : pulled.filter(isDefaultSlateGame).map(g => g.id)));
       setDeadline(toDatetimeLocal(cfg.deadlineIso));
       setStatus(`${pulled.length} games pulled for Week ${week}.`);
     } catch (e) {

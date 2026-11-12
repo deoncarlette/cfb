@@ -1,16 +1,30 @@
-import { matchupChip } from '@/services/espn/index.js';
+import { matchupChip, gameWinnerId } from '@/services/espn/index.js';
 import { MatchupSide } from './MatchupSide.jsx';
 
-// Broadcast-style matchup: away team's color on the left, home on the right, kickoff in the
-// middle. Once a winner is picked, the other side fades to gray.
+// Broadcast-style matchup: away team on the left, home on the right. The picked side fills
+// with its color and the other fades. Scores appear by the seam once the game starts, with
+// FINAL (or the live clock) in a chip on the seam.
 export function MatchupPill({ game, picked, disabled, onPick }) {
   const [away, home] = game.competitors;
   const chip = matchupChip(game);
+  const started = game.completed || game.state === 'in';
+  const winner = gameWinnerId(game);
+  const side = (team, which) => (
+    <MatchupSide
+      team={team}
+      side={which}
+      selected={picked === team.id}
+      lost={!!winner && winner !== team.id}
+      score={started ? team.score : null}
+      disabled={disabled}
+      onClick={() => onPick(team.id)}
+    />
+  );
   return (
-    <div className={'matchup' + (picked ? ' has-pick' : '')}>
-      <MatchupSide team={away} side="away" selected={picked === away.id} disabled={disabled} onClick={() => onPick(away.id)} />
-      <span className="matchup-mid">{chip.top}{chip.bottom && <small>{chip.bottom}</small>}</span>
-      <MatchupSide team={home} side="home" selected={picked === home.id} disabled={disabled} onClick={() => onPick(home.id)} />
+    <div className={'matchup' + (picked ? ' has-pick' : '') + (chip ? ' has-chip' : '') + (started ? ' started' : '')}>
+      {side(away, 'away')}
+      {chip && <span className="matchup-mid">{chip}</span>}
+      {side(home, 'home')}
     </div>
   );
 }

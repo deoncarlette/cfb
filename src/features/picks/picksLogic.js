@@ -1,13 +1,13 @@
-import { gameCategory } from '@/services/espn/index.js';
+import { isDefaultSlateGame, gameWinnerId } from '@/services/espn/index.js';
 
 // Plain functions for the Picks tab — no React, easy to test.
 
-// Until the commissioner configures a week, default to Top 25 + Power 4 rather than the full
-// slate (can be 70+ games some weeks).
+// Until the commissioner configures a week, default to Top 25 + Howard + SEC + Big Ten
+// (see isDefaultSlateGame) rather than the full slate, which can be 70+ games.
 export function gamesForWeek(allGames, config) {
   return config.includedGameIds
     ? allGames.filter(g => config.includedGameIds.includes(g.id))
-    : allGames.filter(g => gameCategory(g) !== 'other');
+    : allGames.filter(isDefaultSlateGame);
 }
 
 // Picks lock at the commissioner's deadline, or else the earliest kickoff.
@@ -50,4 +50,28 @@ export function restoreSavedPicks(saved, games) {
   });
   const missing = games.map(g => g.id).filter(id => !ranked.includes(id));
   return { winners, order: [...missing, ...ranked].filter(id => games.some(g => g.id === id)) };
+}
+
+// Result of one pick once its game is final: { earned, of, correct } — earned is the
+// confidence points if right, 0 if wrong. null if the game isn't final or wasn't picked.
+export function pickResult(game, pickedTeamId, confidence) {
+  const winner = gameWinnerId(game);
+  if (!winner || !pickedTeamId) return null;
+  const correct = pickedTeamId === winner;
+  return { earned: correct ? confidence : 0, of: confidence, correct };
+}
+
+// Week totals for the summary bar. pointsFor(gameId) → that game's confidence.
+export function weekTotals(games, winners, pointsFor) {
+  let earned = 0, right = 0, wrong = 0, stillPossible = 0, total = 0;
+  games.forEach(g => {
+    const pick = winners[g.id];
+    if (!pick) return;
+    const pts = pointsFor(g.id);
+    total += pts;
+    const r = pickResult(g, pick, pts);
+    if (!r) { stillPossible += pts; return; }
+    if (r.correct) { earned += pts; right += 1; } else wrong += 1;
+  });
+  return { earned, right, wrong, decided: right + wrong, maxPossible: earned + stillPossible, total };
 }

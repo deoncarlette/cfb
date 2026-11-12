@@ -15,7 +15,7 @@ export function usePicksWeek(week) {
     setError('');
     try {
       const [fetched, cfg] = await Promise.all([
-        fetchEspnGames(week, [80]).then(gs => applyRankOverlay(gs, week)),
+        fetchEspnGames(week, [80, 81]).then(gs => applyRankOverlay(gs, week)), // FCS too, for Howard
         getWeekConfig(week)
       ]);
       setConfig(cfg);

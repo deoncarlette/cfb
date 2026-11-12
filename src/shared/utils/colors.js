@@ -31,31 +31,23 @@ function saturation(hex) {
   const max = Math.max(...rgb), min = Math.min(...rgb);
   return max === 0 ? 0 : (max - min) / max;
 }
-function mixWithWhite(hex, t) { return toHex(toRgb(hex).map(v => v + (255 - v) * t)); }
-function lightenUntil(hex, minLum) {
-  let out = hex;
-  for (let t = 0.1; luminance(out) < minLum && t <= 1; t += 0.1) out = mixWithWhite(hex, t);
-  return out;
-}
+// True black or gray (no real hue) — would disappear on, or look the same as, the black pill.
+// Dark colors with a real hue (Michigan navy, Mississippi State maroon) are NOT gray.
+function isBlackOrGray(hex) { return !toRgb(hex) || saturation(hex) < 0.15 || luminance(hex) < 0.006; }
 
-// Black, near-black or gray: would disappear against the black pill.
-function isDrab(hex) { return !toRgb(hex) || luminance(hex) < 0.03 || saturation(hex) < 0.15; }
-
-// Fill for a PICKED team. Uses the team's main color unless it's black/gray/very dark, then
-// its secondary color, then a lightened main color, then a light neutral.
+// Fill for a PICKED team: always the team's main color, unless it's black or gray — then its
+// secondary color, so the pick still stands out from the black pill.
 export function teamFill(team) {
-  if (!isDrab(team.color)) return team.color;
-  if (team.altColor && !isDrab(team.altColor)) return team.altColor;
-  if (toRgb(team.color) && saturation(team.color) >= 0.15) return lightenUntil(team.color, 0.06);
+  if (!isBlackOrGray(team.color)) return team.color;
+  if (team.altColor && toRgb(team.altColor) && luminance(team.altColor) >= 0.02) return team.altColor;
   return '#e8e9ec';
 }
 
-// Team-name color on the black pill (not picked). Needs enough contrast to read on black:
-// main color if it's bright enough, else a bright secondary color, else the main color lightened.
+// Team-name color on the black pill (not picked). Main color if it's bright enough to read on
+// black; otherwise the secondary color (Michigan → maize); otherwise off-white. Never tinted.
 export function teamTextOnDark(team) {
-  const MIN = 0.15;
+  const MIN = 0.12;
   if (toRgb(team.color) && luminance(team.color) >= MIN) return team.color;
-  if (team.altColor && toRgb(team.altColor) && luminance(team.altColor) >= MIN && saturation(team.altColor) >= 0.15) return team.altColor;
-  if (toRgb(team.color)) return lightenUntil(team.color, MIN);
+  if (team.altColor && toRgb(team.altColor) && luminance(team.altColor) >= MIN) return team.altColor;
   return '#e8e9ec';
 }
