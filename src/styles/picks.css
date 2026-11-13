@@ -40,7 +40,8 @@
 .arrows{grid-area:arrows; display:flex; gap:3px;}
 .arrows button{flex:1; padding:4px 0; font-size:11px; line-height:1; border-radius:7px;}
 
-/* The matchup pill: near-black sides in dark mode, light gray in light mode.
+/* The matchup pill: black in both themes, like a broadcast graphic. Unpicked games show plain
+   white names in dark mode and school-color names in light mode.
    The pill's own background shows through as a thin slanted seam between the two sides. */
 .matchup{grid-area:pill; position:relative; display:flex; height:58px; border-radius:999px; overflow:hidden; background:var(--pill-seam);}
 .matchup-side{
@@ -56,6 +57,7 @@
 .matchup-side.sel{background:var(--fill); color:var(--fill-ink);}
 /* Once a side is picked, the other side goes one even light gray: name and score in gray,
    logo desaturated. Same shade for every school, so dark colors stay readable. */
+:root[data-theme="light"] .matchup-side:not(.sel){color:var(--name);}
 .matchup.has-pick .matchup-side:not(.sel){color:var(--pill-off);}
 .matchup.has-pick .matchup-side:not(.sel) .team-logo{filter:grayscale(1) drop-shadow(0 1px 2px rgba(0,0,0,.45));}
 .matchup-side.sel::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(0,0,0,.18)); pointer-events:none;}

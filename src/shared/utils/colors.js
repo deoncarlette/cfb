@@ -43,3 +43,11 @@ export function teamFill(team) {
   return '#e8e9ec';
 }
 
+// Team-name color on the black pill (not picked). Main color if it's bright enough to read on
+// black; otherwise the secondary color (Michigan → maize); otherwise off-white. Never tinted.
+export function teamTextOnDark(team) {
+  const MIN = 0.12;
+  if (toRgb(team.color) && luminance(team.color) >= MIN) return team.color;
+  if (team.altColor && toRgb(team.altColor) && luminance(team.altColor) >= MIN) return team.altColor;
+  return '#e8e9ec';
+}
