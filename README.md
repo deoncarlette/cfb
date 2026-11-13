@@ -21,6 +21,12 @@ Also part of the Auth pass:
   random order on every page load (`showEntry` in `src/features/picks/WeekPicks.jsx`), so
   people who skip ranking don't all submit the same order. Once players sign in, shuffle
   once per player per week and save that order (a draft), so reloading keeps it.
+- **Publish a week.** Weeks should stay hidden from players until the commissioner publishes
+  them, and a week's settings (games, lock choice/time) should freeze on publish rather than
+  at first lock. Today a week is visible as soon as it has games, and settings freeze when the
+  week starts locking (`lock` in `src/features/commissioner/hooks/useWeekSlate.js`) — kept
+  that way for now because it's easier to test. Likely shape: a `published` flag in the week
+  config; Picks hides unpublished weeks; Commish shows a Publish button and freezes after.
 
 ## 1. Create the Firebase project
 
