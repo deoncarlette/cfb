@@ -101,16 +101,13 @@ export function fetchGamesFor(week, groups) {
   return fetchEspnGames(week, groups);
 }
 
-// ESPN usually files Week 0 under its Week 1. If it has no Week 0 of its own, take the Week 1
-// games that kicked off at least six days before Week 1's last game (the late-August opener
-// weekend, not Labor Day weekend).
+// The pool's Week 0 (the opener games) is split across ESPN's Week 0 and its Week 1 (e.g.
+// Howard–Alabama A&M in ESPN's Week 0, Colorado–Georgia Tech in its Week 1), so pull both. The
+// commissioner's slate (or the sample picks) decides which games show.
 async function fetchWeekZero(groups) {
-  const own = await fetchEspnGames(0, groups).catch(() => []);
-  if (own.length) return own;
-  const week1 = await fetchEspnGames(1, groups);
-  if (!week1.length) return [];
-  const last = Math.max(...week1.map(g => new Date(g.date).getTime()));
-  return week1.filter(g => new Date(g.date).getTime() < last - 6 * 24 * 60 * 60 * 1000);
+  const [zero, one] = await Promise.all([fetchEspnGames(0, groups).catch(() => []), fetchEspnGames(1, groups)]);
+  const seen = new Set();
+  return [...zero, ...one].filter(g => !seen.has(g.id) && seen.add(g.id));
 }
 
 // Once the CFP committee starts publishing (after CFP_SWITCH_WEEK), its rankings replace the
