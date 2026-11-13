@@ -4,10 +4,9 @@ import { formatKickoff } from '@/shared/utils/dates.js';
 export function LockAlert({ lock }) {
   if (lock.mode === 'kickoff') {
     if (lock.allLocked) return <p className="lock-alert locked">Every game has kicked off, so picks are locked.</p>;
-    const [away, home] = lock.nextGame.competitors;
     return (
       <p className="lock-alert">
-        Each game locks at its own kickoff. Next to lock: <strong>{away.abbr || away.name} at {home.abbr || home.name}</strong>, {formatKickoff(lock.lockAt)}.
+        Each game locks at its own kickoff. Next kickoff: <strong>{formatKickoff(lock.lockAt)}</strong> ({lock.nextCount} {lock.nextCount === 1 ? 'game' : 'games'}).
       </p>
     );
   }

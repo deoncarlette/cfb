@@ -17,19 +17,21 @@ const byKickoff = (a, b) => new Date(a.date) - new Date(b.date);
 // Which games are locked right now, per the commissioner's lock setting:
 //   'slate'   — every game locks at once: the commissioner's deadline, or else the first kickoff.
 //   'kickoff' — each game locks at its own kickoff.
-// → { mode, lockedIds, anyLocked, allLocked, lockAt (when the slate locks / the next game
-//     locks), nextGame (kickoff mode: the next game to lock) }
+// → { mode, lockedIds, anyLocked, allLocked, lockAt (when the slate locks / the next kickoff),
+//     nextCount (kickoff mode: how many games kick off at lockAt) }
 export function lockInfo(config, games, now = Date.now()) {
   const sorted = [...games].sort(byKickoff);
   if (config.lockMode === 'kickoff') {
     const started = g => g.completed || g.state === 'in' || now >= new Date(g.date).getTime();
     const lockedIds = new Set(sorted.filter(started).map(g => g.id));
     const nextGame = sorted.find(g => !lockedIds.has(g.id)) || null;
-    return { mode: 'kickoff', lockedIds, anyLocked: lockedIds.size > 0, allLocked: games.length > 0 && !nextGame, lockAt: nextGame?.date ?? null, nextGame };
+    const lockAt = nextGame?.date ?? null;
+    const nextCount = lockAt ? sorted.filter(g => !lockedIds.has(g.id) && new Date(g.date).getTime() === new Date(lockAt).getTime()).length : 0;
+    return { mode: 'kickoff', lockedIds, anyLocked: lockedIds.size > 0, allLocked: games.length > 0 && !nextGame, lockAt, nextCount };
   }
   const lockAt = config.deadlineIso || sorted[0]?.date || null;
   const all = !!lockAt && now >= new Date(lockAt).getTime();
-  return { mode: 'slate', lockedIds: new Set(all ? games.map(g => g.id) : []), anyLocked: all, allLocked: all, lockAt, nextGame: null };
+  return { mode: 'slate', lockedIds: new Set(all ? games.map(g => g.id) : []), anyLocked: all, allLocked: all, lockAt, nextCount: 0 };
 }
 
 // Pick a team, or clear the pick if that team was already picked.
