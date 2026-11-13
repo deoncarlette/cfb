@@ -1,4 +1,4 @@
-import { bestRealRank, gameCategory, gameConference, rivalryFor, P4_ORDER, FBS_ORDER, FCS_ORDER, POSTSEASON } from '@/services/espn/index.js';
+import { bestRealRank, gameCategory, gameConference, rivalryFor, P4_ORDER, FBS_ORDER, FCS_ORDER } from '@/services/espn/index.js';
 import { useWeekSelector } from '@/shared/hooks/useWeekSelector.js';
 import { WeekSelect } from '@/shared/components/WeekSelect.jsx';
 import { useWeekSlate } from '../hooks/useWeekSlate.js';
@@ -78,7 +78,12 @@ export function WeekSlatePanel() {
           games={slate.games.filter(g => gameCategory(g) === section.key).sort(section.sort)}
           subgroupOf={section.subgroupOf}
           order={section.order?.()}
-          noteFor={g => rivalryFor(g, week !== POSTSEASON)}
+          noteFor={g => {
+            // The game's name from ESPN (bowl names, neutral-site games), plus a rivalry or
+            // in-state tag when it's a different label.
+            const tag = rivalryFor(g, false);
+            return [g.title, tag && tag !== g.title ? tag : null].filter(Boolean).join(', ') || null;
+          }}
           includedIds={slate.includedIds}
           onToggle={slate.toggle}
           onSelectAll={slate.selectAll}
