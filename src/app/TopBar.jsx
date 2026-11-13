@@ -1,11 +1,27 @@
+// Sun in dark mode (tap for light), moon in light mode (tap for dark).
+const Sun = () => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.2" />
+    <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" />
+  </svg>
+);
+const Moon = () => (
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
+    <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
+  </svg>
+);
+
 export function TopBar({ theme }) {
+  const dark = theme.theme === 'dark';
   return (
     <div className="topbar">
       <div className="brand-mark">
         <span className="brand-badge">B</span>
         <span className="brand">Backfield Brainiacs</span>
       </div>
-      <button className="link" onClick={theme.cycle}>{theme.label}</button>
+      <button type="button" className="theme-toggle" onClick={theme.toggle} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'} title={dark ? 'Light mode' : 'Dark mode'}>
+        {dark ? <Sun /> : <Moon />}
+      </button>
     </div>
   );
 }

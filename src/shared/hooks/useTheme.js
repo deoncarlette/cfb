@@ -1,21 +1,29 @@
 import { useEffect, useState } from 'react';
 
+// Light/dark. Follows the device setting until you tap the toggle; your choice is saved only
+// while it differs from the device, so switching back to match it returns to following it.
+const KEY = 'theme-pref';
+const mq = () => window.matchMedia('(prefers-color-scheme: light)');
+const systemTheme = () => (mq().matches ? 'light' : 'dark');
+function savedTheme() {
+  try { const v = localStorage.getItem(KEY); return v === 'light' || v === 'dark' ? v : null; } catch (e) { return null; }
+}
+
 export function useTheme() {
-  const [mode, setMode] = useState(() => { try { return localStorage.getItem('theme-pref') || 'system'; } catch (e) { return 'system'; } });
+  const [saved, setSaved] = useState(savedTheme);
+  const [system, setSystem] = useState(systemTheme);
   useEffect(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: light)');
-    function apply() {
-      const effective = mode === 'system' ? (mq.matches ? 'light' : 'dark') : mode;
-      document.documentElement.setAttribute('data-theme', effective);
-    }
-    apply();
-    if (mode === 'system') { mq.addEventListener('change', apply); return () => mq.removeEventListener('change', apply); }
-  }, [mode]);
-  function cycle() {
-    const next = mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system';
-    setMode(next);
-    try { localStorage.setItem('theme-pref', next); } catch (e) {}
+    const m = mq(); const onChange = () => setSystem(systemTheme());
+    m.addEventListener('change', onChange);
+    return () => m.removeEventListener('change', onChange);
+  }, []);
+  const theme = saved || system;
+  useEffect(() => { document.documentElement.setAttribute('data-theme', theme); }, [theme]);
+  function toggle() {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    const keep = next === system ? null : next;
+    setSaved(keep);
+    try { keep ? localStorage.setItem(KEY, keep) : localStorage.removeItem(KEY); } catch (e) {}
   }
-  const label = mode === 'system' ? '\u{1F5A5}\uFE0F System' : mode === 'light' ? '\u2600\uFE0F Light' : '\u{1F319} Dark';
-  return { mode, cycle, label };
+  return { theme, toggle };
 }
