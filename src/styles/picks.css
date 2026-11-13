@@ -210,3 +210,38 @@
 .details-toggle .game-title{color:var(--text); font-weight:600; flex-shrink:1;}
 /* Missed: locked with no pick — its (lowest) point value is burned. */
 .pts-badge.missed{background:transparent; border-style:dashed; color:var(--muted); opacity:.75;}
+
+/* ---- Trial layout: teams on the left and right, confidence points between them ---- */
+.layout-trial{display:flex; align-items:center; gap:10px; margin:0 0 12px; font-size:12px; color:var(--muted);}
+.layout-trial .subtab-track{flex:1; margin:0;}
+.layout-trial .subtab-btn{font-size:12px; padding:6px 8px;}
+
+.game-card.center{
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  grid-template-areas:"meta meta meta" "away pts home" ". arrows ." "venue venue venue";
+  column-gap:8px;
+}
+.game-card.center .matchup{display:contents;}
+.game-card.center .matchup-side{
+  grid-area:away; height:58px; clip-path:none; margin:0;
+  padding:0 12px 0 14px; container:side / inline-size; overflow:hidden;
+}
+.game-card.center .matchup-side.away{border-radius:29px 16px 16px 29px;}
+.game-card.center .matchup-side.home{grid-area:home; border-radius:16px 29px 29px 16px; padding:0 14px 0 12px;}
+.game-card.center .pts-input, .game-card.center .pts-badge{width:52px; height:52px; font-size:26px; border-radius:14px; justify-self:center;}
+.game-card.center .arrows, .game-card.center .pts-of{justify-self:center;}
+.game-card.center .game-details{grid-column:1 / -1;}
+.game-card.center .team-score{font-size:24px;}
+@container side (max-width:200px){
+  .game-card.center .team-name{display:none;}
+  .game-card.center .team-abbr{display:block;}
+}
+@media (max-width:440px){
+  .game-card.center{column-gap:6px; padding:8px;}
+  .game-card.center .matchup-side{height:52px; padding:0 8px 0 10px; gap:5px;}
+  .game-card.center .matchup-side.away{border-radius:26px 14px 14px 26px;}
+  .game-card.center .matchup-side.home{border-radius:14px 26px 26px 14px;}
+  .game-card.center .matchup-side.home{padding:0 10px 0 8px;}
+  .game-card.center .pts-input, .game-card.center .pts-badge{width:46px; height:46px; font-size:23px;}
+  .game-card.center .team-score{font-size:20px;}
+}

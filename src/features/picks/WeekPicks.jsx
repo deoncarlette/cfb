@@ -9,6 +9,8 @@ import { PlayerPicker } from './components/PlayerPicker.jsx';
 import { LockAlert } from './components/LockAlert.jsx';
 import { DEFAULT_PLAYER } from './sample/samplePicks.js';
 import { useNav, navigate } from '@/shared/nav.js';
+import { Segmented } from '@/shared/components/Segmented.jsx';
+import { useStoredState } from '@/shared/hooks/useStoredState.js';
 import { fetchPollScores } from '@/services/espn/index.js';
 import { ReplayScheduleToggle } from '@/shared/components/ReplayScheduleToggle.jsx';
 import { replaySchedule } from '@/services/espn/replay.js';
@@ -32,6 +34,7 @@ export function WeekPicks({ week, userName, nameKey }) {
   // Whose picks are on the cards: '' = yours; else another player's (in the address, so the
   // Scoreboard can link here and Back returns).
   const nav = useNav();
+  const [cardLayout, setCardLayout] = useStoredState('card-layout', 'pill', 'local');
   const viewing = nav.player;
   const setViewing = name => navigate({ player: name });
 
@@ -234,6 +237,10 @@ export function WeekPicks({ week, userName, nameKey }) {
               />
             </>
           )}
+          <div className="layout-trial">
+            <span>Card layout (trial)</span>
+            <Segmented label="Card layout" options={[['pill', 'Pill'], ['center', 'Points in the middle']]} value={cardLayout} onChange={setCardLayout} />
+          </div>
           {!(viewingOther && !viewed) && groups.map(group => (
             <section key={group.id} className="game-group">
               {group.label && <h3 className="game-group-head">{group.label} <span>{group.ids.length}</span></h3>}
@@ -250,6 +257,7 @@ export function WeekPicks({ week, userName, nameKey }) {
                     live={liveStanding(game, shown.winners[gameId])}
                     picked={shown.winners[gameId]}
                     missed={!viewingOther && isMissed(gameId)}
+                    layout={cardLayout}
                     locked={readOnly}
                     canUp={!readOnly && canMove(gameId, -1)}
                     canDown={!readOnly && canMove(gameId, 1)}

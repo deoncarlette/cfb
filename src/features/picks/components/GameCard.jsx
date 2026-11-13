@@ -10,7 +10,8 @@ import { ConfidenceControl } from './ConfidenceControl.jsx';
 // lists none), and the details button; points on the right.
 // The button under the pill opens the matchup info (before kickoff) or the box score.
 // total is how many cards there are; canUp/canDown say whether the arrows can move it.
-export function GameCard({ game, total, points, result, live, picked, missed, locked, canUp, canDown, pool, dragProps, onPick, onMove, onSetPoints }) {
+// layout: 'pill' (default) or 'center' (trial: teams left and right, points chip between them).
+export function GameCard({ game, total, points, result, live, picked, missed, locked, canUp, canDown, pool, dragProps, onPick, onMove, onSetPoints, layout = 'pill' }) {
   const [open, setOpen] = useState(false);
   const isLive = game.state === 'in';
   const started = game.completed || isLive;
@@ -18,7 +19,7 @@ export function GameCard({ game, total, points, result, live, picked, missed, lo
   // ESPN's name for the game (bowls, neutral-site games), else a known rivalry's name.
   const gameName = game.title || listedRivalry(game);
   return (
-    <div className={'game-card' + (!picked ? ' unpicked' : '') + (isLive ? ' live' : '')} draggable={!locked} {...(locked ? {} : dragProps)}>
+    <div className={'game-card' + (layout === 'center' ? ' center' : '') + (!picked ? ' unpicked' : '') + (isLive ? ' live' : '')} draggable={!locked} {...(locked ? {} : dragProps)}>
       <div className="game-meta">
         {game.completed
           ? <span><strong className="game-final">Final</strong> {formatGameDay(game.date)}</span>
