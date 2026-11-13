@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { fetchGamesFor, applyRankOverlay, isDefaultSlateGame, loadConferenceNames, POSTSEASON } from '@/services/espn/index.js';
+import { fetchGamesFor, applyRankOverlay, isDefaultSlateGame, POSTSEASON } from '@/services/espn/index.js';
 import { getWeekConfig, saveWeekConfig } from '@/services/data/index.js';
 import { toDatetimeLocal } from '@/shared/utils/dates.js';
 import { weekLabel } from '@/shared/components/WeekSelect.jsx';
@@ -19,7 +19,7 @@ export function useWeekSlate(week) {
     setStatus(`Pulling ${weekLabel(week)} from ESPN…`);
     try {
       let pulled = await fetchGamesFor(week, [80, 81]); // 80 = FBS, 81 = FCS — "all D1"; bowls for Postseason
-      [pulled] = await Promise.all([applyRankOverlay(pulled, week), loadConferenceNames()]);
+      pulled = await applyRankOverlay(pulled, week);
       setGames(pulled);
       const cfg = await getWeekConfig(week);
       // Nothing saved yet for this week → start with the same games the Picks tab shows: the

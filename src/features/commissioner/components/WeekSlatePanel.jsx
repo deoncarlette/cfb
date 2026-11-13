@@ -1,4 +1,4 @@
-import { bestRealRank, gameCategory, gameConference, rivalryFor, otherConferenceOrder, P4_ORDER, POSTSEASON } from '@/services/espn/index.js';
+import { bestRealRank, gameCategory, gameConference, rivalryFor, P4_ORDER, OTHER_ORDER, POSTSEASON } from '@/services/espn/index.js';
 import { useWeekSelector } from '@/shared/hooks/useWeekSelector.js';
 import { WeekSelect } from '@/shared/components/WeekSelect.jsx';
 import { useWeekSlate } from '../hooks/useWeekSlate.js';
@@ -9,7 +9,8 @@ const byKickoff = (a, b) => new Date(a.date) - new Date(b.date);
 const SECTIONS = [
   { key: 'top25', label: 'Top 25', sort: (a, b) => bestRealRank(a) - bestRealRank(b) || byKickoff(a, b) },
   { key: 'power4', label: 'Power 4', sort: byKickoff, subgroupOf: g => gameConference(g, true), order: () => P4_ORDER },
-  { key: 'other', label: 'All Other Games', sort: byKickoff, subgroupOf: g => gameConference(g), order: otherConferenceOrder }
+  { key: 'meac', label: 'MEAC', sort: byKickoff },
+  { key: 'other', label: 'All Other Games', sort: byKickoff, subgroupOf: g => gameConference(g), order: () => OTHER_ORDER }
 ];
 
 export function WeekSlatePanel() {
