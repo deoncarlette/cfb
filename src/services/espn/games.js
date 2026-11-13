@@ -118,14 +118,6 @@ export function gameStatusLabel(game) {
   return formatKickoff(game.date);
 }
 
-// The chip on the seam between the two teams: FINAL, or the live clock. Nothing before kickoff
-// (the kickoff time shows above the pill instead).
-export function matchupChip(game) {
-  if (game.completed) return 'Final';
-  if (game.state === 'in') return game.status;
-  return null;
-}
-
 // Team id of the winner of a finished game, else null.
 export function gameWinnerId(game) {
   if (!game.completed) return null;

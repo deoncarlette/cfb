@@ -51,8 +51,6 @@
 }
 .matchup-side.away{clip-path:polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%); margin-right:-8px; padding-right:24px;}
 .matchup-side.home{clip-path:polygon(18px 0, 100% 0, 100% 100%, 0 100%); margin-left:-8px; padding-left:24px; flex-direction:row-reverse; text-align:right;}
-.matchup.has-chip .matchup-side.away{padding-right:40px;}
-.matchup.has-chip .matchup-side.home{padding-left:40px;}
 .matchup-side:disabled{cursor:default; opacity:1;}
 .matchup-side.sel{background:var(--fill); color:var(--fill-ink);}
 /* Once a side is picked, the other side goes one even light gray: name and score in gray,
@@ -77,12 +75,6 @@
   font-family:var(--display); font-weight:700; font-style:italic; text-transform:uppercase;
   font-size:20px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-.matchup-mid{
-  position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); z-index:2; pointer-events:none;
-  padding:4px 7px; text-align:center; border-radius:8px; white-space:nowrap;
-  background:var(--pill-chip); color:var(--pill-chip-ink); border:1px solid var(--pill-chip-line);
-  font-family:var(--display); font-weight:700; font-size:13px; line-height:1.05; text-transform:uppercase;
-}
 
 /* Week summary (once games go final) */
 .week-results{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:0 0 16px;}
@@ -106,9 +98,6 @@
   .matchup-side .team-logo{width:24px; height:24px;}
   .team-name{font-size:17px;}
   .team-score{font-size:22px;}
-  .matchup-mid{display:none;}  /* "Final" is in the line above instead */
-  .matchup.has-chip .matchup-side.away{padding-right:20px;}
-  .matchup.has-chip .matchup-side.home{padding-left:20px;}
   .team-rank{font-size:13px;}
 }
 /* Short names (MICH, UCLA) whenever the pill is phone-sized — measured on the pill itself, so it
