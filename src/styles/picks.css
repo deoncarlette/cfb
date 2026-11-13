@@ -1,5 +1,7 @@
 /* Picks tab — game cards with the broadcast-style matchup pill (features/picks). */
-.quickpicks{margin:10px 0 16px;}
+.quickpicks{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin:10px 0 16px;}
+.quickpicks button{padding:10px 6px; font-size:14px;}
+.quickpicks .qp-clear{color:var(--danger);}
 
 /* Card grid: kickoff on top left, spread + O/U on top right (across the full card); [matchup pill] [points]; venue under the pill, ↑/↓ under the points. */
 .game-card{

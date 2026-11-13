@@ -47,14 +47,26 @@ export function togglePick(winners, gameId, teamId) {
   const next = { ...winners }; delete next[gameId]; return next;
 }
 
-// mode: 'home' | 'away' | 'random' → { gameId: teamId }
+// The betting favorite's team id: from the line, else the better-ranked team, else the home team.
+export function favoriteId(game) {
+  const [away, home] = game.competitors;
+  if (game.line?.favorite) return game.line.favorite;
+  const r = t => Number(t.rank) || 99;
+  if (r(away) !== r(home)) return r(away) < r(home) ? away.id : home.id;
+  return home.id;
+}
+
+// mode: 'home' | 'away' | 'random' | 'favorites' | 'underdogs' → { gameId: teamId }
 export function quickPickWinners(games, mode) {
   const next = {};
   games.forEach(g => {
     const [away, home] = g.competitors;
+    const fav = favoriteId(g);
     if (mode === 'home') next[g.id] = home.id;
     else if (mode === 'away') next[g.id] = away.id;
     else if (mode === 'random') next[g.id] = Math.random() < 0.5 ? away.id : home.id;
+    else if (mode === 'favorites') next[g.id] = fav;
+    else if (mode === 'underdogs') next[g.id] = fav === home.id ? away.id : home.id;
   });
   return next;
 }

@@ -6,11 +6,19 @@ import { formatKickoff } from '@/shared/utils/dates.js';
 
 // Betting line from ESPN, when they have one (usually just the current week).
 // → { spread: 'MICH -3.5', overUnder: 47.5 } or null
-function parseLine(odds) {
+// { spread: "IOWA -17.5", overUnder, favorite: team id | null }. The favorite comes from ESPN's
+// favorite flags, else the team abbreviation in the spread ("EVEN"/"PK" → no favorite).
+function parseLine(odds, competitors = []) {
   if (!odds) return null;
   const spread = odds.details || null;
   const overUnder = odds.overUnder ?? null;
-  return spread || overUnder != null ? { spread, overUnder } : null;
+  const [away, home] = competitors;
+  let favorite = odds.homeTeamOdds?.favorite ? home?.id : odds.awayTeamOdds?.favorite ? away?.id : null;
+  if (!favorite && spread) {
+    const text = spread.trim().toUpperCase() + ' ';
+    favorite = competitors.find(c => c.abbr && text.startsWith(c.abbr.toUpperCase() + ' '))?.id || null;
+  }
+  return spread || overUnder != null ? { spread, overUnder, favorite } : null;
 }
 
 // "Week" key for the postseason: bowl games (and the CFP bracket, which has its own screen).
@@ -50,7 +58,7 @@ function parseEvents(events) {
       status: event.status?.type?.shortDetail || 'Scheduled',
       state: event.status?.type?.state || 'pre',
       completed: event.status?.type?.completed === true,
-      line: parseLine(competition?.odds?.[0]),
+      line: parseLine(competition?.odds?.[0], competitors),
       // TV network(s), e.g. "ESPN" or "FOX".
       broadcast: competition?.broadcast || competition?.broadcasts?.[0]?.names?.join('/') || competition?.geoBroadcasts?.[0]?.media?.shortName || null,
       situation: parseSituation(competition?.situation),

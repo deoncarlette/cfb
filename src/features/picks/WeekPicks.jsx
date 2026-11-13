@@ -190,7 +190,12 @@ export function WeekPicks({ week, userName, nameKey }) {
                 Pick a winner on each card, then drag (or use the arrows/number) to set confidence. Top = most confident.
                 {' '}{pickedCount} of {games.length} picked.
               </p>
-              <QuickPicks onPick={mode => setWinners(w => ({ ...w, ...quickPickWinners(openGames, mode) }))} disabled={lock.allLocked} />
+              <QuickPicks
+                onPick={mode => setWinners(w => mode === 'clear'
+                  ? Object.fromEntries(Object.entries(w).filter(([id]) => isLocked(id)))
+                  : { ...w, ...quickPickWinners(openGames, mode) })}
+                disabled={lock.allLocked}
+              />
             </>
           )}
           {!(viewingOther && !viewed) && groups.map(group => (
