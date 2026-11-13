@@ -42,6 +42,9 @@ export function WeekSlatePanel() {
         <button onClick={slate.pullGames} disabled={slate.pulling}>{slate.pulling ? 'Pulling…' : 'Pull games from ESPN'}</button>
         <span className="muted small" style={{ alignSelf: 'center' }}>{slate.status}</span>
       </div>
+      {slate.games.some(g => g.simulated) && (
+        <p className="bk-notice">These bowls are simulated until ESPN posts the real ones (usually early December). Don't save a bowl slate until then — the real games will have different IDs.</p>
+      )}
 
       <label>Picks lock</label>
       {/* Three choices instead of a blank date field: the iPhone time picker can't be closed

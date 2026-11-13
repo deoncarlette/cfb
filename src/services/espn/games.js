@@ -3,6 +3,7 @@ import { fetchPollRankMap } from './rankings.js';
 import { SEASON, CFP_SWITCH_WEEK } from '@/config.js';
 import { hexColor } from '@/shared/utils/colors.js';
 import { formatKickoff } from '@/shared/utils/dates.js';
+import { simulatedBowls } from './simulatedBowls.js';
 
 // Betting line from ESPN, when they have one (usually just the current week).
 // → { spread: 'MICH -3.5', overUnder: 47.5 } or null
@@ -95,11 +96,22 @@ export function isPlayoffGame(game) {
 }
 
 // All FBS bowl games (Dec–Jan), without the CFP games.
+// The season's bowls from ESPN. Until ESPN posts them (early December), a stand-in slate built
+// from this season's teams (simulatedBowls.js), every game marked simulated: true.
 export async function fetchBowlGames() {
   const response = await fetch(`${ESPN_BASE}/scoreboard?limit=300&seasontype=3&dates=${SEASON}1201-${SEASON + 1}0131&groups=80`);
   if (!response.ok) throw new Error('Schedule unavailable');
   const data = await response.json();
-  return parseEvents(data.events || []).filter(g => !isPlayoffGame(g));
+  const bowls = parseEvents(data.events || []).filter(g => !isPlayoffGame(g));
+  if (bowls.length) return bowls;
+  const week = await fetchCurrentWeek();
+  if (typeof week !== 'number') return [];
+  const [fbs, fcs] = await Promise.all([
+    fetchEspnGames(week, [80]).catch(() => []),
+    fetchEspnGames(week, [81]).catch(() => [])
+  ]);
+  const prior = week > 1 ? await fetchEspnGames(week - 1, [80]).catch(() => []) : [];
+  return simulatedBowls([...fbs, ...prior], fcs);
 }
 
 // Games for a week number, or bowl games for POSTSEASON.

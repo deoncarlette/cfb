@@ -174,6 +174,9 @@ export function WeekPicks({ week, userName, nameKey }) {
               {`Showing ${sample.playerName}'s picks${sample.isMock ? ' (some simulated for this preview)' : ''}`}{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
             </p>
           )}
+          {games.some(g => g.simulated) && (
+            <p className="sample-note">Simulated bowl slate: ESPN hasn't posted this season's bowls yet, so these matchups are built from current rankings and records. The real bowls replace them once ESPN has them (usually early December).</p>
+          )}
           {isReplay && (
             <div className="sample-note">
               Test replay: {label}'s games are re-played today at their real kickoff times.

@@ -11,6 +11,8 @@ export function useGameSummary(eventId, live) {
 
   useEffect(() => {
     let alive = true;
+    // Stand-in bowls (simulated until ESPN posts the real ones) have nothing to look up.
+    if (String(eventId).startsWith('sim-')) { setError('Simulated matchup: details come once ESPN posts the real bowl.'); return () => {}; }
     const load = () => fetchGameSummary(eventId)
       .then(s => {
         if (!alive) return;

@@ -77,6 +77,10 @@ export const P4_ORDER = ['SEC', 'Big Ten', 'Big 12', 'ACC'];
 export const FBS_ORDER = ['American', 'Mountain West', 'Sun Belt', 'MAC', 'Conference USA', 'Pac-12', 'FBS Independents'];
 export const FCS_ORDER = Object.values(FCS_BY_ESPN_ID).sort((a, b) => a.localeCompare(b));
 
+// An FBS team (Power 4 by name, or an FBS conference id) — FCS opponents of FBS teams show up
+// in ESPN's FBS game lists too.
+export function isFbsTeam(team) { return isP4(team.name) || !!FBS_BY_ESPN_ID[team.conferenceId]; }
+
 export function conferenceOf(team) {
   if (SEC_TEAMS.has(team.name)) return 'SEC';
   if (BIG_TEN_TEAMS.has(team.name)) return 'Big Ten';
