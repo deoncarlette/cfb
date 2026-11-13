@@ -2,8 +2,8 @@
 // it and the menu goes back to its prompt. Games that have locked aren't touched.
 // Favorites come from the betting line; games without one use the better-ranked team, then home.
 const OPTIONS = [
-  ['random', 'Random'], ['favorites', 'All favorites'], ['underdogs', 'All underdogs'],
-  ['home', 'All home'], ['away', 'All away'], ['clear', 'Clear all picks']
+  ['random', 'Random'], ['home', 'All home'], ['away', 'All away'],
+  ['favorites', 'All favorites'], ['underdogs', 'All underdogs'], ['clear', 'Clear all picks']
 ];
 
 export function QuickPicks({ onPick, disabled }) {
