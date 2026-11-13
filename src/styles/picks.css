@@ -1,15 +1,15 @@
 /* Picks tab — game cards with the broadcast-style matchup pill (features/picks). */
 .quickpicks{margin:10px 0 16px;}
 
-/* Card grid: kickoff + line on top; [matchup pill] [points]; venue under the pill, ↑/↓ under the points. */
+/* Card grid: kickoff on top left, spread + O/U on top right (across the full card); [matchup pill] [points]; venue under the pill, ↑/↓ under the points. */
 .game-card{
-  display:grid; grid-template-columns:minmax(0,1fr) 44px; grid-template-areas:"meta ." "pill pts" "venue arrows";
+  display:grid; grid-template-columns:minmax(0,1fr) 44px; grid-template-areas:"meta meta" "pill pts" "venue arrows";
   column-gap:10px; row-gap:6px; align-items:center;
   background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
   padding:10px; margin-bottom:10px; cursor:grab; box-shadow:var(--shadow);
 }
 .game-card:active{cursor:grabbing;}
-.game-meta{grid-area:meta; display:flex; justify-content:space-between; gap:10px; padding:0 6px; font-size:12px; color:var(--muted); white-space:nowrap;}
+.game-meta{grid-area:meta; display:flex; justify-content:space-between; gap:10px; padding:0 2px 0 6px; font-size:12px; color:var(--muted); white-space:nowrap;}
 .game-final{color:var(--text); font-weight:700;}
 .game-line{display:flex; gap:10px; font-weight:600; color:var(--text);}
 .game-venue{grid-area:venue; text-align:center; font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
@@ -59,6 +59,7 @@
    logo desaturated. Same shade for every school, so dark colors stay readable. */
 .matchup.has-pick .matchup-side:not(.sel){color:var(--pill-off);}
 .matchup.has-pick .matchup-side:not(.sel) .team-logo{filter:grayscale(1) drop-shadow(0 1px 2px rgba(0,0,0,.45));}
+:root[data-theme="light"] .matchup.has-pick .matchup-side:not(.sel) .team-logo{filter:grayscale(1) opacity(.4);}
 .matchup-side.sel::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(0,0,0,.18)); pointer-events:none;}
 
 .matchup-side .team-logo{width:32px; height:32px; position:relative; z-index:1; filter:drop-shadow(0 1px 2px rgba(0,0,0,.45));}

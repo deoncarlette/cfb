@@ -37,7 +37,7 @@ export function WeekSlatePanel() {
 
       {SECTIONS.map(section => (
         <GameSection
-          key={section.key}
+          key={week + ':' + section.key}
           label={section.label}
           games={slate.games.filter(g => section.key === 'rivalry' ? rivalryFor(g, week !== POSTSEASON) : gameCategory(g) === section.key).sort(section.sort)}
           subgroupOf={section.subgroupOf}

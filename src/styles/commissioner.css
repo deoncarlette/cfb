@@ -12,3 +12,12 @@
 .commish-row label > span{display:flex; flex-direction:column; min-width:0;}
 .rivalry-name{font-size:12px; font-weight:500; color:var(--accent);}
 :root[data-theme="light"] .rivalry-name{color:#9a6b00;}
+
+/* Collapsible sections and conference subgroups: tap the name to open/close. */
+.collapse-toggle{display:inline-flex; align-items:center; gap:8px; background:none; border:none; padding:4px 0; margin:0; color:inherit; font:inherit; text-align:left; cursor:pointer;}
+.collapse-toggle .section-count{margin-left:0;}
+.chevron{width:7px; height:7px; border-right:2px solid var(--muted); border-bottom:2px solid var(--muted); transform:rotate(-45deg); transition:transform .15s ease; flex-shrink:0;}
+.collapse-toggle[aria-expanded="true"] .chevron{transform:rotate(45deg) translate(-2px, -2px);}
+.subgroup-heading .collapse-toggle{font-size:13px; font-weight:700; color:var(--muted);}
+.slate-section:not(.open) .section-heading{margin-bottom:4px;}
+@media (prefers-reduced-motion: reduce){ .chevron{transition:none;} }
