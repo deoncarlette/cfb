@@ -13,6 +13,16 @@ export function formatKickoff(value) {
   return `${weekday}, ${get('month')}/${get('day')} ${get('hour')}:${get('minute')} ${get('dayPeriod')} ${get('timeZoneName')}`;
 }
 
+// A game whose kickoff time isn't set: ESPN parks it at midnight Eastern on game day, so read
+// the day in Eastern time → "SAT, 11/28, time TBA".
+export function formatTbdDay(value) {
+  const d = new Date(value);
+  if (isNaN(d.getTime())) return '';
+  const p = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'numeric', day: 'numeric', timeZone: 'America/New_York' }).formatToParts(d);
+  const get = type => p.find(x => x.type === type)?.value || '';
+  return `${get('weekday').toUpperCase().replace('.', '')}, ${get('month')}/${get('day')}, time TBA`;
+}
+
 // "SAT, 9/5" — the day only, for finished games.
 export function formatGameDay(value) {
   const k = formatKickoff(value);

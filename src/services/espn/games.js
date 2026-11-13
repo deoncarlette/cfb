@@ -2,7 +2,7 @@ import { ESPN_BASE } from './client.js';
 import { fetchPollRankMap } from './rankings.js';
 import { SEASON, CFP_SWITCH_WEEK } from '@/config.js';
 import { hexColor } from '@/shared/utils/colors.js';
-import { formatKickoff } from '@/shared/utils/dates.js';
+import { formatKickoff, formatTbdDay } from '@/shared/utils/dates.js';
 import { simulatedBowls, hasTbdTeam } from './simulatedBowls.js';
 
 // Betting line from ESPN, when they have one (usually just the current week).
@@ -53,8 +53,11 @@ function parseEvents(events) {
     return {
       id: String(event.id),
       date: event.date,
-      // Bowl / game name ESPN attaches, e.g. "Rose Bowl" or "CFP First Round".
-      title: competition?.notes?.[0]?.headline || null,
+      // Bowl / game name ESPN attaches, e.g. "Rose Bowl" or "CFP First Round" — not its TV
+      // time-window notes ("FLEX: 3:30 - 4:30pm OR 6 - 8pm ET start, Iron Bowl" → "Iron Bowl").
+      title: gameName(competition?.notes),
+      // ESPN hasn't set the kickoff time yet (the date is a placeholder at midnight Eastern).
+      timeTbd: event.timeValid === false,
       venue: competition?.venue?.fullName || formatKickoff(event.date),
       status: event.status?.type?.shortDetail || 'Scheduled',
       state: event.status?.type?.state || 'pre',
@@ -66,6 +69,19 @@ function parseEvents(events) {
       competitors
     };
   }).filter(game => game.competitors.length === 2);
+}
+
+// ESPN's game notes → the game's name, or null. Drops scheduling notes such as
+// "FLEX: 3:30 - 4:30pm OR 6 - 8pm ET start", "NIGHT: 6 - 8pm ET start", "EARLY: Noon - 1pm ET
+// start", and keeps what follows ("…, Iron Bowl" → "Iron Bowl").
+const TIME_NOTE = /^\s*(flex|night|early|late|afternoon|prime\s*time|primetime|evening|tba|tbd)\b[^,]*?\bstart\b\s*,?\s*/i;
+const TIME_ONLY = /^\s*(\w+:\s*)?(noon|\d{1,2}(:\d\d)?\s*(am|pm)?)\b.*\b(et|ct|pt|mt)\b.*$/i;
+export function gameName(notes) {
+  for (const n of notes || []) {
+    const name = (n?.headline || '').replace(TIME_NOTE, '').trim();
+    if (name && !TIME_ONLY.test(name)) return name;
+  }
+  return null;
 }
 
 // Live game situation: who has the ball, down & distance, red zone. null when not live.
@@ -148,7 +164,7 @@ export async function applyRankOverlay(gamesList, week) {
 export function gameStatusLabel(game) {
   if (game.completed) return 'FINAL';
   if (game.state === 'in') return game.status;
-  return formatKickoff(game.date);
+  return game.timeTbd ? formatTbdDay(game.date) : formatKickoff(game.date);
 }
 
 // Team id of the winner of a finished game, else null.

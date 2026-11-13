@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { formatKickoff, formatGameDay } from '@/shared/utils/dates.js';
+import { formatKickoff, formatGameDay, formatTbdDay } from '@/shared/utils/dates.js';
 import { listedRivalry } from '@/services/espn/index.js';
 import { GameDetails } from './details/GameDetails.jsx';
 import { MatchupPill } from './MatchupPill.jsx';
@@ -24,7 +24,7 @@ export function GameCard({ game, total, points, result, live, picked, locked, ca
           ? <span><strong className="game-final">Final</strong> {formatGameDay(game.date)}</span>
           : isLive
             ? <span><strong className="live-badge">Live</strong> {game.status}<Possession game={game} /></span>
-            : <span>{formatKickoff(game.date)}</span>}
+            : <span>{game.timeTbd ? formatTbdDay(game.date) : formatKickoff(game.date)}</span>}
         {line && (
           <span className="game-line">
             {line.spread && <span>{line.spread}</span>}
