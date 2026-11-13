@@ -169,16 +169,18 @@ export function replayGames(games, now = new Date()) {
   return games.map(g => {
     if (!g.completed) return g;
     const { kickoff, f } = replayClock(g.date, now);
-    const base = { ...g, date: kickoff.toISOString(), replay: { f } };
+    // realWinner: who actually won, even while the replay shows the game upcoming or live.
+    const real = g.competitors.find(c => c.winner);
+    const base = { ...g, date: kickoff.toISOString(), replay: { f }, realWinner: real ? real.id : null };
     if (f < 0) {
       return { ...base, completed: false, state: 'pre', status: 'Scheduled', competitors: g.competitors.map(c => ({ ...c, score: null, winner: false })) };
     }
     if (f >= 1) return base; // final, real score
-    const real = replaySummaryFor(g.id);
-    const rewound = real && rewindSummary(real, f);
+    const summary = replaySummaryFor(g.id);
+    const rewound = summary && rewindSummary(summary, f);
     return {
       ...base, completed: false, state: 'in', status: clockAt(f),
-      situation: situationAt(real, g, f * 4 * QUARTER_SECS),
+      situation: situationAt(summary, g, f * 4 * QUARTER_SECS),
       competitors: g.competitors.map(c => ({
         ...c, winner: false,
         score: rewound

@@ -49,16 +49,69 @@ async function loadFile() {
   return fileCache;
 }
 
+// Who actually won (a replayed game keeps its real winner while it plays back), or null.
+const realWinnerOf = g => g.realWinner ?? (g.completed ? g.competitors.find(c => c.winner)?.id ?? null : null);
+
 // One ballot → { user_name, picks: { espnGameId: { winner, confidence } }, isMock } using the
-// file-game → ESPN-game map.
+// file-game → ESPN-game map. Simulated picks are fitted to the player's recorded score once
+// every game's real winner is known — see fitToScore.
 function ballotEntry(ballot, espnByFileId) {
-  const picks = {};
+  const picks = {}; const simulated = new Set();
   ballot.picks.forEach(p => {
     const game = espnByFileId.get(p.gameId);
     const winner = game && game.competitors.find(c => teamMatches(p.pick, c));
-    if (winner) picks[game.id] = { winner: winner.id, confidence: p.confidence };
+    if (!winner) return;
+    picks[game.id] = { winner: winner.id, confidence: p.confidence };
+    if (p.isMock) simulated.add(game.id);
   });
+  if (simulated.size && ballot.weeklyScore != null) fitToScore(picks, simulated, Number(ballot.weeklyScore), espnByFileId);
   return { user_name: ballot.playerName, picks, isMock: !!ballot.isMockBallot };
+}
+
+// Simulated picks were seeded for looks, not to add up. Once every game on the ballot has a
+// real winner, flip the fewest simulated picks (same points, other team) so the ballot scores
+// exactly the player's recorded weekly score. Real picks never change. If no combination of
+// simulated picks can reach the score, the ballot is left as it was.
+function fitToScore(picks, simulated, target, espnByFileId) {
+  const games = new Map([...espnByFileId.values()].map(g => [g.id, g]));
+  const winners = new Map();
+  for (const id of Object.keys(picks)) {
+    const w = games.get(id) && realWinnerOf(games.get(id));
+    if (!w) return; // some game isn't decided yet: nothing to fit to
+    winners.set(id, w);
+  }
+  let fixed = 0; const items = [];
+  for (const [id, p] of Object.entries(picks)) {
+    const right = p.winner === winners.get(id);
+    if (!simulated.has(id)) { if (right) fixed += Number(p.confidence) || 0; }
+    else items.push({ id, conf: Number(p.confidence) || 0, right });
+  }
+  const need = target - fixed;
+  const max = items.reduce((t, i) => t + i.conf, 0);
+  if (need < 0 || need > max) return;
+  // best[s] = fewest flips for the simulated picks so far to score s; choice tracks the path.
+  let best = new Array(max + 1).fill(Infinity); best[0] = 0;
+  const steps = [];
+  for (const it of items) {
+    const next = new Array(max + 1).fill(Infinity); const took = new Array(max + 1).fill(false);
+    for (let s = 0; s <= max; s++) {
+      if (best[s] === Infinity) continue;
+      const wrong = best[s] + (it.right ? 1 : 0);                 // make it a miss
+      if (wrong < next[s]) { next[s] = wrong; took[s] = false; }
+      const right = best[s] + (it.right ? 0 : 1);                  // make it a hit
+      if (s + it.conf <= max && right < next[s + it.conf]) { next[s + it.conf] = right; took[s + it.conf] = true; }
+    }
+    steps.push(took); best = next;
+  }
+  if (best[need] === Infinity) return;
+  for (let k = items.length - 1, s = need; k >= 0; k--) {
+    const it = items[k]; const hit = steps[k][s];
+    if (hit !== it.right) {
+      const other = games.get(it.id).competitors.find(c => c.id !== picks[it.id].winner);
+      picks[it.id] = { ...picks[it.id], winner: other.id };
+    }
+    if (hit) s -= it.conf;
+  }
 }
 
 // For a week in the file:
