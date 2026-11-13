@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getMyPicks, submitPicks } from '@/services/data/index.js';
-import { formatKickoff } from '@/shared/utils/dates.js';
 import { weekLabel } from '@/shared/components/WeekSelect.jsx';
 import { Centered } from '@/shared/components/Centered.jsx';
 import { usePicksWeek } from './hooks/usePicksWeek.js';
 import { useConfidenceOrder } from './hooks/useConfidenceOrder.js';
 import { useOtherPlayers } from './hooks/useOtherPlayers.js';
 import { PlayerPicker } from './components/PlayerPicker.jsx';
+import { LockAlert } from './components/LockAlert.jsx';
 import { quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding } from './picksLogic.js';
 import { WeekResults } from './components/WeekResults.jsx';
 import { QuickPicks } from './components/QuickPicks.jsx';
@@ -17,8 +17,9 @@ import { SubmitPicks } from './components/SubmitPicks.jsx';
 // cards by confidence. Once games go final, each card shows the score and the points earned.
 // nameKey changes when the player finishes typing their name, to pull up their saved picks.
 export function WeekPicks({ week, userName, nameKey }) {
-  const { games, config, sample, loading, error, deadlinePassed, anyLive, updatedAt, isReplay } = usePicksWeek(week);
-  const { order, setOrder, move, moveToConfidence, dragPropsFor } = useConfidenceOrder();
+  const { games, sample, loading, error, lock, anyLive, updatedAt, isReplay } = usePicksWeek(week);
+  const isLocked = id => lock.lockedIds.has(id);
+  const { order, setOrder, move, canMove, moveToConfidence, dragPropsFor } = useConfidenceOrder(isLocked);
   const [winners, setWinners] = useState({});
   const [existing, setExisting] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -53,7 +54,11 @@ export function WeekPicks({ week, userName, nameKey }) {
 
   async function handleSubmit() {
     setSaving(true);
+    // Games that have already locked keep whatever you'd saved for them (or stay unpicked).
     const picksMap = buildPicksMap(order, winners);
+    lock.lockedIds.forEach(id => {
+      if (existing?.picks?.[id]) picksMap[id] = existing.picks[id]; else delete picksMap[id];
+    });
     await submitPicks(week, userName, picksMap);
     setExisting({ picks: picksMap });
     setSavedAt(Date.now());
@@ -62,24 +67,33 @@ export function WeekPicks({ week, userName, nameKey }) {
 
   const gameById = useMemo(() => Object.fromEntries(games.map(g => [g.id, g])), [games]);
   const pickedCount = games.filter(g => winners[g.id]).length;
-  const allPicked = games.length > 0 && pickedCount === games.length;
+  const openGames = games.filter(g => !isLocked(g.id));
+  const allPicked = openGames.length > 0 && openGames.every(g => winners[g.id]);
 
-  // Once picks lock, show the confidence you actually submitted (it can differ from card
+  // Once a game locks, show the confidence actually submitted for it (it can differ from card
   // position if a game was dropped from the slate). Before that, position = points.
   const own = existing || sample; // your picks on the cards
 
-  // Locked weeks: look at another player's picks instead (read-only).
-  const others = useOtherPlayers(week, deadlinePassed, sample);
-  const viewed = deadlinePassed && viewing ? others.entryFor(viewing) : null;
+  // Once games lock: look at another player's picks instead (read-only) — only on games that
+  // have locked, so nobody sees picks they could still copy.
+  const viewingOther = !!viewing && lock.anyLocked;
+  const others = useOtherPlayers(week, lock.anyLocked, sample);
+  const viewed = viewingOther ? others.entryFor(viewing) : null;
   const viewedPicks = useMemo(() => (viewed ? restoreSavedPicks(viewed, games) : null), [viewed, games]);
-  const shown = viewing && deadlinePassed
-    ? { entry: viewed, winners: viewedPicks?.winners || {}, order: viewedPicks?.order || games.map(g => g.id) }
+  const shown = viewingOther
+    ? {
+        entry: viewed,
+        winners: Object.fromEntries(Object.entries(viewedPicks?.winners || {}).filter(([id]) => isLocked(id))),
+        order: (viewedPicks?.order || games.map(g => g.id)).filter(isLocked),
+        fullOrder: viewedPicks?.order || games.map(g => g.id)
+      }
     : { entry: own, winners, order };
 
   const showingSample = !viewing && !existing && !!sample;
   const pointsFor = gameId => {
     const saved = shown.entry?.picks?.[gameId]?.confidence;
-    return deadlinePassed && saved != null ? saved : shown.order.length - shown.order.indexOf(gameId);
+    const ranking = shown.fullOrder || order;
+    return isLocked(gameId) && saved != null ? saved : ranking.length - ranking.indexOf(gameId);
   };
   const totals = weekTotals(games, shown.winners, pointsFor);
 
@@ -88,7 +102,7 @@ export function WeekPicks({ week, userName, nameKey }) {
   const visible = shown.order.filter(id => gameById[id]);
   const anyStarted = games.some(g => g.completed || g.state === 'in');
   const byPoints = ids => [...ids].sort((a, b) => pointsFor(b) - pointsFor(a));
-  const groups = deadlinePassed && anyStarted
+  const groups = lock.anyLocked && anyStarted
     ? [
         { id: 'live', label: 'Live', ids: byPoints(visible.filter(id => gameById[id].state === 'in')) },
         { id: 'done', label: 'Completed', ids: byPoints(visible.filter(id => gameById[id].completed)) },
@@ -99,9 +113,6 @@ export function WeekPicks({ week, userName, nameKey }) {
   const label = week === 'bowls' ? 'the bowl games' : weekLabel(week);
   return (
     <>
-      {config.deadlineIso && (
-        <p className="muted small">Picks lock {formatKickoff(config.deadlineIso)}{deadlinePassed ? ' — locked' : ''}.</p>
-      )}
       {loading && <Centered>Loading {label}…</Centered>}
       {!loading && error && <Centered>{error}</Centered>}
       {!loading && !error && games.length === 0 && (
@@ -110,7 +121,8 @@ export function WeekPicks({ week, userName, nameKey }) {
 
       {!loading && !error && games.length > 0 && (
         <>
-          {deadlinePassed && (
+          <LockAlert lock={lock} />
+          {lock.anyLocked && (
             <PlayerPicker
               value={viewing}
               players={others.players.filter(n => n.toLowerCase() !== userName.trim().toLowerCase())}
@@ -118,7 +130,7 @@ export function WeekPicks({ week, userName, nameKey }) {
               onChange={setViewing}
             />
           )}
-          {viewing && deadlinePassed && !viewed && (
+          {viewingOther && !viewed && (
             <p className="sample-note">{sample?.hidden ? `Everyone's ${label} picks show after 9 PM Saturday.` : `No picks saved for ${viewing} in ${label}.`}</p>
           )}
           {viewing && viewed?.isMock && <p className="sample-note">Some of {viewing}'s picks are simulated for this preview.</p>}
@@ -132,32 +144,33 @@ export function WeekPicks({ week, userName, nameKey }) {
           {anyLive && updatedAt && (
             <p className="muted small center live-updated">Live scores update every 30 seconds. Last updated {updatedAt.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}.</p>
           )}
-          {!deadlinePassed && (
+          {!lock.allLocked && !viewingOther && (
             <>
               <p className="muted small">
                 Pick a winner on each card, then drag (or use the arrows/number) to set confidence. Top = most confident.
                 {' '}{pickedCount} of {games.length} picked.
               </p>
-              <QuickPicks onPick={mode => setWinners(quickPickWinners(games, mode))} disabled={deadlinePassed} />
+              <QuickPicks onPick={mode => setWinners(w => ({ ...w, ...quickPickWinners(openGames, mode) }))} disabled={lock.allLocked} />
             </>
           )}
-          {!(viewing && deadlinePassed && !viewed) && groups.map(group => (
+          {!(viewingOther && !viewed) && groups.map(group => (
             <section key={group.id} className="game-group">
               {group.label && <h3 className="game-group-head">{group.label} <span>{group.ids.length}</span></h3>}
               {group.ids.map(gameId => {
                 const game = gameById[gameId];
-                const idx = shown.order.indexOf(gameId);
+                const readOnly = viewingOther || isLocked(gameId);
                 return (
                   <GameCard
                     key={gameId}
                     game={game}
-                    index={idx}
-                    total={shown.order.length}
+                    total={order.length}
                     points={pointsFor(gameId)}
                     result={pickResult(game, shown.winners[gameId], pointsFor(gameId))}
                     live={liveStanding(game, shown.winners[gameId])}
                     picked={shown.winners[gameId]}
-                    locked={deadlinePassed}
+                    locked={readOnly}
+                    canUp={!readOnly && canMove(gameId, -1)}
+                    canDown={!readOnly && canMove(gameId, 1)}
                     dragProps={dragPropsFor(gameId)}
                     onPick={teamId => setWinners(w => togglePick(w, gameId, teamId))}
                     onMove={dir => move(gameId, dir)}
@@ -167,7 +180,7 @@ export function WeekPicks({ week, userName, nameKey }) {
               })}
             </section>
           ))}
-          {!deadlinePassed && (
+          {!lock.allLocked && !viewingOther && (
             <SubmitPicks
               canSubmit={allPicked && !!userName.trim() && !saving}
               saving={saving}
@@ -178,7 +191,7 @@ export function WeekPicks({ week, userName, nameKey }) {
               onSubmit={handleSubmit}
             />
           )}
-          {deadlinePassed && <p className="muted small center">Picks are locked.</p>}
+          {lock.allLocked && <p className="muted small center">Picks are locked.</p>}
         </>
       )}
     </>

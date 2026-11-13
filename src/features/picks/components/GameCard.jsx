@@ -6,8 +6,8 @@ import { ConfidenceControl } from './ConfidenceControl.jsx';
 
 // One game: kickoff and betting line above the matchup pill, venue below, points on the right.
 // The button under the pill opens the matchup info (before kickoff) or the box score.
-// index is the card's position (0 = top); total is how many cards there are.
-export function GameCard({ game, index, total, points, result, live, picked, locked, dragProps, onPick, onMove, onSetPoints }) {
+// total is how many cards there are; canUp/canDown say whether the arrows can move it.
+export function GameCard({ game, total, points, result, live, picked, locked, canUp, canDown, dragProps, onPick, onMove, onSetPoints }) {
   const [open, setOpen] = useState(false);
   const isLive = game.state === 'in';
   const started = game.completed || isLive;
@@ -35,8 +35,8 @@ export function GameCard({ game, index, total, points, result, live, picked, loc
       <ConfidenceControl
         points={points}
         max={total}
-        canUp={index > 0}
-        canDown={index < total - 1}
+        canUp={canUp}
+        canDown={canDown}
         locked={locked}
         result={result}
         live={live}

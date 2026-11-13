@@ -3,6 +3,7 @@ import { useWeekSelector } from '@/shared/hooks/useWeekSelector.js';
 import { WeekSelect } from '@/shared/components/WeekSelect.jsx';
 import { useWeekSlate } from '../hooks/useWeekSlate.js';
 import { GameSection } from './GameSection.jsx';
+import { formatKickoff } from '@/shared/utils/dates.js';
 
 const byKickoff = (a, b) => new Date(a.date) - new Date(b.date);
 // Rivalry and in-state games aren't a section of their own — they're labeled within each section.
@@ -18,6 +19,7 @@ const SECTIONS = [
 export function WeekSlatePanel() {
   const { week, setWeek, weeks } = useWeekSelector(1);
   const slate = useWeekSlate(week);
+  const firstKickoff = slate.games.filter(g => slate.includedIds.has(g.id)).map(g => g.date).sort((a, b) => new Date(a) - new Date(b))[0];
 
   return (
     <div className="panel">
@@ -30,9 +32,21 @@ export function WeekSlatePanel() {
         <span className="muted small" style={{ alignSelf: 'center' }}>{slate.status}</span>
       </div>
 
-      <label>Picks lock at</label>
-      <input type="datetime-local" value={slate.deadline} onChange={e => slate.setDeadline(e.target.value)} />
-      <p className="muted small">Leave blank to fall back to the earliest kickoff among included games.</p>
+      <label>Picks lock</label>
+      <div className="subtab-track" role="radiogroup" aria-label="When picks lock">
+        <button type="button" role="radio" aria-checked={slate.lockMode === 'slate'} className={'subtab-btn' + (slate.lockMode === 'slate' ? ' active' : '')} onClick={() => slate.setLockMode('slate')}>Whole slate at once</button>
+        <button type="button" role="radio" aria-checked={slate.lockMode === 'kickoff'} className={'subtab-btn' + (slate.lockMode === 'kickoff' ? ' active' : '')} onClick={() => slate.setLockMode('kickoff')}>Each game at kickoff</button>
+      </div>
+      {slate.lockMode === 'slate' ? (
+        <>
+          <input type="datetime-local" aria-label="Slate locks at" value={slate.deadline} onChange={e => slate.setDeadline(e.target.value)} />
+          <p className="muted small">
+            Leave blank to lock at the first kickoff of the selected games{firstKickoff ? ` (${formatKickoff(firstKickoff)})` : ''}.
+          </p>
+        </>
+      ) : (
+        <p className="muted small">Players can keep changing picks on games that haven't started. A game's pick and points lock when it kicks off.</p>
+      )}
 
       <p className="selected-count">{slate.includedIds.size} of {slate.games.length} selected</p>
       {slate.games.length === 0 && !slate.pulling && <p className="muted small">No games pulled yet.</p>}

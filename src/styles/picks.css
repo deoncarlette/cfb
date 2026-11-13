@@ -182,3 +182,7 @@
 .game-group + .game-group{margin-top:18px;}
 .game-group-head{display:flex; align-items:baseline; gap:8px; margin:0 0 10px; font-size:15px; font-weight:700;}
 .game-group-head span{font-size:13px; font-weight:500; color:var(--muted);}
+
+/* When picks lock — top of the week. Accent edge while picks are open; plain once locked. */
+.lock-alert{font-size:13px; line-height:1.4; color:var(--text); background:var(--raised); border-left:3px solid var(--accent); border-radius:10px; padding:9px 12px; margin:0 0 14px;}
+.lock-alert.locked{border-left-color:var(--line-strong); color:var(--muted);}

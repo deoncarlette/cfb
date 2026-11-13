@@ -3,11 +3,11 @@ import { slugify } from '@/shared/utils/slugify.js';
 
 export async function getWeekConfig(week) {
   const w = load().weeks?.[week];
-  return { includedGameIds: w?.includedGameIds ?? null, deadlineIso: w?.deadlineIso ?? null };
+  return { includedGameIds: w?.includedGameIds ?? null, deadlineIso: w?.deadlineIso ?? null, lockMode: w?.lockMode === 'kickoff' ? 'kickoff' : 'slate' };
 }
-export async function saveWeekConfig(week, includedGameIds, deadlineIso) {
+export async function saveWeekConfig(week, includedGameIds, deadlineIso, lockMode = 'slate') {
   const d = load(); d.weeks = d.weeks || {};
-  d.weeks[week] = { ...(d.weeks[week] || {}), includedGameIds: includedGameIds ?? null, deadlineIso: deadlineIso ?? null };
+  d.weeks[week] = { ...(d.weeks[week] || {}), includedGameIds: includedGameIds ?? null, deadlineIso: deadlineIso ?? null, lockMode: lockMode === 'kickoff' ? 'kickoff' : 'slate' };
   save(d);
 }
 export async function getMyPicks(week, userName) {

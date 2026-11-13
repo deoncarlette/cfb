@@ -2,7 +2,8 @@ import { doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from './client.js';
 import { slugify } from '@/shared/utils/slugify.js';
 
-// weeks/{week}                  -> { includedGameIds: string[] | null, deadlineIso: string | null }
+// weeks/{week}                  -> { includedGameIds: string[] | null, deadlineIso: string | null,
+//                                     lockMode: 'slate' | 'kickoff' }
 // weeks/{week}/picks/{nameSlug} -> { user_name, picks: { [gameId]: { winner, confidence } }, submittedAt }
 //
 // No Auth yet: picks are keyed by a slug of the name someone types in, so re-submitting the
@@ -12,15 +13,18 @@ import { slugify } from '@/shared/utils/slugify.js';
 
 export async function getWeekConfig(week) {
   const snap = await getDoc(doc(db, 'weeks', String(week)));
-  if (!snap.exists()) return { includedGameIds: null, deadlineIso: null };
+  if (!snap.exists()) return { includedGameIds: null, deadlineIso: null, lockMode: 'slate' };
   const data = snap.data();
-  return { includedGameIds: data.includedGameIds ?? null, deadlineIso: data.deadlineIso ?? null };
+  return { includedGameIds: data.includedGameIds ?? null, deadlineIso: data.deadlineIso ?? null, lockMode: data.lockMode === 'kickoff' ? 'kickoff' : 'slate' };
 }
 
-export async function saveWeekConfig(week, includedGameIds, deadlineIso) {
+// lockMode: 'slate' = every game locks at once (deadlineIso, or the first kickoff);
+// 'kickoff' = each game locks at its own kickoff.
+export async function saveWeekConfig(week, includedGameIds, deadlineIso, lockMode = 'slate') {
   await setDoc(doc(db, 'weeks', String(week)), {
     includedGameIds: includedGameIds ?? null,
     deadlineIso: deadlineIso ?? null,
+    lockMode: lockMode === 'kickoff' ? 'kickoff' : 'slate',
     updatedAt: new Date().toISOString()
   }, { merge: true });
 }

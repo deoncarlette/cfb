@@ -10,6 +10,7 @@ export function useWeekSlate(week) {
   const [games, setGames] = useState([]);
   const [includedIds, setIncludedIds] = useState(new Set());
   const [deadline, setDeadline] = useState('');
+  const [lockMode, setLockMode] = useState('slate'); // 'slate' (all at once) | 'kickoff' (each game)
   const [status, setStatus] = useState('');
   const [pulling, setPulling] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -28,6 +29,7 @@ export function useWeekSlate(week) {
       const sample = cfg.includedGameIds ? null : await samplePicksForWeek(week, pulled);
       setIncludedIds(new Set(cfg.includedGameIds || sample?.gameIds || (week === POSTSEASON ? pulled : pulled.filter(isDefaultSlateGame)).map(g => g.id)));
       setDeadline(toDatetimeLocal(cfg.deadlineIso));
+      setLockMode(cfg.lockMode === 'kickoff' ? 'kickoff' : 'slate');
       setStatus(`${pulled.length} games pulled for ${weekLabel(week)}.`);
     } catch (e) {
       setGames([]);
@@ -47,11 +49,11 @@ export function useWeekSlate(week) {
   async function save() {
     setSaving(true);
     const includedGameIds = games.length ? Array.from(includedIds) : null;
-    const deadlineIso = deadline ? new Date(deadline).toISOString() : null;
-    await saveWeekConfig(week, includedGameIds, deadlineIso);
+    const deadlineIso = lockMode === 'slate' && deadline ? new Date(deadline).toISOString() : null;
+    await saveWeekConfig(week, includedGameIds, deadlineIso, lockMode);
     setStatus(`Saved. ${weekLabel(week)} now uses ${includedGameIds ? includedGameIds.length : 'all'} game(s).`);
     setSaving(false);
   }
 
-  return { games, includedIds, deadline, setDeadline, status, pulling, saving, pullGames, toggle, selectAll, deselectAll, save };
+  return { games, includedIds, deadline, setDeadline, lockMode, setLockMode, status, pulling, saving, pullGames, toggle, selectAll, deselectAll, save };
 }

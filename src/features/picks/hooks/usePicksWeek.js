@@ -3,7 +3,7 @@ import { REPLAY_WEEK } from '@/config.js';
 import { fetchGamesFor, applyRankOverlay } from '@/services/espn/index.js';
 import { replayGames, loadReplaySummaries } from '@/services/espn/replay.js';
 import { getWeekConfig } from '@/services/data/index.js';
-import { gamesForWeek, isDeadlinePassed } from '../picksLogic.js';
+import { gamesForWeek, lockInfo } from '../picksLogic.js';
 import { samplePicksForWeek, firstSampleWeek } from '../sample/samplePicks.js';
 
 const REFRESH_MS = 30 * 1000;
@@ -28,7 +28,8 @@ function needsRefresh(games) {
 // While games are live, scores refresh every 30 seconds (and when you come back to the tab).
 export function usePicksWeek(week) {
   const [games, setGames] = useState([]);
-  const [config, setConfig] = useState({ includedGameIds: null, deadlineIso: null });
+  const [config, setConfig] = useState({ includedGameIds: null, deadlineIso: null, lockMode: 'slate' });
+  const [now, setNow] = useState(() => Date.now()); // re-checks locks as kickoffs pass
   const [sample, setSample] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -69,13 +70,13 @@ export function usePicksWeek(week) {
   useEffect(() => { load(); }, [load]);
 
   useEffect(() => {
-    const tick = () => { if (!document.hidden && needsRefresh(gamesRef.current)) refresh(); };
+    const tick = () => { setNow(Date.now()); if (!document.hidden && needsRefresh(gamesRef.current)) refresh(); };
     const id = setInterval(tick, REFRESH_MS);
     document.addEventListener('visibilitychange', tick);
     return () => { clearInterval(id); document.removeEventListener('visibilitychange', tick); };
   }, [refresh]);
 
-  const deadlinePassed = useMemo(() => isDeadlinePassed(config, games), [config, games]);
+  const lock = useMemo(() => lockInfo(config, games, now), [config, games, now]);
   const anyLive = games.some(g => g.state === 'in');
-  return { games, config, sample, loading, error, deadlinePassed, anyLive, updatedAt, isReplay: week === REPLAY_WEEK };
+  return { games, config, sample, loading, error, lock, anyLive, updatedAt, isReplay: week === REPLAY_WEEK };
 }
