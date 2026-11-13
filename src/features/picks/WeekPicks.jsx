@@ -175,7 +175,7 @@ export function WeekPicks({ week, userName, nameKey }) {
             </p>
           )}
           {games.some(g => g.simulated) && (
-            <p className="sample-note">Simulated bowl slate: ESPN hasn't posted this season's bowls yet, so these matchups are built from current rankings and records. The real bowls replace them once ESPN has them (usually early December).</p>
+            <p className="sample-note">Simulated bowl matchups: ESPN hasn't set this season's bowl teams yet, so these are built from current rankings and records. The real matchups replace them once ESPN has them (usually early December).</p>
           )}
           {isReplay && (
             <div className="sample-note">

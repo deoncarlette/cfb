@@ -72,16 +72,32 @@ function game(i, [title, date, venue, broadcast], a, b) {
   };
 }
 
+// A bowl ESPN has listed but whose teams aren't set yet ("TBD").
+export const isTbdTeam = c => !c || !c.id || Number(c.id) <= 0 || /^(tbd|tba|to be determined)/i.test(c.name || '');
+export const hasTbdTeam = g => g.competitors.length < 2 || g.competitors.some(isTbdTeam);
+
 // fbsGames / fcsGames: this season's latest regular-season games (for teams and records).
-export function simulatedBowls(fbsGames, fcsGames = []) {
+// espnBowls: whatever ESPN already lists for the bowl season. Bowls with real teams stay as
+// they are (and their teams aren't reused); TBD bowls keep ESPN's name, date, stadium and
+// network and get simulated teams. With nothing from ESPN, the built-in schedule above is used.
+export function simulatedBowls(fbsGames, fcsGames = [], espnBowls = []) {
+  const set = espnBowls.filter(g => !hasTbdTeam(g));
+  const tbd = espnBowls.filter(hasTbdTeam);
+  const rank = title => { const i = BOWLS.findIndex(b => b[0].toLowerCase() === (title || '').toLowerCase()); return i < 0 ? 99 : i; };
+  const schedule = tbd.length
+    ? tbd.filter(g => !/celebration/i.test(g.title || ''))
+      .sort((a, b) => rank(a.title) - rank(b.title) || new Date(a.date) - new Date(b.date))
+      .map(g => [g.title || 'Bowl game', g.date, g.venue, g.broadcast])
+    : BOWLS;
+  const taken = new Set(set.flatMap(g => g.competitors.map(c => c.id)));
   const teams = new Map();
-  fbsGames.forEach(g => g.competitors.forEach(c => { if (!teams.has(c.id) && isFbsTeam(c)) teams.set(c.id, c); }));
+  fbsGames.forEach(g => g.competitors.forEach(c => { if (!teams.has(c.id) && isFbsTeam(c) && !taken.has(c.id)) teams.set(c.id, c); }));
   const ranked = [...teams.values()].filter(t => t.rank && t.rank <= 25).sort((a, b) => a.rank - b.rank);
   const inPlayoff = new Set(projectField(ranked).map(t => t.id));
   const pool = [...teams.values()].filter(t => !inPlayoff.has(t.id)).sort(better);
 
-  const out = [];
-  BOWLS.forEach((bowl, i) => {
+  const out = [...set];
+  schedule.forEach((bowl, i) => {
     let [a, b] = [pool[2 * i], pool[2 * i + 1]];
     if (!a || !b) return;
     // Avoid same-conference bowls: trade with the next team down.
@@ -96,7 +112,9 @@ export function simulatedBowls(fbsGames, fcsGames = []) {
   fcsGames.forEach(g => g.competitors.forEach(c => { if (!fcs.has(c.id)) fcs.set(c.id, c); }));
   const best = conf => [...fcs.values()].filter(t => t.conferenceId === conf).sort(better)[0];
   const meac = best('24'), swac = best('31');
-  if (meac && swac) out.push(game(BOWLS.length, CELEBRATION, swac, meac));
+  const espnCelebration = tbd.find(g => /celebration/i.test(g.title || ''));
+  const celebration = espnCelebration ? ['Celebration Bowl', espnCelebration.date, espnCelebration.venue, espnCelebration.broadcast] : CELEBRATION;
+  if (meac && swac && !set.some(g => /celebration/i.test(g.title || ''))) out.push(game(schedule.length, celebration, swac, meac));
 
   return out.sort((x, y) => new Date(x.date) - new Date(y.date));
 }

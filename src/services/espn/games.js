@@ -3,7 +3,7 @@ import { fetchPollRankMap } from './rankings.js';
 import { SEASON, CFP_SWITCH_WEEK } from '@/config.js';
 import { hexColor } from '@/shared/utils/colors.js';
 import { formatKickoff } from '@/shared/utils/dates.js';
-import { simulatedBowls } from './simulatedBowls.js';
+import { simulatedBowls, hasTbdTeam } from './simulatedBowls.js';
 
 // Betting line from ESPN, when they have one (usually just the current week).
 // → { spread: 'MICH -3.5', overUnder: 47.5 } or null
@@ -33,7 +33,7 @@ function parseEvents(events) {
     return true;
   }).map(event => {
     const competition = event.competitions?.[0];
-    const competitors = (competition?.competitors || []).map(entry => ({
+    const competitors = (competition?.competitors || []).map(e => ({ ...e, team: e.team || { id: '-1', location: 'TBD' } })).map(entry => ({
       id: String(entry.team.id),
       name: entry.team.location || entry.team.displayName || entry.team.shortDisplayName || 'Team',
       homeAway: entry.homeAway || 'away',
@@ -99,19 +99,21 @@ export function isPlayoffGame(game) {
 // The season's bowls from ESPN. Until ESPN posts them (early December), a stand-in slate built
 // from this season's teams (simulatedBowls.js), every game marked simulated: true.
 export async function fetchBowlGames() {
-  const response = await fetch(`${ESPN_BASE}/scoreboard?limit=300&seasontype=3&dates=${SEASON}1201-${SEASON + 1}0131&groups=80`);
-  if (!response.ok) throw new Error('Schedule unavailable');
-  const data = await response.json();
-  const bowls = parseEvents(data.events || []).filter(g => !isPlayoffGame(g));
-  if (bowls.length) return bowls;
+  let bowls = [];
+  try {
+    const response = await fetch(`${ESPN_BASE}/scoreboard?limit=300&seasontype=3&dates=${SEASON}1201-${SEASON + 1}0131&groups=80`);
+    if (response.ok) bowls = parseEvents((await response.json()).events || []).filter(g => !isPlayoffGame(g));
+  } catch (e) { /* not posted / unreachable: simulate below */ }
+  // Real once every bowl has its teams; until then, simulated teams fill the TBD spots.
+  if (bowls.length && !bowls.some(hasTbdTeam)) return bowls;
   const week = await fetchCurrentWeek();
-  if (typeof week !== 'number') return [];
+  if (typeof week !== 'number') return bowls;
   const [fbs, fcs] = await Promise.all([
     fetchEspnGames(week, [80]).catch(() => []),
     fetchEspnGames(week, [81]).catch(() => [])
   ]);
   const prior = week > 1 ? await fetchEspnGames(week - 1, [80]).catch(() => []) : [];
-  return simulatedBowls([...fbs, ...prior], fcs);
+  return simulatedBowls([...fbs, ...prior], fcs, bowls);
 }
 
 // Games for a week number, or bowl games for POSTSEASON.
