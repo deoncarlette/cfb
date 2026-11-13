@@ -1,3 +1,5 @@
+import { ESPN_BASE } from './client.js';
+
 // Team classification helpers: Power 4 membership and ranking rules.
 
 // Best-effort Power 4 membership for sorting/categorizing games — ESPN's scoreboard
@@ -56,7 +58,9 @@ export function isDefaultSlateGame(game) {
 // ---- Conferences (for the Commish tab's subgroups) ----
 
 // Power 4 come from the lists above. Everyone else comes from ESPN's conferenceId on the team,
-// using ESPN's commonly cited conference ids — unrecognized ids fall into "FCS & other".
+// using ESPN's commonly cited conference ids. Any other id (FCS conferences, or one this list
+// gets wrong) is named from ESPN's conference list, loaded by loadConferenceNames(); if that
+// can't be reached, the game falls into "FCS & other".
 const CONFERENCE_BY_ESPN_ID = {
   '151': 'American', '17': 'Mountain West', '37': 'Sun Belt', '15': 'MAC',
   '12': 'Conference USA', '9': 'Pac-12', '18': 'FBS Independents'
@@ -64,12 +68,47 @@ const CONFERENCE_BY_ESPN_ID = {
 export const P4_ORDER = ['SEC', 'Big Ten', 'Big 12', 'ACC'];
 export const OTHER_ORDER = ['American', 'Mountain West', 'Sun Belt', 'MAC', 'Conference USA', 'Pac-12', 'FBS Independents', 'FCS & other'];
 
+// { espnConferenceId: { name, fcs } } from ESPN's /groups list.
+let espnConferences = {};
+
+// ESPN's /groups response nests divisions → conferences. Keep the leaves (conferences), named by
+// their short name, and flag the ones under FCS so they sort after the FBS conferences.
+export function parseConferences(data) {
+  const out = {};
+  const walk = (nodes, fcs) => (nodes || []).forEach(n => {
+    const id = String(n.groupId ?? n.id ?? '');
+    const isFcs = fcs || id === '81' || /FCS|I-AA/i.test(n.name || '');
+    if (n.children?.length) return walk(n.children, isFcs);
+    const name = n.shortName || n.abbreviation?.toUpperCase() || n.name;
+    if (id && name) out[id] = { name, fcs: isFcs };
+  });
+  walk(data?.groups, false);
+  return out;
+}
+
+let conferencesLoading = null;
+export function loadConferenceNames() {
+  conferencesLoading ||= fetch(`${ESPN_BASE}/groups`)
+    .then(r => (r.ok ? r.json() : null))
+    .then(d => { espnConferences = parseConferences(d); })
+    .catch(() => { conferencesLoading = null; });
+  return conferencesLoading;
+}
+
+// "All Other Games" subgroup order: the FBS list above, then any other FBS conference ESPN
+// named, then FCS conferences A–Z, then the leftovers.
+export function otherConferenceOrder() {
+  const known = new Set(OTHER_ORDER);
+  const extra = fcs => [...new Set(Object.values(espnConferences).filter(c => c.fcs === fcs && !known.has(c.name)).map(c => c.name))].sort();
+  return [...OTHER_ORDER.filter(n => n !== 'FCS & other'), ...extra(false), ...extra(true), 'FCS & other'];
+}
+
 export function conferenceOf(team) {
   if (SEC_TEAMS.has(team.name)) return 'SEC';
   if (BIG_TEN_TEAMS.has(team.name)) return 'Big Ten';
   if (BIG_12_TEAMS.has(team.name)) return 'Big 12';
   if (ACC_TEAMS.has(team.name)) return 'ACC';
-  return CONFERENCE_BY_ESPN_ID[team.conferenceId] || null;
+  return CONFERENCE_BY_ESPN_ID[team.conferenceId] || espnConferences[team.conferenceId]?.name || null;
 }
 
 // Which conference a game is filed under: the home team's (a Power 4 team's, in the Power 4
