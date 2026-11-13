@@ -151,7 +151,8 @@ export function WeekPicks({ week, userName, nameKey }) {
           )}
           {isReplay && (
             <div className="sample-note">
-              Test replay: {label}'s games are re-played today at their real kickoff times{replaySchedule() === 'twice' ? ', and again 12 hours later' : ''}.
+              Test replay: {label}'s games are re-played today at their real kickoff times.
+              {replaySchedule() === 'twice' && ' Live previews: each game also plays live 12 hours away from its kickoff (e.g. an 8 PM game at 8 AM). Previews never count; afterward the game goes back to its real state.'}
               <ReplayScheduleToggle />
             </div>
           )}

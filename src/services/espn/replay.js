@@ -14,9 +14,13 @@ const QUARTER_SECS = 15 * 60;
 
 // ---- the replay clock ----
 
-// Schedule: 'twice' (default) — every game kicks off at its real time AND 12 hours later (an
-// 11 AM game is live at 11 AM and again at 11 PM), so there's always something live to test.
-// 'real' — once a day, at its real time only, so results line up with a real Saturday.
+// Every game shows its real state for today: upcoming before its real kickoff time, live
+// during it (~3½ hours), final after — so points add up through the day like a real Saturday.
+// The "day" turns over at 4 AM so late games can finish.
+// Schedule 'twice' (default) also runs each game as a live PREVIEW 12 hours away from its real
+// kickoff (an 8 PM game is live 8–11:30 AM; an 11 AM game is live 11 PM–2:30 AM), so there's
+// something live to test at any hour. A preview never counts: when it ends, the game goes
+// straight back to its real state. 'real' = no previews.
 // Saved in this browser; the replay notes on Picks and Scoreboard switch it.
 const SCHEDULE_KEY = 'replay-schedule';
 export function replaySchedule() {
@@ -26,19 +30,24 @@ export function setReplaySchedule(value) {
   try { localStorage.setItem(SCHEDULE_KEY, value === 'real' ? 'real' : 'twice'); } catch (e) {}
 }
 
-// { kickoff, f } — f is the share of the game played: <0 not started, 0–1 live, ≥1 final.
-// Each run stays as it last was — live, then final — until 45 minutes before the next run
-// kicks off, so late games finish and the night's scoring adds up before it resets.
 const HOUR_MS = 60 * 60 * 1000;
-const RESET_BEFORE_MS = 45 * 60 * 1000;
+const DAY_STARTS_AT = 4; // 4 AM
+
+// { kickoff, f, preview } — f is the share of the game played: <0 not started, 0–1 live, ≥1 final.
+// preview: this is the 12-hours-away live preview, not the game's real run.
 export function replayClock(realDate, now = new Date(), schedule = replaySchedule()) {
   const real = new Date(realDate);
-  const twice = schedule !== 'real';
-  const periodStart = new Date(now); periodStart.setHours(twice && now.getHours() >= 12 ? 12 : 0, 0, 0, 0);
-  const offset = (((twice ? real.getHours() % 12 : real.getHours()) * 60) + real.getMinutes()) * 60000;
-  let kickoff = new Date(periodStart.getTime() + offset);
-  if (now < kickoff.getTime() - RESET_BEFORE_MS) kickoff = new Date(kickoff.getTime() - (twice ? 12 : 24) * HOUR_MS);
-  return { kickoff, f: (now - kickoff) / GAME_LENGTH_MS };
+  const kickoff = new Date(now.getTime() - DAY_STARTS_AT * HOUR_MS); // today's date (4 AM turnover)
+  kickoff.setHours(real.getHours(), real.getMinutes(), 0, 0);
+  if (real.getHours() < DAY_STARTS_AT) kickoff.setDate(kickoff.getDate() + 1); // after-midnight kickoffs
+  if (schedule !== 'real') {
+    for (const shift of [-12, 12]) {
+      const preview = new Date(kickoff.getTime() + shift * HOUR_MS);
+      const f = (now - preview) / GAME_LENGTH_MS;
+      if (f >= 0 && f < 1) return { kickoff: preview, f, preview: true };
+    }
+  }
+  return { kickoff, f: (now - kickoff) / GAME_LENGTH_MS, preview: false };
 }
 
 function clockAt(f) {
