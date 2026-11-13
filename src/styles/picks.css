@@ -72,6 +72,7 @@
 .matchup-side.sel .team-rank{color:inherit; opacity:.85;}
 /* Short name (MICH) — used on phones. */
 .team-abbr{display:none;}
+.team-record{display:none;}
 .team-name{
   font-family:var(--display); font-weight:700; font-style:italic; text-transform:uppercase;
   font-size:20px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
@@ -226,7 +227,14 @@
 .game-card.whole .matchup-side{height:66px; border-radius:0; margin:0; container:side / inline-size;}
 .game-card.whole .matchup-side.away{grid-area:away; clip-path:polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%); margin-right:-8px; padding:0 44px 0 14px;}
 .game-card.whole .matchup-side.home{grid-area:home; clip-path:polygon(16px 0, 100% 0, 100% 100%, 0 100%); margin-left:-8px; padding:0 14px 0 44px;}
+.game-card.whole .matchup-side.home{margin-left:-6px;} /* 2px gap: a thin seam always shows */
 .game-card.whole .team-score{font-size:26px;}
+/* Second line under the name: the record. */
+.game-card.whole .team-text{flex-wrap:wrap; row-gap:5px;}
+.game-card.whole .team-record{display:block; flex-basis:100%; font-size:12px; font-weight:500; color:var(--muted); letter-spacing:.02em;}
+.game-card.whole .matchup-side.home .team-record{text-align:right;}
+.game-card.whole .matchup-side.sel .team-record{color:inherit; opacity:.8;}
+.game-card.whole .matchup.has-pick .matchup-side:not(.sel) .team-record{opacity:.6;}
 @container side (max-width:220px){
   .game-card.whole .team-name{display:none;}
   .game-card.whole .team-abbr{display:block;}
@@ -239,7 +247,11 @@
 }
 .game-card.whole .pts-chip .pts-badge, .game-card.whole .pts-chip .pts-input{width:44px; height:40px; font-size:22px; border-radius:12px;}
 .game-card.whole .pts-chip.editable{border:1px solid var(--line-strong); padding:1px 0;}
-.game-card.whole .pts-chip.editable .pts-input{height:28px; border:none; background:transparent; border-radius:0;}
+.game-card.whole .pts-chip.editable .pts-input{height:28px; border:none; background:transparent; border-radius:0; color:var(--text);}
+/* Once a side is picked the whole chip takes the accent, so the number stays readable. */
+.game-card.whole:not(.unpicked) .pts-chip.editable{background:var(--accent); border-color:var(--accent);}
+.game-card.whole:not(.unpicked) .pts-chip.editable .pts-input{color:var(--accent-ink); background:transparent;}
+.game-card.whole:not(.unpicked) .pts-chip.editable button{color:var(--accent-ink); opacity:.7;}
 .game-card.whole .pts-chip.editable button{width:44px; height:16px; padding:0; border:none; background:none; color:var(--muted); font-size:11px; line-height:1;}
 .game-card.whole .pts-chip.editable button:disabled{opacity:.25;}
 @media (max-width:440px){
@@ -249,3 +261,19 @@
   .game-card.whole .matchup-side.home{padding:0 10px 0 34px;}
   .game-card.whole .team-score{font-size:22px;}
 }
+
+/* Teams only: the card is just the two teams and the points chip; everything else opens below. */
+.game-card.whole.teams{grid-template-areas:"away home" "venue venue"; row-gap:0; padding:0;}
+.game-card.whole.teams .pts-chip{grid-row:1;}
+.game-card.whole.teams .matchup-side{height:72px;}
+.game-card.whole.teams .card-handle{height:20px; padding:0; border-radius:0; justify-content:center;}
+.game-card.whole.teams .card-handle .chev{font-size:11px; color:var(--muted);}
+.game-card.whole .game-details{margin:6px 14px 0; padding-bottom:10px;}
+.bare-info{grid-column:1 / -1; display:grid; gap:6px; padding:10px 14px 0; border-top:1px solid var(--line);}
+.game-card.whole .bare-info .game-meta, .bare-info .bare-names{grid-area:auto; padding:0;}
+.bare-names .venue-name{white-space:nowrap;}
+.bare-names{display:flex; gap:12px; font-size:12px; color:var(--muted);}
+.bare-names .game-title{color:var(--text); font-weight:600;}
+.game-card.whole.teams .bare-info + .game-details{border-top:none; margin-top:2px;}
+@media (max-width:440px){ .game-card.whole.teams .matchup-side{height:64px;} }
+

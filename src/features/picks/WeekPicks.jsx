@@ -239,7 +239,7 @@ export function WeekPicks({ week, userName, nameKey }) {
           )}
           <div className="layout-trial">
             <span>Card layout (trial)</span>
-            <Segmented label="Card layout" options={[['pill', 'Pill'], ['whole', 'Whole card']]} value={cardLayout} onChange={setCardLayout} />
+            <Segmented label="Card layout" options={[['pill', 'Pill'], ['whole', 'Whole card'], ['teams', 'Teams only']]} value={cardLayout} onChange={setCardLayout} />
           </div>
           {!(viewingOther && !viewed) && groups.map(group => (
             <section key={group.id} className="game-group">

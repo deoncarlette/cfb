@@ -43,6 +43,7 @@ export function MatchupSide({ team, side, selected, lost, score, disabled, onCli
         {rank && <span className="team-rank">{rank}</span>}
         <span className="team-name">{team.name}</span>
         <span className="team-name team-abbr">{team.abbr || team.name}</span>
+        {team.record && <span className="team-record">{team.record}</span>}
       </span>
       {score != null && <span className="team-score">{score}</span>}
     </button>

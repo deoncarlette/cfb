@@ -10,8 +10,9 @@ import { ConfidenceControl } from './ConfidenceControl.jsx';
 // lists none), and the details button; points on the right.
 // The button under the pill opens the matchup info (before kickoff) or the box score.
 // total is how many cards there are; canUp/canDown say whether the arrows can move it.
-// layout: 'pill' (default) or 'whole' (trial: the two teams fill the card edge to edge, points in
-// a chip on the seam).
+// layout: 'pill' (default), 'whole' (trial: the two teams fill the card edge to edge, points in
+// a chip on the seam) or 'teams' (whole, but nothing else on the card: kickoff, line, game name
+// and network move into the expansion, opened by the small handle under the teams).
 export function GameCard({ game, total, points, result, live, picked, missed, locked, canUp, canDown, pool, dragProps, onPick, onMove, onSetPoints, layout = 'pill' }) {
   const [open, setOpen] = useState(false);
   const isLive = game.state === 'in';
@@ -19,29 +20,41 @@ export function GameCard({ game, total, points, result, live, picked, missed, lo
   const line = !game.completed && !isLive && game.line;
   // ESPN's name for the game (bowls, neutral-site games), else a known rivalry's name.
   const gameName = game.title || listedRivalry(game);
+  const bare = layout === 'teams';
+  const chip = layout === 'whole' || bare;
+  const meta = (
+    <div className="game-meta">
+      {game.completed
+        ? <span><strong className="game-final">Final</strong> {formatGameDay(game.date)}</span>
+        : isLive
+          ? <span><strong className="live-badge">Live</strong> {game.status}<Possession game={game} /></span>
+          : <span>{game.timeTbd ? formatTbdDay(game.date) : formatKickoff(game.date)}</span>}
+      {line && (
+        <span className="game-line">
+          {line.spread && <span>{line.spread}</span>}
+          {line.overUnder != null && <span>O/U {line.overUnder}</span>}
+        </span>
+      )}
+    </div>
+  );
+  const names = <>
+    {gameName && <span className="venue-name game-title">{gameName}</span>}
+    {(game.broadcast || !gameName) && <span className="venue-name">{game.broadcast || game.venue}</span>}
+  </>;
   return (
-    <div className={'game-card' + (layout === 'whole' ? ' whole' : '') + (!picked ? ' unpicked' : '') + (isLive ? ' live' : '')} draggable={!locked} {...(locked ? {} : dragProps)}>
-      <div className="game-meta">
-        {game.completed
-          ? <span><strong className="game-final">Final</strong> {formatGameDay(game.date)}</span>
-          : isLive
-            ? <span><strong className="live-badge">Live</strong> {game.status}<Possession game={game} /></span>
-            : <span>{game.timeTbd ? formatTbdDay(game.date) : formatKickoff(game.date)}</span>}
-        {line && (
-          <span className="game-line">
-            {line.spread && <span>{line.spread}</span>}
-            {line.overUnder != null && <span>O/U {line.overUnder}</span>}
-          </span>
-        )}
-      </div>
+    <div className={'game-card' + (chip ? ' whole' : '') + (bare ? ' teams' : '') + (!picked ? ' unpicked' : '') + (isLive ? ' live' : '')} draggable={!locked} {...(locked ? {} : dragProps)}>
+      {!bare && meta}
       <MatchupPill game={game} picked={picked} disabled={locked} onPick={onPick} />
-      <button type="button" className="game-venue details-toggle" aria-expanded={open} onClick={() => setOpen(o => !o)}>
-        {gameName && <span className="venue-name game-title">{gameName}</span>}
-        {(game.broadcast || !gameName) && <span className="venue-name">{game.broadcast || game.venue}</span>}
-        <span className="details-label">{started ? 'Box score' : 'Matchup'} <span className="chev" aria-hidden="true">▾</span></span>
-      </button>
+      {bare
+        ? <button type="button" className="game-venue details-toggle card-handle" aria-expanded={open} aria-label={open ? 'Hide game details' : 'Show game details'} onClick={() => setOpen(o => !o)}>
+            <span className="chev" aria-hidden="true">▾</span>
+          </button>
+        : <button type="button" className="game-venue details-toggle" aria-expanded={open} onClick={() => setOpen(o => !o)}>
+            {names}
+            <span className="details-label">{started ? 'Box score' : 'Matchup'} <span className="chev" aria-hidden="true">▾</span></span>
+          </button>}
       <ConfidenceControl
-        chip={layout === 'whole'}
+        chip={chip}
         missed={missed}
         points={points}
         max={total}
@@ -54,6 +67,7 @@ export function GameCard({ game, total, points, result, live, picked, missed, lo
         onUp={() => onMove(-1)}
         onDown={() => onMove(1)}
       />
+      {open && bare && <div className="bare-info">{meta}<div className="bare-names">{names}</div></div>}
       {open && <GameDetails game={game} pool={pool} />}
     </div>
   );
