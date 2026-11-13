@@ -27,8 +27,8 @@ export function ScoreboardScreen() {
         {progress
           ? (
             <div className="sample-note">
-              Week {week} is the test replay: points come in as games finish ({progress.final} of {progress.total} final). Updates every 30 seconds.
-              <ReplayScheduleToggle />
+              {progress.replay ? `Week ${week} is the test replay: points` : `Week ${week} points`} come in as games finish ({progress.final} of {progress.total} final). Updates every 30 seconds.
+              {progress.replay && <ReplayScheduleToggle />}
             </div>
           )
           : info?.isSample && <p className="sample-note">Week {week} scores are sample data — these games aren't final yet.</p>}

@@ -2,8 +2,8 @@
   "season": 2026,
   "league": "College Football Confidence Pool",
   "fixtureVersion": 1,
-  "description": "App testing fixture: historical recorded/reconciled weekly scores for weeks 0–10; fully simulated Week 11.",
-  "disclaimer": "Not an authoritative official ledger. Some prior weekly recaps conflict; the scores were reconciled to match the latest Week 10 cumulative standings. Do not publish as certified results.",
+  "description": "App testing fixture: weekly scores for Weeks 0–10 from the pool sheet; fully simulated Week 11.",
+  "disclaimer": "Weeks 0–10 match the pool sheet (Nov 2026). Week 11 is simulated.",
   "includesPreseasonWeekZero": true,
   "players": [
     {
@@ -299,7 +299,7 @@
       "label": "Preseason",
       "possiblePoints": null,
       "status": "completed",
-      "source": "historical_app_seed",
+      "source": "pool_sheet",
       "notes": "Preseason/bonus points present in older app data; included because season cumulative totals include these points.",
       "standings": [
         {
@@ -309,8 +309,8 @@
           "cumulativeScore": 14,
           "weeklyRank": 1,
           "overallRank": 1,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -320,8 +320,8 @@
           "cumulativeScore": 11,
           "weeklyRank": 2,
           "overallRank": 2,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -331,8 +331,8 @@
           "cumulativeScore": 11,
           "weeklyRank": 2,
           "overallRank": 2,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -342,8 +342,8 @@
           "cumulativeScore": 10,
           "weeklyRank": 4,
           "overallRank": 4,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -353,8 +353,8 @@
           "cumulativeScore": 10,
           "weeklyRank": 4,
           "overallRank": 4,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -364,8 +364,8 @@
           "cumulativeScore": 10,
           "weeklyRank": 4,
           "overallRank": 4,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -375,8 +375,8 @@
           "cumulativeScore": 10,
           "weeklyRank": 4,
           "overallRank": 4,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -386,8 +386,8 @@
           "cumulativeScore": 10,
           "weeklyRank": 4,
           "overallRank": 4,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -397,8 +397,8 @@
           "cumulativeScore": 9,
           "weeklyRank": 9,
           "overallRank": 9,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -408,8 +408,8 @@
           "cumulativeScore": 8,
           "weeklyRank": 10,
           "overallRank": 10,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -417,10 +417,10 @@
           "userName": "Brian",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 11,
           "overallRank": 11,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -428,10 +428,10 @@
           "userName": "Deandra",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 11,
           "overallRank": 11,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -439,10 +439,10 @@
           "userName": "Lucy",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 11,
           "overallRank": 11,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -450,10 +450,10 @@
           "userName": "Nicole",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 11,
           "overallRank": 11,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -461,10 +461,10 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 11,
           "overallRank": 11,
-          "entered": null,
-          "scoreSource": "historical_app_seed",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         }
       ]
@@ -474,7 +474,7 @@
       "label": "Week 1",
       "possiblePoints": 496,
       "status": "completed",
-      "source": "historical_app_seed",
+      "source": "pool_sheet",
       "notes": "Recorded weekly points, confidence picks remain as originally submitted.",
       "standings": [
         {
@@ -485,7 +485,7 @@
           "weeklyRank": 1,
           "overallRank": 1,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -496,7 +496,7 @@
           "weeklyRank": 4,
           "overallRank": 2,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -507,7 +507,7 @@
           "weeklyRank": 1,
           "overallRank": 3,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -518,7 +518,7 @@
           "weeklyRank": 3,
           "overallRank": 3,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -529,7 +529,7 @@
           "weeklyRank": 5,
           "overallRank": 5,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -540,7 +540,7 @@
           "weeklyRank": 5,
           "overallRank": 6,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -551,7 +551,7 @@
           "weeklyRank": 7,
           "overallRank": 7,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -562,7 +562,7 @@
           "weeklyRank": 8,
           "overallRank": 8,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -573,7 +573,7 @@
           "weeklyRank": 9,
           "overallRank": 9,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -584,7 +584,7 @@
           "weeklyRank": 10,
           "overallRank": 10,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -595,7 +595,7 @@
           "weeklyRank": 11,
           "overallRank": 11,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -606,7 +606,7 @@
           "weeklyRank": 12,
           "overallRank": 12,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -617,7 +617,7 @@
           "weeklyRank": 13,
           "overallRank": 13,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -625,10 +625,10 @@
           "userName": "Lucy",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 14,
           "overallRank": 14,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -636,10 +636,10 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 14,
           "overallRank": 14,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         }
       ]
@@ -649,7 +649,7 @@
       "label": "Week 2",
       "possiblePoints": 465,
       "status": "completed",
-      "source": "historical_app_seed",
+      "source": "pool_sheet",
       "notes": "Recorded weekly points from archived app.",
       "standings": [
         {
@@ -660,7 +660,7 @@
           "weeklyRank": 2,
           "overallRank": 1,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -671,7 +671,7 @@
           "weeklyRank": 4,
           "overallRank": 2,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -682,7 +682,7 @@
           "weeklyRank": 3,
           "overallRank": 3,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -693,7 +693,7 @@
           "weeklyRank": 5,
           "overallRank": 4,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -704,7 +704,7 @@
           "weeklyRank": 7,
           "overallRank": 5,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -715,7 +715,7 @@
           "weeklyRank": 1,
           "overallRank": 6,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -726,7 +726,7 @@
           "weeklyRank": 6,
           "overallRank": 7,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -737,7 +737,7 @@
           "weeklyRank": 8,
           "overallRank": 8,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -748,7 +748,7 @@
           "weeklyRank": 9,
           "overallRank": 9,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -759,7 +759,7 @@
           "weeklyRank": 10,
           "overallRank": 10,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -767,10 +767,10 @@
           "userName": "Sedrick",
           "weeklyScore": 0,
           "cumulativeScore": 497,
-          "weeklyRank": null,
+          "weeklyRank": 11,
           "overallRank": 11,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -778,10 +778,10 @@
           "userName": "Madelyn",
           "weeklyScore": 0,
           "cumulativeScore": 473,
-          "weeklyRank": null,
+          "weeklyRank": 11,
           "overallRank": 12,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -789,10 +789,10 @@
           "userName": "Brian",
           "weeklyScore": 0,
           "cumulativeScore": 406,
-          "weeklyRank": null,
+          "weeklyRank": 11,
           "overallRank": 13,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -800,10 +800,10 @@
           "userName": "Lucy",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 11,
           "overallRank": 14,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -811,10 +811,10 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 11,
           "overallRank": 14,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         }
       ]
@@ -824,7 +824,7 @@
       "label": "Week 3",
       "possiblePoints": 378,
       "status": "completed",
-      "source": "historical_app_seed",
+      "source": "pool_sheet",
       "notes": "Some rows were missing from an archived partial screenshot; unlisted users recorded as 0, consistent with Week 4 cumulative totals.",
       "standings": [
         {
@@ -835,7 +835,7 @@
           "weeklyRank": 1,
           "overallRank": 1,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -846,7 +846,7 @@
           "weeklyRank": 4,
           "overallRank": 2,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -854,10 +854,10 @@
           "userName": "Morgan",
           "weeklyScore": 328,
           "cumulativeScore": 1246,
-          "weeklyRank": 5,
+          "weeklyRank": 6,
           "overallRank": 3,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -868,7 +868,7 @@
           "weeklyRank": 2,
           "overallRank": 4,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -879,7 +879,7 @@
           "weeklyRank": 8,
           "overallRank": 5,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -890,7 +890,7 @@
           "weeklyRank": 3,
           "overallRank": 6,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -898,10 +898,10 @@
           "userName": "Tara",
           "weeklyScore": 0,
           "cumulativeScore": 885,
-          "weeklyRank": null,
+          "weeklyRank": 9,
           "overallRank": 7,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -909,10 +909,10 @@
           "userName": "Bean",
           "weeklyScore": 0,
           "cumulativeScore": 876,
-          "weeklyRank": null,
+          "weeklyRank": 9,
           "overallRank": 8,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -920,32 +920,32 @@
           "userName": "Savannah",
           "weeklyScore": 0,
           "cumulativeScore": 840,
-          "weeklyRank": null,
+          "weeklyRank": 9,
           "overallRank": 9,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
           "userId": "sedrick",
           "userName": "Sedrick",
-          "weeklyScore": 311,
-          "cumulativeScore": 808,
+          "weeklyScore": 299,
+          "cumulativeScore": 796,
           "weeklyRank": 7,
-          "overallRank": 10,
+          "overallRank": 11,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
           "userId": "madelyn",
           "userName": "Madelyn",
-          "weeklyScore": 323,
-          "cumulativeScore": 796,
-          "weeklyRank": 6,
-          "overallRank": 11,
+          "weeklyScore": 335,
+          "cumulativeScore": 808,
+          "weeklyRank": 5,
+          "overallRank": 10,
           "entered": true,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -953,10 +953,10 @@
           "userName": "Mary",
           "weeklyScore": 0,
           "cumulativeScore": 774,
-          "weeklyRank": null,
+          "weeklyRank": 9,
           "overallRank": 12,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -964,10 +964,10 @@
           "userName": "Brian",
           "weeklyScore": 0,
           "cumulativeScore": 406,
-          "weeklyRank": null,
+          "weeklyRank": 9,
           "overallRank": 13,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -975,10 +975,10 @@
           "userName": "Lucy",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 9,
           "overallRank": 14,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -986,10 +986,10 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 9,
           "overallRank": 14,
           "entered": false,
-          "scoreSource": "historical_app_seed",
+          "scoreSource": "pool_sheet",
           "isMock": false
         }
       ]
@@ -999,7 +999,7 @@
       "label": "Week 4",
       "possiblePoints": 300,
       "status": "completed",
-      "source": "historical_postgame_final",
+      "source": "pool_sheet",
       "notes": "Computed from final Week 4 cumulative scores minus Weeks 0–3.",
       "standings": [
         {
@@ -1010,7 +1010,7 @@
           "weeklyRank": 4,
           "overallRank": 1,
           "entered": true,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1021,7 +1021,7 @@
           "weeklyRank": 3,
           "overallRank": 2,
           "entered": true,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1032,7 +1032,7 @@
           "weeklyRank": 4,
           "overallRank": 3,
           "entered": true,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1043,7 +1043,7 @@
           "weeklyRank": 1,
           "overallRank": 4,
           "entered": true,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1054,7 +1054,7 @@
           "weeklyRank": 9,
           "overallRank": 5,
           "entered": true,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1065,7 +1065,7 @@
           "weeklyRank": 8,
           "overallRank": 6,
           "entered": true,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1076,7 +1076,7 @@
           "weeklyRank": 7,
           "overallRank": 7,
           "entered": true,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1087,7 +1087,7 @@
           "weeklyRank": 2,
           "overallRank": 8,
           "entered": true,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1095,32 +1095,32 @@
           "userName": "Cynthia",
           "weeklyScore": 0,
           "cumulativeScore": 1055,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 9,
           "entered": false,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
           "userId": "madelyn",
           "userName": "Madelyn",
           "weeklyScore": 229,
-          "cumulativeScore": 1025,
+          "cumulativeScore": 1037,
           "weeklyRank": 6,
           "overallRank": 10,
           "entered": true,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
           "userId": "sedrick",
           "userName": "Sedrick",
           "weeklyScore": 186,
-          "cumulativeScore": 994,
+          "cumulativeScore": 982,
           "weeklyRank": 11,
           "overallRank": 11,
           "entered": true,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1128,10 +1128,10 @@
           "userName": "Mary",
           "weeklyScore": 0,
           "cumulativeScore": 774,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 12,
           "entered": false,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1139,10 +1139,10 @@
           "userName": "Brian",
           "weeklyScore": 0,
           "cumulativeScore": 406,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 13,
           "entered": false,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1153,7 +1153,7 @@
           "weeklyRank": 10,
           "overallRank": 14,
           "entered": true,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1161,10 +1161,10 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 15,
           "entered": false,
-          "scoreSource": "historical_postgame_final",
+          "scoreSource": "pool_sheet",
           "isMock": false
         }
       ]
@@ -1174,7 +1174,7 @@
       "label": "Week 5",
       "possiblePoints": 190,
       "status": "completed",
-      "source": "derived_from_week6_totals",
+      "source": "pool_sheet",
       "notes": "Computed from Week 6 final cumulative minus Week 6 weekly minus Week 4 cumulative.",
       "standings": [
         {
@@ -1185,7 +1185,7 @@
           "weeklyRank": 5,
           "overallRank": 1,
           "entered": true,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1196,7 +1196,7 @@
           "weeklyRank": 1,
           "overallRank": 2,
           "entered": true,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1207,7 +1207,7 @@
           "weeklyRank": 7,
           "overallRank": 3,
           "entered": true,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1215,10 +1215,10 @@
           "userName": "Luis",
           "weeklyScore": 0,
           "cumulativeScore": 1509,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 4,
           "entered": false,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1226,10 +1226,10 @@
           "userName": "Nicole",
           "weeklyScore": 159,
           "cumulativeScore": 1507,
-          "weeklyRank": 3,
+          "weeklyRank": 2,
           "overallRank": 5,
           "entered": true,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1240,7 +1240,7 @@
           "weeklyRank": 6,
           "overallRank": 6,
           "entered": true,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1248,10 +1248,10 @@
           "userName": "Cynthia",
           "weeklyScore": 154,
           "cumulativeScore": 1209,
-          "weeklyRank": 4,
+          "weeklyRank": 3,
           "overallRank": 7,
           "entered": true,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1262,29 +1262,29 @@
           "weeklyRank": 9,
           "overallRank": 8,
           "entered": true,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
           "userId": "madelyn",
           "userName": "Madelyn",
-          "weeklyScore": 161,
+          "weeklyScore": 149,
           "cumulativeScore": 1186,
-          "weeklyRank": 2,
+          "weeklyRank": 4,
           "overallRank": 9,
           "entered": true,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
           "userId": "sedrick",
           "userName": "Sedrick",
-          "weeklyScore": 107,
+          "weeklyScore": 119,
           "cumulativeScore": 1101,
           "weeklyRank": 10,
           "overallRank": 10,
           "entered": true,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1292,10 +1292,10 @@
           "userName": "Bean",
           "weeklyScore": 0,
           "cumulativeScore": 1099,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 11,
           "entered": false,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1306,7 +1306,7 @@
           "weeklyRank": 8,
           "overallRank": 12,
           "entered": true,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1314,10 +1314,10 @@
           "userName": "Brian",
           "weeklyScore": 0,
           "cumulativeScore": 406,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 13,
           "entered": false,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1328,7 +1328,7 @@
           "weeklyRank": 11,
           "overallRank": 14,
           "entered": true,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1336,10 +1336,10 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 15,
           "entered": false,
-          "scoreSource": "derived_from_week6_totals",
+          "scoreSource": "pool_sheet",
           "isMock": false
         }
       ]
@@ -1349,7 +1349,7 @@
       "label": "Week 6",
       "possiblePoints": 210,
       "status": "completed",
-      "source": "historical_postgame_final",
+      "source": "pool_sheet",
       "notes": "Reported final Week 6 weekly scores.",
       "standings": [
         {
@@ -1359,8 +1359,8 @@
           "cumulativeScore": 1775,
           "weeklyRank": 2,
           "overallRank": 1,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1370,8 +1370,8 @@
           "cumulativeScore": 1762,
           "weeklyRank": 10,
           "overallRank": 2,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1381,19 +1381,19 @@
           "cumulativeScore": 1741,
           "weeklyRank": 8,
           "overallRank": 3,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
           "userId": "luis",
           "userName": "Luis",
-          "weeklyScore": 135,
-          "cumulativeScore": 1644,
+          "weeklyScore": 136,
+          "cumulativeScore": 1645,
           "weeklyRank": 3,
           "overallRank": 4,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1403,8 +1403,8 @@
           "cumulativeScore": 1621,
           "weeklyRank": 10,
           "overallRank": 5,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1414,8 +1414,8 @@
           "cumulativeScore": 1404,
           "weeklyRank": 1,
           "overallRank": 6,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1425,8 +1425,8 @@
           "cumulativeScore": 1323,
           "weeklyRank": 9,
           "overallRank": 7,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1434,10 +1434,10 @@
           "userName": "Madelyn",
           "weeklyScore": 135,
           "cumulativeScore": 1321,
-          "weeklyRank": 3,
+          "weeklyRank": 4,
           "overallRank": 8,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1447,8 +1447,8 @@
           "cumulativeScore": 1303,
           "weeklyRank": 12,
           "overallRank": 9,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1458,8 +1458,8 @@
           "cumulativeScore": 1228,
           "weeklyRank": 6,
           "overallRank": 10,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1469,8 +1469,8 @@
           "cumulativeScore": 1225,
           "weeklyRank": 7,
           "overallRank": 11,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1480,8 +1480,8 @@
           "cumulativeScore": 1036,
           "weeklyRank": 5,
           "overallRank": 12,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1489,10 +1489,10 @@
           "userName": "Brian",
           "weeklyScore": 0,
           "cumulativeScore": 406,
-          "weeklyRank": null,
+          "weeklyRank": 14,
           "overallRank": 13,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1502,8 +1502,8 @@
           "cumulativeScore": 380,
           "weeklyRank": 12,
           "overallRank": 14,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1511,10 +1511,10 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 14,
           "overallRank": 15,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         }
       ]
@@ -1524,7 +1524,7 @@
       "label": "Week 7",
       "possiblePoints": 253,
       "status": "completed",
-      "source": "reconciled_from_week8_final",
+      "source": "pool_sheet",
       "notes": "Derived by subtraction from Week 8 scoreboard to maintain continuous totals. Some earlier recaps contain conflicting values.",
       "standings": [
         {
@@ -1534,8 +1534,8 @@
           "cumulativeScore": 1947,
           "weeklyRank": 1,
           "overallRank": 1,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1545,8 +1545,8 @@
           "cumulativeScore": 1909,
           "weeklyRank": 4,
           "overallRank": 2,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1556,8 +1556,8 @@
           "cumulativeScore": 1868,
           "weeklyRank": 8,
           "overallRank": 3,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1567,19 +1567,19 @@
           "cumulativeScore": 1743,
           "weeklyRank": 9,
           "overallRank": 4,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
           "userId": "luis",
           "userName": "Luis",
-          "weeklyScore": 1,
+          "weeklyScore": 0,
           "cumulativeScore": 1645,
           "weeklyRank": 10,
           "overallRank": 5,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1589,8 +1589,8 @@
           "cumulativeScore": 1537,
           "weeklyRank": 6,
           "overallRank": 6,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1600,8 +1600,8 @@
           "cumulativeScore": 1476,
           "weeklyRank": 3,
           "overallRank": 7,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1611,8 +1611,8 @@
           "cumulativeScore": 1395,
           "weeklyRank": 2,
           "overallRank": 8,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1622,8 +1622,8 @@
           "cumulativeScore": 1358,
           "weeklyRank": 6,
           "overallRank": 9,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1631,10 +1631,10 @@
           "userName": "Madelyn",
           "weeklyScore": 0,
           "cumulativeScore": 1321,
-          "weeklyRank": null,
+          "weeklyRank": 10,
           "overallRank": 10,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1642,10 +1642,10 @@
           "userName": "Cynthia",
           "weeklyScore": 0,
           "cumulativeScore": 1303,
-          "weeklyRank": null,
+          "weeklyRank": 10,
           "overallRank": 11,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1653,10 +1653,10 @@
           "userName": "Mary",
           "weeklyScore": 0,
           "cumulativeScore": 1036,
-          "weeklyRank": null,
+          "weeklyRank": 10,
           "overallRank": 12,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1666,8 +1666,8 @@
           "cumulativeScore": 523,
           "weeklyRank": 5,
           "overallRank": 13,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1675,10 +1675,10 @@
           "userName": "Brian",
           "weeklyScore": 0,
           "cumulativeScore": 406,
-          "weeklyRank": null,
+          "weeklyRank": 10,
           "overallRank": 14,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1686,10 +1686,10 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 10,
           "overallRank": 15,
-          "entered": null,
-          "scoreSource": "reconciled_from_week8_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         }
       ]
@@ -1699,7 +1699,7 @@
       "label": "Week 8",
       "possiblePoints": 210,
       "status": "completed",
-      "source": "historical_postgame_final",
+      "source": "pool_sheet",
       "notes": "Reported final Week 8 weekly scores.",
       "standings": [
         {
@@ -1709,8 +1709,8 @@
           "cumulativeScore": 2064,
           "weeklyRank": 8,
           "overallRank": 1,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1720,8 +1720,8 @@
           "cumulativeScore": 2037,
           "weeklyRank": 5,
           "overallRank": 2,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1731,8 +1731,8 @@
           "cumulativeScore": 2018,
           "weeklyRank": 2,
           "overallRank": 3,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1742,8 +1742,8 @@
           "cumulativeScore": 1883,
           "weeklyRank": 3,
           "overallRank": 4,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1753,8 +1753,8 @@
           "cumulativeScore": 1680,
           "weeklyRank": 13,
           "overallRank": 5,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1764,8 +1764,8 @@
           "cumulativeScore": 1662,
           "weeklyRank": 6,
           "overallRank": 6,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1775,8 +1775,8 @@
           "cumulativeScore": 1644,
           "weeklyRank": 1,
           "overallRank": 7,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1786,19 +1786,19 @@
           "cumulativeScore": 1504,
           "weeklyRank": 9,
           "overallRank": 8,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
           "userId": "bean",
           "userName": "Bean",
-          "weeklyScore": 92,
-          "cumulativeScore": 1450,
+          "weeklyScore": 93,
+          "cumulativeScore": 1451,
           "weeklyRank": 11,
           "overallRank": 9,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1808,8 +1808,8 @@
           "cumulativeScore": 1443,
           "weeklyRank": 3,
           "overallRank": 10,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1819,8 +1819,8 @@
           "cumulativeScore": 1443,
           "weeklyRank": 7,
           "overallRank": 10,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1830,8 +1830,8 @@
           "cumulativeScore": 1137,
           "weeklyRank": 10,
           "overallRank": 12,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1841,8 +1841,8 @@
           "cumulativeScore": 603,
           "weeklyRank": 12,
           "overallRank": 13,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1850,10 +1850,10 @@
           "userName": "Brian",
           "weeklyScore": 0,
           "cumulativeScore": 406,
-          "weeklyRank": null,
+          "weeklyRank": 14,
           "overallRank": 14,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1861,10 +1861,10 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 14,
           "overallRank": 15,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         }
       ]
@@ -1874,7 +1874,7 @@
       "label": "Week 9",
       "possiblePoints": 210,
       "status": "completed",
-      "source": "reconciled_from_week10_final",
+      "source": "pool_sheet",
       "notes": "Derived by subtraction from final Week 10 scoreboard. Some earlier Week 9 recaps differ by a few points.",
       "standings": [
         {
@@ -1884,8 +1884,8 @@
           "cumulativeScore": 2246,
           "weeklyRank": 1,
           "overallRank": 1,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1895,8 +1895,8 @@
           "cumulativeScore": 2203,
           "weeklyRank": 7,
           "overallRank": 2,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1906,8 +1906,8 @@
           "cumulativeScore": 2174,
           "weeklyRank": 10,
           "overallRank": 3,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1917,8 +1917,8 @@
           "cumulativeScore": 2041,
           "weeklyRank": 8,
           "overallRank": 4,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1928,8 +1928,8 @@
           "cumulativeScore": 1837,
           "weeklyRank": 9,
           "overallRank": 5,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1937,10 +1937,10 @@
           "userName": "Tara",
           "weeklyScore": 170,
           "cumulativeScore": 1832,
-          "weeklyRank": 5,
+          "weeklyRank": 4,
           "overallRank": 6,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1950,19 +1950,19 @@
           "cumulativeScore": 1823,
           "weeklyRank": 2,
           "overallRank": 7,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
           "userId": "bean",
           "userName": "Bean",
-          "weeklyScore": 171,
+          "weeklyScore": 170,
           "cumulativeScore": 1621,
           "weeklyRank": 4,
           "overallRank": 8,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1972,8 +1972,8 @@
           "cumulativeScore": 1619,
           "weeklyRank": 11,
           "overallRank": 9,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1983,8 +1983,8 @@
           "cumulativeScore": 1618,
           "weeklyRank": 3,
           "overallRank": 10,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -1992,10 +1992,10 @@
           "userName": "Madelyn",
           "weeklyScore": 0,
           "cumulativeScore": 1443,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 11,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2005,8 +2005,8 @@
           "cumulativeScore": 1304,
           "weeklyRank": 6,
           "overallRank": 12,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2014,10 +2014,10 @@
           "userName": "Lucy",
           "weeklyScore": 0,
           "cumulativeScore": 603,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 13,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2025,10 +2025,10 @@
           "userName": "Brian",
           "weeklyScore": 0,
           "cumulativeScore": 406,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 14,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2036,10 +2036,10 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 15,
-          "entered": null,
-          "scoreSource": "reconciled_from_week10_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         }
       ]
@@ -2049,7 +2049,7 @@
       "label": "Week 10",
       "possiblePoints": 300,
       "status": "completed",
-      "source": "historical_postgame_final",
+      "source": "pool_sheet",
       "notes": "Reported final Week 10 weekly scores and season totals.",
       "standings": [
         {
@@ -2057,10 +2057,10 @@
           "userName": "Deandra",
           "weeklyScore": 188,
           "cumulativeScore": 2434,
-          "weeklyRank": 10,
+          "weeklyRank": 9,
           "overallRank": 1,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2068,10 +2068,10 @@
           "userName": "Joseph",
           "weeklyScore": 190,
           "cumulativeScore": 2393,
-          "weeklyRank": 9,
+          "weeklyRank": 7,
           "overallRank": 2,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2079,10 +2079,10 @@
           "userName": "Morgan",
           "weeklyScore": 188,
           "cumulativeScore": 2362,
-          "weeklyRank": 6,
+          "weeklyRank": 9,
           "overallRank": 3,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2090,10 +2090,10 @@
           "userName": "Nicole",
           "weeklyScore": 210,
           "cumulativeScore": 2251,
-          "weeklyRank": 5,
+          "weeklyRank": 4,
           "overallRank": 4,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2101,10 +2101,10 @@
           "userName": "Tara",
           "weeklyScore": 202,
           "cumulativeScore": 2034,
-          "weeklyRank": 3,
-          "overallRank": 5,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "weeklyRank": 6,
+          "overallRank": 6,
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2112,10 +2112,10 @@
           "userName": "Luis",
           "weeklyScore": 208,
           "cumulativeScore": 2045,
-          "weeklyRank": 8,
-          "overallRank": 6,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "weeklyRank": 5,
+          "overallRank": 5,
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2125,8 +2125,8 @@
           "cumulativeScore": 2004,
           "weeklyRank": 11,
           "overallRank": 7,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2136,8 +2136,8 @@
           "cumulativeScore": 1859,
           "weeklyRank": 1,
           "overallRank": 8,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2145,10 +2145,10 @@
           "userName": "Madelyn",
           "weeklyScore": 189,
           "cumulativeScore": 1632,
-          "weeklyRank": 7,
+          "weeklyRank": 8,
           "overallRank": 9,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2156,10 +2156,10 @@
           "userName": "Sedrick",
           "weeklyScore": 0,
           "cumulativeScore": 1619,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 10,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2167,10 +2167,10 @@
           "userName": "Cynthia",
           "weeklyScore": 0,
           "cumulativeScore": 1618,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 11,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2180,8 +2180,8 @@
           "cumulativeScore": 1535,
           "weeklyRank": 2,
           "overallRank": 12,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2189,10 +2189,10 @@
           "userName": "Lucy",
           "weeklyScore": 220,
           "cumulativeScore": 823,
-          "weeklyRank": 4,
+          "weeklyRank": 3,
           "overallRank": 13,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": true,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2200,10 +2200,10 @@
           "userName": "Brian",
           "weeklyScore": 0,
           "cumulativeScore": 406,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 14,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         },
         {
@@ -2211,10 +2211,10 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 12,
           "overallRank": 15,
-          "entered": null,
-          "scoreSource": "historical_postgame_final",
+          "entered": false,
+          "scoreSource": "pool_sheet",
           "isMock": false
         }
       ]
@@ -2244,7 +2244,7 @@
           "weeklyScore": 236,
           "cumulativeScore": 2598,
           "weeklyRank": 2,
-          "overallRank": 2,
+          "overallRank": 3,
           "entered": true,
           "scoreSource": "synthetic_demo",
           "isMock": true
@@ -2255,7 +2255,7 @@
           "weeklyScore": 223,
           "cumulativeScore": 2616,
           "weeklyRank": 6,
-          "overallRank": 3,
+          "overallRank": 2,
           "entered": true,
           "scoreSource": "synthetic_demo",
           "isMock": true
@@ -2353,7 +2353,7 @@
           "userName": "Sedrick",
           "weeklyScore": 0,
           "cumulativeScore": 1619,
-          "weeklyRank": null,
+          "weeklyRank": 13,
           "overallRank": 12,
           "entered": false,
           "scoreSource": "synthetic_demo",
@@ -2375,7 +2375,7 @@
           "userName": "Brian",
           "weeklyScore": 0,
           "cumulativeScore": 406,
-          "weeklyRank": null,
+          "weeklyRank": 13,
           "overallRank": 14,
           "entered": false,
           "scoreSource": "synthetic_demo",
@@ -2386,7 +2386,7 @@
           "userName": "Vinny",
           "weeklyScore": 0,
           "cumulativeScore": 0,
-          "weeklyRank": null,
+          "weeklyRank": 13,
           "overallRank": 15,
           "entered": false,
           "scoreSource": "synthetic_demo",

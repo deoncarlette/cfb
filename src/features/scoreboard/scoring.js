@@ -31,19 +31,27 @@ async function replayedGames() {
   return replayGames(await replayRaw);
 }
 
-export const isLiveScoredWeek = week => REPLAY_WEEK != null && week === REPLAY_WEEK;
+// Weeks scored live from picks instead of recorded scores: the test replay week, and any week
+// whose recorded scores are only a placeholder (Week 11 until it's played) — so its points come
+// in as games actually finish instead of showing made-up totals.
+export const isLiveScoredWeek = week =>
+  (REPLAY_WEEK != null && week === REPLAY_WEEK) || mockWeek(week)?.status === 'mock_upcoming';
 
 // { rows: [{ user_name, score, entered }], final, total } — final = games finished so far.
-async function replayRecords() {
-  const games = await replayedGames();
-  const sample = await samplePicksForWeek(REPLAY_WEEK, games);
+// Picks: everyone's from the sample file (hidden weeks show none until they open), with any
+// picks saved in the app taking their place.
+async function replayRecords(week = REPLAY_WEEK) {
+  const games = week === REPLAY_WEEK ? await replayedGames() : await fetchGamesFor(week, [80, 81]);
+  const sample = await samplePicksForWeek(week, games);
   const slate = sample ? games.filter(g => sample.gameIds.includes(g.id)) : [];
   const winners = new Map(slate.map(g => [g.id, gameWinnerId(g)]).filter(([, w]) => w));
   const norm = s => s.trim().toLowerCase();
   const names = new Map(SEASON_ROSTER.map(n => [norm(n), n]));
   sample?.ballots.forEach(b => { if (!names.has(norm(b.user_name))) names.set(norm(b.user_name), b.user_name); });
+  const saved = new Map((await getAllPicksForWeek(week).catch(() => [])).map(e => [norm(e.user_name), e]));
+  saved.forEach(e => { if (!names.has(norm(e.user_name))) names.set(norm(e.user_name), e.user_name); });
   const rows = [...names.entries()].map(([key, name]) => {
-    const ballot = sample?.ballots.get(key);
+    const ballot = saved.get(key) || sample?.ballots.get(key);
     if (!ballot) return { user_name: name, score: 0, entered: false };
     let score = 0;
     Object.entries(ballot.picks).forEach(([gid, p]) => { if (winners.get(gid) === p.winner) score += Number(p.confidence) || 0; });
@@ -55,13 +63,13 @@ async function replayRecords() {
 // Live progress line for the replay week: { final, total } or null.
 export async function replayProgress(week) {
   if (!isLiveScoredWeek(week)) return null;
-  const { final, total } = await replayRecords();
-  return { final, total };
+  const { final, total } = await replayRecords(week);
+  return { final, total, replay: week === REPLAY_WEEK };
 }
 
 async function weekRows(week) {
   if (isLiveScoredWeek(week)) {
-    try { return (await replayRecords()).rows; } catch (e) { /* ESPN unreachable → recorded scores */ }
+    try { return (await replayRecords(week)).rows; } catch (e) { /* ESPN unreachable → recorded scores */ }
   }
   const w = mockWeek(week);
   return w ? w.standings.map(s => ({ user_name: s.userName, score: s.weeklyScore, entered: s.entered })) : null;
