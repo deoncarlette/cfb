@@ -148,7 +148,7 @@ export function WeekPicks({ week, userName, nameKey }) {
             <PlayerPicker
               value={viewing}
               players={others.players.filter(n => n.toLowerCase() !== userName.trim().toLowerCase())}
-              selfLabel={userName.trim() ? `${userName.trim()} (you)` : 'You'}
+              selfLabel={userName.trim() || 'Me'}
               onChange={setViewing}
             />
           )}

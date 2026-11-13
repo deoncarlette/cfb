@@ -3,7 +3,7 @@ import { gameWinnerId } from '@/services/espn/index.js';
 
 // How the pool picked this game (shown once the game locks): a split bar of players on each
 // team in the team colors, the confidence points riding on each side, and who picked whom
-// with their points, highest first. Your row is highlighted. Final: the winning side turns
+// with their points, highest first. Your name is highlighted. Final: the winning side turns
 // green, the losing side red; live: which side is ahead.
 // pool: [{ name, winner (team id) | null, confidence, isYou }]
 export function PoolPicks({ game, pool }) {
@@ -39,7 +39,7 @@ export function PoolPicks({ game, pool }) {
             <div className="pool-col-head">{s.team.abbr || s.team.name}{status(s.team) && <em>{status(s.team)}</em>}</div>
             {s.rows.map(r => (
               <div key={r.name} className={'pool-row' + (r.isYou ? ' you' : '')}>
-                <span>{r.name}{r.isYou && <small> (you)</small>}</span><strong>{r.confidence}</strong>
+                <span>{r.name}</span><strong>{r.confidence}</strong>
               </div>
             ))}
             {!s.rows.length && <div className="pool-row empty">No one</div>}
