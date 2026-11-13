@@ -105,6 +105,13 @@ export function WeekPicks({ week, userName, nameKey }) {
     : { entry: own, winners, order };
 
   const showingSample = !viewing && !existing && !!sample;
+
+  // Pool picks for a game's panel: everyone's pick on it, once that game has locked.
+  const youName = (userName.trim() || sample?.playerName || '').toLowerCase();
+  const poolFor = gameId => (isLocked(gameId) ? others.players.map(name => {
+    const p = others.entryFor(name)?.picks?.[gameId];
+    return { name, winner: p?.winner ?? null, confidence: Number(p?.confidence) || 0, isYou: name.toLowerCase() === youName };
+  }) : null);
   const pointsFor = gameId => {
     const saved = shown.entry?.picks?.[gameId]?.confidence;
     const ranking = shown.fullOrder || order;
@@ -195,6 +202,7 @@ export function WeekPicks({ week, userName, nameKey }) {
                     locked={readOnly}
                     canUp={!readOnly && canMove(gameId, -1)}
                     canDown={!readOnly && canMove(gameId, 1)}
+                    pool={poolFor(gameId)}
                     dragProps={dragPropsFor(gameId)}
                     onPick={teamId => setWinners(w => togglePick(w, gameId, teamId))}
                     onMove={dir => move(gameId, dir)}

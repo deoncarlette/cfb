@@ -6,12 +6,14 @@ import { LineScore } from './LineScore.jsx';
 import { Leaders } from './Leaders.jsx';
 import { LastFive } from './LastFive.jsx';
 import { ScoringPlays } from './ScoringPlays.jsx';
+import { PoolPicks } from './PoolPicks.jsx';
 
 const ml = v => (v == null ? null : v > 0 ? `+${v}` : String(v));
 
 // The panel that opens under a game card.
 // Before kickoff: matchup info to help with picks. Live / final: the box score.
-export function GameDetails({ game }) {
+// pool: everyone's picks on this game (only passed once it locks) → Pool picks section.
+export function GameDetails({ game, pool }) {
   const started = game.completed || game.state === 'in';
   // Test replay: the real box score rewound to the replayed game clock (the card's refresh
   // moves game.replay.f forward, so this follows along without its own polling).
@@ -21,8 +23,9 @@ export function GameDetails({ game }) {
   // show while the details load.
   const [cardAway, cardHome] = game.competitors;
   const header = <div className="gd-teams"><span>{cardAway.name}</span><span>{cardHome.name}</span></div>;
-  if (error) return <div className="game-details">{header}<p className="muted small center">{error}</p></div>;
-  if (!s) return <div className="game-details">{header}<p className="muted small center">Loading…</p></div>;
+  const poolSection = pool?.length ? <PoolPicks game={game} pool={pool} /> : null;
+  if (error) return <div className="game-details">{header}{poolSection}<p className="muted small center">{error}</p></div>;
+  if (!s) return <div className="game-details">{header}{poolSection}<p className="muted small center">Loading…</p></div>;
 
   // Colors come from the card's teams (ESPN's summary uses the same ids).
   const away = { ...s.away, color: cardAway.color, altColor: cardAway.altColor };
@@ -48,6 +51,7 @@ export function GameDetails({ game }) {
       {header}
       {started && <LineScore away={s.away} home={s.home} />}
       {s.winProb && (!started || s.winProb.live) && <WinProbability prob={s.winProb} away={away} home={home} />}
+      {poolSection}
       {!started && <CompareRows title="Matchup" rows={pregameRows} />}
       {s.replay?.estimatedStats && game.state === 'in' && (
         <p className="gd-note">Test replay: score, quarters and scoring plays are exact to the game clock. Team stats and leaders are the final totals scaled to the share of the game played.</p>

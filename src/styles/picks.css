@@ -188,3 +188,28 @@
 .lock-alert.locked{border-left-color:var(--line-strong); color:var(--muted);}
 /* Black logos on the black pill: a thin light edge traced around the logo's shape. */
 .matchup-side .team-logo.outline img{filter:drop-shadow(0 0 1px rgba(255,255,255,.95)) drop-shadow(0 0 1px rgba(255,255,255,.95)) drop-shadow(0 0 2px rgba(255,255,255,.35));}
+
+/* Pool picks (game panel, once the game locks). */
+.pool-points{display:grid; grid-template-columns:1fr auto 1fr; align-items:baseline; gap:8px; padding:6px 4px 10px; font-size:13px; font-weight:700; font-variant-numeric:tabular-nums;}
+.pool-points span:last-child{text-align:right;}
+.pool-points small{font-size:11px; font-weight:500; color:var(--muted);}
+.pool-cols{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+.pool-col{background:var(--raised); border-radius:10px; padding:8px 10px; min-width:0; border-top:3px solid transparent;}
+.pool-col.won{border-top-color:var(--success);}
+.pool-col.lost{border-top-color:var(--danger);}
+.pool-col.ahead{border-top-color:color-mix(in srgb, var(--success) 55%, transparent);}
+.pool-col.behind{border-top-color:color-mix(in srgb, var(--danger) 55%, transparent);}
+.pool-col-head{display:flex; justify-content:space-between; align-items:baseline; gap:6px; font-family:var(--display); font-weight:800; font-style:italic; font-size:15px; text-transform:uppercase; margin-bottom:4px;}
+.pool-col-head em{font-family:var(--font); font-style:normal; font-weight:600; font-size:11px; text-transform:none;}
+.pool-col.won .pool-col-head em, .pool-col.ahead .pool-col-head em{color:var(--success);}
+.pool-col.lost .pool-col-head em, .pool-col.behind .pool-col-head em{color:var(--danger);}
+.pool-row{display:flex; justify-content:space-between; gap:8px; padding:3px 0; font-size:13px; border-bottom:1px solid var(--line);}
+.pool-row:last-child{border-bottom:none;}
+.pool-row span{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.pool-row strong{font-variant-numeric:tabular-nums;}
+.pool-row.you{font-weight:700; color:var(--accent);}
+:root[data-theme="light"] .pool-row.you{color:#9a6b00;}
+.pool-row small{font-weight:500; color:var(--muted);}
+.pool-row.empty{color:var(--muted);}
+.pool-col.lost .pool-row:not(.you) strong{color:var(--muted); text-decoration:line-through;}
+.pool-note{font-size:12px; color:var(--muted); text-align:center; margin:8px 0 0;}
