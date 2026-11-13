@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getAllPicksForWeek } from '@/services/data/index.js';
 import { SEASON_ROSTER } from '@/features/scoreboard/scoring.js';
 
-// Everyone's picks for a week, for the "Picks shown" selector on locked weeks: picks saved in
+// Everyone's picks for a week, for the "View picks for" selector on locked weeks: picks saved in
 // the app first, then the sample file's ballots. Only loads once the week is locked, so
 // nobody's picks are fetched early. Returns { players: [name], entryFor(name) → entry or null }.
 export function useOtherPlayers(week, locked, sample) {

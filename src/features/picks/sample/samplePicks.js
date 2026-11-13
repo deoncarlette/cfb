@@ -2,7 +2,7 @@
 // simulated and marked isMock). For any week in the file:
 //   - that week's slate is exactly the file's games (matched to ESPN's games by team name)
 //   - DEFAULT_PLAYER's picks show on the cards until someone saves their own
-//   - everyone's picks can be viewed with the "Picks shown" selector once the week locks
+//   - everyone's picks can be viewed with the "View picks for" selector once the week locks
 // To update: replace all-picks-2026.json with a corrected file in the same format.
 
 export const DEFAULT_PLAYER = 'Deandra';
