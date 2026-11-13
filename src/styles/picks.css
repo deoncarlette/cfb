@@ -43,7 +43,7 @@
 /* The matchup pill: near-black sides in dark mode, light gray in light mode. Names are plain
    (white / near-black); logos keep their colors.
    The pill's own background shows through as a thin slanted seam between the two sides. */
-.matchup{grid-area:pill; position:relative; display:flex; height:58px; border-radius:999px; overflow:hidden; background:var(--pill-seam);}
+.matchup{grid-area:pill; container:pill / inline-size; position:relative; display:flex; height:58px; border-radius:999px; overflow:hidden; background:var(--pill-seam);}
 .matchup-side{
   flex:1; min-width:0; position:relative; display:flex; align-items:center; gap:9px; text-align:left;
   border:none; border-radius:0; padding:0 14px; background:var(--pill-side); color:var(--pill-ink);
@@ -109,10 +109,14 @@
   .matchup-mid{display:none;}  /* "Final" is in the line above instead */
   .matchup.has-chip .matchup-side.away{padding-right:20px;}
   .matchup.has-chip .matchup-side.home{padding-left:20px;}
-  /* Phones: ESPN's short name (MICH, UCLA) on every game; the expanded panel spells them out. */
+  .team-rank{font-size:13px;}
+}
+/* Short names (MICH, UCLA) whenever the pill is phone-sized — measured on the pill itself, so it
+   also holds with browser zoom or text-size settings that make the page wider than the phone.
+   The expanded panel spells the names out. */
+@container pill (max-width:480px){
   .team-name{display:none;}
   .team-abbr{display:block;}
-  .team-rank{font-size:13px;}
 }
 
 /* Live games */
