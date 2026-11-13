@@ -39,11 +39,15 @@ export function bestRealRank(game) {
   return ranks.length ? Math.min(...ranks) : 999;
 }
 
-// 'top25' | 'power4' | 'meac' | 'other' — drives the Commissioner sections and the default slate.
+// Commish sections, first match wins: 'top25' (a ranked team) | 'power4' | 'meac' |
+// 'fbs' (another FBS team) | 'fcs' (an FCS team) | 'other' (conference unknown).
 export function gameCategory(game) {
-  if (game.competitors.some(hasRealRank)) return 'top25';
-  if (game.competitors.some(c => isP4(c.name))) return 'power4';
-  if (game.competitors.some(c => conferenceOf(c) === 'MEAC')) return 'meac';
+  const cs = game.competitors;
+  if (cs.some(hasRealRank)) return 'top25';
+  if (cs.some(c => isP4(c.name))) return 'power4';
+  if (cs.some(c => conferenceOf(c) === 'MEAC')) return 'meac';
+  if (cs.some(c => FBS_BY_ESPN_ID[c.conferenceId])) return 'fbs';
+  if (cs.some(c => FCS_BY_ESPN_ID[c.conferenceId])) return 'fcs';
   return 'other';
 }
 
@@ -70,11 +74,8 @@ const FCS_BY_ESPN_ID = {
   '29': 'Southern', '30': 'Southland', '31': 'SWAC', '177': 'UAC'
 };
 export const P4_ORDER = ['SEC', 'Big Ten', 'Big 12', 'ACC'];
-// "All Other Games" subgroups: FBS conferences first, then FCS A–Z, then anything unrecognized.
-export const OTHER_ORDER = [
-  'American', 'Mountain West', 'Sun Belt', 'MAC', 'Conference USA', 'Pac-12', 'FBS Independents',
-  ...Object.values(FCS_BY_ESPN_ID).sort((a, b) => a.localeCompare(b)), 'Other'
-];
+export const FBS_ORDER = ['American', 'Mountain West', 'Sun Belt', 'MAC', 'Conference USA', 'Pac-12', 'FBS Independents'];
+export const FCS_ORDER = Object.values(FCS_BY_ESPN_ID).sort((a, b) => a.localeCompare(b));
 
 export function conferenceOf(team) {
   if (SEC_TEAMS.has(team.name)) return 'SEC';
@@ -86,8 +87,10 @@ export function conferenceOf(team) {
 
 // Which conference a game is filed under: the home team's (a Power 4 team's, in the Power 4
 // section), else the away team's, else "Other".
-export function gameConference(game, p4Only = false) {
+// only: limit to one list of conferences (P4_ORDER, FBS_ORDER, FCS_ORDER) — e.g. Marshall vs an
+// FCS team files under Sun Belt in the FBS section.
+export function gameConference(game, only = null) {
   const [away, home] = game.competitors;
-  const pick = t => { const c = conferenceOf(t); return c && (!p4Only || P4_ORDER.includes(c)) ? c : null; };
+  const pick = t => { const c = conferenceOf(t); return c && (!only || only.includes(c)) ? c : null; };
   return pick(home) || pick(away) || 'Other';
 }
