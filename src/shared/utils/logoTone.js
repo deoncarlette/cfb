@@ -1,9 +1,10 @@
-// Is a logo mostly black? ESPN doesn't say, so draw it once onto a small hidden canvas and
-// count near-black pixels. → Promise<'dark' | 'light' | null> (null = couldn't tell, e.g. the
-// image host doesn't allow reading its pixels). Cached per image URL.
+// How much of a logo is near-black? ESPN doesn't say, so draw it once onto a small hidden canvas
+// and count. → Promise<number 0–1 | null> (share of the logo's visible pixels that are near-black;
+// null = couldn't tell — missing image, or the host doesn't allow reading its pixels).
+// Cached per image URL.
 const cache = new Map();
 
-export function logoTone(url) {
+export function logoDarkShare(url) {
   if (!url) return Promise.resolve(null);
   if (!cache.has(url)) {
     cache.set(url, new Promise(resolve => {
@@ -21,7 +22,7 @@ export function logoTone(url) {
             opaque++;
             if (0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2] < 25) dark++; // near-black only; maroon and navy logos stay as they are
           }
-          resolve(opaque ? (dark / opaque > 0.55 ? 'dark' : 'light') : null);
+          resolve(opaque ? dark / opaque : null);
         } catch (e) { resolve(null); }
       };
       img.onerror = () => resolve(null);
