@@ -37,6 +37,7 @@ export function WeekPicks({ week, userName, nameKey }) {
   // Show a saved entry's picks (yours, or the sample picks) on the cards; null = blank cards.
   // No picks yet on an open week: the cards come up in a random order, so people who skip
   // ranking (or quick-pick) don't all end up with the same confidence order.
+  // TODO (Auth pass, see README): shuffle only on a player's first load of the week and save it.
   function showEntry(entry) {
     const blank = !entry || !Object.keys(entry.picks || {}).length;
     if (blank && !lock.anyLocked) { setWinners({}); setOrder(shuffled(games.map(g => g.id))); return; }

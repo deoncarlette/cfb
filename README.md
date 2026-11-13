@@ -16,6 +16,12 @@ using it — come back for an Auth pass (Google Sign-In + Firestore rules that c
 `request.auth`) before that happens. The earlier React scaffold's `firestore.rules` has a
 worked example with an `isCommissioner` flag if you want a head start on that later.
 
+Also part of the Auth pass:
+- **Card shuffle on the first load only.** Open weeks with no picks currently load in a new
+  random order on every page load (`showEntry` in `src/features/picks/WeekPicks.jsx`), so
+  people who skip ranking don't all submit the same order. Once players sign in, shuffle
+  once per player per week and save that order (a draft), so reloading keeps it.
+
 ## 1. Create the Firebase project
 
 1. https://console.firebase.google.com → Add project.
