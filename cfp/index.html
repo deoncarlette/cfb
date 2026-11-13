@@ -12,17 +12,17 @@
     // Set the theme before first paint to avoid a flash of the wrong theme.
     (function () {
       try {
-        var pref = localStorage.getItem('theme-pref') || 'system';
+        var pref = localStorage.getItem('theme-pref');
         var systemLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-        var effective = pref === 'system' ? (systemLight ? 'light' : 'dark') : pref;
+        var effective = pref === 'light' || pref === 'dark' ? pref : (systemLight ? 'light' : 'dark');
         document.documentElement.setAttribute('data-theme', effective);
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" crossorigin href="./assets/index-IBKLOH4C.css">
+  <link rel="stylesheet" crossorigin href="./assets/index-QQBPWLNV.css">
 </head>
 <body>
   <div id="root"></div>
-  <script type="module" crossorigin src="./assets/index-I63U3MPI.js"></script>
+  <script type="module" crossorigin src="./assets/index-Z5YWU2YT.js"></script>
 </body>
 </html>
