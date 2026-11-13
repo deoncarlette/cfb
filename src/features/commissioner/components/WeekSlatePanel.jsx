@@ -83,8 +83,8 @@ export function WeekSlatePanel() {
         />
       ))}
 
-      <button className="primary big" onClick={slate.save} disabled={slate.saving}>
-        {slate.saving ? 'Saving…' : "Save this week's settings"}
+      <button className="primary big" onClick={slate.save} disabled={slate.saving || !slate.dirty}>
+        {slate.saving ? 'Saving…' : slate.dirty ? "Save this week's settings" : 'Saved'}
       </button>
     </div>
   );

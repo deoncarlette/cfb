@@ -58,7 +58,7 @@ export function BracketAdminPanel() {
         </>
       )}
 
-      <button className="primary big" onClick={admin.save} disabled={admin.busy}>{admin.busy ? 'Working…' : 'Save playoff settings'}</button>
+      <button className="primary big" onClick={admin.save} disabled={admin.busy || !admin.dirty}>{admin.busy ? 'Working…' : admin.dirty ? 'Save playoff settings' : 'Saved'}</button>
     </div>
   );
 }

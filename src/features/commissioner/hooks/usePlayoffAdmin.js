@@ -9,6 +9,10 @@ import { syncPlayoffResults } from '../syncPlayoffResults.js';
 export const SEED_NUMBERS = Array.from({ length: 12 }, (_, i) => i + 1);
 
 // Commissioner's playoff setup: the 12 seeds, lock time, and results as games finish.
+// The playoff settings Save would write, as a comparable string.
+const playoffKey = (seeds, lock, results, title) =>
+  JSON.stringify([seeds, lock || '', Object.entries(results || {}).sort(), title]);
+
 export function usePlayoffAdmin() {
   const [candidates, setCandidates] = useState([]); // ranked teams to choose seeds from
   const [pollName, setPollName] = useState('');
@@ -20,6 +24,7 @@ export function usePlayoffAdmin() {
   const [entryCount, setEntryCount] = useState(0);
   const [status, setStatus] = useState('Loading…');
   const [busy, setBusy] = useState(false);
+  const [savedKey, setSavedKey] = useState(undefined); // what's saved, as playoffKey(); undefined while loading
 
   useEffect(() => {
     (async () => {
@@ -35,6 +40,7 @@ export function usePlayoffAdmin() {
       setLock(toDatetimeLocal(cfg.lockIso));
       setResults(cfg.results);
       setTitleTotal(cfg.championshipTotal ?? '');
+      setSavedKey(playoffKey(cfg.seeds.map(t => [t.seed, t.id]), toDatetimeLocal(cfg.lockIso), cfg.seeds.length === 12 ? cfg.results : {}, cfg.championshipTotal ?? null));
       setEntryCount(brackets.length);
       setStatus(cfg.seeds.length === 12 ? 'Field is set.' : 'No field saved yet.');
     })().catch(() => setStatus("Couldn't load playoff settings."));
@@ -93,12 +99,16 @@ export function usePlayoffAdmin() {
       championshipTotal: titleTotal === '' ? null : Number(titleTotal)
     });
     setSavedSeeds(toSave);
+    setSavedKey(currentKey);
     setStatus('Saved. The Bracket tab is up to date.');
     setBusy(false);
   }
 
+  const currentKey = playoffKey(fieldComplete ? seeds.map(t => [t.seed, t.id]) : [], lock, fieldComplete ? results : {}, titleTotal === '' ? null : Number(titleTotal));
+  const dirty = savedKey !== undefined && savedKey !== currentKey;
+
   return {
-    candidates, pollName, seedIds, seeds, fieldComplete, seedsChanged, entryCount,
+    dirty, candidates, pollName, seedIds, seeds, fieldComplete, seedsChanged, entryCount,
     lock, setLock, results, titleTotal, setTitleTotal, status, busy,
     fillFromRankings, assignSeed, markResult, syncFromEspn, save
   };

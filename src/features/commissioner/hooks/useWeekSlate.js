@@ -5,6 +5,11 @@ import { toDatetimeLocal } from '@/shared/utils/dates.js';
 import { weekLabel } from '@/shared/components/WeekSelect.jsx';
 import { samplePicksForWeek } from '@/features/picks/sample/samplePicks.js';
 
+// The settings Save would write, as a comparable string (the deadline only counts when the whole
+// slate locks at once).
+const slateKey = (ids, lockMode, deadline) =>
+  JSON.stringify([[...ids].map(String).sort(), lockMode, lockMode === 'slate' ? deadline || '' : '']);
+
 // Commissioner's weekly setup: pull games, choose which count, set when picks lock.
 export function useWeekSlate(week) {
   const [games, setGames] = useState([]);
@@ -14,6 +19,9 @@ export function useWeekSlate(week) {
   const [status, setStatus] = useState('');
   const [pulling, setPulling] = useState(false);
   const [saving, setSaving] = useState(false);
+  // What's saved for this week, in the same shape as slateKey() — null when nothing is saved
+  // yet (then Save stays on, since the starting selection isn't stored anywhere).
+  const [savedKey, setSavedKey] = useState(null);
 
   const pullGames = useCallback(async () => {
     setPulling(true);
@@ -30,6 +38,9 @@ export function useWeekSlate(week) {
       setIncludedIds(new Set(cfg.includedGameIds || sample?.gameIds || (week === POSTSEASON ? pulled : pulled.filter(isDefaultSlateGame)).map(g => g.id)));
       setDeadline(toDatetimeLocal(cfg.deadlineIso));
       setLockMode(cfg.lockMode === 'kickoff' ? 'kickoff' : 'slate');
+      setSavedKey(cfg.includedGameIds
+        ? slateKey(cfg.includedGameIds, cfg.lockMode === 'kickoff' ? 'kickoff' : 'slate', toDatetimeLocal(cfg.deadlineIso))
+        : null);
       setStatus(`${pulled.length} games pulled for ${weekLabel(week)}.`);
     } catch (e) {
       setGames([]);
@@ -51,9 +62,11 @@ export function useWeekSlate(week) {
     const includedGameIds = games.length ? Array.from(includedIds) : null;
     const deadlineIso = lockMode === 'slate' && deadline ? new Date(deadline).toISOString() : null;
     await saveWeekConfig(week, includedGameIds, deadlineIso, lockMode);
+    setSavedKey(slateKey(includedGameIds || [], lockMode, deadline));
     setStatus(`Saved. ${weekLabel(week)} now uses ${includedGameIds ? includedGameIds.length : 'all'} game(s).`);
     setSaving(false);
   }
 
-  return { games, includedIds, deadline, setDeadline, lockMode, setLockMode, status, pulling, saving, pullGames, toggle, selectAll, deselectAll, save };
+  const dirty = savedKey !== slateKey([...includedIds], lockMode, deadline);
+  return { games, includedIds, deadline, setDeadline, lockMode, setLockMode, status, pulling, saving, dirty, pullGames, toggle, selectAll, deselectAll, save };
 }
