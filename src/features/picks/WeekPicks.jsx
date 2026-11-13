@@ -160,12 +160,12 @@ export function WeekPicks({ week, userName, nameKey }) {
             <p className="sample-note">{sample?.hidden ? `Everyone's ${label} picks show after 9 PM Saturday.` : `No picks saved for ${viewing} in ${label}.`}</p>
           )}
           {viewingOther && viewed?.isMock && <p className="sample-note">Some of {viewing}'s picks are simulated for this preview.</p>}
-          {!viewing && !existing && sample && !sample.playerName && !sample.randomized && (
+          {!viewing && !existing && sample && !sample.playerName && !sample.hidden && (
             <p className="sample-note">{DEFAULT_PLAYER} didn't play {label}. Choose a player above to see their picks.</p>
           )}
-          {showingSample && (sample.playerName || sample.randomized) && (
+          {showingSample && sample.playerName && (
             <p className="sample-note">
-              {sample.randomized ? 'Showing random sample picks' : `Showing ${sample.playerName}'s picks${sample.isMock ? ' (some simulated for this preview)' : ''}`}{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
+              {`Showing ${sample.playerName}'s picks${sample.isMock ? ' (some simulated for this preview)' : ''}`}{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
             </p>
           )}
           {isReplay && (

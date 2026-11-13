@@ -37,29 +37,11 @@ function findGame(matchup, games) {
 }
 
 // Weeks whose picks stay hidden until a set time (so a shared demo doesn't give them away).
-// Before then: the same games, but the cards show random winners in a random order, and no
-// one's picks can be viewed.
+// Before then: the same games with no picks on them (ready to fill in), and no one's picks
+// can be viewed.
 const HIDE_UNTIL = {
   11: '2026-11-14T21:00:00-06:00' // Week 11: Saturday, Nov 14, 9 PM Central
 };
-
-function shuffled(list) {
-  const a = [...list];
-  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
-  return a;
-}
-
-// Same games, random winners, random confidence order.
-function randomPicks(gameIds, games) {
-  const byId = new Map(games.map(g => [g.id, g]));
-  const confidences = shuffled(gameIds.map((_, i) => i + 1));
-  const picks = {};
-  gameIds.forEach((id, i) => {
-    const teams = byId.get(id).competitors;
-    picks[id] = { winner: teams[Math.random() < 0.5 ? 0 : 1].id, confidence: confidences[i] };
-  });
-  return picks;
-}
 
 let fileCache = null;
 async function loadFile() {
@@ -80,7 +62,7 @@ function ballotEntry(ballot, espnByFileId) {
 }
 
 // For a week in the file:
-// { playerName, gameIds, picks, randomized, matched, total, missing: [matchup],
+// { playerName, gameIds, picks, matched, total, missing: [matchup],
 //   ballots: Map(lowercase name → entry), hidden }
 // null if the week isn't in the file or fewer than half its games were found on ESPN.
 export async function samplePicksForWeek(week, games) {
@@ -99,13 +81,13 @@ export async function samplePicksForWeek(week, games) {
   const base = { gameIds, matched: gameIds.length, total: fileWeek.games.length, missing };
 
   if (HIDE_UNTIL[week] && Date.now() < new Date(HIDE_UNTIL[week]).getTime()) {
-    return { ...base, playerName: null, picks: randomPicks(gameIds, games), randomized: true, ballots: new Map(), hidden: true };
+    return { ...base, playerName: null, picks: {}, ballots: new Map(), hidden: true };
   }
   const ballots = new Map(fileWeek.ballots.filter(b => b.entered && b.picks.length)
     .map(b => [b.playerName.trim().toLowerCase(), ballotEntry(b, espnByFileId)]));
   const mine = ballots.get(DEFAULT_PLAYER.toLowerCase());
   // playerName null when Deandra didn't play that week (Week 0): blank cards, others viewable.
-  return { ...base, playerName: mine ? DEFAULT_PLAYER : null, picks: mine ? mine.picks : {}, isMock: mine?.isMock, randomized: false, ballots, hidden: false };
+  return { ...base, playerName: mine ? DEFAULT_PLAYER : null, picks: mine ? mine.picks : {}, isMock: mine?.isMock, ballots, hidden: false };
 }
 
 // The first week the file covers (Week 1). Earlier weeks have no games in the app.
