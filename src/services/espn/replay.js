@@ -17,15 +17,17 @@ const QUARTER_SECS = 15 * 60;
 // { kickoff, f } — f is the share of the game played: <0 not started, 0–1 live, ≥1 final.
 // The day replays twice: every game kicks off at its real time in the morning half AND the
 // evening half (an 11 AM game is live at 11 AM and again at 11 PM), so there's always something
-// to test. A game still running when a half ends (a 10:30 kickoff) finishes before it resets.
+// to test. Each run stays as it last was — live, then final — until 45 minutes before the
+// next run kicks off, so late games finish and the night's scoring adds up before it resets.
 const HALF_DAY_MS = 12 * 60 * 60 * 1000;
+const RESET_BEFORE_MS = 45 * 60 * 1000;
 export function replayClock(realDate, now = new Date()) {
   const real = new Date(realDate);
   const halfStart = new Date(now); halfStart.setHours(now.getHours() < 12 ? 0 : 12, 0, 0, 0);
   const offset = ((real.getHours() % 12) * 60 + real.getMinutes()) * 60000;
   let kickoff = new Date(halfStart.getTime() + offset);
   const previous = new Date(kickoff.getTime() - HALF_DAY_MS);
-  if (now < kickoff && now - previous < GAME_LENGTH_MS) kickoff = previous;
+  if (now < kickoff.getTime() - RESET_BEFORE_MS) kickoff = previous;
   return { kickoff, f: (now - kickoff) / GAME_LENGTH_MS };
 }
 
