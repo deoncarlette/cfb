@@ -1,7 +1,7 @@
 import { fetchGameSummary } from './summary.js';
 
 // Test helper (see REPLAY_WEEK in config.js): makes finished games look like they're being
-// played today. Each game "kicks off" today at its real time of day and runs ~3½ hours of real
+// played today. Each game "kicks off" today at its real time of day — twice, AM and PM — and runs ~3½ hours of real
 // time for 60 minutes of game clock. Everything is a pure function of the clock, so a refresh a
 // minute later moves every game forward a minute.
 //
@@ -15,9 +15,17 @@ const QUARTER_SECS = 15 * 60;
 // ---- the replay clock ----
 
 // { kickoff, f } — f is the share of the game played: <0 not started, 0–1 live, ≥1 final.
+// The day replays twice: every game kicks off at its real time in the morning half AND the
+// evening half (an 11 AM game is live at 11 AM and again at 11 PM), so there's always something
+// to test. A game still running when a half ends (a 10:30 kickoff) finishes before it resets.
+const HALF_DAY_MS = 12 * 60 * 60 * 1000;
 export function replayClock(realDate, now = new Date()) {
   const real = new Date(realDate);
-  const kickoff = new Date(now); kickoff.setHours(real.getHours(), real.getMinutes(), 0, 0);
+  const halfStart = new Date(now); halfStart.setHours(now.getHours() < 12 ? 0 : 12, 0, 0, 0);
+  const offset = ((real.getHours() % 12) * 60 + real.getMinutes()) * 60000;
+  let kickoff = new Date(halfStart.getTime() + offset);
+  const previous = new Date(kickoff.getTime() - HALF_DAY_MS);
+  if (now < kickoff && now - previous < GAME_LENGTH_MS) kickoff = previous;
   return { kickoff, f: (now - kickoff) / GAME_LENGTH_MS };
 }
 
