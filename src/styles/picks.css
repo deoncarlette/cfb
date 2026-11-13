@@ -208,3 +208,5 @@
 .gd-more[aria-expanded="true"] .chev{transform:rotate(180deg);}
 /* Named games (ESPN notes): the name sits before the network, a step stronger. */
 .details-toggle .game-title{color:var(--text); font-weight:600; flex-shrink:1;}
+/* Missed: locked with no pick — its (lowest) point value is burned. */
+.pts-badge.missed{background:transparent; border-style:dashed; color:var(--muted); opacity:.75;}

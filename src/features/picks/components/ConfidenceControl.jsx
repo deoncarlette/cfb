@@ -3,7 +3,16 @@
 // Game final: your confidence, filled green if the pick won and red if it lost.
 // Live: your confidence, tinted by whether your team is ahead.
 // Locked but not started: just your confidence.
-export function ConfidenceControl({ points, max, canUp, canDown, locked, result, live, onSetPoints, onUp, onDown }) {
+// Missed (locked with no pick): the burned point value in gray.
+export function ConfidenceControl({ points, max, canUp, canDown, locked, result, live, missed, onSetPoints, onUp, onDown }) {
+  if (missed) {
+    return (
+      <>
+        <span className="pts-badge missed" aria-label={`${points} points missed, not picked before kickoff`}>{points}</span>
+        <span className="pts-of">missed</span>
+      </>
+    );
+  }
   if (result) {
     return (
       <>

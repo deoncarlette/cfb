@@ -41,12 +41,40 @@ export function WeekPicks({ week, userName, nameKey }) {
   // TODO (Auth pass, see README): shuffle only on a player's first load of the week and save it.
   function showEntry(entry) {
     const blank = !entry || !Object.keys(entry.picks || {}).length;
-    if (blank && !lock.anyLocked) { setWinners({}); setOrder(shuffled(games.map(g => g.id))); return; }
-    if (!entry) { setWinners({}); setOrder(games.map(g => g.id)); return; }
+    if (blank) { setWinners({}); setOrder(withMissedAtBottom(shuffled(games.map(g => g.id)), entry)); return; }
     const restored = restoreSavedPicks(entry, games);
     setWinners(restored.winners);
-    setOrder(restored.order);
+    setOrder(withMissedAtBottom(restored.order, entry));
   }
+
+  // Missed games — locked with no saved pick (none saved, or only picked on the page and never
+  // submitted before kickoff) — can't score, so they take the LOWEST point values still free:
+  // the earliest-kicking-off missed game gets the lowest. Locked games with a saved pick keep
+  // their spot; open games keep their order in what's left.
+  const savedSource = () => existing || sample;
+  const isMissed = (id, source = savedSource()) => isLocked(id) && !source?.picks?.[id];
+  function withMissedAtBottom(list, source = savedSource()) {
+    const kick = id => new Date(games.find(g => g.id === id)?.date || 0).getTime();
+    const missed = list.filter(id => isMissed(id, source)).sort((a, b) => kick(b) - kick(a));
+    if (!missed.length) return list;
+    const free = list.map((id, i) => i).filter(i => !isLocked(list[i]) || isMissed(list[i], source));
+    const openIds = list.filter(id => !isLocked(id));
+    const next = [...list];
+    free.forEach((slot, k) => { next[slot] = k < openIds.length ? openIds[k] : missed[k - openIds.length]; });
+    return next;
+  }
+
+  // As games lock while the page is open, move newly missed ones to the bottom and drop any
+  // unsaved pick on them.
+  const lockKey = [...lock.lockedIds].sort().join(',');
+  useEffect(() => {
+    if (!lock.anyLocked || !order.length) return;
+    const next = withMissedAtBottom(order);
+    if (next.some((id, i) => id !== order[i])) setOrder(next);
+    const drop = Object.keys(winners).filter(id => isMissed(id));
+    if (drop.length) setWinners(w => Object.fromEntries(Object.entries(w).filter(([id]) => !drop.includes(id))));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lockKey, existing, sample]);
 
   // New week / slate loaded → the sample picks (if this week has them), then yours if you've
   // saved any. Keyed on the game ids, so live score refreshes don't reset anything.
@@ -221,6 +249,7 @@ export function WeekPicks({ week, userName, nameKey }) {
                     result={pickResult(game, shown.winners[gameId], pointsFor(gameId))}
                     live={liveStanding(game, shown.winners[gameId])}
                     picked={shown.winners[gameId]}
+                    missed={!viewingOther && isMissed(gameId)}
                     locked={readOnly}
                     canUp={!readOnly && canMove(gameId, -1)}
                     canDown={!readOnly && canMove(gameId, 1)}
