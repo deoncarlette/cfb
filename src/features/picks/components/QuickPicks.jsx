@@ -1,16 +1,19 @@
-// Fill in every open game at once (or clear them). Games that have locked aren't touched.
+// Fill in every open game at once (or clear them), from one dropdown. Choosing an option applies
+// it and the menu goes back to its prompt. Games that have locked aren't touched.
 // Favorites come from the betting line; games without one use the better-ranked team, then home.
 const OPTIONS = [
-  ['favorites', 'All favorites'], ['underdogs', 'All underdogs'], ['random', 'Random'],
-  ['home', 'All home'], ['away', 'All away'], ['clear', 'Clear all']
+  ['random', 'Random'], ['favorites', 'All favorites'], ['underdogs', 'All underdogs'],
+  ['home', 'All home'], ['away', 'All away'], ['clear', 'Clear all picks']
 ];
 
 export function QuickPicks({ onPick, disabled }) {
   return (
     <div className="quickpicks">
-      {OPTIONS.map(([mode, label]) => (
-        <button key={mode} type="button" className={mode === 'clear' ? 'qp-clear' : ''} onClick={() => onPick(mode)} disabled={disabled}>{label}</button>
-      ))}
+      <label htmlFor="quick-picks">Quick picks</label>
+      <select id="quick-picks" value="" disabled={disabled} onChange={e => { if (e.target.value) onPick(e.target.value); }}>
+        <option value="" disabled>Fill in every game…</option>
+        {OPTIONS.map(([mode, label]) => <option key={mode} value={mode}>{label}</option>)}
+      </select>
     </div>
   );
 }
