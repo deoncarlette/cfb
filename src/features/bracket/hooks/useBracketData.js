@@ -2,14 +2,15 @@ import { useEffect, useMemo, useState } from 'react';
 import { SEASON } from '@/config.js';
 import { fetchCurrentRankings } from '@/services/espn/index.js';
 import { getPlayoffConfig, getAllBrackets } from '@/services/data/index.js';
-import { seedMap, eliminatedTeams } from '../bracketLogic.js';
+import { seedMap, eliminatedTeams, projectField } from '../bracketLogic.js';
 import { isPast } from '@/shared/utils/dates.js';
 
-// Before the commissioner saves real seeds (Selection Day), preview a straight 1-12 seeding
-// from ESPN's current CFP rankings so people can play with it. Submitting stays off until
-// the real field is saved.
+// Before the commissioner saves real seeds (Selection Day), the bracket previews the field
+// projected from ESPN's current CFP rankings — five automatic bids (Power 4 + top Group of
+// Six), Notre Dame if top 12, then at-large by rank — so people can play with it. Submitting
+// is disabled until the real field is saved.
 function projectedSeeds(teams) {
-  return teams.slice(0, 12).map((t, i) => ({ ...t, seed: i + 1 }));
+  return projectField(teams);
 }
 
 // Everything the Bracket tab needs from the server: the field, results, lock status, and

@@ -17,9 +17,9 @@ export function BracketAdminPanel() {
       </p>
 
       <div className="row-gap">
-        <button onClick={admin.fillFromRankings} disabled={!admin.candidates.length}>Fill 1–12 from {poll}</button>
+        <button onClick={admin.fillFromRankings} disabled={!admin.candidates.length}>Project the field from {poll}</button>
       </div>
-      <p className="muted small">Then adjust for the five conference-champion auto-bids — picking a team that's already seeded swaps the two.</p>
+      <p className="muted small">Fills all 12 seeds: the top team in each Power 4 conference and the top Group of Six team (stand-ins for the five conference champions), Notre Dame if it's top 12, then at-large by rank. Once the conference title games are played, swap in the actual champions — picking a team that's already seeded swaps the two.</p>
 
       <SeedPicker seedIds={admin.seedIds} candidates={admin.candidates} onAssign={admin.assignSeed} />
       {admin.seedsChanged && admin.entryCount > 0 && (

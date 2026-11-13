@@ -8,7 +8,7 @@ export function BracketEntryForm({ projection, ready, my, locked, lockIso }) {
     <>
       {projection && (
         <p className="bk-notice">
-          Preview only — seeded straight from the current {projection.pollName}. The real field is set on Selection Day, and submissions open once the commissioner saves it.
+          Preview only — projected from the current {projection.pollName}: the top team in each Power 4 conference and the top Group of Six team get the automatic bids, the rest go by rank. The real field is set on Selection Day, and submissions open once the commissioner saves it.
         </p>
       )}
       {ready && (

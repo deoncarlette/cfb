@@ -1,12 +1,42 @@
 // Pure bracket logic for the 12-team College Football Playoff — no React, no Firebase, so it
 // can be unit-tested on its own and shared by the Bracket screen and the Commissioner panel.
 //
-// 2026-27 format: 12 teams, seeds 1-4 get first-round byes, NO re-seeding. That makes the
-// bracket fixed the moment seeds are known:
+// 2026-27 format: 12 teams. Five automatic bids — the ACC, Big Ten, Big 12 and SEC champions
+// and the highest-ranked Group of Six champion — plus Notre Dame if it's in the top 12; the
+// rest are at-large. All 12 are seeded straight by ranking. Seeds 1-4 get first-round byes,
+// NO re-seeding. That makes the bracket fixed the moment seeds are known:
 //   First round (higher seed hosts):  5v12, 8v9, 6v11, 7v10
 //   Quarterfinals:                     1 v 8/9,  4 v 5/12,  3 v 6/11,  2 v 7/10
 //   Semifinals:                        (1 side) v (4 side),  (3 side) v (2 side)
 //   National Championship
+
+import { SEC_TEAMS, BIG_TEN_TEAMS, BIG_12_TEAMS, ACC_TEAMS } from '@/services/espn/teams.js';
+
+// Independents can't win a conference title (Notre Dame has its own top-12 guarantee).
+const INDEPENDENTS = new Set(['Notre Dame', 'UConn', 'Connecticut']);
+function bidConference(name) {
+  if (SEC_TEAMS.has(name)) return 'SEC';
+  if (BIG_TEN_TEAMS.has(name)) return 'Big Ten';
+  if (BIG_12_TEAMS.has(name)) return 'Big 12';
+  if (ACC_TEAMS.has(name)) return 'ACC';
+  return INDEPENDENTS.has(name) ? null : 'Group of Six';
+}
+
+// The projected 12-team field from a ranking (teams sorted best first): each Power 4
+// conference's top-ranked team and the top-ranked Group of Six team (stand-ins for the
+// conference champions), Notre Dame if it's top 12, then the best-ranked at-large teams.
+// Seeded straight by ranking. Each team gets autoBid: the conference it's projected to win.
+export function projectField(teams) {
+  const auto = new Map();
+  teams.forEach(t => { const c = bidConference(t.name); if (c && !auto.has(c)) auto.set(c, t.id); });
+  const autoBid = new Map([...auto].map(([c, id]) => [id, c]));
+  const field = new Set(auto.values());
+  const nd = teams.slice(0, 12).find(t => t.name === 'Notre Dame');
+  if (nd) field.add(nd.id);
+  for (const t of teams) { if (field.size >= 12) break; field.add(t.id); }
+  return teams.filter(t => field.has(t.id)).slice(0, 12)
+    .map((t, i) => ({ ...t, seed: i + 1, autoBid: autoBid.get(t.id) || null }));
+}
 
 export const ROUNDS = [
   { id: 'r1', label: 'First Round', short: 'R1' },

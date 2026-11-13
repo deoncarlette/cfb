@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { SEASON } from '@/config.js';
 import { fetchCurrentRankings } from '@/services/espn/index.js';
 import { getPlayoffConfig, savePlayoffConfig, getAllBrackets } from '@/services/data/index.js';
-import { GAMES, seedMap, setPick, pruneInvalidPicks } from '@/features/bracket/bracketLogic.js';
+import { GAMES, seedMap, setPick, pruneInvalidPicks, projectField } from '@/features/bracket/bracketLogic.js';
 import { toDatetimeLocal } from '@/shared/utils/dates.js';
 import { syncPlayoffResults } from '../syncPlayoffResults.js';
 
@@ -54,7 +54,9 @@ export function usePlayoffAdmin() {
   const seedsChanged = JSON.stringify(savedSeeds.map(t => [t.seed, t.id])) !== JSON.stringify(seeds.map(t => [t.seed, t.id]));
 
   function fillFromRankings() {
-    setSeedIds(Object.fromEntries(candidates.slice(0, 12).map((t, i) => [i + 1, t.id])));
+    // Same projection as the Bracket preview: five automatic bids, Notre Dame if top 12, then
+    // at-large by rank, seeded by ranking.
+    setSeedIds(Object.fromEntries(projectField([...candidates].sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99))).map(t => [t.seed, t.id])));
     setResults({});
   }
 
