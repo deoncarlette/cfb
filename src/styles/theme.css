@@ -9,6 +9,9 @@
   --input:#26292e; --input-ink:#f2f3f5;
   --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.22);
   --dim:grayscale(1) brightness(.5);
+  /* Matchup pill: unpicked sides, the seam between them, names, the not-picked gray, center chip. */
+  --pill-side:#0c0d0f; --pill-seam:#3a3d44; --pill-ink:#ffffff; --pill-off:#a9aeb6; --pill-rank:#9aa0a8;
+  --pill-chip:#1c1e22; --pill-chip-ink:#f2f3f5; --pill-chip-line:#3a3d44;
   --font:"Helvetica Neue",Helvetica,Arial,sans-serif;
   --display:"Barlow Condensed","Helvetica Neue",Helvetica,Arial,sans-serif;
   --radius:14px;
@@ -23,5 +26,7 @@
   --input:#ffffff; --input-ink:#16181c;
   --shadow:0 1px 2px rgba(20,22,26,.06), 0 6px 18px rgba(20,22,26,.06);
   --dim:grayscale(1) opacity(.4);
+  --pill-side:#eceef1; --pill-seam:#cfd3d9; --pill-ink:#16181c; --pill-off:#8a9099; --pill-rank:#6b717a;
+  --pill-chip:#ffffff; --pill-chip-ink:#16181c; --pill-chip-line:#cfd3d9;
   color-scheme:light;
 }

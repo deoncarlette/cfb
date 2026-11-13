@@ -40,12 +40,12 @@
 .arrows{grid-area:arrows; display:flex; gap:3px;}
 .arrows button{flex:1; padding:4px 0; font-size:11px; line-height:1; border-radius:7px;}
 
-/* The matchup pill: black in both themes, like a broadcast graphic.
+/* The matchup pill: near-black sides in dark mode, light gray in light mode.
    The pill's own background shows through as a thin slanted seam between the two sides. */
-.matchup{grid-area:pill; position:relative; display:flex; height:58px; border-radius:999px; overflow:hidden; background:#3a3d44;}
+.matchup{grid-area:pill; position:relative; display:flex; height:58px; border-radius:999px; overflow:hidden; background:var(--pill-seam);}
 .matchup-side{
   flex:1; min-width:0; position:relative; display:flex; align-items:center; gap:9px; text-align:left;
-  border:none; border-radius:0; padding:0 14px; background:#0c0d0f; color:var(--name);
+  border:none; border-radius:0; padding:0 14px; background:var(--pill-side); color:var(--pill-ink);
   transition:background-color .18s ease, color .18s ease, filter .18s ease;
 }
 .matchup-side.away{clip-path:polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%); margin-right:-8px; padding-right:24px;}
@@ -56,7 +56,7 @@
 .matchup-side.sel{background:var(--fill); color:var(--fill-ink);}
 /* Once a side is picked, the other side goes one even light gray: name and score in gray,
    logo desaturated. Same shade for every school, so dark colors stay readable. */
-.matchup.has-pick .matchup-side:not(.sel){color:#a9aeb6;}
+.matchup.has-pick .matchup-side:not(.sel){color:var(--pill-off);}
 .matchup.has-pick .matchup-side:not(.sel) .team-logo{filter:grayscale(1) drop-shadow(0 1px 2px rgba(0,0,0,.45));}
 .matchup-side.sel::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(0,0,0,.18)); pointer-events:none;}
 
@@ -67,7 +67,7 @@
 /* Score sits by the seam; the losing team's score dims. */
 .team-score{position:relative; z-index:1; font-family:var(--display); font-weight:800; font-size:28px; line-height:1; font-variant-numeric:tabular-nums;}
 .matchup-side.lost .team-score{opacity:.5;}
-.team-rank{flex-shrink:0; font-family:var(--display); font-style:italic; font-size:15px; font-weight:600; color:#9aa0a8;}
+.team-rank{flex-shrink:0; font-family:var(--display); font-style:italic; font-size:15px; font-weight:600; color:var(--pill-rank);}
 .matchup-side.sel .team-rank{color:inherit; opacity:.85;}
 /* Short name (MICH) — used on phones. */
 .team-abbr{display:none;}
@@ -78,7 +78,7 @@
 .matchup-mid{
   position:absolute; left:50%; top:50%; transform:translate(-50%, -50%); z-index:2; pointer-events:none;
   padding:4px 7px; text-align:center; border-radius:8px; white-space:nowrap;
-  background:#1c1e22; color:#f2f3f5; border:1px solid #3a3d44;
+  background:var(--pill-chip); color:var(--pill-chip-ink); border:1px solid var(--pill-chip-line);
   font-family:var(--display); font-weight:700; font-size:13px; line-height:1.05; text-transform:uppercase;
 }
 
