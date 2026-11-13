@@ -1,9 +1,11 @@
 import { useStoredState } from '@/shared/hooks/useStoredState.js';
+import { navigate } from '@/shared/nav.js';
 import { RankMove } from './RankMove.jsx';
 import { rankOf } from '../scoring.js';
 
 // One table: rank, player, this week's points, season total, and movement since last week.
-// Tap "Wk N" or "Total" to sort by it (remembered for this tab). The rank follows the sort;
+// Tap "Wk N" or "Total" to sort by it (remembered for this tab). Tap a name to see that
+// player's picks for the week on the Picks tab (Back returns here). The rank follows the sort;
 // ties share a rank. "—" = didn't play that week. Arrows (season movement) show on Total only.
 export function StandingsTable({ week, weeklyRecords, overallRecords, priorRanks }) {
   const [sortBy, setSortBy] = useStoredState('scoreboard-sort', 'total', 'session');
@@ -36,7 +38,10 @@ export function StandingsTable({ week, weeklyRecords, overallRecords, priorRanks
           const rank = sortBy === 'week' && sat ? null : rankOf(value(r), values);
           return (
             <tr key={r.user_name}>
-              <td><span className="rank">{rank ?? '–'}</span>{r.user_name}</td>
+              <td>
+                <span className="rank">{rank ?? '–'}</span>
+                <button type="button" className="player-link" onClick={() => { navigate({ tab: 'picks', week, player: r.user_name }); window.scrollTo(0, 0); }}>{r.user_name}</button>
+              </td>
               <td className={'num week-pts' + (sat ? ' sat-out' : '') + (sortBy === 'week' ? ' sorted' : '')}>{sat ? '—' : w.score}</td>
               <td className={'num' + (sortBy === 'total' ? ' sorted' : '')}>{r.score}</td>
               <td className="move-cell">{sortBy === 'total' && priorRanks && <RankMove prior={priorRanks.get(r.user_name)} rank={rank} />}</td>

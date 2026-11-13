@@ -7,6 +7,7 @@ import { useConfidenceOrder } from './hooks/useConfidenceOrder.js';
 import { useOtherPlayers } from './hooks/useOtherPlayers.js';
 import { PlayerPicker } from './components/PlayerPicker.jsx';
 import { LockAlert } from './components/LockAlert.jsx';
+import { useNav, navigate } from '@/shared/nav.js';
 import { ReplayScheduleToggle } from '@/shared/components/ReplayScheduleToggle.jsx';
 import { replaySchedule } from '@/services/espn/replay.js';
 import { quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding } from './picksLogic.js';
@@ -26,7 +27,11 @@ export function WeekPicks({ week, userName, nameKey }) {
   const [existing, setExisting] = useState(null);
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState(null);
-  const [viewing, setViewing] = useState(''); // '' = your own picks; else another player's name
+  // Whose picks are on the cards: '' = yours; else another player's (in the address, so the
+  // Scoreboard can link here and Back returns).
+  const nav = useNav();
+  const viewing = nav.player;
+  const setViewing = name => navigate({ player: name });
 
   // Show a saved entry's picks (yours, or the sample picks) on the cards; null = blank cards.
   function showEntry(entry) {
@@ -140,10 +145,13 @@ export function WeekPicks({ week, userName, nameKey }) {
               onChange={setViewing}
             />
           )}
+          {viewing && !lock.anyLocked && (
+            <p className="sample-note">{viewing}'s {label} picks show once games lock. <button type="button" className="link" onClick={() => setViewing('')}>Show mine</button></p>
+          )}
           {viewingOther && !viewed && (
             <p className="sample-note">{sample?.hidden ? `Everyone's ${label} picks show after 9 PM Saturday.` : `No picks saved for ${viewing} in ${label}.`}</p>
           )}
-          {viewing && viewed?.isMock && <p className="sample-note">Some of {viewing}'s picks are simulated for this preview.</p>}
+          {viewingOther && viewed?.isMock && <p className="sample-note">Some of {viewing}'s picks are simulated for this preview.</p>}
           {showingSample && (
             <p className="sample-note">
               {sample.randomized ? 'Showing random sample picks' : `Showing ${sample.playerName}'s picks${sample.isMock ? ' (some simulated for this preview)' : ''}`}{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
@@ -156,7 +164,7 @@ export function WeekPicks({ week, userName, nameKey }) {
               <ReplayScheduleToggle />
             </div>
           )}
-          {(totals.decided > 0 || anyLive) && (!viewing || viewed) && <WeekResults totals={totals} />}
+          {(totals.decided > 0 || anyLive) && (!viewingOther || viewed) && <WeekResults totals={totals} />}
           {anyLive && updatedAt && (
             <p className="muted small center live-updated">Live scores update every 30 seconds. Last updated {updatedAt.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}.</p>
           )}
