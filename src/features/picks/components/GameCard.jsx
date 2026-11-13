@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { formatKickoff, formatGameDay } from '@/shared/utils/dates.js';
+import { listedRivalry } from '@/services/espn/index.js';
 import { GameDetails } from './details/GameDetails.jsx';
 import { MatchupPill } from './MatchupPill.jsx';
 import { ConfidenceControl } from './ConfidenceControl.jsx';
 
 // One game: kickoff and betting line above the matchup pill; below it the game's name from
-// ESPN's notes if it has one (Rose Bowl, CFP First Round…), the TV network (stadium if ESPN
+// ESPN's notes or the rivalry list if it has one (Rose Bowl, Red River Rivalry…), the TV network (stadium if ESPN
 // lists none), and the details button; points on the right.
 // The button under the pill opens the matchup info (before kickoff) or the box score.
 // total is how many cards there are; canUp/canDown say whether the arrows can move it.
@@ -14,6 +15,8 @@ export function GameCard({ game, total, points, result, live, picked, locked, ca
   const isLive = game.state === 'in';
   const started = game.completed || isLive;
   const line = !game.completed && !isLive && game.line;
+  // ESPN's name for the game (bowls, neutral-site games), else a known rivalry's name.
+  const gameName = game.title || listedRivalry(game);
   return (
     <div className={'game-card' + (!picked ? ' unpicked' : '') + (isLive ? ' live' : '')} draggable={!locked} {...(locked ? {} : dragProps)}>
       <div className="game-meta">
@@ -31,8 +34,8 @@ export function GameCard({ game, total, points, result, live, picked, locked, ca
       </div>
       <MatchupPill game={game} picked={picked} disabled={locked} onPick={onPick} />
       <button type="button" className="game-venue details-toggle" aria-expanded={open} onClick={() => setOpen(o => !o)}>
-        {game.title && <span className="venue-name game-title">{game.title}</span>}
-        {(game.broadcast || !game.title) && <span className="venue-name">{game.broadcast || game.venue}</span>}
+        {gameName && <span className="venue-name game-title">{gameName}</span>}
+        {(game.broadcast || !gameName) && <span className="venue-name">{game.broadcast || game.venue}</span>}
         <span className="details-label">{started ? 'Box score' : 'Matchup'} <span className="chev" aria-hidden="true">▾</span></span>
       </button>
       <ConfidenceControl

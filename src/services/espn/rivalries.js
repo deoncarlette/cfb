@@ -73,6 +73,13 @@ function namesOf(team) {
   return [team.name, ...(team.altNames || [])].map(norm);
 }
 
+// The rivalry's name from the list above (Red River Rivalry, Iron Bowl…), or null.
+export function listedRivalry(game) {
+  const [a, b] = game.competitors;
+  const has = (team, n) => namesOf(team).includes(norm(n));
+  return RIVALRIES.find(([, x, y]) => (has(a, x) && has(b, y)) || (has(a, y) && has(b, x)))?.[0] || null;
+}
+
 // → rivalry name, "In-state", or null. useTitle: count ESPN's game name (off for bowls, whose
 // names are bowl names, not rivalries).
 export function rivalryFor(game, useTitle = true) {
