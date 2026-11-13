@@ -8,17 +8,21 @@ import { TeamLogo } from '@/shared/components/TeamLogo.jsx';
 export function MatchupSide({ team, side, selected, lost, score, disabled, onClick }) {
   const rank = displayRank(team);
   const fill = teamFill(team);
+  const ink = textForBackground(fill);
+  // The pill is black until picked, then the team's color. Use the dark-background logo
+  // everywhere except on a light team fill.
+  const onDark = !selected || ink === '#ffffff';
   return (
     <button
       type="button"
       className={`matchup-side ${side}` + (selected ? ' sel' : '') + (lost ? ' lost' : '')}
-      style={{ '--fill': fill, '--fill-ink': textForBackground(fill), '--name': teamTextOnDark(team) }}
+      style={{ '--fill': fill, '--fill-ink': ink, '--name': teamTextOnDark(team) }}
       aria-pressed={selected}
       aria-label={`${team.name}${score != null ? ` ${score}` : ''}${selected ? ', your pick' : ''}`}
       disabled={disabled}
       onClick={onClick}
     >
-      <TeamLogo team={team} />
+      <TeamLogo team={team} onDark={onDark} />
       <span className="team-text">
         {rank && <span className="team-rank">{rank}</span>}
         <span className="team-name">{team.name}</span>
