@@ -9,9 +9,9 @@ export function MatchupSide({ team, side, selected, lost, score, disabled, onCli
   const rank = displayRank(team);
   const fill = teamFill(team);
   const ink = textForBackground(fill);
-  // The pill is black until picked, then the team's color. Use the dark-background logo
-  // everywhere except on a light team fill.
-  const onDark = !selected || ink === '#ffffff';
+  // Regular logo on the black side (keeps the school's colors). Once picked, a dark team fill
+  // switches to ESPN's dark-background logo so it doesn't vanish into the same color.
+  const onDark = selected && ink === '#ffffff';
   return (
     <button
       type="button"
