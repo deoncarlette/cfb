@@ -8,7 +8,7 @@ const rankPrefix = t => displayRank(t) ? `#${displayRank(t)} ` : '';
 // noteFor(game) → short text shown with the game (e.g. the rivalry's name).
 // The section and each subgroup collapse. Each starts collapsed if none of its games are checked;
 // once you open/close one or change its checkboxes, it stays where you left it.
-export function GameSection({ label, games, includedIds, onToggle, onSelectAll, onDeselectAll, subgroupOf, order = [], noteFor }) {
+export function GameSection({ label, games, includedIds, onToggle, onSelectAll, onDeselectAll, subgroupOf, order = [], noteFor, disabled = false }) {
   const [pinned, setPinned] = useState({}); // { groupKey: open } — set once you touch a group
   if (!games.length) return null;
   const ids = games.map(g => g.id);
@@ -36,10 +36,10 @@ export function GameSection({ label, games, includedIds, onToggle, onSelectAll, 
           <span className="section-label">{label}</span>
           <span className="section-count">{checked(games)} of {games.length}</span>
         </button>
-        <span className="section-actions">
+        {!disabled && <span className="section-actions">
           <button onClick={() => { pinAll(); onSelectAll(ids); }}>Select all</button>
           <button onClick={() => { pinAll(); onDeselectAll(ids); }}>Deselect all</button>
-        </span>
+        </span>}
       </div>
       {sectionOpen && groups.map(group => {
         const open = !group.name || isOpen(group.name, group.games);
@@ -52,10 +52,10 @@ export function GameSection({ label, games, includedIds, onToggle, onSelectAll, 
                 <span className="chevron" aria-hidden="true" />
                 {group.name} <span className="section-count">{checked(group.games)} of {group.games.length}</span>
               </button>
-              <span className="section-actions">
+              {!disabled && <span className="section-actions">
                 <button onClick={() => { pinAll(); onSelectAll(gids); }}>All</button>
                 <button onClick={() => { pinAll(); onDeselectAll(gids); }}>None</button>
-              </span>
+              </span>}
             </div>
           )}
           {open && group.games.map(g => {
@@ -64,7 +64,7 @@ export function GameSection({ label, games, includedIds, onToggle, onSelectAll, 
             return (
               <div key={g.id} className="commish-row">
                 <label>
-                  <input type="checkbox" checked={includedIds.has(g.id)} onChange={() => { pinAll(); onToggle(g.id); }} />
+                  <input type="checkbox" checked={includedIds.has(g.id)} disabled={disabled} onChange={() => { pinAll(); onToggle(g.id); }} />
                   <span>
                     {rankPrefix(away)}{away.name} @ {rankPrefix(home)}{home.name}
                     {note && <small className="rivalry-name">{note}</small>}

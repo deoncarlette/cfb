@@ -25,6 +25,7 @@ export function usePlayoffAdmin() {
   const [status, setStatus] = useState('Loading…');
   const [busy, setBusy] = useState(false);
   const [savedKey, setSavedKey] = useState(undefined); // what's saved, as playoffKey(); undefined while loading
+  const [savedLock, setSavedLock] = useState({ lockIso: null, results: 0, seeds: 0 }); // what players see
 
   useEffect(() => {
     (async () => {
@@ -40,6 +41,7 @@ export function usePlayoffAdmin() {
       setLock(toDatetimeLocal(cfg.lockIso));
       setResults(cfg.results);
       setTitleTotal(cfg.championshipTotal ?? '');
+      setSavedLock({ lockIso: cfg.lockIso, results: Object.keys(cfg.results || {}).length, seeds: cfg.seeds.length });
       setSavedKey(playoffKey(cfg.seeds.map(t => [t.seed, t.id]), toDatetimeLocal(cfg.lockIso), cfg.seeds.length === 12 ? cfg.results : {}, cfg.championshipTotal ?? null));
       setEntryCount(brackets.length);
       setStatus(cfg.seeds.length === 12 ? 'Field is set.' : 'No field saved yet.');
@@ -102,15 +104,19 @@ export function usePlayoffAdmin() {
     });
     setSavedSeeds(toSave);
     setSavedKey(currentKey);
+    setSavedLock({ lockIso: lock ? new Date(lock).toISOString() : null, results: fieldComplete ? Object.keys(results).length : 0, seeds: toSave.length });
     setStatus('Saved. The Bracket tab is up to date.');
     setBusy(false);
   }
 
   const currentKey = playoffKey(fieldComplete ? seeds.map(t => [t.seed, t.id]) : [], lock, fieldComplete ? results : {}, titleTotal === '' ? null : Number(titleTotal));
   const dirty = savedKey !== undefined && savedKey !== currentKey;
+  // Once brackets lock (saved lock time passed, or a result recorded), the field and the lock
+  // time are frozen; results and the title-game total stay editable.
+  const fieldLocked = savedLock.seeds === 12 && (savedLock.results > 0 || (!!savedLock.lockIso && Date.now() >= new Date(savedLock.lockIso).getTime()));
 
   return {
-    dirty, candidates, pollName, seedIds, seeds, fieldComplete, seedsChanged, entryCount,
+    dirty, fieldLocked, candidates, pollName, seedIds, seeds, fieldComplete, seedsChanged, entryCount,
     lock, setLock, results, titleTotal, setTitleTotal, status, busy,
     fillFromRankings, assignSeed, markResult, syncFromEspn, save
   };

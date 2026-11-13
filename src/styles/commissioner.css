@@ -21,3 +21,28 @@
 .subgroup-heading .collapse-toggle{font-size:13px; font-weight:700; color:var(--muted);}
 .slate-section:not(.open) .section-heading{margin-bottom:4px;}
 @media (prefers-reduced-motion: reduce){ .chevron{transition:none;} }
+
+/* Commish → Insights */
+.insights .ins-summary{font-size:14px; margin:12px 0 4px;}
+.ins-section{margin-top:18px;}
+.ins-section h3{font-size:13px; font-weight:700; color:var(--muted); margin:0 0 8px;}
+.ins-flag{background:var(--raised); border-radius:10px; padding:10px 12px; margin-bottom:8px; border-left:3px solid var(--line-strong);}
+.ins-flag.contrarian{border-left-color:var(--accent);}
+.ins-flag.dogs{border-left-color:var(--danger);}
+.ins-flag.chalk{border-left-color:var(--success);}
+.ins-flag.lone{border-left-color:#8b7cf6;}
+.ins-flag > div{display:flex; align-items:baseline; justify-content:space-between; gap:8px;}
+.ins-flag p{margin:4px 0 0; font-size:13px; color:var(--muted); line-height:1.4;}
+.ins-name{background:none; border:none; padding:0; font:inherit; font-weight:700; color:var(--text); text-decoration:underline; text-decoration-color:var(--line-strong); text-underline-offset:3px; cursor:pointer;}
+.ins-tag{font-size:12px; font-weight:600; color:var(--muted); white-space:nowrap;}
+.ins-game{padding:8px 0; border-bottom:1px solid var(--line);}
+.ins-game:last-child{border-bottom:none;}
+.ins-game-head{display:flex; justify-content:space-between; gap:8px; font-size:14px;}
+.ins-result{font-size:12px; color:var(--muted);}
+.ins-result.burned{color:var(--danger); font-weight:600;}
+.ins-split{display:flex; justify-content:space-between; gap:8px; font-size:12px; color:var(--muted); margin:3px 0 5px;}
+.ins-bar{height:6px;}
+.ins-people{display:flex; flex-wrap:wrap; gap:6px;}
+.ins-person{padding:6px 12px; border-radius:999px; font-size:13px;}
+/* Week settings freeze once the week starts locking. */
+.slate-settings.frozen .subtab-track, .slate-settings.frozen input[type=datetime-local]{opacity:.6;}

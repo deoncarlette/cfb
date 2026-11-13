@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { lockInfo } from '@/features/picks/picksLogic.js';
 import { fetchGamesFor, applyRankOverlay, isDefaultSlateGame, POSTSEASON } from '@/services/espn/index.js';
 import { getWeekConfig, saveWeekConfig } from '@/services/data/index.js';
 import { toDatetimeLocal } from '@/shared/utils/dates.js';
@@ -22,6 +23,7 @@ export function useWeekSlate(week) {
   // What's saved for this week, in the same shape as slateKey() — null when nothing is saved
   // yet (then Save stays on, since the starting selection isn't stored anywhere).
   const [savedKey, setSavedKey] = useState(null);
+  const [savedCfg, setSavedCfg] = useState(null); // the settings players see (null = none saved)
 
   const pullGames = useCallback(async () => {
     setPulling(true);
@@ -38,6 +40,7 @@ export function useWeekSlate(week) {
       setIncludedIds(new Set(cfg.includedGameIds || sample?.gameIds || (week === POSTSEASON ? pulled : pulled.filter(isDefaultSlateGame)).map(g => g.id)));
       setDeadline(toDatetimeLocal(cfg.deadlineIso));
       setLockMode(cfg.lockMode === 'kickoff' ? 'kickoff' : 'slate');
+      setSavedCfg(cfg.includedGameIds ? cfg : null);
       setSavedKey(cfg.includedGameIds
         ? slateKey(cfg.includedGameIds, cfg.lockMode === 'kickoff' ? 'kickoff' : 'slate', toDatetimeLocal(cfg.deadlineIso))
         : null);
@@ -63,10 +66,15 @@ export function useWeekSlate(week) {
     const deadlineIso = lockMode === 'slate' && deadline ? new Date(deadline).toISOString() : null;
     await saveWeekConfig(week, includedGameIds, deadlineIso, lockMode);
     setSavedKey(slateKey(includedGameIds || [], lockMode, deadline));
+    setSavedCfg({ includedGameIds, deadlineIso, lockMode });
     setStatus(`Saved. ${weekLabel(week)} now uses ${includedGameIds ? includedGameIds.length : 'all'} game(s).`);
     setSaving(false);
   }
 
   const dirty = savedKey !== slateKey([...includedIds], lockMode, deadline);
-  return { games, includedIds, deadline, setDeadline, lockMode, setLockMode, status, pulling, saving, dirty, pullGames, toggle, selectAll, deselectAll, save };
+  // Once the week starts locking (by the SAVED settings — what players see; with none saved,
+  // the default: first kickoff of the selected games), its settings are frozen too.
+  const savedIds = new Set((savedCfg?.includedGameIds || [...includedIds]).map(String));
+  const lock = lockInfo(savedCfg || { lockMode: 'slate', deadlineIso: null }, games.filter(g => savedIds.has(g.id)));
+  return { games, includedIds, deadline, setDeadline, lockMode, setLockMode, status, pulling, saving, dirty, lock, pullGames, toggle, selectAll, deselectAll, save };
 }

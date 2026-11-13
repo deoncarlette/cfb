@@ -17,11 +17,12 @@ export function BracketAdminPanel() {
       </p>
 
       <div className="row-gap">
-        <button onClick={admin.fillFromRankings} disabled={!admin.candidates.length}>Project the field from {poll}</button>
+        <button onClick={admin.fillFromRankings} disabled={!admin.candidates.length || admin.fieldLocked}>Project the field from {poll}</button>
       </div>
       <p className="muted small">Fills all 12 seeds: the top team in each Power 4 conference and the top Group of Six team (stand-ins for the five conference champions), Notre Dame if it's top 12, then at-large by rank. Once the conference title games are played, swap in the actual champions — picking a team that's already seeded swaps the two.</p>
 
-      <SeedPicker seedIds={admin.seedIds} candidates={admin.candidates} onAssign={admin.assignSeed} />
+      {admin.fieldLocked && <p className="bk-notice">Brackets are locked, so the field and lock time can't change. Record results below as games finish.</p>}
+      <SeedPicker seedIds={admin.seedIds} candidates={admin.candidates} onAssign={admin.assignSeed} disabled={admin.fieldLocked} />
       {admin.seedsChanged && admin.entryCount > 0 && (
         <p className="bk-notice">{admin.entryCount} bracket(s) were submitted against the saved field. Changing seeds now can invalidate their picks.</p>
       )}
@@ -32,9 +33,10 @@ export function BracketAdminPanel() {
         label="When brackets lock"
         options={[['result', 'First result'], ['custom', 'Set a time']]}
         value={admin.lock ? 'custom' : 'result'}
+        disabled={admin.fieldLocked}
         onChange={choice => admin.setLock(choice === 'result' ? '' : admin.lock || toDatetimeLocal(new Date(Math.ceil(Date.now() / 3600000) * 3600000).toISOString()))}
       />
-      {admin.lock && <input type="datetime-local" aria-label="Brackets lock at" value={admin.lock} onChange={e => e.target.value && admin.setLock(e.target.value)} />}
+      {admin.lock && <input type="datetime-local" aria-label="Brackets lock at" disabled={admin.fieldLocked} value={admin.lock} onChange={e => e.target.value && admin.setLock(e.target.value)} />}
       <p className="muted small">{admin.lock ? 'Set this to the first first-round kickoff. ' : ''}Brackets also lock as soon as any result is recorded.</p>
 
       {admin.fieldComplete && (

@@ -20,6 +20,7 @@ const SECTIONS = [
 export function WeekSlatePanel() {
   const { week, setWeek, weeks } = useWeekSelector(1);
   const slate = useWeekSlate(week);
+  const frozen = slate.lock.anyLocked;
   const lockChoice = slate.lockMode === 'kickoff' ? 'kickoff' : slate.deadline ? 'custom' : 'first';
   function chooseLock(choice) {
     slate.setLockMode(choice === 'kickoff' ? 'kickoff' : 'slate');
@@ -38,8 +39,14 @@ export function WeekSlatePanel() {
       <p className="muted small">Pull games from ESPN, choose which count, set when picks lock. No access control yet — see the note in services/data/firebase/weeklyPicks.js.</p>
 
       <WeekSelect week={week} weeks={weeks} onChange={setWeek} />
+      {frozen && (
+        <p className="bk-notice">
+          {typeof week === 'number' ? `Week ${week}` : 'The postseason'} has started locking{slate.lock.mode === 'slate' && slate.lock.lockAt ? ` (${formatKickoff(slate.lock.lockAt)})` : ''}, so its settings are locked too. See how the pool picked under Insights.
+        </p>
+      )}
+      <div className={frozen ? 'slate-settings frozen' : 'slate-settings'}>
       <div className="row-gap">
-        <button onClick={slate.pullGames} disabled={slate.pulling}>{slate.pulling ? 'Pulling…' : 'Pull games from ESPN'}</button>
+        <button onClick={slate.pullGames} disabled={slate.pulling || frozen}>{slate.pulling ? 'Pulling…' : 'Pull games from ESPN'}</button>
         <span className="muted small" style={{ alignSelf: 'center' }}>{slate.status}</span>
       </div>
       {slate.games.some(g => g.simulated) && (
@@ -54,13 +61,14 @@ export function WeekSlatePanel() {
         options={[['first', 'First kickoff'], ['custom', 'Set a time'], ['kickoff', 'Each game']]}
         value={lockChoice}
         onChange={chooseLock}
+        disabled={frozen}
       />
       {lockChoice === 'first' && (
         <p className="muted small">The whole slate locks at the first kickoff of the selected games{firstKickoff ? ` (${formatKickoff(firstKickoff)})` : ''}.</p>
       )}
       {lockChoice === 'custom' && (
         <>
-          <input type="datetime-local" aria-label="Slate locks at" value={slate.deadline} onChange={e => e.target.value && slate.setDeadline(e.target.value)} />
+          <input type="datetime-local" aria-label="Slate locks at" disabled={frozen} value={slate.deadline} onChange={e => e.target.value && slate.setDeadline(e.target.value)} />
           <p className="muted small">The whole slate locks at this time.</p>
         </>
       )}
@@ -88,12 +96,16 @@ export function WeekSlatePanel() {
           onToggle={slate.toggle}
           onSelectAll={slate.selectAll}
           onDeselectAll={slate.deselectAll}
+          disabled={frozen}
         />
       ))}
 
-      <button className="primary big" onClick={slate.save} disabled={slate.saving || !slate.dirty}>
-        {slate.saving ? 'Saving…' : slate.dirty ? "Save this week's settings" : 'Saved'}
-      </button>
+      </div>
+      {!frozen && (
+        <button className="primary big" onClick={slate.save} disabled={slate.saving || !slate.dirty}>
+          {slate.saving ? 'Saving…' : slate.dirty ? "Save this week's settings" : 'Saved'}
+        </button>
+      )}
     </div>
   );
 }

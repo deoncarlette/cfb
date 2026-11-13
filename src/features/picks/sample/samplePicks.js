@@ -49,6 +49,11 @@ async function loadFile() {
   return fileCache;
 }
 
+// Every week in the picks file, as stored (for season-long stats like Commish insights).
+export async function sampleFileWeeks() {
+  return (await loadFile()).weeks;
+}
+
 // Who actually won (a replayed game keeps its real winner while it plays back), or null.
 const realWinnerOf = g => g.realWinner ?? (g.completed ? g.competitors.find(c => c.winner)?.id ?? null : null);
 
