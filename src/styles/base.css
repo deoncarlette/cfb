@@ -58,3 +58,7 @@ label{display:block; font-size:13px; font-weight:600; color:var(--muted); margin
 
 /* "Showing sample data" notes */
 .sample-note{font-size:13px; color:var(--muted); background:var(--raised); border-radius:10px; padding:8px 12px; margin:0 0 14px;}
+/* Test replay schedule switch, inside the replay note. */
+.replay-toggle{display:flex; gap:4px; margin-top:8px; background:var(--bg); border-radius:9px; padding:3px;}
+.replay-opt{flex:1; padding:6px 8px; font-size:12px; font-weight:600; border:none; border-radius:7px; background:none; color:var(--muted);}
+.replay-opt.active{background:var(--surface); color:var(--text); box-shadow:var(--shadow);}

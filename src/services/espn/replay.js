@@ -14,20 +14,30 @@ const QUARTER_SECS = 15 * 60;
 
 // ---- the replay clock ----
 
+// Schedule: 'twice' (default) — every game kicks off at its real time AND 12 hours later (an
+// 11 AM game is live at 11 AM and again at 11 PM), so there's always something live to test.
+// 'real' — once a day, at its real time only, so results line up with a real Saturday.
+// Saved in this browser; the replay notes on Picks and Scoreboard switch it.
+const SCHEDULE_KEY = 'replay-schedule';
+export function replaySchedule() {
+  try { return localStorage.getItem(SCHEDULE_KEY) === 'real' ? 'real' : 'twice'; } catch (e) { return 'twice'; }
+}
+export function setReplaySchedule(value) {
+  try { localStorage.setItem(SCHEDULE_KEY, value === 'real' ? 'real' : 'twice'); } catch (e) {}
+}
+
 // { kickoff, f } — f is the share of the game played: <0 not started, 0–1 live, ≥1 final.
-// The day replays twice: every game kicks off at its real time in the morning half AND the
-// evening half (an 11 AM game is live at 11 AM and again at 11 PM), so there's always something
-// to test. Each run stays as it last was — live, then final — until 45 minutes before the
-// next run kicks off, so late games finish and the night's scoring adds up before it resets.
-const HALF_DAY_MS = 12 * 60 * 60 * 1000;
+// Each run stays as it last was — live, then final — until 45 minutes before the next run
+// kicks off, so late games finish and the night's scoring adds up before it resets.
+const HOUR_MS = 60 * 60 * 1000;
 const RESET_BEFORE_MS = 45 * 60 * 1000;
-export function replayClock(realDate, now = new Date()) {
+export function replayClock(realDate, now = new Date(), schedule = replaySchedule()) {
   const real = new Date(realDate);
-  const halfStart = new Date(now); halfStart.setHours(now.getHours() < 12 ? 0 : 12, 0, 0, 0);
-  const offset = ((real.getHours() % 12) * 60 + real.getMinutes()) * 60000;
-  let kickoff = new Date(halfStart.getTime() + offset);
-  const previous = new Date(kickoff.getTime() - HALF_DAY_MS);
-  if (now < kickoff.getTime() - RESET_BEFORE_MS) kickoff = previous;
+  const twice = schedule !== 'real';
+  const periodStart = new Date(now); periodStart.setHours(twice && now.getHours() >= 12 ? 12 : 0, 0, 0, 0);
+  const offset = (((twice ? real.getHours() % 12 : real.getHours()) * 60) + real.getMinutes()) * 60000;
+  let kickoff = new Date(periodStart.getTime() + offset);
+  if (now < kickoff.getTime() - RESET_BEFORE_MS) kickoff = new Date(kickoff.getTime() - (twice ? 12 : 24) * HOUR_MS);
   return { kickoff, f: (now - kickoff) / GAME_LENGTH_MS };
 }
 

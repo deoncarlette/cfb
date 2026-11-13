@@ -7,6 +7,8 @@ import { useConfidenceOrder } from './hooks/useConfidenceOrder.js';
 import { useOtherPlayers } from './hooks/useOtherPlayers.js';
 import { PlayerPicker } from './components/PlayerPicker.jsx';
 import { LockAlert } from './components/LockAlert.jsx';
+import { ReplayScheduleToggle } from '@/shared/components/ReplayScheduleToggle.jsx';
+import { replaySchedule } from '@/services/espn/replay.js';
 import { quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding } from './picksLogic.js';
 import { WeekResults } from './components/WeekResults.jsx';
 import { QuickPicks } from './components/QuickPicks.jsx';
@@ -147,7 +149,12 @@ export function WeekPicks({ week, userName, nameKey }) {
               {sample.randomized ? 'Showing random sample picks' : `Showing ${sample.playerName}'s picks${sample.isMock ? ' (some simulated for this preview)' : ''}`}{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
             </p>
           )}
-          {isReplay && <p className="sample-note">Test replay: {label}'s games are being re-played today at their real kickoff times.</p>}
+          {isReplay && (
+            <div className="sample-note">
+              Test replay: {label}'s games are re-played today at their real kickoff times{replaySchedule() === 'twice' ? ', and again 12 hours later' : ''}.
+              <ReplayScheduleToggle />
+            </div>
+          )}
           {(totals.decided > 0 || anyLive) && (!viewing || viewed) && <WeekResults totals={totals} />}
           {anyLive && updatedAt && (
             <p className="muted small center live-updated">Live scores update every 30 seconds. Last updated {updatedAt.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}.</p>

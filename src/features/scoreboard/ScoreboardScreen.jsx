@@ -4,6 +4,7 @@ import { WeekSelect } from '@/shared/components/WeekSelect.jsx';
 import { useStandings } from './hooks/useStandings.js';
 import { weekInfo } from './scoring.js';
 import { StandingsTable } from './components/StandingsTable.jsx';
+import { ReplayScheduleToggle } from '@/shared/components/ReplayScheduleToggle.jsx';
 
 export function ScoreboardScreen() {
   const sel = useWeekSelector(1);
@@ -24,7 +25,12 @@ export function ScoreboardScreen() {
         <h2>Scoreboard</h2>
         <WeekSelect week={week} weeks={shownWeeks} onChange={setWeek} />
         {progress
-          ? <p className="sample-note">Week {week} is the test replay: points come in as games finish ({progress.final} of {progress.total} final). Updates every 30 seconds.</p>
+          ? (
+            <div className="sample-note">
+              Week {week} is the test replay: points come in as games finish ({progress.final} of {progress.total} final). Updates every 30 seconds.
+              <ReplayScheduleToggle />
+            </div>
+          )
           : info?.isSample && <p className="sample-note">Week {week} scores are sample data — these games aren't final yet.</p>}
         <p className="muted small">
           Wk {week} is this week's points{info?.possible ? ` (out of ${info.possible})` : ''}. Total is the season through Week {week}{week > 0 ? `; arrows show the change since Week ${week - 1}` : ''}.
