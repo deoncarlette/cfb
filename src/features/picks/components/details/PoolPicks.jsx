@@ -6,7 +6,8 @@ import { gameWinnerId } from '@/services/espn/index.js';
 // with their points, highest first. Your name is highlighted. Final: the winning side turns
 // green, the losing side red; live: which side is ahead.
 // pool: [{ name, winner (team id) | null, confidence, isYou }]
-export function PoolPicks({ game, pool }) {
+// compact: just the two columns (Commish Insights already shows the split above).
+export function PoolPicks({ game, pool, compact = false }) {
   const [away, home] = game.competitors;
   const sides = [away, home].map(team => {
     const rows = pool.filter(p => p.winner === team.id).sort((a, b) => b.confidence - a.confidence || a.name.localeCompare(b.name));
@@ -23,15 +24,19 @@ export function PoolPicks({ game, pool }) {
 
   return (
     <section className="gd-section pool">
-      <h4>Pool picks</h4>
-      <div className="wp-labels">
-        <strong>{sides[0].rows.length} ({pct(sides[0].rows.length)}%)</strong>
-        <strong>{sides[1].rows.length} ({pct(sides[1].rows.length)}%)</strong>
-      </div>
-      <div className="wp-bar">
-        {sides.map(s => s.rows.length > 0 && <span key={s.team.id} style={{ width: `${pct(s.rows.length)}%`, background: teamFill(s.team) }} />)}
-      </div>
-      <div className="pool-points"><span>{sides[0].points}</span><small>points riding</small><span>{sides[1].points}</span></div>
+      {!compact && (
+        <>
+          <h4>Pool picks</h4>
+          <div className="wp-labels">
+            <strong>{sides[0].rows.length} ({pct(sides[0].rows.length)}%)</strong>
+            <strong>{sides[1].rows.length} ({pct(sides[1].rows.length)}%)</strong>
+          </div>
+          <div className="wp-bar">
+            {sides.map(s => s.rows.length > 0 && <span key={s.team.id} style={{ width: `${pct(s.rows.length)}%`, background: teamFill(s.team) }} />)}
+          </div>
+          <div className="pool-points"><span>{sides[0].points}</span><small>points riding</small><span>{sides[1].points}</span></div>
+        </>
+      )}
       <div className="pool-cols">
         {sides.map((s, i) => (
           <div key={s.team.id} className={'pool-col ' + (i ? 'home ' : 'away ') + status(s.team)}>

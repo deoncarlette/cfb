@@ -7,6 +7,7 @@ import { usePicksWeek } from '@/features/picks/hooks/usePicksWeek.js';
 import { useOtherPlayers } from '@/features/picks/hooks/useOtherPlayers.js';
 import { sampleFileWeeks } from '@/features/picks/sample/samplePicks.js';
 import { weekInsights, agreementHistory } from './insightsLogic.js';
+import { PoolPicks } from '@/features/picks/components/details/PoolPicks.jsx';
 
 // Commish → Insights: how the pool picked a week, from LOCKED games only (open picks stay
 // private, same rule as everywhere else).
@@ -53,16 +54,16 @@ export function InsightsPanel() {
           </Section>
 
           <Section title="Pool agrees" empty="No game has 75% or more on one side.">
-            {ins.consensus.map(g => <GameRow key={g.game.id} g={g} />)}
+            {ins.consensus.map(g => <GameRow key={g.game.id} g={g} people={people} />)}
           </Section>
 
           <Section title="Split decisions">
-            {ins.splits.map(g => <GameRow key={g.game.id} g={g} />)}
+            {ins.splits.map(g => <GameRow key={g.game.id} g={g} people={people} />)}
           </Section>
 
           {ins.burned.length > 0 && (
             <Section title="Pool got burned">
-              {ins.burned.map(g => <GameRow key={g.game.id} g={g} burned />)}
+              {ins.burned.map(g => <GameRow key={g.game.id} g={g} people={people} burned />)}
             </Section>
           )}
 
@@ -89,14 +90,18 @@ function Section({ title, empty, children }) {
   );
 }
 
-// One game: who's on each side (count and points), with the result once final.
-function GameRow({ g, burned }) {
+// One game: who's on each side (count and points), with the result once final. Tap it to see
+// where everyone lines up (the same Pool picks view as the game panel on Picks).
+function GameRow({ g, people, burned }) {
+  const [open, setOpen] = useState(false);
   const [a, b] = g.sides;
+  const pool = people.map(p => ({ name: p.name, winner: p.picks[g.game.id]?.winner ?? null, confidence: Number(p.picks[g.game.id]?.confidence) || 0, isYou: false }));
   const name = t => t.team.abbr || t.team.name;
   const result = g.winner ? (burned ? `${name(g.sides.find(s => s.team.id === g.winner))} won` : `Final`) : g.game.state === 'in' ? 'Live' : '';
   return (
-    <div className="ins-game">
-      <div className="ins-game-head"><strong>{name(a)} vs {name(b)}</strong>{result && <span className={'ins-result' + (burned ? ' burned' : '')}>{result}</span>}</div>
+    <div className={'ins-game' + (open ? ' open' : '')}>
+      <button type="button" className="ins-game-btn" aria-expanded={open} onClick={() => setOpen(o => !o)}>
+      <div className="ins-game-head"><strong>{name(a)} vs {name(b)}</strong><span className="ins-right">{result && <span className={'ins-result' + (burned ? ' burned' : '')}>{result}</span>}<span className="chev" aria-hidden="true" /></span></div>
       {a.n && b.n ? (
         <div className="ins-split">
           <span>{name(a)}: {a.n} {a.n === 1 ? 'player' : 'players'}, {a.points} pts</span>
@@ -109,6 +114,8 @@ function GameRow({ g, burned }) {
         {a.n > 0 && <span style={{ width: `${(a.n / g.n) * 100}%`, background: a.team.color }} />}
         {b.n > 0 && <span style={{ width: `${(b.n / g.n) * 100}%`, background: b.team.color }} />}
       </div>
+      </button>
+      {open && <div className="ins-pool"><PoolPicks game={g.game} pool={pool} compact /></div>}
     </div>
   );
 }

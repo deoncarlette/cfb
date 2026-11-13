@@ -46,3 +46,11 @@
 .ins-person{padding:6px 12px; border-radius:999px; font-size:13px;}
 /* Week settings freeze once the week starts locking. */
 .slate-settings.frozen .subtab-track, .slate-settings.frozen input[type=datetime-local]{opacity:.6;}
+/* Tap a game in Insights to see where everyone lines up. */
+.ins-game-btn{display:block; width:100%; background:none; border:none; padding:0; margin:0; font:inherit; color:inherit; text-align:left; cursor:pointer;}
+.ins-right{display:inline-flex; align-items:center; gap:8px;}
+.ins-game .chev{width:7px; height:7px; border-right:2px solid var(--muted); border-bottom:2px solid var(--muted); transform:rotate(45deg) translateY(-2px); transition:transform .15s ease;}
+.ins-game.open .chev{transform:rotate(-135deg) translateY(-2px);}
+.ins-pool{margin-top:8px;}
+.ins-pool .gd-section{margin:0;}
+@media (prefers-reduced-motion: reduce){ .ins-game .chev{transition:none;} }
