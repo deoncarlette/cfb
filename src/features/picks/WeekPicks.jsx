@@ -7,6 +7,7 @@ import { useConfidenceOrder } from './hooks/useConfidenceOrder.js';
 import { useOtherPlayers } from './hooks/useOtherPlayers.js';
 import { PlayerPicker } from './components/PlayerPicker.jsx';
 import { LockAlert } from './components/LockAlert.jsx';
+import { DEFAULT_PLAYER } from './sample/samplePicks.js';
 import { useNav, navigate } from '@/shared/nav.js';
 import { ReplayScheduleToggle } from '@/shared/components/ReplayScheduleToggle.jsx';
 import { replaySchedule } from '@/services/espn/replay.js';
@@ -159,7 +160,10 @@ export function WeekPicks({ week, userName, nameKey }) {
             <p className="sample-note">{sample?.hidden ? `Everyone's ${label} picks show after 9 PM Saturday.` : `No picks saved for ${viewing} in ${label}.`}</p>
           )}
           {viewingOther && viewed?.isMock && <p className="sample-note">Some of {viewing}'s picks are simulated for this preview.</p>}
-          {showingSample && (
+          {!viewing && !existing && sample && !sample.playerName && !sample.randomized && (
+            <p className="sample-note">{DEFAULT_PLAYER} didn't play {label}. Choose a player above to see their picks.</p>
+          )}
+          {showingSample && (sample.playerName || sample.randomized) && (
             <p className="sample-note">
               {sample.randomized ? 'Showing random sample picks' : `Showing ${sample.playerName}'s picks${sample.isMock ? ' (some simulated for this preview)' : ''}`}{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
             </p>

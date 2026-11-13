@@ -74,7 +74,8 @@
     "Each per-pick source/isMock identifies provenance; isMockBallot is true if any selections are simulated.",
     "Weekly scores copied from the separate earlier score fixture; they are not calculated from these synthetic ballots. No actual game outcomes/winners are asserted.",
     "Players without an entry have entered=false and picks=[]. The score fixture may contain inferred participation for weeks 6-11.",
-    "Mary's Week 1 source ballot contains a duplicate confidence 1 and no confidence 11. Preserved verbatim as requested; see validation."
+    "Mary's Week 1 source ballot contains a duplicate confidence 1 and no confidence 11. Preserved verbatim as requested; see validation.",
+    "Week 0: Savannah, Sedrick, Tara, Bean and Cynthia from recovered screenshots (Tara's Howard/Alabama A&M row read as Alabama A&M, which matches her 8 points). Morgan, Madelyn, Luis, Mary and Joseph simulated to match their recorded Week 0 points, assuming Colorado, Howard, Illinois, Minnesota and North Carolina won."
   ],
   "stats": {
     "enteredBallots": 123,
@@ -100,6 +101,686 @@
     }
   ],
   "weeks": [
+    {
+      "week": 0,
+      "gameCount": 5,
+      "possiblePoints": 15,
+      "gameSlateSource": "user_screenshot",
+      "games": [
+        {
+          "gameId": "2026-w00-g01",
+          "gameNumber": 1,
+          "matchup": "Colorado vs Georgia Tech",
+          "teams": [
+            "Colorado",
+            "Georgia Tech"
+          ]
+        },
+        {
+          "gameId": "2026-w00-g02",
+          "gameNumber": 2,
+          "matchup": "Howard vs Alabama A&M",
+          "teams": [
+            "Howard",
+            "Alabama A&M"
+          ]
+        },
+        {
+          "gameId": "2026-w00-g03",
+          "gameNumber": 3,
+          "matchup": "Illinois vs UAB",
+          "teams": [
+            "Illinois",
+            "UAB"
+          ]
+        },
+        {
+          "gameId": "2026-w00-g04",
+          "gameNumber": 4,
+          "matchup": "Minnesota vs Eastern Illinois",
+          "teams": [
+            "Minnesota",
+            "Eastern Illinois"
+          ]
+        },
+        {
+          "gameId": "2026-w00-g05",
+          "gameNumber": 5,
+          "matchup": "North Carolina vs TCU",
+          "teams": [
+            "North Carolina",
+            "TCU"
+          ]
+        }
+      ],
+      "ballots": [
+        {
+          "playerId": "bean",
+          "playerName": "Bean",
+          "entered": true,
+          "participationSource": "user_screenshot",
+          "weeklyScore": 10,
+          "isMockScore": false,
+          "source": "user_screenshot",
+          "isMockBallot": false,
+          "picks": [
+            {
+              "gameId": "2026-w00-g01",
+              "gameNumber": 1,
+              "matchup": "Colorado vs Georgia Tech",
+              "pick": "Georgia Tech",
+              "confidence": 2,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g02",
+              "gameNumber": 2,
+              "matchup": "Howard vs Alabama A&M",
+              "pick": "Alabama A&M",
+              "confidence": 3,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g03",
+              "gameNumber": 3,
+              "matchup": "Illinois vs UAB",
+              "pick": "Illinois",
+              "confidence": 5,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g04",
+              "gameNumber": 4,
+              "matchup": "Minnesota vs Eastern Illinois",
+              "pick": "Minnesota",
+              "confidence": 4,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g05",
+              "gameNumber": 5,
+              "matchup": "North Carolina vs TCU",
+              "pick": "North Carolina",
+              "confidence": 1,
+              "source": "user_screenshot",
+              "isMock": false
+            }
+          ]
+        },
+        {
+          "playerId": "brian",
+          "playerName": "Brian",
+          "entered": false,
+          "participationSource": "score_fixture",
+          "weeklyScore": 0,
+          "isMockScore": false,
+          "source": "none",
+          "isMockBallot": false,
+          "picks": []
+        },
+        {
+          "playerId": "cynthia",
+          "playerName": "Cynthia",
+          "entered": true,
+          "participationSource": "user_screenshot",
+          "weeklyScore": 10,
+          "isMockScore": false,
+          "source": "user_screenshot",
+          "isMockBallot": false,
+          "picks": [
+            {
+              "gameId": "2026-w00-g01",
+              "gameNumber": 1,
+              "matchup": "Colorado vs Georgia Tech",
+              "pick": "Georgia Tech",
+              "confidence": 5,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g02",
+              "gameNumber": 2,
+              "matchup": "Howard vs Alabama A&M",
+              "pick": "Howard",
+              "confidence": 4,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g03",
+              "gameNumber": 3,
+              "matchup": "Illinois vs UAB",
+              "pick": "Illinois",
+              "confidence": 3,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g04",
+              "gameNumber": 4,
+              "matchup": "Minnesota vs Eastern Illinois",
+              "pick": "Minnesota",
+              "confidence": 2,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g05",
+              "gameNumber": 5,
+              "matchup": "North Carolina vs TCU",
+              "pick": "North Carolina",
+              "confidence": 1,
+              "source": "user_screenshot",
+              "isMock": false
+            }
+          ]
+        },
+        {
+          "playerId": "deandra",
+          "playerName": "Deandra",
+          "entered": false,
+          "participationSource": "score_fixture",
+          "weeklyScore": 0,
+          "isMockScore": false,
+          "source": "none",
+          "isMockBallot": false,
+          "picks": []
+        },
+        {
+          "playerId": "joseph",
+          "playerName": "Joseph",
+          "entered": true,
+          "participationSource": "score_fixture",
+          "weeklyScore": 9,
+          "isMockScore": false,
+          "source": "simulated_to_match_points",
+          "isMockBallot": true,
+          "picks": [
+            {
+              "gameId": "2026-w00-g01",
+              "gameNumber": 1,
+              "matchup": "Colorado vs Georgia Tech",
+              "pick": "Georgia Tech",
+              "confidence": 3,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g02",
+              "gameNumber": 2,
+              "matchup": "Howard vs Alabama A&M",
+              "pick": "Alabama A&M",
+              "confidence": 1,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g03",
+              "gameNumber": 3,
+              "matchup": "Illinois vs UAB",
+              "pick": "Illinois",
+              "confidence": 4,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g04",
+              "gameNumber": 4,
+              "matchup": "Minnesota vs Eastern Illinois",
+              "pick": "Minnesota",
+              "confidence": 5,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g05",
+              "gameNumber": 5,
+              "matchup": "North Carolina vs TCU",
+              "pick": "TCU",
+              "confidence": 2,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            }
+          ]
+        },
+        {
+          "playerId": "lucy",
+          "playerName": "Lucy",
+          "entered": false,
+          "participationSource": "score_fixture",
+          "weeklyScore": 0,
+          "isMockScore": false,
+          "source": "none",
+          "isMockBallot": false,
+          "picks": []
+        },
+        {
+          "playerId": "luis",
+          "playerName": "Luis",
+          "entered": true,
+          "participationSource": "score_fixture",
+          "weeklyScore": 10,
+          "isMockScore": false,
+          "source": "simulated_to_match_points",
+          "isMockBallot": true,
+          "picks": [
+            {
+              "gameId": "2026-w00-g01",
+              "gameNumber": 1,
+              "matchup": "Colorado vs Georgia Tech",
+              "pick": "Georgia Tech",
+              "confidence": 4,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g02",
+              "gameNumber": 2,
+              "matchup": "Howard vs Alabama A&M",
+              "pick": "Alabama A&M",
+              "confidence": 1,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g03",
+              "gameNumber": 3,
+              "matchup": "Illinois vs UAB",
+              "pick": "Illinois",
+              "confidence": 5,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g04",
+              "gameNumber": 4,
+              "matchup": "Minnesota vs Eastern Illinois",
+              "pick": "Minnesota",
+              "confidence": 3,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g05",
+              "gameNumber": 5,
+              "matchup": "North Carolina vs TCU",
+              "pick": "North Carolina",
+              "confidence": 2,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            }
+          ]
+        },
+        {
+          "playerId": "madelyn",
+          "playerName": "Madelyn",
+          "entered": true,
+          "participationSource": "score_fixture",
+          "weeklyScore": 11,
+          "isMockScore": false,
+          "source": "simulated_to_match_points",
+          "isMockBallot": true,
+          "picks": [
+            {
+              "gameId": "2026-w00-g01",
+              "gameNumber": 1,
+              "matchup": "Colorado vs Georgia Tech",
+              "pick": "Georgia Tech",
+              "confidence": 3,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g02",
+              "gameNumber": 2,
+              "matchup": "Howard vs Alabama A&M",
+              "pick": "Howard",
+              "confidence": 2,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g03",
+              "gameNumber": 3,
+              "matchup": "Illinois vs UAB",
+              "pick": "Illinois",
+              "confidence": 5,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g04",
+              "gameNumber": 4,
+              "matchup": "Minnesota vs Eastern Illinois",
+              "pick": "Minnesota",
+              "confidence": 4,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g05",
+              "gameNumber": 5,
+              "matchup": "North Carolina vs TCU",
+              "pick": "TCU",
+              "confidence": 1,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            }
+          ]
+        },
+        {
+          "playerId": "mary",
+          "playerName": "Mary",
+          "entered": true,
+          "participationSource": "score_fixture",
+          "weeklyScore": 10,
+          "isMockScore": false,
+          "source": "simulated_to_match_points",
+          "isMockBallot": true,
+          "picks": [
+            {
+              "gameId": "2026-w00-g01",
+              "gameNumber": 1,
+              "matchup": "Colorado vs Georgia Tech",
+              "pick": "Georgia Tech",
+              "confidence": 3,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g02",
+              "gameNumber": 2,
+              "matchup": "Howard vs Alabama A&M",
+              "pick": "Howard",
+              "confidence": 1,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g03",
+              "gameNumber": 3,
+              "matchup": "Illinois vs UAB",
+              "pick": "Illinois",
+              "confidence": 4,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g04",
+              "gameNumber": 4,
+              "matchup": "Minnesota vs Eastern Illinois",
+              "pick": "Minnesota",
+              "confidence": 5,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g05",
+              "gameNumber": 5,
+              "matchup": "North Carolina vs TCU",
+              "pick": "TCU",
+              "confidence": 2,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            }
+          ]
+        },
+        {
+          "playerId": "morgan",
+          "playerName": "Morgan",
+          "entered": true,
+          "participationSource": "score_fixture",
+          "weeklyScore": 14,
+          "isMockScore": false,
+          "source": "simulated_to_match_points",
+          "isMockBallot": true,
+          "picks": [
+            {
+              "gameId": "2026-w00-g01",
+              "gameNumber": 1,
+              "matchup": "Colorado vs Georgia Tech",
+              "pick": "Colorado",
+              "confidence": 2,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g02",
+              "gameNumber": 2,
+              "matchup": "Howard vs Alabama A&M",
+              "pick": "Alabama A&M",
+              "confidence": 1,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g03",
+              "gameNumber": 3,
+              "matchup": "Illinois vs UAB",
+              "pick": "Illinois",
+              "confidence": 5,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g04",
+              "gameNumber": 4,
+              "matchup": "Minnesota vs Eastern Illinois",
+              "pick": "Minnesota",
+              "confidence": 4,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            },
+            {
+              "gameId": "2026-w00-g05",
+              "gameNumber": 5,
+              "matchup": "North Carolina vs TCU",
+              "pick": "North Carolina",
+              "confidence": 3,
+              "source": "simulated_to_match_points",
+              "isMock": true
+            }
+          ]
+        },
+        {
+          "playerId": "nicole",
+          "playerName": "Nicole",
+          "entered": false,
+          "participationSource": "score_fixture",
+          "weeklyScore": 0,
+          "isMockScore": false,
+          "source": "none",
+          "isMockBallot": false,
+          "picks": []
+        },
+        {
+          "playerId": "savannah",
+          "playerName": "Savannah",
+          "entered": true,
+          "participationSource": "user_screenshot",
+          "weeklyScore": 10,
+          "isMockScore": false,
+          "source": "user_screenshot",
+          "isMockBallot": false,
+          "picks": [
+            {
+              "gameId": "2026-w00-g01",
+              "gameNumber": 1,
+              "matchup": "Colorado vs Georgia Tech",
+              "pick": "Georgia Tech",
+              "confidence": 4,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g02",
+              "gameNumber": 2,
+              "matchup": "Howard vs Alabama A&M",
+              "pick": "Alabama A&M",
+              "confidence": 1,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g03",
+              "gameNumber": 3,
+              "matchup": "Illinois vs UAB",
+              "pick": "Illinois",
+              "confidence": 5,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g04",
+              "gameNumber": 4,
+              "matchup": "Minnesota vs Eastern Illinois",
+              "pick": "Minnesota",
+              "confidence": 2,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g05",
+              "gameNumber": 5,
+              "matchup": "North Carolina vs TCU",
+              "pick": "North Carolina",
+              "confidence": 3,
+              "source": "user_screenshot",
+              "isMock": false
+            }
+          ]
+        },
+        {
+          "playerId": "sedrick",
+          "playerName": "Sedrick",
+          "entered": true,
+          "participationSource": "user_screenshot",
+          "weeklyScore": 11,
+          "isMockScore": false,
+          "source": "user_screenshot",
+          "isMockBallot": false,
+          "picks": [
+            {
+              "gameId": "2026-w00-g01",
+              "gameNumber": 1,
+              "matchup": "Colorado vs Georgia Tech",
+              "pick": "Georgia Tech",
+              "confidence": 4,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g02",
+              "gameNumber": 2,
+              "matchup": "Howard vs Alabama A&M",
+              "pick": "Howard",
+              "confidence": 1,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g03",
+              "gameNumber": 3,
+              "matchup": "Illinois vs UAB",
+              "pick": "Illinois",
+              "confidence": 5,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g04",
+              "gameNumber": 4,
+              "matchup": "Minnesota vs Eastern Illinois",
+              "pick": "Minnesota",
+              "confidence": 3,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g05",
+              "gameNumber": 5,
+              "matchup": "North Carolina vs TCU",
+              "pick": "North Carolina",
+              "confidence": 2,
+              "source": "user_screenshot",
+              "isMock": false
+            }
+          ]
+        },
+        {
+          "playerId": "tara",
+          "playerName": "Tara",
+          "entered": true,
+          "participationSource": "user_screenshot",
+          "weeklyScore": 8,
+          "isMockScore": false,
+          "source": "user_screenshot",
+          "isMockBallot": false,
+          "picks": [
+            {
+              "gameId": "2026-w00-g01",
+              "gameNumber": 1,
+              "matchup": "Colorado vs Georgia Tech",
+              "pick": "Georgia Tech",
+              "confidence": 4,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g02",
+              "gameNumber": 2,
+              "matchup": "Howard vs Alabama A&M",
+              "pick": "Alabama A&M",
+              "confidence": 1,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g03",
+              "gameNumber": 3,
+              "matchup": "Illinois vs UAB",
+              "pick": "Illinois",
+              "confidence": 5,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g04",
+              "gameNumber": 4,
+              "matchup": "Minnesota vs Eastern Illinois",
+              "pick": "Minnesota",
+              "confidence": 3,
+              "source": "user_screenshot",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w00-g05",
+              "gameNumber": 5,
+              "matchup": "North Carolina vs TCU",
+              "pick": "TCU",
+              "confidence": 2,
+              "source": "user_screenshot",
+              "isMock": false
+            }
+          ]
+        },
+        {
+          "playerId": "vinny",
+          "playerName": "Vinny",
+          "entered": false,
+          "participationSource": "score_fixture",
+          "weeklyScore": 0,
+          "isMockScore": false,
+          "source": "none",
+          "isMockBallot": false,
+          "picks": []
+        }
+      ]
+    },
     {
       "week": 1,
       "gameCount": 31,

@@ -104,7 +104,8 @@ export async function samplePicksForWeek(week, games) {
   const ballots = new Map(fileWeek.ballots.filter(b => b.entered && b.picks.length)
     .map(b => [b.playerName.trim().toLowerCase(), ballotEntry(b, espnByFileId)]));
   const mine = ballots.get(DEFAULT_PLAYER.toLowerCase());
-  return { ...base, playerName: DEFAULT_PLAYER, picks: mine ? mine.picks : {}, isMock: mine?.isMock, randomized: false, ballots, hidden: false };
+  // playerName null when Deandra didn't play that week (Week 0): blank cards, others viewable.
+  return { ...base, playerName: mine ? DEFAULT_PLAYER : null, picks: mine ? mine.picks : {}, isMock: mine?.isMock, randomized: false, ballots, hidden: false };
 }
 
 // The first week the file covers (Week 1). Earlier weeks have no games in the app.
