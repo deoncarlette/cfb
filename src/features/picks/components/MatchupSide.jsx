@@ -20,7 +20,7 @@ export function MatchupSide({ team, side, selected, lost, score, disabled, onCli
     >
       <TeamLogo team={team} />
       <span className="team-text">
-        {rank && <span className="team-rank">#{rank}</span>}
+        {rank && <span className="team-rank">{rank}</span>}
         <span className="team-name">{team.name}</span>
         <span className="team-name team-abbr">{team.abbr || team.name}</span>
       </span>

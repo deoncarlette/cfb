@@ -58,13 +58,15 @@
 .matchup.has-pick .matchup-side:not(.sel){filter:grayscale(1) brightness(.75);}
 
 .matchup-side .team-logo{width:32px; height:32px; position:relative; z-index:1; filter:drop-shadow(0 1px 2px rgba(0,0,0,.45));}
-.team-text{position:relative; z-index:1; flex:1; display:flex; flex-direction:column; min-width:0; line-height:1;}
+/* Rank sits in front of the name on the same line: "8 UCLA". */
+.team-text{position:relative; z-index:1; flex:1; display:flex; align-items:baseline; gap:5px; min-width:0; line-height:1;}
+.matchup-side.home .team-text{justify-content:flex-end;}
 /* Score sits by the seam; the losing team's score dims. */
 .team-score{position:relative; z-index:1; font-family:var(--display); font-weight:800; font-size:28px; line-height:1; font-variant-numeric:tabular-nums;}
 .matchup-side.lost .team-score{opacity:.5;}
-.team-rank{font-size:11px; font-weight:700; color:#9aa0a8; margin-bottom:2px;}
+.team-rank{flex-shrink:0; font-family:var(--display); font-style:italic; font-size:15px; font-weight:600; color:#9aa0a8;}
 .matchup-side.sel .team-rank{color:inherit; opacity:.85;}
-/* Short name (MICH) — swapped in on phones once a game has a score. */
+/* Short name (MICH) — used on phones. */
 .team-abbr{display:none;}
 .team-name{
   font-family:var(--display); font-weight:700; font-style:italic; text-transform:uppercase;
@@ -102,8 +104,12 @@
   .matchup-mid{display:none;}  /* "Final" is in the line above instead */
   .matchup.has-chip .matchup-side.away{padding-right:20px;}
   .matchup.has-chip .matchup-side.home{padding-left:20px;}
-  .matchup.started .team-name{display:none;}
-  .matchup.started .team-abbr{display:block;}
+  /* Phones: ESPN's short name (MICH, UCLA) on every game — full names while a card is expanded. */
+  .team-name{display:none;}
+  .team-abbr{display:block;}
+  .game-card.expanded .team-name:not(.team-abbr){display:block;}
+  .game-card.expanded .team-abbr{display:none;}
+  .team-rank{font-size:13px;}
 }
 
 /* Live games */
