@@ -1,5 +1,5 @@
 import { displayRank } from '@/services/espn/index.js';
-import { textForBackground, teamFill, teamTextOnDark } from '@/shared/utils/colors.js';
+import { textForBackground, teamFill } from '@/shared/utils/colors.js';
 import { TeamLogo } from '@/shared/components/TeamLogo.jsx';
 
 // One half of the matchup pill. Not picked: plain name (white in dark mode) with the team's logo.
@@ -16,7 +16,7 @@ export function MatchupSide({ team, side, selected, lost, score, disabled, onCli
     <button
       type="button"
       className={`matchup-side ${side}` + (selected ? ' sel' : '') + (lost ? ' lost' : '')}
-      style={{ '--fill': fill, '--fill-ink': ink, '--name': teamTextOnDark(team) }}
+      style={{ '--fill': fill, '--fill-ink': ink }}
       aria-pressed={selected}
       aria-label={`${team.name}${score != null ? ` ${score}` : ''}${selected ? ', your pick' : ''}`}
       disabled={disabled}
