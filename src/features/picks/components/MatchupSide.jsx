@@ -1,6 +1,8 @@
 import { displayRank } from '@/services/espn/index.js';
-import { textForBackground, teamFill } from '@/shared/utils/colors.js';
-import { TeamLogo } from '@/shared/components/TeamLogo.jsx';
+import { textForBackground, teamFill, isBlackOrGray } from '@/shared/utils/colors.js';
+import { TeamLogo, darkLogoUrl } from '@/shared/components/TeamLogo.jsx';
+import { useLogoTone } from '@/shared/hooks/useLogoTone.js';
+import { useDocTheme } from '@/shared/hooks/useDocTheme.js';
 
 // One half of the matchup pill. Not picked: plain name (white in dark mode) with the team's logo.
 // Picked: filled with the team's color. Tap again to clear.
@@ -11,7 +13,16 @@ export function MatchupSide({ team, side, selected, lost, score, disabled, onCli
   const ink = textForBackground(fill);
   // Regular logo on the black side (keeps the school's colors). Once picked, a dark team fill
   // switches to ESPN's dark-background logo so it doesn't vanish into the same color.
-  const onDark = selected && ink === '#ffffff';
+  // Black logos (Iowa, Wake Forest) on the black side (dark mode): ESPN's dark-background logo,
+  // and if that's black too (or missing), a thin light outline. When the logo can't be measured,
+  // a black/gray team color stands in for "black logo".
+  const theme = useDocTheme(); // always called (hooks can't be conditional)
+  const blackSide = !selected && theme !== 'light';
+  const tone = useLogoTone(blackSide ? team.logo : null);
+  const blackLogo = blackSide && (tone === 'dark' || (tone == null && isBlackOrGray(team.color)));
+  const darkTone = useLogoTone(blackLogo ? darkLogoUrl(team.logo) : null);
+  const onDark = (selected && ink === '#ffffff') || blackLogo;
+  const outline = blackLogo && darkTone !== 'light';
   return (
     <button
       type="button"
@@ -22,7 +33,7 @@ export function MatchupSide({ team, side, selected, lost, score, disabled, onCli
       disabled={disabled}
       onClick={onClick}
     >
-      <TeamLogo team={team} onDark={onDark} />
+      <TeamLogo team={team} onDark={onDark} outline={outline} />
       <span className="team-text">
         {rank && <span className="team-rank">{rank}</span>}
         <span className="team-name">{team.name}</span>

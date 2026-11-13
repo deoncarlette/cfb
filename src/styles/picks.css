@@ -186,3 +186,5 @@
 /* When picks lock — top of the week. Accent edge while picks are open; plain once locked. */
 .lock-alert{font-size:13px; line-height:1.4; color:var(--text); background:var(--raised); border-left:3px solid var(--accent); border-radius:10px; padding:9px 12px; margin:0 0 14px;}
 .lock-alert.locked{border-left-color:var(--line-strong); color:var(--muted);}
+/* Black logos on the black pill: a thin light edge traced around the logo's shape. */
+.matchup-side .team-logo.outline img{filter:drop-shadow(0 0 1px rgba(255,255,255,.95)) drop-shadow(0 0 1px rgba(255,255,255,.95)) drop-shadow(0 0 2px rgba(255,255,255,.35));}

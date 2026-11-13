@@ -33,7 +33,7 @@ function saturation(hex) {
 }
 // True black or gray (no real hue) — would disappear on, or look the same as, the black pill.
 // Dark colors with a real hue (Michigan navy, Mississippi State maroon) are NOT gray.
-function isBlackOrGray(hex) { return !toRgb(hex) || saturation(hex) < 0.15 || luminance(hex) < 0.006; }
+export function isBlackOrGray(hex) { return !toRgb(hex) || saturation(hex) < 0.15 || luminance(hex) < 0.006; }
 
 // Fill for a PICKED team: always the team's main color, unless it's black or gray — then its
 // secondary color, so the pick still stands out from the black pill.
