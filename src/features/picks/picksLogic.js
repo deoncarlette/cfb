@@ -56,8 +56,23 @@ export function favoriteId(game) {
   return home.id;
 }
 
-// mode: 'home' | 'away' | 'random' | 'favorites' | 'underdogs' → { gameId: teamId }
-export function quickPickWinners(games, mode) {
+// The higher-ranked team's id, by the first source that tells them apart: CFP rankings → AP
+// points (receiving-votes points count) → Coaches points → the betting favorite → a coin flip.
+// polls: { cfp, ap, coaches } from fetchPollScores (Maps teamId → score; higher = better).
+export function higherRankedId(game, polls) {
+  const [away, home] = game.competitors;
+  for (const map of [polls?.cfp, polls?.ap, polls?.coaches]) {
+    if (!map) continue;
+    const a = map.get(away.id) || 0, h = map.get(home.id) || 0;
+    if (a !== h) return a > h ? away.id : home.id;
+  }
+  if (game.line?.favorite) return game.line.favorite;
+  return Math.random() < 0.5 ? away.id : home.id;
+}
+
+// mode: 'home' | 'away' | 'random' | 'favorites' | 'underdogs' | 'ranked' → { gameId: teamId }
+// ('ranked' needs polls.)
+export function quickPickWinners(games, mode, polls = null) {
   const next = {};
   games.forEach(g => {
     const [away, home] = g.competitors;
@@ -67,6 +82,7 @@ export function quickPickWinners(games, mode) {
     else if (mode === 'random') next[g.id] = Math.random() < 0.5 ? away.id : home.id;
     else if (mode === 'favorites') next[g.id] = fav;
     else if (mode === 'underdogs') next[g.id] = fav === home.id ? away.id : home.id;
+    else if (mode === 'ranked') next[g.id] = higherRankedId(g, polls);
   });
   return next;
 }

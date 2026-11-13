@@ -20,6 +20,38 @@ export async function fetchPollRankMap(week, keyword) {
   }
 }
 
+// Every poll for a week, as comparable scores (higher = better), for "Higher ranked":
+//   cfp:     rank → 100 − rank (the committee publishes no points)
+//   ap, coaches: poll points, including teams "receiving votes" outside the top 25
+// → { cfp, ap, coaches } (each a Map teamId → score, or null), cached per week. week null =
+// ESPN's latest set.
+const pollCache = new Map();
+export function fetchPollScores(week) {
+  const key = week ?? 'latest';
+  if (!pollCache.has(key)) {
+    pollCache.set(key, (async () => {
+      const q = week == null ? '' : `?week=${week}&seasontype=2`;
+      const response = await fetch(`${ESPN_BASE}/rankings${q}`);
+      if (!response.ok) throw new Error('rankings');
+      const polls = (await response.json()).rankings || [];
+      const find = test => polls.find(p => test(pollLabel(p)));
+      const byRank = poll => poll?.ranks?.length ? new Map(poll.ranks.filter(e => e.team?.id).map(e => [String(e.team.id), 100 - e.current])) : null;
+      const byPoints = poll => {
+        if (!poll) return null;
+        const map = new Map();
+        [...(poll.ranks || []), ...(poll.others || [])].forEach(e => { if (e.team?.id) map.set(String(e.team.id), Number(e.points) || 0); });
+        return map.size ? map : null;
+      };
+      return {
+        cfp: byRank(find(l => /cfp|playoff/.test(l))),
+        ap: byPoints(find(l => /\bap\b/.test(l) && !/cfp|playoff/.test(l))),
+        coaches: byPoints(find(l => /coach|afca|usa today/.test(l)))
+      };
+    })().catch(e => { pollCache.delete(key); return { cfp: null, ap: null, coaches: null }; }));
+  }
+  return pollCache.get(key);
+}
+
 function teamFromRankEntry(entry) {
   const t = entry.team || {};
   return {

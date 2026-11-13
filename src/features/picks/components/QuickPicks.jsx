@@ -1,9 +1,11 @@
 // Fill in every open game at once (or clear them), from one dropdown. Choosing an option applies
 // it and the menu goes back to its prompt. Games that have locked aren't touched.
 // Favorites come from the betting line; games without one use the better-ranked team, then home.
+// Higher ranked: CFP rankings → AP points → Coaches points → the favorite → a coin flip.
 const OPTIONS = [
   ['random', 'Random'], ['home', 'All home'], ['away', 'All away'],
-  ['favorites', 'All favorites'], ['underdogs', 'All underdogs'], ['clear', 'Clear all picks']
+  ['favorites', 'All favorites'], ['underdogs', 'All underdogs'], ['ranked', 'Higher ranked'],
+  ['clear', 'Clear all picks']
 ];
 
 export function QuickPicks({ onPick, disabled }) {

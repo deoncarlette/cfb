@@ -9,6 +9,7 @@ import { PlayerPicker } from './components/PlayerPicker.jsx';
 import { LockAlert } from './components/LockAlert.jsx';
 import { DEFAULT_PLAYER } from './sample/samplePicks.js';
 import { useNav, navigate } from '@/shared/nav.js';
+import { fetchPollScores } from '@/services/espn/index.js';
 import { ReplayScheduleToggle } from '@/shared/components/ReplayScheduleToggle.jsx';
 import { replaySchedule } from '@/services/espn/replay.js';
 import { shuffled, quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding } from './picksLogic.js';
@@ -191,9 +192,13 @@ export function WeekPicks({ week, userName, nameKey }) {
                 {' '}{pickedCount} of {games.length} picked.
               </p>
               <QuickPicks
-                onPick={mode => setWinners(w => mode === 'clear'
-                  ? Object.fromEntries(Object.entries(w).filter(([id]) => isLocked(id)))
-                  : { ...w, ...quickPickWinners(openGames, mode) })}
+                onPick={async mode => {
+                  // Higher ranked needs this week's polls (the ones out before its games).
+                  const polls = mode === 'ranked' ? await fetchPollScores(typeof week === 'number' ? Math.max(1, week) : null) : null;
+                  setWinners(w => mode === 'clear'
+                    ? Object.fromEntries(Object.entries(w).filter(([id]) => isLocked(id)))
+                    : { ...w, ...quickPickWinners(openGames, mode, polls) });
+                }}
                 disabled={lock.allLocked}
               />
             </>
