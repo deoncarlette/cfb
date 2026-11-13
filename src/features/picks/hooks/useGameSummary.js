@@ -12,7 +12,11 @@ export function useGameSummary(eventId, live) {
   useEffect(() => {
     let alive = true;
     const load = () => fetchGameSummary(eventId)
-      .then(s => { if (!alive) return; cache.set(eventId, s); setSummary(s); setError(''); })
+      .then(s => {
+        if (!alive) return;
+        if (!s) { if (!cache.get(eventId)) setError('ESPN has no details for this game yet.'); return; }
+        cache.set(eventId, s); setSummary(s); setError('');
+      })
       .catch(() => { if (alive && !cache.get(eventId)) setError("Couldn't load game details from ESPN."); });
     load();
     const id = live ? setInterval(load, 30 * 1000) : null;

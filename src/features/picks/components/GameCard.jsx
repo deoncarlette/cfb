@@ -13,7 +13,7 @@ export function GameCard({ game, index, total, points, result, live, picked, loc
   const started = game.completed || isLive;
   const line = !game.completed && !isLive && game.line;
   return (
-    <div className={'game-card' + (!picked ? ' unpicked' : '') + (isLive ? ' live' : '') + (open ? ' expanded' : '')} draggable={!locked} {...(locked ? {} : dragProps)}>
+    <div className={'game-card' + (!picked ? ' unpicked' : '') + (isLive ? ' live' : '')} draggable={!locked} {...(locked ? {} : dragProps)}>
       <div className="game-meta">
         {game.completed
           ? <span><strong className="game-final">Final</strong> {formatGameDay(game.date)}</span>

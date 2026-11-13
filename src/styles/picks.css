@@ -104,11 +104,9 @@
   .matchup-mid{display:none;}  /* "Final" is in the line above instead */
   .matchup.has-chip .matchup-side.away{padding-right:20px;}
   .matchup.has-chip .matchup-side.home{padding-left:20px;}
-  /* Phones: ESPN's short name (MICH, UCLA) on every game — full names while a card is expanded. */
+  /* Phones: ESPN's short name (MICH, UCLA) on every game; the expanded panel spells them out. */
   .team-name{display:none;}
   .team-abbr{display:block;}
-  .game-card.expanded .team-name:not(.team-abbr){display:block;}
-  .game-card.expanded .team-abbr{display:none;}
   .team-rank{font-size:13px;}
 }
 
@@ -125,7 +123,7 @@
 
 /* Game details panel (box score / matchup) — spans the whole card. */
 .game-details{grid-column:1 / -1; border-top:1px solid var(--line); margin-top:6px; padding-top:12px; cursor:default;}
-.gd-teams{display:flex; justify-content:space-between; padding:0 4px 6px; font-family:var(--display); font-weight:800; font-style:italic; font-size:18px; text-transform:uppercase;}
+.gd-teams{display:flex; justify-content:space-between; gap:12px; padding:0 4px 6px; font-family:var(--display); font-weight:800; font-style:italic; font-size:18px; text-transform:uppercase;}
 .gd-section{margin-bottom:14px;}
 .gd-section h4{margin:0 0 8px; font-size:12px; font-weight:600; color:var(--muted); text-align:center;}
 .compare{display:flex; flex-direction:column;}

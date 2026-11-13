@@ -17,11 +17,14 @@ export function GameDetails({ game }) {
   // moves game.replay.f forward, so this follows along without its own polling).
   const { summary: raw, error } = useGameSummary(game.id, game.state === 'in' && !game.replay);
   const s = game.replay && raw ? rewindSummary(raw, game.replay.f) : raw;
-  if (error) return <div className="game-details"><p className="muted small center">{error}</p></div>;
-  if (!s) return <div className="game-details"><p className="muted small center">Loading…</p></div>;
+  // Full names up top (the pill uses short names on phones) — straight from the card, so they
+  // show while the details load.
+  const [cardAway, cardHome] = game.competitors;
+  const header = <div className="gd-teams"><span>{cardAway.name}</span><span>{cardHome.name}</span></div>;
+  if (error) return <div className="game-details">{header}<p className="muted small center">{error}</p></div>;
+  if (!s) return <div className="game-details">{header}<p className="muted small center">Loading…</p></div>;
 
   // Colors come from the card's teams (ESPN's summary uses the same ids).
-  const [cardAway, cardHome] = game.competitors;
   const away = { ...s.away, color: cardAway.color, altColor: cardAway.altColor };
   const home = { ...s.home, color: cardHome.color, altColor: cardHome.altColor };
 
@@ -42,7 +45,7 @@ export function GameDetails({ game }) {
 
   return (
     <div className="game-details">
-      <div className="gd-teams"><span>{away.abbr}</span><span>{home.abbr}</span></div>
+      {header}
       {started && <LineScore away={s.away} home={s.home} />}
       {s.winProb && (!started || s.winProb.live) && <WinProbability prob={s.winProb} away={away} home={home} />}
       {!started && <CompareRows title="Matchup" rows={pregameRows} />}
