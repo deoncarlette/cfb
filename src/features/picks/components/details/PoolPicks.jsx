@@ -14,7 +14,6 @@ export function PoolPicks({ game, pool }) {
   });
   const picked = sides[0].rows.length + sides[1].rows.length;
   if (!picked) return null;
-  const satOut = pool.length - picked;
   const pct = n => Math.round((n / picked) * 100);
 
   const winner = gameWinnerId(game);
@@ -46,7 +45,6 @@ export function PoolPicks({ game, pool }) {
           </div>
         ))}
       </div>
-      {satOut > 0 && <p className="pool-note">{satOut} {satOut === 1 ? 'player' : 'players'} didn't pick this game.</p>}
     </section>
   );
 }
