@@ -22,8 +22,8 @@ function needsRefresh(games) {
   return games.some(g => g.state === 'in' || (!g.completed && new Date(g.date).getTime() - now < SOON_MS));
 }
 
-// Loads one week: games from ESPN, the commissioner's settings, and — if the commissioner
-// hasn't set the slate — the sample picks for that week, whose games become the slate.
+// Loads one week: games from ESPN, the commissioner's settings, and the sample picks for that
+// week. The commissioner's saved slate picks the games; without one, the sample file's do.
 // No sample picks: Week 0 is empty; later weeks use the default slate (Top 25, Howard, SEC, Big Ten).
 // While games are live, scores refresh every 30 seconds (and when you come back to the tab).
 export function usePicksWeek(week) {
@@ -42,12 +42,16 @@ export function usePicksWeek(week) {
     setError('');
     try {
       const [fetched, cfg] = await Promise.all([fetchWeekGames(week), getWeekConfig(week)]);
-      const sp = cfg.includedGameIds ? null : await samplePicksForWeek(week, fetched);
+      // Sample picks load either way; a slate the commissioner saved decides which games show
+      // (the sample picks fill in for those games), otherwise the sample file's games do.
+      const sp = await samplePicksForWeek(week, fetched);
       // Weeks before the sample file starts (Week 0) have no slate unless the commissioner sets one.
       const beforeSample = !cfg.includedGameIds && typeof week === 'number' && week < await firstSampleWeek();
       setConfig(cfg);
       setSample(sp);
-      setGames(sp ? fetched.filter(g => sp.gameIds.includes(g.id)) : beforeSample ? [] : gamesForWeek(fetched, cfg, week));
+      setGames(cfg.includedGameIds ? gamesForWeek(fetched, cfg, week)
+        : sp ? fetched.filter(g => sp.gameIds.includes(g.id))
+        : beforeSample ? [] : gamesForWeek(fetched, cfg, week));
       setUpdatedAt(new Date());
     } catch (e) {
       setError("Couldn't reach ESPN. Try again in a moment.");
