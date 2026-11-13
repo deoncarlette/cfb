@@ -1,3 +1,5 @@
+import { Segmented } from '@/shared/components/Segmented.jsx';
+import { toDatetimeLocal } from '@/shared/utils/dates.js';
 import { BracketView } from '@/features/bracket/components/BracketView.jsx';
 import { usePlayoffAdmin } from '../hooks/usePlayoffAdmin.js';
 import { SeedPicker } from './SeedPicker.jsx';
@@ -24,9 +26,16 @@ export function BracketAdminPanel() {
         <p className="bk-notice">{admin.entryCount} bracket(s) were submitted against the saved field. Changing seeds now can invalidate their picks.</p>
       )}
 
-      <label>Brackets lock at</label>
-      <input type="datetime-local" value={admin.lock} onChange={e => admin.setLock(e.target.value)} />
-      <p className="muted small">Set this to the first first-round kickoff. Brackets also lock as soon as any result is recorded.</p>
+      <label>Brackets lock</label>
+      {/* No blank date field (the iPhone picker can't be closed empty): pick "Set a time" to show it. */}
+      <Segmented
+        label="When brackets lock"
+        options={[['result', 'First result'], ['custom', 'Set a time']]}
+        value={admin.lock ? 'custom' : 'result'}
+        onChange={choice => admin.setLock(choice === 'result' ? '' : admin.lock || toDatetimeLocal(new Date(Math.ceil(Date.now() / 3600000) * 3600000).toISOString()))}
+      />
+      {admin.lock && <input type="datetime-local" aria-label="Brackets lock at" value={admin.lock} onChange={e => e.target.value && admin.setLock(e.target.value)} />}
+      <p className="muted small">{admin.lock ? 'Set this to the first first-round kickoff. ' : ''}Brackets also lock as soon as any result is recorded.</p>
 
       {admin.fieldComplete && (
         <>

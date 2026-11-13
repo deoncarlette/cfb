@@ -3,7 +3,8 @@ import { useWeekSelector } from '@/shared/hooks/useWeekSelector.js';
 import { WeekSelect } from '@/shared/components/WeekSelect.jsx';
 import { useWeekSlate } from '../hooks/useWeekSlate.js';
 import { GameSection } from './GameSection.jsx';
-import { formatKickoff } from '@/shared/utils/dates.js';
+import { formatKickoff, toDatetimeLocal } from '@/shared/utils/dates.js';
+import { Segmented } from '@/shared/components/Segmented.jsx';
 
 const byKickoff = (a, b) => new Date(a.date) - new Date(b.date);
 // Rivalry and in-state games aren't a section of their own — they're labeled within each section.
@@ -19,6 +20,16 @@ const SECTIONS = [
 export function WeekSlatePanel() {
   const { week, setWeek, weeks } = useWeekSelector(1);
   const slate = useWeekSlate(week);
+  const lockChoice = slate.lockMode === 'kickoff' ? 'kickoff' : slate.deadline ? 'custom' : 'first';
+  function chooseLock(choice) {
+    slate.setLockMode(choice === 'kickoff' ? 'kickoff' : 'slate');
+    if (choice === 'first') slate.setDeadline('');
+    // Start the picker on the first kickoff (or the next hour), never empty.
+    if (choice === 'custom' && !slate.deadline) {
+      const start = firstKickoff ? new Date(firstKickoff) : new Date(Math.ceil(Date.now() / 3600000) * 3600000);
+      slate.setDeadline(toDatetimeLocal(start.toISOString()));
+    }
+  }
   const firstKickoff = slate.games.filter(g => slate.includedIds.has(g.id)).map(g => g.date).sort((a, b) => new Date(a) - new Date(b))[0];
 
   return (
@@ -33,19 +44,25 @@ export function WeekSlatePanel() {
       </div>
 
       <label>Picks lock</label>
-      <div className="subtab-track" role="radiogroup" aria-label="When picks lock">
-        <button type="button" role="radio" aria-checked={slate.lockMode === 'slate'} className={'subtab-btn' + (slate.lockMode === 'slate' ? ' active' : '')} onClick={() => slate.setLockMode('slate')}>Whole slate at once</button>
-        <button type="button" role="radio" aria-checked={slate.lockMode === 'kickoff'} className={'subtab-btn' + (slate.lockMode === 'kickoff' ? ' active' : '')} onClick={() => slate.setLockMode('kickoff')}>Each game at kickoff</button>
-      </div>
-      {slate.lockMode === 'slate' ? (
+      {/* Three choices instead of a blank date field: the iPhone time picker can't be closed
+          empty, so "first kickoff" is its own option and the picker only shows for a set time. */}
+      <Segmented
+        label="When picks lock"
+        options={[['first', 'First kickoff'], ['custom', 'Set a time'], ['kickoff', 'Each game']]}
+        value={lockChoice}
+        onChange={chooseLock}
+      />
+      {lockChoice === 'first' && (
+        <p className="muted small">The whole slate locks at the first kickoff of the selected games{firstKickoff ? ` (${formatKickoff(firstKickoff)})` : ''}.</p>
+      )}
+      {lockChoice === 'custom' && (
         <>
-          <input type="datetime-local" aria-label="Slate locks at" value={slate.deadline} onChange={e => slate.setDeadline(e.target.value)} />
-          <p className="muted small">
-            Leave blank to lock at the first kickoff of the selected games{firstKickoff ? ` (${formatKickoff(firstKickoff)})` : ''}.
-          </p>
+          <input type="datetime-local" aria-label="Slate locks at" value={slate.deadline} onChange={e => e.target.value && slate.setDeadline(e.target.value)} />
+          <p className="muted small">The whole slate locks at this time.</p>
         </>
-      ) : (
-        <p className="muted small">Players can keep changing picks on games that haven't started. A game's pick and points lock when it kicks off.</p>
+      )}
+      {lockChoice === 'kickoff' && (
+        <p className="muted small">Each game locks at its own kickoff. Players can keep changing picks on games that haven't started.</p>
       )}
 
       <p className="selected-count">{slate.includedIds.size} of {slate.games.length} selected</p>
