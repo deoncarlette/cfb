@@ -1,14 +1,14 @@
 // Right side of a game card.
 // Before lock: the point value (type a number to jump there) with ↑/↓ under it.
-// Game final: the points you earned (your confidence if right, 0 if wrong) and "of N".
+// Game final: your confidence, filled green if the pick won and red if it lost.
 // Live: your confidence, tinted by whether your team is ahead.
 // Locked but not started: just your confidence.
 export function ConfidenceControl({ points, max, canUp, canDown, locked, result, live, onSetPoints, onUp, onDown }) {
   if (result) {
     return (
       <>
-        <span className={'pts-badge ' + (result.correct ? 'right' : 'wrong')} aria-label={`${result.earned} of ${result.of} points`}>{result.earned}</span>
-        <span className="pts-of">of {result.of}</span>
+        <span className={'pts-badge ' + (result.correct ? 'right' : 'wrong')} aria-label={`${result.of} points ${result.correct ? 'won' : 'lost'}`}>{result.of}</span>
+        <span className="pts-of">{result.correct ? 'won' : 'lost'}</span>
       </>
     );
   }

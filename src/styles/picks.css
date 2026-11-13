@@ -28,14 +28,14 @@
 }
 .pts-input::-webkit-outer-spin-button, .pts-input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0;}
 .game-card:not(.unpicked) .pts-input{background:var(--accent); border-color:var(--accent); color:var(--accent-ink);}
-/* Locked / final: points as a badge. Green = earned, red = 0. */
+/* Locked / final: points as a badge. Green = won those points, red = lost them. */
 .pts-badge{
   grid-area:pts; width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:10px;
   font-family:var(--display); font-weight:800; font-size:24px; font-variant-numeric:tabular-nums;
   background:var(--raised); color:var(--text); border:1px solid var(--line-strong);
 }
 .pts-badge.right{background:var(--success); border-color:var(--success); color:#fff;}
-.pts-badge.wrong{background:transparent; border-color:var(--danger); color:var(--danger);}
+.pts-badge.wrong{background:var(--danger); border-color:var(--danger); color:#fff;}
 .pts-of{grid-area:arrows; text-align:center; font-size:11px; color:var(--muted); white-space:nowrap;}
 .arrows{grid-area:arrows; display:flex; gap:3px;}
 .arrows button{flex:1; padding:4px 0; font-size:11px; line-height:1; border-radius:7px;}
@@ -111,7 +111,6 @@
 }
 
 /* Live games */
-.game-card.live{border-color:rgba(229,100,90,.55);}
 .live-badge{display:inline-flex; align-items:center; gap:5px; color:var(--danger); font-weight:700; margin-right:4px;}
 .live-badge::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--danger); animation:live-pulse 1.6s ease-in-out infinite;}
 @keyframes live-pulse{0%,100%{opacity:1;} 50%{opacity:.25;}}
