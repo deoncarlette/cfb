@@ -34,6 +34,13 @@ export function lockInfo(config, games, now = Date.now()) {
   return { mode: 'slate', lockedIds: new Set(all ? games.map(g => g.id) : []), anyLocked: all, allLocked: all, lockAt, nextCount: 0 };
 }
 
+// A copy of the list in random order.
+export function shuffled(list) {
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
 // Pick a team, or clear the pick if that team was already picked.
 export function togglePick(winners, gameId, teamId) {
   if (winners[gameId] !== teamId) return { ...winners, [gameId]: teamId };

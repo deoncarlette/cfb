@@ -11,7 +11,7 @@ import { DEFAULT_PLAYER } from './sample/samplePicks.js';
 import { useNav, navigate } from '@/shared/nav.js';
 import { ReplayScheduleToggle } from '@/shared/components/ReplayScheduleToggle.jsx';
 import { replaySchedule } from '@/services/espn/replay.js';
-import { quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding } from './picksLogic.js';
+import { shuffled, quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding } from './picksLogic.js';
 import { WeekResults } from './components/WeekResults.jsx';
 import { QuickPicks } from './components/QuickPicks.jsx';
 import { GameCard } from './components/GameCard.jsx';
@@ -35,7 +35,11 @@ export function WeekPicks({ week, userName, nameKey }) {
   const setViewing = name => navigate({ player: name });
 
   // Show a saved entry's picks (yours, or the sample picks) on the cards; null = blank cards.
+  // No picks yet on an open week: the cards come up in a random order, so people who skip
+  // ranking (or quick-pick) don't all end up with the same confidence order.
   function showEntry(entry) {
+    const blank = !entry || !Object.keys(entry.picks || {}).length;
+    if (blank && !lock.anyLocked) { setWinners({}); setOrder(shuffled(games.map(g => g.id))); return; }
     if (!entry) { setWinners({}); setOrder(games.map(g => g.id)); return; }
     const restored = restoreSavedPicks(entry, games);
     setWinners(restored.winners);
@@ -63,7 +67,7 @@ export function WeekPicks({ week, userName, nameKey }) {
       : {};
     const mine = saved && Object.keys(fill).length ? { ...saved, picks: { ...fill, ...saved.picks } } : saved;
     setExisting(mine);
-    showEntry(mine || sample);
+    if (mine) showEntry(mine); // nothing saved under this name: leave the cards as they are
   }
 
   async function handleSubmit() {
