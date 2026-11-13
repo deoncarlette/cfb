@@ -13,7 +13,7 @@ export function ScoreboardScreen() {
   const { setWeek } = sel;
   const currentWeek = typeof sel.currentWeek === 'number' ? sel.currentWeek : null;
   const weeks = sel.weeks.filter(w => typeof w === 'number');
-  const { weeklyRecords, overallRecords, priorRanks, loading } = useStandings(week);
+  const { weeklyRecords, overallRecords, priorRanks, progress, loading } = useStandings(week);
   // Only weeks that have happened (through the current one).
   const shownWeeks = currentWeek == null ? weeks : weeks.filter(w => w <= currentWeek);
   const info = weekInfo(week);
@@ -23,7 +23,9 @@ export function ScoreboardScreen() {
       <div className="panel">
         <h2>Scoreboard</h2>
         <WeekSelect week={week} weeks={shownWeeks} onChange={setWeek} />
-        {info?.isSample && <p className="sample-note">Week {week} scores are sample data — these games aren't final yet.</p>}
+        {progress
+          ? <p className="sample-note">Week {week} is the test replay: points come in as games finish ({progress.final} of {progress.total} final). Updates every 30 seconds.</p>
+          : info?.isSample && <p className="sample-note">Week {week} scores are sample data — these games aren't final yet.</p>}
         <p className="muted small">
           Wk {week} is this week's points{info?.possible ? ` (out of ${info.possible})` : ''}. Total is the season through Week {week}{week > 0 ? `; arrows show the change since Week ${week - 1}` : ''}.
         </p>

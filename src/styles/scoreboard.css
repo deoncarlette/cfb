@@ -13,3 +13,10 @@ table.board td.sat-out{color:var(--muted); font-weight:500;}
 table.standings td.week-pts{font-weight:500; color:var(--muted);}
 table.standings td.week-pts:not(.sat-out){color:var(--text);}
 table.standings .move-cell{width:44px; text-align:right; padding-left:2px;}
+/* Sortable column headers: tap to sort; the active one is full-strength with a caret. */
+table.board th .sort-btn{display:inline-flex; align-items:center; gap:3px; background:none; border:none; padding:0; margin:0; font:inherit; color:inherit; cursor:pointer;}
+table.board th .sort-btn.active{color:var(--text);}
+table.board th .sort-caret{font-size:10px; visibility:hidden;}
+table.board th .sort-btn.active .sort-caret{visibility:visible;}
+table.standings td.num:not(.sorted){font-weight:500;}
+table.standings td.sorted{font-weight:700;}
