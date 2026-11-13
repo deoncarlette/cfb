@@ -47,17 +47,25 @@ export function WeekPicks({ week, userName, nameKey }) {
 
   async function loadExistingPicks() {
     if (!userName.trim() || games.length === 0) return;
-    const mine = await getMyPicks(week, userName);
+    const saved = await getMyPicks(week, userName);
+    // Picks saved before per-game locking kept locked games out; fill those from the sample
+    // ballot that was on screen, so they keep their pick and points.
+    const fill = saved && sample?.picks
+      ? Object.fromEntries(Object.entries(sample.picks).filter(([id]) => isLocked(id) && !saved.picks?.[id]))
+      : {};
+    const mine = saved && Object.keys(fill).length ? { ...saved, picks: { ...fill, ...saved.picks } } : saved;
     setExisting(mine);
     showEntry(mine || sample);
   }
 
   async function handleSubmit() {
     setSaving(true);
-    // Games that have already locked keep whatever you'd saved for them (or stay unpicked).
+    // Games that have already locked keep the pick they had when they locked — your saved one,
+    // or the sample ballot that was showing as yours — or stay unpicked.
     const picksMap = buildPicksMap(order, winners);
+    const lockedSource = existing || sample;
     lock.lockedIds.forEach(id => {
-      if (existing?.picks?.[id]) picksMap[id] = existing.picks[id]; else delete picksMap[id];
+      if (lockedSource?.picks?.[id]) picksMap[id] = lockedSource.picks[id]; else delete picksMap[id];
     });
     await submitPicks(week, userName, picksMap);
     setExisting({ picks: picksMap });
