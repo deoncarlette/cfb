@@ -51,6 +51,8 @@ function parseEvents(events) {
       state: event.status?.type?.state || 'pre',
       completed: event.status?.type?.completed === true,
       line: parseLine(competition?.odds?.[0]),
+      // TV network(s), e.g. "ESPN" or "FOX".
+      broadcast: competition?.broadcast || competition?.broadcasts?.[0]?.names?.join('/') || competition?.geoBroadcasts?.[0]?.media?.shortName || null,
       situation: parseSituation(competition?.situation),
       competitors
     };

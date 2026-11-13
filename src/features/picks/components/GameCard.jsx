@@ -4,7 +4,8 @@ import { GameDetails } from './details/GameDetails.jsx';
 import { MatchupPill } from './MatchupPill.jsx';
 import { ConfidenceControl } from './ConfidenceControl.jsx';
 
-// One game: kickoff and betting line above the matchup pill, venue below, points on the right.
+// One game: kickoff and betting line above the matchup pill; below it the bowl name or TV
+// network (stadium if neither) and the details button; points on the right.
 // The button under the pill opens the matchup info (before kickoff) or the box score.
 // total is how many cards there are; canUp/canDown say whether the arrows can move it.
 export function GameCard({ game, total, points, result, live, picked, locked, canUp, canDown, pool, dragProps, onPick, onMove, onSetPoints }) {
@@ -29,7 +30,7 @@ export function GameCard({ game, total, points, result, live, picked, locked, ca
       </div>
       <MatchupPill game={game} picked={picked} disabled={locked} onPick={onPick} />
       <button type="button" className="game-venue details-toggle" aria-expanded={open} onClick={() => setOpen(o => !o)}>
-        <span className="venue-name">{game.title || game.venue}</span>
+        <span className="venue-name">{game.title || game.broadcast || game.venue}</span>
         <span className="details-label">{started ? 'Box score' : 'Matchup'} <span className="chev" aria-hidden="true">▾</span></span>
       </button>
       <ConfidenceControl

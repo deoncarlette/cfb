@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useGameSummary } from '../../hooks/useGameSummary.js';
 import { rewindSummary } from '@/services/espn/replay.js';
 import { WinProbability } from './WinProbability.jsx';
@@ -10,10 +11,13 @@ import { PoolPicks } from './PoolPicks.jsx';
 
 const ml = v => (v == null ? null : v > 0 ? `+${v}` : String(v));
 
-// The panel that opens under a game card.
-// Before kickoff: matchup info to help with picks. Live / final: the box score.
+// The panel that opens under a game card. Kept short up top; "More" opens the rest.
+// Before kickoff: predictor, pool picks (once locked), matchup rows | More: season leaders, notes.
+// Live / final: line score, win probability, pool picks | More: team stats, leaders, scoring
+// plays, notes. (The TV network is on the card itself; the stadium is in the notes.)
 // pool: everyone's picks on this game (only passed once it locks) → Pool picks section.
 export function GameDetails({ game, pool }) {
+  const [more, setMore] = useState(false);
   const started = game.completed || game.state === 'in';
   // Test replay: the real box score rewound to the replayed game clock (the card's refresh
   // moves game.replay.f forward, so this follows along without its own polling).
@@ -41,7 +45,8 @@ export function GameDetails({ game, pool }) {
 
   const facts = [
     !started && s.odds?.details && `${s.odds.details}${s.odds.overUnder != null ? `, O/U ${s.odds.overUnder}` : ''}${s.odds.provider ? ` (${s.odds.provider})` : ''}`,
-    s.broadcast && `TV: ${s.broadcast}`,
+    !game.broadcast && s.broadcast && `TV: ${s.broadcast}`,
+    (game.title || game.broadcast) && game.venue && game.venue,
     s.weather && `Weather: ${s.weather}`,
     started && s.attendance && `Attendance: ${Number(s.attendance).toLocaleString()}`
   ].filter(Boolean);
@@ -53,13 +58,20 @@ export function GameDetails({ game, pool }) {
       {s.winProb && (!started || s.winProb.live) && <WinProbability prob={s.winProb} away={away} home={home} />}
       {poolSection}
       {!started && <CompareRows title="Matchup" rows={pregameRows} />}
-      {s.replay?.estimatedStats && game.state === 'in' && (
-        <p className="gd-note">Test replay: score, quarters and scoring plays are exact to the game clock. Team stats and leaders are the final totals scaled to the share of the game played.</p>
+      <button type="button" className="gd-more" aria-expanded={more} onClick={() => setMore(m => !m)}>
+        {more ? 'Less' : started ? 'More stats' : 'More'} <span className="chev" aria-hidden="true">▾</span>
+      </button>
+      {more && (
+        <>
+          {s.replay?.estimatedStats && game.state === 'in' && (
+            <p className="gd-note">Test replay: score, quarters and scoring plays are exact to the game clock. Team stats and leaders are the final totals scaled to the share of the game played.</p>
+          )}
+          {started && <CompareRows title="Team stats" rows={s.stats} />}
+          <Leaders leaders={s.leaders} started={started} />
+          {started && <ScoringPlays plays={s.scoring} away={s.away} home={s.home} />}
+          {facts.length > 0 && <p className="gd-facts">{facts.map(f => <span key={f}>{f}</span>)}</p>}
+        </>
       )}
-      {started && <CompareRows title="Team stats" rows={s.stats} />}
-      <Leaders leaders={s.leaders} started={started} />
-      {started && <ScoringPlays plays={s.scoring} away={s.away} home={s.home} />}
-      {facts.length > 0 && <p className="gd-facts">{facts.map(f => <span key={f}>{f}</span>)}</p>}
     </div>
   );
 }

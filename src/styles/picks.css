@@ -213,3 +213,7 @@
 .pool-row.empty{color:var(--muted);}
 .pool-col.lost .pool-row:not(.you) strong{color:var(--muted); text-decoration:line-through;}
 .pool-note{font-size:12px; color:var(--muted); text-align:center; margin:8px 0 0;}
+/* More / Less in the game panel. */
+.gd-more{display:flex; align-items:center; gap:6px; margin:2px auto 12px; padding:6px 14px; border-radius:999px; background:var(--raised); border:1px solid var(--line); font-size:13px; font-weight:600; color:var(--text);}
+.gd-more .chev{font-size:11px; transition:transform .15s ease;}
+.gd-more[aria-expanded="true"] .chev{transform:rotate(180deg);}
