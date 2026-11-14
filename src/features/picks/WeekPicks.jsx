@@ -16,6 +16,7 @@ import { ReplayScheduleToggle } from '@/shared/components/ReplayScheduleToggle.j
 import { replaySchedule } from '@/services/espn/replay.js';
 import { shuffled, quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding } from './picksLogic.js';
 import { WeekResults } from './components/WeekResults.jsx';
+import { useSeasonStats } from './hooks/useSeasonStats.js';
 import { QuickPicks } from './components/QuickPicks.jsx';
 import { GameCard } from './components/GameCard.jsx';
 import { SubmitPicks } from './components/SubmitPicks.jsx';
@@ -148,6 +149,9 @@ export function WeekPicks({ week, userName, nameKey }) {
 
   // Pool picks for a game's panel: everyone's pick on it, once that game has locked.
   const youName = (userName.trim() || sample?.playerName || '').toLowerCase();
+  // Season record and points for whoever's picks are showing (Postseason has its own scoring).
+  const seasonName = viewingOther ? viewing : (userName.trim() || sample?.playerName || '');
+  const season = useSeasonStats(typeof week === 'number' ? week : null, seasonName);
   const poolFor = gameId => (isLocked(gameId) ? others.players.map(name => {
     const p = others.entryFor(name)?.picks?.[gameId];
     return { name, winner: p?.winner ?? null, confidence: Number(p?.confidence) || 0, isYou: name.toLowerCase() === youName };
@@ -222,7 +226,9 @@ export function WeekPicks({ week, userName, nameKey }) {
               <ReplayScheduleToggle />
             </div>
           )}
-          {(totals.decided > 0 || anyLive) && (!viewingOther || viewed) && <WeekResults totals={totals} />}
+          {(!viewingOther || viewed) && (totals.decided > 0 || anyLive || season) && (
+            <WeekResults totals={totals} season={season} showWeek={totals.decided > 0 || anyLive} />
+          )}
           {anyLive && updatedAt && (
             <p className="muted small center live-updated">Live scores update every 30 seconds. Last updated {updatedAt.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}.</p>
           )}
