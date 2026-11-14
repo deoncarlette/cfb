@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { lockInfo } from '@/features/picks/picksLogic.js';
-import { fetchGamesFor, applyRankOverlay, isDefaultSlateGame, POSTSEASON } from '@/services/espn/index.js';
-import { getWeekConfig, saveWeekConfig } from '@/services/data/index.js';
+import { fetchGamesFor, applyRankOverlay, isStartingSlateGame, POSTSEASON } from '@/services/espn/index.js';
+import { getWeekConfig, saveWeekConfig, getSlateDefaults } from '@/services/data/index.js';
 import { toDatetimeLocal } from '@/shared/utils/dates.js';
 import { weekLabel } from '@/shared/components/WeekSelect.jsx';
 import { samplePicksForWeek } from '@/features/picks/sample/samplePicks.js';
@@ -34,10 +34,11 @@ export function useWeekSlate(week) {
       setGames(pulled);
       const cfg = await getWeekConfig(week);
       // Nothing saved yet for this week → start with the same games the Picks tab shows: the
-      // sample file's games for weeks it covers, else the default slate (Top 25, Howard, SEC,
-      // Big Ten), or every bowl for Postseason.
+      // sample file's games for weeks it covers, else the commish's defaults (teams always in +
+      // categories; built-in Top 25, Howard, SEC, Big Ten if none saved), or every bowl.
       const sample = cfg.includedGameIds ? null : await samplePicksForWeek(week, pulled);
-      setIncludedIds(new Set(cfg.includedGameIds || sample?.gameIds || (week === POSTSEASON ? pulled : pulled.filter(isDefaultSlateGame)).map(g => g.id)));
+      const defaults = await getSlateDefaults().catch(() => null);
+      setIncludedIds(new Set(cfg.includedGameIds || sample?.gameIds || (week === POSTSEASON ? pulled : pulled.filter(g => isStartingSlateGame(g, defaults))).map(g => g.id)));
       setDeadline(toDatetimeLocal(cfg.deadlineIso));
       setLockMode(cfg.lockMode === 'kickoff' ? 'kickoff' : 'slate');
       setSavedCfg(cfg.includedGameIds ? cfg : null);
@@ -76,5 +77,10 @@ export function useWeekSlate(week) {
   // the default: first kickoff of the selected games), its settings are frozen too.
   const savedIds = new Set((savedCfg?.includedGameIds || [...includedIds]).map(String));
   const lock = lockInfo(savedCfg || { lockMode: 'slate', deadlineIso: null }, games.filter(g => savedIds.has(g.id)));
-  return { games, includedIds, deadline, setDeadline, lockMode, setLockMode, status, pulling, saving, dirty, lock, pullGames, toggle, selectAll, deselectAll, save };
+  // After the defaults change: restart an unsaved week's selection from them.
+  function applyDefaults(defaults) {
+    if (savedCfg || week === POSTSEASON) return;
+    setIncludedIds(new Set(games.filter(g => isStartingSlateGame(g, defaults)).map(g => g.id)));
+  }
+  return { applyDefaults, saved: !!savedCfg, games, includedIds, deadline, setDeadline, lockMode, setLockMode, status, pulling, saving, dirty, lock, pullGames, toggle, selectAll, deselectAll, save };
 }

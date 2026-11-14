@@ -46,3 +46,13 @@ export async function getAllPicksForWeek(week) {
   const snap = await getDocs(collection(db, 'weeks', String(week), 'picks'));
   return snap.docs.map(d => ({ id: d.id, ...d.data() }));
 }
+
+// settings/slateDefaults -> { teams: [{ id, name }], categories: string[] } — the commish's
+// starting selection for weeks nobody has set up yet.
+export async function getSlateDefaults() {
+  const snap = await getDoc(doc(db, 'settings', 'slateDefaults'));
+  return snap.exists() ? { teams: snap.data().teams || [], categories: snap.data().categories || [] } : null;
+}
+export async function saveSlateDefaults(defaults) {
+  await setDoc(doc(db, 'settings', 'slateDefaults'), { ...defaults, updatedAt: new Date().toISOString() });
+}

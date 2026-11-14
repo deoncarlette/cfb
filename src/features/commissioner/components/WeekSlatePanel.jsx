@@ -3,6 +3,7 @@ import { useWeekSelector } from '@/shared/hooks/useWeekSelector.js';
 import { WeekSelect } from '@/shared/components/WeekSelect.jsx';
 import { useWeekSlate } from '../hooks/useWeekSlate.js';
 import { GameSection } from './GameSection.jsx';
+import { SlateDefaults } from './SlateDefaults.jsx';
 import { formatKickoff, toDatetimeLocal } from '@/shared/utils/dates.js';
 import { Segmented } from '@/shared/components/Segmented.jsx';
 
@@ -75,6 +76,9 @@ export function WeekSlatePanel() {
       {lockChoice === 'kickoff' && (
         <p className="muted small">Each game locks at its own kickoff. Players can keep changing picks on games that haven't started.</p>
       )}
+
+      <SlateDefaults games={slate.games} categories={SECTIONS} onSaved={slate.applyDefaults} />
+      {!slate.saved && !frozen && slate.games.length > 0 && <p className="muted small">This week isn't saved yet, so it starts from your defaults.</p>}
 
       <p className="selected-count">{slate.includedIds.size} of {slate.games.length} selected</p>
       {slate.games.length === 0 && !slate.pulling && <p className="muted small">No games pulled yet.</p>}

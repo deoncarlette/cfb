@@ -21,3 +21,11 @@ export async function submitPicks(week, userName, picksMap) {
 export async function getAllPicksForWeek(week) {
   return Object.entries(load().picks?.[week] || {}).map(([id, v]) => ({ id, ...v }));
 }
+
+// Commish defaults for new weeks: { teams: [{ id, name }], categories: [...] } or null.
+export async function getSlateDefaults() {
+  return clone(load().slateDefaults ?? null);
+}
+export async function saveSlateDefaults(defaults) {
+  const d = load(); d.slateDefaults = defaults; save(d);
+}

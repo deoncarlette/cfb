@@ -1,15 +1,16 @@
-import { isDefaultSlateGame, gameWinnerId, POSTSEASON } from '@/services/espn/index.js';
+import { isStartingSlateGame, gameWinnerId, POSTSEASON } from '@/services/espn/index.js';
 
 // Plain functions for the Picks tab — no React, easy to test.
 
-// Until the commissioner configures a week, default to Top 25 + Howard + SEC + Big Ten
-// (see isDefaultSlateGame) rather than the full slate, which can be 70+ games.
-// Bowl games: every bowl (the CFP games are already left out).
-export function gamesForWeek(allGames, config, week) {
+// Until the commissioner configures a week, start from the commish's saved defaults (teams
+// always in + categories), or the built-in Top 25 + Howard + SEC + Big Ten when none are saved,
+// rather than the full slate, which can be 70+ games. Bowl games: every bowl (the CFP games are
+// already left out).
+export function gamesForWeek(allGames, config, week, defaults = null) {
   if (!config.includedGameIds && week === POSTSEASON) return allGames;
   return config.includedGameIds
     ? allGames.filter(g => config.includedGameIds.includes(g.id))
-    : allGames.filter(isDefaultSlateGame);
+    : allGames.filter(g => isStartingSlateGame(g, defaults));
 }
 
 const byKickoff = (a, b) => new Date(a.date) - new Date(b.date);

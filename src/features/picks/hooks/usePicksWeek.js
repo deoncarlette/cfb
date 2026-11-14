@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { REPLAY_WEEK } from '@/config.js';
 import { fetchGamesFor, applyRankOverlay } from '@/services/espn/index.js';
 import { replayGames, loadReplaySummaries } from '@/services/espn/replay.js';
-import { getWeekConfig } from '@/services/data/index.js';
+import { getWeekConfig, getSlateDefaults } from '@/services/data/index.js';
 import { gamesForWeek, lockInfo } from '../picksLogic.js';
 import { samplePicksForWeek, firstSampleWeek } from '../sample/samplePicks.js';
 
@@ -41,7 +41,7 @@ export function usePicksWeek(week) {
     setLoading(true);
     setError('');
     try {
-      const [fetched, cfg] = await Promise.all([fetchWeekGames(week), getWeekConfig(week)]);
+      const [fetched, cfg, defaults] = await Promise.all([fetchWeekGames(week), getWeekConfig(week), getSlateDefaults().catch(() => null)]);
       // Sample picks load either way; a slate the commissioner saved decides which games show
       // (the sample picks fill in for those games), otherwise the sample file's games do.
       const sp = await samplePicksForWeek(week, fetched);
@@ -49,9 +49,9 @@ export function usePicksWeek(week) {
       const beforeSample = !cfg.includedGameIds && typeof week === 'number' && week < await firstSampleWeek();
       setConfig(cfg);
       setSample(sp);
-      setGames(cfg.includedGameIds ? gamesForWeek(fetched, cfg, week)
+      setGames(cfg.includedGameIds ? gamesForWeek(fetched, cfg, week, defaults)
         : sp ? fetched.filter(g => sp.gameIds.includes(g.id))
-        : beforeSample ? [] : gamesForWeek(fetched, cfg, week));
+        : beforeSample ? [] : gamesForWeek(fetched, cfg, week, defaults));
       setUpdatedAt(new Date());
     } catch (e) {
       setError("Couldn't reach ESPN. Try again in a moment.");
