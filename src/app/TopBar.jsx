@@ -11,7 +11,15 @@ const Moon = () => (
   </svg>
 );
 
-export function TopBar({ theme }) {
+// Gear: the commissioner's settings (kept out of the tab strip).
+const Gear = () => (
+  <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="3" />
+    <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
+  </svg>
+);
+
+export function TopBar({ theme, onCommish, inCommish }) {
   const dark = theme.theme === 'dark';
   return (
     <div className="topbar">
@@ -19,9 +27,14 @@ export function TopBar({ theme }) {
         <span className="brand-badge">B</span>
         <span className="brand">Backfield Brainiacs</span>
       </div>
+      <div className="topbar-actions">
+      <button type="button" className={'theme-toggle' + (inCommish ? ' active' : '')} onClick={onCommish} aria-label="Commish settings" title="Commish settings" aria-pressed={inCommish}>
+        <Gear />
+      </button>
       <button type="button" className="theme-toggle" onClick={theme.toggle} aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'} title={dark ? 'Light mode' : 'Dark mode'}>
         {dark ? <Sun /> : <Moon />}
       </button>
+      </div>
     </div>
   );
 }

@@ -23,7 +23,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <TopBar theme={theme} />
+      <TopBar theme={theme} inCommish={tab === 'commish'} onCommish={() => setTab('commish')} />
       <div className="screen">
         <HeroHeader />
         <PreviewBanner />
