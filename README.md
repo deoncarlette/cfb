@@ -29,14 +29,21 @@ Also part of the Auth pass:
   config; Picks hides unpublished weeks; Commish shows a Publish button and freezes after.
 
 Planned with the Auth pass (player profiles):
-- **Alma maters and favorite teams.** Players add the schools they attended and teams they
-  root for (any number of each), stored as ESPN team IDs so they match the games feed.
+- **Alma maters and favorite team.** Players add every school they attended (no limit) and
+  one favorite team, stored as ESPN team IDs so they match the games feed.
   Commish gets a "Pool alma maters & favorites" category alongside Top 25 / P4 / MEAC / FBS /
   FCS / All Other: every game that week involving someone's school or team, labeled with whose
   it is (e.g. "Nicole's alma mater", "Bean's team"), so the commish can pull them into the slate.
   Also planned: an Insights "Picked against their own" call-out whenever a player picks
   against their school or team (worth more attention the more points they put on it — e.g.
   Deandra picking against Texas). Maybe later: the same label on the game card.
+
+Commissioner defaults (doesn't need Auth — could ship any time):
+- **Pre-selected teams and categories.** The commish saves defaults once — teams that are always
+  in (today Howard and Northwestern) and categories to start checked (e.g. Top 25) — and every
+  newly loaded week starts with those games selected. The commish can still uncheck anything
+  for a given week; saved weeks keep their own selection. Pool alma maters & favorites could be
+  one of the default categories once profiles exist.
 
 ## 1. Create the Firebase project
 
