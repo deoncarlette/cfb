@@ -97,7 +97,11 @@ export function parseSummary(data) {
     // Every drive's team and game-clock window, and every snap's down & distance — used by the
     // test replay to show who has the ball and the situation at the replayed moment.
     ...(() => {
-      const all = [...(data.drives?.previous || []), ...(data.drives?.current ? [data.drives.current] : [])];
+      // ESPN also lists the drive in progress at the end of `previous`; keep one copy (the current).
+      const cur = data.drives?.current;
+      const sameDrive = (d, c) => (d.id && c.id ? String(d.id) === String(c.id)
+        : String(d.team?.id) === String(c.team?.id) && !(d.displayResult || d.result));
+      const all = [...(data.drives?.previous || []).filter(d => !cur || !sameDrive(d, cur)), ...(cur ? [cur] : [])];
       const drives = all.map(d => ({
         teamId: String(d.team?.id ?? ''),
         start: { period: d.start?.period?.number, clock: d.start?.clock?.displayValue },
@@ -114,14 +118,17 @@ export function parseSummary(data) {
       // result: Touchdown, Field Goal, Punt, Interception, Fumble, Downs, …), its summary
       // ("8 plays, 75 yards, 3:21") and the score after it.
       const lastScore = d => { const ps = (d.plays || []).filter(p => p.awayScore != null && p.homeScore != null); const p = ps[ps.length - 1]; return p ? { away: p.awayScore, home: p.homeScore } : null; };
+      // A drive just underway may not have its start filled in yet — use its first play's.
+      const firstPlay = d => (d.plays || [])[0];
       const driveLog = all.map((d, i) => ({
         teamId: String(d.team?.id ?? ''),
-        period: d.start?.period?.number, clock: d.start?.clock?.displayValue || '',
+        period: d.start?.period?.number ?? firstPlay(d)?.period?.number,
+        clock: d.start?.clock?.displayValue || firstPlay(d)?.clock?.displayValue || '',
         endPeriod: d.end?.period?.number, endClock: d.end?.clock?.displayValue || '',
         result: d.displayResult || d.result || '',
         isScore: !!d.isScore,
         description: d.description || '',
-        current: !!data.drives?.current && i === all.length - 1 && !(data.header?.competitions?.[0]?.status?.type?.completed),
+        current: !!cur && i === all.length - 1 && !(data.header?.competitions?.[0]?.status?.type?.completed),
         score: lastScore(d)
       })).filter(d => d.teamId && d.period);
       return { drives, plays, driveLog };
