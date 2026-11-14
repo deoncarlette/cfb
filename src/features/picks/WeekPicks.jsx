@@ -250,13 +250,16 @@ export function WeekPicks({ week, userName, nameKey }) {
             <span>Card layout (trial)</span>
             <Segmented label="Card layout" options={[['pill', 'Pill'], ['whole', 'Whole card'], ['teams', 'Teams only']]} value={cardLayout} onChange={setCardLayout} />
           </div>
-          {visible.some(id => !gameById[id].completed && gameById[id].state !== 'in') && <div className="layout-trial">
-            <span>Sort upcoming by</span>
-            <Segmented label="Sort upcoming games by" options={[['points', 'Points'], ['kickoff', 'Kickoff']]} value={sortBy} onChange={setSortBy} />
-          </div>}
           {!(viewingOther && !viewed) && groups.map(group => (
             <section key={group.id} className="game-group">
-              {group.label && <h3 className="game-group-head">{group.label} <span>{group.ids.length}</span></h3>}
+              {(group.label || group.id === 'all') && (
+                <div className={'game-group-head' + (group.label ? '' : ' bare')}>
+                  {group.label && <h3>{group.label} <span>{group.ids.length}</span></h3>}
+                  {(group.id === 'next' || (group.id === 'all' && group.ids.length > 1)) && (
+                    <Segmented className="mini" label="Sort upcoming games by" options={[['points', 'Points'], ['kickoff', 'Kickoff']]} value={sortBy} onChange={setSortBy} />
+                  )}
+                </div>
+              )}
               {group.ids.map(gameId => {
                 const game = gameById[gameId];
                 const readOnly = viewingOther || isLocked(gameId);

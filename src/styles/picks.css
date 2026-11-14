@@ -171,8 +171,13 @@
 
 /* Live / Completed / Upcoming groups on locked weeks */
 .game-group + .game-group{margin-top:18px;}
-.game-group-head{display:flex; align-items:baseline; gap:8px; margin:0 0 10px; font-size:15px; font-weight:700;}
-.game-group-head span{font-size:13px; font-weight:500; color:var(--muted);}
+.game-group-head{display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0 0 10px;}
+.game-group-head h3{display:flex; align-items:baseline; gap:8px; margin:0; font-size:15px; font-weight:700;}
+.game-group-head h3 span{font-size:13px; font-weight:500; color:var(--muted);}
+.game-group-head.bare{justify-content:flex-end;}
+/* Small Points | Kickoff switch beside the Upcoming heading. */
+.subtab-track.mini{margin:0; padding:2px; width:auto; flex:none;}
+.subtab-track.mini .subtab-btn{padding:3px 9px; font-size:11px; flex:none;}
 
 /* When picks lock — top of the week. Accent edge while picks are open; plain once locked. */
 .lock-alert{font-size:13px; line-height:1.4; color:var(--text); background:var(--raised); border-left:3px solid var(--accent); border-radius:10px; padding:9px 12px; margin:0 0 14px;}
