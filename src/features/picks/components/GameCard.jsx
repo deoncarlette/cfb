@@ -49,17 +49,18 @@ export function GameCard({ game, total, points, result, live, picked, missed, lo
     : isLive
       ? <span><strong className="live-badge">Live</strong> {game.status}</span>
       : <span>{game.timeTbd ? formatTbdDay(game.date) : formatKickoff(game.date)}</span>;
-  // Whole-card strip, right side: before lock the spread and O/U; locked but not started the
-  // spread and network (O/U moves into the expansion); once started just the network.
+  // Whole-card strip, right side: before lock the spread and O/U; once locked just the network
+  // (the spread and O/U move into the expansion).
   const lockedPregame = locked && !started;
-  const overUnderInside = lockedPregame && line && line.overUnder != null;
-  const stripInfo = (gameName || (!started && !locked) || isLive || overUnderInside) && (
+  const lineInside = lockedPregame && line && (line.spread || line.overUnder != null);
+  const stripInfo = (gameName || (!started && !locked) || isLive || lineInside) && (
     <div className="bare-info strip-info">
       {isLive && <Possession game={game} />}
       <div className="bare-names">
         {gameName && <span className="venue-name game-title">{gameName}</span>}
         {!started && !locked && <span className="venue-name">{game.broadcast || game.venue}</span>}
-        {overUnderInside && <span className="venue-name">O/U {line.overUnder}</span>}
+        {lineInside && line.spread && <span className="venue-name">{line.spread}</span>}
+        {lineInside && line.overUnder != null && <span className="venue-name">O/U {line.overUnder}</span>}
       </div>
     </div>
   );
@@ -74,10 +75,7 @@ export function GameCard({ game, total, points, result, live, picked, missed, lo
               {started
                 ? <span className="strip-network">{game.broadcast || game.venue}</span>
                 : lockedPregame
-                  ? <>
-                      {line?.spread && <span>{line.spread}</span>}
-                      <span className="strip-network">{game.broadcast || game.venue}</span>
-                    </>
+                  ? <span className="strip-network">{game.broadcast || game.venue}</span>
                   : line && <>
                       {line.spread && <span>{line.spread}</span>}
                       {line.overUnder != null && <span>O/U {line.overUnder}</span>}
