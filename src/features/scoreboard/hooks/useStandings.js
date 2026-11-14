@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { REPLAY_WEEK } from '@/config.js';
-import { recordsForWeek, computeOverallStandings, rankMap, replayProgress } from '../scoring.js';
+import { recordsForWeek, computeOverallStandings, rankMap, replayProgress, isLiveScoredWeek } from '../scoring.js';
 
 const REFRESH_MS = 30 * 1000;
 
@@ -30,7 +29,8 @@ export function useStandings(week) {
       setLoading(false);
     }
     load();
-    const live = REPLAY_WEEK != null && week >= REPLAY_WEEK;
+    // Keep refreshing while this week or any week in the overall total is scored live.
+    const live = Array.from({ length: week + 1 }, (_, w) => w).some(isLiveScoredWeek);
     const id = live ? setInterval(() => { if (!document.hidden) load(); }, REFRESH_MS) : null;
     return () => { cancelled = true; if (id) clearInterval(id); };
   }, [week]);

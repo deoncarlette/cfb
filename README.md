@@ -95,6 +95,12 @@ file), which is the natural next step.
 **New in this version**: real shared persistence via Firestore (localStorage was always
 per-device — this is the actual upgrade React+Firebase buys you), and a real deploy pipeline.
 
+## Replaying a finished week (testing)
+
+`VITE_REPLAY_WEEK` (see `src/config.js`) replays a finished week as if its games were live, so
+live scoring can be tested without waiting for Saturday. The /cfb/cfp preview ran Week 10 this
+way; it's off now that Week 11 is being tested live. Set it to a week number to turn it back on.
+
 ## Postseason: CFP bracket + bowl games (Picks tab → Postseason)
 
 A March Madness–style pool for the 12-team College Football Playoff (seeds 1–4 get byes,
