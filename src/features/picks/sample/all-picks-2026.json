@@ -29469,7 +29469,7 @@
               "matchup": "Notre Dame vs Boston College",
               "pick": "Notre Dame",
               "confidence": 24,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29478,7 +29478,7 @@
               "matchup": "Alabama vs Vanderbilt",
               "pick": "Alabama",
               "confidence": 23,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29487,7 +29487,7 @@
               "matchup": "Miami vs Duke",
               "pick": "Miami",
               "confidence": 22,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29496,7 +29496,7 @@
               "matchup": "Georgia vs Missouri",
               "pick": "Georgia",
               "confidence": 21,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29505,7 +29505,7 @@
               "matchup": "South Carolina vs Arkansas",
               "pick": "South Carolina",
               "confidence": 20,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29514,7 +29514,7 @@
               "matchup": "Houston vs Colorado",
               "pick": "Houston",
               "confidence": 19,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29523,7 +29523,7 @@
               "matchup": "Nebraska vs Rutgers",
               "pick": "Nebraska",
               "confidence": 18,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29532,7 +29532,7 @@
               "matchup": "Texas Tech vs Oklahoma State",
               "pick": "Texas Tech",
               "confidence": 17,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29541,7 +29541,7 @@
               "matchup": "Ohio State vs Northwestern",
               "pick": "Ohio State",
               "confidence": 16,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29550,7 +29550,7 @@
               "matchup": "Iowa vs Purdue",
               "pick": "Iowa",
               "confidence": 15,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29559,7 +29559,7 @@
               "matchup": "UCLA vs Illinois",
               "pick": "UCLA",
               "confidence": 14,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29568,7 +29568,7 @@
               "matchup": "Wisconsin vs Maryland",
               "pick": "Wisconsin",
               "confidence": 13,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29577,7 +29577,7 @@
               "matchup": "Washington vs Michigan State",
               "pick": "Washington",
               "confidence": 12,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29586,7 +29586,7 @@
               "matchup": "Oregon vs Michigan",
               "pick": "Oregon",
               "confidence": 11,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29595,7 +29595,7 @@
               "matchup": "Clemson vs Georgia Tech",
               "pick": "Clemson",
               "confidence": 10,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29604,7 +29604,7 @@
               "matchup": "Tennessee vs Texas A&M",
               "pick": "Tennessee",
               "confidence": 9,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29613,7 +29613,7 @@
               "matchup": "Ole Miss vs Oklahoma",
               "pick": "Ole Miss",
               "confidence": 8,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29622,7 +29622,7 @@
               "matchup": "Penn State vs Minnesota",
               "pick": "Penn State",
               "confidence": 7,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29631,7 +29631,7 @@
               "matchup": "Delaware State vs Howard",
               "pick": "Delaware State",
               "confidence": 6,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29640,7 +29640,7 @@
               "matchup": "UNC vs Louisville",
               "pick": "UNC",
               "confidence": 5,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29649,7 +29649,7 @@
               "matchup": "Auburn vs Mississippi State",
               "pick": "Auburn",
               "confidence": 4,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
@@ -29658,25 +29658,25 @@
               "matchup": "Indiana vs USC",
               "pick": "Indiana",
               "confidence": 3,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
               "gameId": "2026-w11-g23",
               "gameNumber": 23,
               "matchup": "LSU vs Texas",
-              "pick": "LSU",
+              "pick": "Texas",
               "confidence": 2,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             },
             {
               "gameId": "2026-w11-g24",
               "gameNumber": 24,
               "matchup": "Florida vs Kentucky",
-              "pick": "Florida",
+              "pick": "Kentucky",
               "confidence": 1,
-              "source": "user_ballot_reconstructed",
+              "source": "user_ballot",
               "isMock": false
             }
           ],
