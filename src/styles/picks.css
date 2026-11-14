@@ -84,7 +84,7 @@
 .week-results strong{display:block; font-family:var(--display); font-weight:800; font-size:28px; line-height:1.05; font-variant-numeric:tabular-nums;}
 .week-results span{font-size:12px; color:var(--muted);}
 .season-results{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:-8px 0 16px;}
-.season-results div{display:flex; align-items:baseline; justify-content:center; gap:8px; background:var(--raised); border-radius:10px; padding:7px 6px;}
+.season-results div{display:flex; align-items:baseline; justify-content:center; gap:8px; background:var(--surface); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); padding:7px 6px;}
 .season-results strong{font-family:var(--display); font-weight:800; font-size:18px; font-variant-numeric:tabular-nums;}
 .season-results span{font-size:12px; color:var(--muted);}
 
