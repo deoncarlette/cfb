@@ -45,7 +45,7 @@ function Quarter({ period, drives, abbr, startOpen }) {
                 <span className="sp-when">{d.clock}</span>
                 <span className="sp-team">{abbr(d.teamId)}</span>
                 <span className="sp-text">
-                  <span className={'drive-result ' + k}>{k === 'current' ? 'In progress' : d.result || '—'}</span>
+                  <span className={'drive-result ' + k}>{k === 'current' ? 'In progress' : d.result || '—'}{d.score?.conversion && (k === 'score' || k === 'turnover') && <span className={'drive-try' + (/missed|failed/.test(d.score.conversion) ? ' no' : '')}> · {d.score.conversion}</span>}</span>
                   {d.description && <span className="drive-desc">{d.description}</span>}
                 </span>
                 {/* Score after scoring drives, and turnovers returned for a score (pick-six, scoop-and-score). */}

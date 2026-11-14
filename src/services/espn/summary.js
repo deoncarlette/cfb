@@ -122,7 +122,18 @@ export function parseSummary(data) {
       // between the drive's start and end. Only if there are no scoring plays, the drive's plays.
       const secs = c => { const m = /^(\d+):(\d{2})$/.exec(c || ''); return m ? +m[1] * 60 + +m[2] : null; };
       const at = (period, clock) => (period && secs(clock) != null ? (period - 1) * 900 + (900 - secs(clock)) : null);
-      const scored = (data.scoringPlays || []).map(p => ({ t: at(p.period?.number, p.clock?.displayValue), away: p.awayScore, home: p.homeScore })).filter(p => p.t != null);
+      // The try after a touchdown, from the end of the scoring play's text, e.g. "(Peyton
+      // Woodring Kick)", "(PAT failed)", "(Two-Point Pass Conversion Failed)".
+      const conversion = text => {
+        const m = /\(([^()]*)\)\s*$/.exec(text || '');
+        if (!m || !/touchdown|\btd\b|yd (run|pass|.*return)|yard/i.test(text)) return null;
+        const t = m[1];
+        const failed = /fail|missed|no good|block|incomplete|aborted/i.test(t);
+        if (/two[- ]point|2[- ]?pt/i.test(t)) return failed ? '2-pt failed' : '2-pt good';
+        if (/kick|pat|extra point/i.test(t)) return failed ? 'PAT missed' : 'PAT good';
+        return null;
+      };
+      const scored = (data.scoringPlays || []).map(p => ({ t: at(p.period?.number, p.clock?.displayValue), away: p.awayScore, home: p.homeScore, conversion: conversion(p.text) })).filter(p => p.t != null);
       const lastScore = d => {
         const from = at(d.start?.period?.number ?? d.plays?.[0]?.period?.number, d.start?.clock?.displayValue || d.plays?.[0]?.clock?.displayValue);
         const to = at(d.end?.period?.number, d.end?.clock?.displayValue);
@@ -130,7 +141,8 @@ export function parseSummary(data) {
           if (from == null || to == null) return null;
           // After the drive starts (a score at its very first second belongs to the drive before).
           const hits = scored.filter(p => p.t > from && p.t <= to);
-          return hits.length ? { away: hits[hits.length - 1].away, home: hits[hits.length - 1].home } : null;
+          const h = hits[hits.length - 1];
+          return h ? { away: h.away, home: h.home, conversion: h.conversion } : null;
         }
         const ps = (d.plays || []).filter(p => p.awayScore != null && p.homeScore != null); const p = ps[ps.length - 1];
         return p ? { away: p.awayScore, home: p.homeScore } : null;
