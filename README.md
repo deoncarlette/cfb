@@ -95,6 +95,42 @@ file), which is the natural next step.
 **New in this version**: real shared persistence via Firestore (localStorage was always
 per-device — this is the actual upgrade React+Firebase buys you), and a real deploy pipeline.
 
+## Planned: live scores through Firebase + AI game-day updates
+
+Not built yet. The plan, with rough costs (checked Nov 2026):
+
+**ESPN → Firebase → phones.** A scheduled Cloud Function reads ESPN about once a minute on
+game days and writes one small Firestore document per week with every followed game's state
+(score, clock, possession, final/winner, kickoff). Phones listen to that document instead of
+each calling ESPN.
+- One ESPN request no matter how many phones are open; everyone sees the same scores,
+  kickoff times and lock times (locks should be enforced server-side once picks are real).
+- Finals and winners get saved as games end, so past weeks never have to be reconstructed.
+- Trade-off: scores lag up to ~1 minute (Cloud Scheduler's minimum), vs. 30 s today. Keep the
+  current direct-ESPN code as a fallback for when the function is down.
+- Cost: Cloud Functions need the Blaze (pay-as-you-go) plan, but this sits far inside its
+  no-cost tier (2M function runs/month; Firestore 50K reads + 20K writes per day). One
+  document per week ≈ one write per change; ~16 players watching a full Saturday ≈ 20K reads.
+  Set a budget alert in Google Cloud anyway.
+
+**AI updates.** When the function sees a change worth talking about (lead change, score, final),
+it asks a Claude model for a plain-language update and writes it to Firestore for everyone.
+- Feed the model the facts, not raw data: `swingGames()` in
+  `src/features/insights/insightsLogic.js` already works out each player's rank, the gap to the
+  players around them, which undecided games matter, which result helps (even against their own
+  pick) and who leads now. The model only writes the sentence ("Clemson trailing is quietly good
+  news for Deandra — Nicole has 22 riding on them").
+- The API key lives only in the function (never in the app — GitHub Pages / Hosting serve
+  everything publicly).
+- Cost (Claude Haiku 5.5, $0.10 / $0.50 per million input/output tokens; ~3K tokens in per
+  update): about $0.10 per Saturday for ~250 pool-wide updates, ~$1.50 with personal updates
+  for 16 players. Sonnet 5.5 ($2 / $10) would be ~20x that — Haiku is enough here.
+- The raw Swing games section on Insights is built but hidden (`SHOW_SWING_GAMES` in
+  `src/features/insights/InsightsPanel.jsx`) — too much for casual fans as numbers.
+
+Pricing sources: https://firebase.google.com/pricing ·
+https://platform.claude.com/docs/en/about-claude/pricing
+
 ## Replaying a finished week (testing)
 
 `VITE_REPLAY_WEEK` (see `src/config.js`) replays a finished week as if its games were live, so
