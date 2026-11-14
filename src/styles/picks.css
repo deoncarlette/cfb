@@ -171,7 +171,6 @@
 .drive-result.current{color:var(--accent);}
 .drive-desc{font-size:12px; color:var(--muted);}
 .drive-try{font-weight:500; color:var(--muted);}
-.drive-try.no{color:var(--danger);}
 .drives li:not(.score):not(.turnover):not(.current) .drive-result{color:var(--muted); font-weight:500;}
 .gd-facts{display:flex; flex-wrap:wrap; justify-content:center; gap:4px 14px; font-size:12px; color:var(--muted); margin:0 0 4px;}
 .gd-note{font-size:12px; color:var(--muted); background:var(--raised); border-radius:8px; padding:8px 10px; margin:0 0 14px;}
