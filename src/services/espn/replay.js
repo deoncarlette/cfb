@@ -138,6 +138,11 @@ export function rewindSummary(s, f) {
     away: { ...s.away, score: pre ? null : awayScore, linescores: lines('away') },
     home: { ...s.home, score: pre ? null : homeScore, linescores: lines('home') },
     scoring,
+    // Drives so far: ones that started by now; one still going shows no result yet.
+    driveLog: pre ? [] : (s.driveLog || []).filter(d => playElapsed(d) <= elapsed).map(d => {
+      const done = d.endPeriod && playElapsed({ period: d.endPeriod, clock: d.endClock }) <= elapsed;
+      return done ? d : { ...d, result: '', isScore: false, description: '', score: null, current: true };
+    }),
     winProb,
     stats: pre ? [] : s.stats.map(r => ({ ...r, away: scaleStat(r.away, f), home: scaleStat(r.home, f) })),
     leaders: pre ? [] : s.leaders.map(l => ({

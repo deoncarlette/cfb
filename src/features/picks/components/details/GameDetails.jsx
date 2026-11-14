@@ -6,15 +6,15 @@ import { CompareRows } from './CompareRows.jsx';
 import { LineScore } from './LineScore.jsx';
 import { Leaders } from './Leaders.jsx';
 import { LastFive } from './LastFive.jsx';
-import { ScoringPlays } from './ScoringPlays.jsx';
+import { Drives } from './Drives.jsx';
 import { PoolPicks } from './PoolPicks.jsx';
 
 const ml = v => (v == null ? null : v > 0 ? `+${v}` : String(v));
 
 // The panel that opens under a game card. Kept short up top; "More" opens the rest.
 // Before kickoff: predictor, pool picks (once locked), matchup rows | More: season leaders, notes.
-// Live / final: line score, win probability, pool picks | More: team stats, leaders, scoring
-// plays, notes. (The TV network is on the card itself; the stadium is in the notes.)
+// Live / final: line score, win probability, pool picks | More: team stats, leaders, drives
+// (how each ended — scores and turnovers included), notes. (The TV network is on the card itself; the stadium is in the notes.)
 // pool: everyone's picks on this game (only passed once it locks) → Pool picks section.
 export function GameDetails({ game, pool }) {
   const [more, setMore] = useState(false);
@@ -64,11 +64,11 @@ export function GameDetails({ game, pool }) {
       {more && (
         <>
           {s.replay?.estimatedStats && game.state === 'in' && (
-            <p className="gd-note">Test replay: score, quarters and scoring plays are exact to the game clock. Team stats and leaders are the final totals scaled to the share of the game played.</p>
+            <p className="gd-note">Test replay: score, quarters and drives are exact to the game clock. Team stats and leaders are the final totals scaled to the share of the game played.</p>
           )}
           {started && <CompareRows title="Team stats" rows={s.stats} />}
           <Leaders leaders={s.leaders} started={started} />
-          {started && <ScoringPlays plays={s.scoring} away={s.away} home={s.home} />}
+          {started && <Drives drives={s.driveLog} scoring={s.scoring} away={s.away} home={s.home} />}
           {facts.length > 0 && <p className="gd-facts">{facts.map(f => <span key={f}>{f}</span>)}</p>}
         </>
       )}

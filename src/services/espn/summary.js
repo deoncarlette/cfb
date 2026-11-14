@@ -110,7 +110,21 @@ export function parseSummary(data) {
         downDistance: p.start?.downDistanceText || null,
         yardsToEndzone: p.start?.yardsToEndzone ?? null
       }))).filter(p => p.teamId && p.period && p.downDistance);
-      return { drives, plays };
+      // The drive log for the Drives list: who had it, when it started, how it ended (ESPN's
+      // result: Touchdown, Field Goal, Punt, Interception, Fumble, Downs, …), its summary
+      // ("8 plays, 75 yards, 3:21") and the score after it.
+      const lastScore = d => { const ps = (d.plays || []).filter(p => p.awayScore != null && p.homeScore != null); const p = ps[ps.length - 1]; return p ? { away: p.awayScore, home: p.homeScore } : null; };
+      const driveLog = all.map((d, i) => ({
+        teamId: String(d.team?.id ?? ''),
+        period: d.start?.period?.number, clock: d.start?.clock?.displayValue || '',
+        endPeriod: d.end?.period?.number, endClock: d.end?.clock?.displayValue || '',
+        result: d.displayResult || d.result || '',
+        isScore: !!d.isScore,
+        description: d.description || '',
+        current: !!data.drives?.current && i === all.length - 1 && !(data.header?.competitions?.[0]?.status?.type?.completed),
+        score: lastScore(d)
+      })).filter(d => d.teamId && d.period);
+      return { drives, plays, driveLog };
     })(),
     // Home win % after each play, in order (used by the test replay to rewind win probability).
     winTimeline: (data.winprobability || []).map(w => w.homeWinPercentage).filter(v => v != null),
