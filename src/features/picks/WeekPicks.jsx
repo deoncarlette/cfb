@@ -35,6 +35,8 @@ export function WeekPicks({ week, userName, nameKey }) {
   // Scoreboard can link here and Back returns).
   const nav = useNav();
   const [cardLayout, setCardLayout] = useStoredState('card-layout', 'pill', 'local');
+  // Card order: by points (the confidence ranking) or by kickoff. Remembered on this device.
+  const [sortBy, setSortBy] = useStoredState('picks-sort', 'points', 'local');
   const viewing = nav.player;
   const setViewing = name => navigate({ player: name });
 
@@ -157,27 +159,22 @@ export function WeekPicks({ week, userName, nameKey }) {
   };
   const totals = weekTotals(games, shown.winners, pointsFor);
 
-  // Locked week with games underway or done: group into Live / Completed / Upcoming. Live and
-  // Completed go by points (highest first). Upcoming goes by kickoff (points break ties) once
-  // every game in it is locked — what's next matters more than rank then; while any of them
-  // can still be edited it stays in points order, so the ↑/↓ arrows visibly move cards.
-  // Otherwise one list in confidence order (drag-to-rank stays intact), or by kickoff if the
-  // whole slate is locked before anything has started.
+  // Locked week with games underway or done: group into Live / Completed / Upcoming; otherwise
+  // one list. Sorted by points (highest first; for the single list, the confidence order itself,
+  // so drag-to-rank stays intact) or by kickoff (earliest first, points break ties).
   const visible = shown.order.filter(id => gameById[id]);
   const anyStarted = games.some(g => g.completed || g.state === 'in');
   const byPoints = ids => [...ids].sort((a, b) => pointsFor(b) - pointsFor(a));
   const kickoff = id => new Date(gameById[id].date).getTime() || 0;
-  const byKickoffWhenLocked = ids => (ids.length && ids.every(isLocked)
-    ? [...ids].sort((a, b) => kickoff(a) - kickoff(b) || pointsFor(b) - pointsFor(a))
-    : null);
-  const upcoming = visible.filter(id => !gameById[id].completed && gameById[id].state !== 'in');
+  const byKickoff = ids => [...ids].sort((a, b) => kickoff(a) - kickoff(b) || pointsFor(b) - pointsFor(a));
+  const sorted = sortBy === 'kickoff' ? byKickoff : byPoints;
   const groups = lock.anyLocked && anyStarted
     ? [
-        { id: 'live', label: 'Live', ids: byPoints(visible.filter(id => gameById[id].state === 'in')) },
-        { id: 'done', label: 'Completed', ids: byPoints(visible.filter(id => gameById[id].completed)) },
-        { id: 'next', label: 'Upcoming', ids: byKickoffWhenLocked(upcoming) || byPoints(upcoming) }
+        { id: 'live', label: 'Live', ids: sorted(visible.filter(id => gameById[id].state === 'in')) },
+        { id: 'done', label: 'Completed', ids: sorted(visible.filter(id => gameById[id].completed)) },
+        { id: 'next', label: 'Upcoming', ids: sorted(visible.filter(id => !gameById[id].completed && gameById[id].state !== 'in')) }
       ].filter(g => g.ids.length)
-    : [{ id: 'all', label: null, ids: (lock.anyLocked && byKickoffWhenLocked(visible)) || visible }];
+    : [{ id: 'all', label: null, ids: sortBy === 'kickoff' ? byKickoff(visible) : visible }];
 
   const label = week === 'bowls' ? 'the bowl games' : weekLabel(week);
   return (
@@ -231,7 +228,9 @@ export function WeekPicks({ week, userName, nameKey }) {
           {!lock.allLocked && !viewingOther && (
             <>
               <p className="muted small">
-                Pick a winner on each card, then drag (or use the arrows/number) to set confidence. Top = most confident.
+                {sortBy === 'points'
+                  ? 'Pick a winner on each card, then drag (or use the arrows/number) to set confidence. Top = most confident.'
+                  : 'Sorted by kickoff: pick winners and set points with the arrows or number. Switch to Points to drag cards into order.'}
                 {' '}{pickedCount} of {games.length} picked.
               </p>
               <QuickPicks
@@ -249,6 +248,10 @@ export function WeekPicks({ week, userName, nameKey }) {
           <div className="layout-trial">
             <span>Card layout (trial)</span>
             <Segmented label="Card layout" options={[['pill', 'Pill'], ['whole', 'Whole card'], ['teams', 'Teams only']]} value={cardLayout} onChange={setCardLayout} />
+          </div>
+          <div className="layout-trial">
+            <span>Sort by</span>
+            <Segmented label="Sort games by" options={[['points', 'Points'], ['kickoff', 'Kickoff']]} value={sortBy} onChange={setSortBy} />
           </div>
           {!(viewingOther && !viewed) && groups.map(group => (
             <section key={group.id} className="game-group">
@@ -271,7 +274,7 @@ export function WeekPicks({ week, userName, nameKey }) {
                     canUp={!readOnly && canMove(gameId, -1)}
                     canDown={!readOnly && canMove(gameId, 1)}
                     pool={poolFor(gameId)}
-                    dragProps={dragPropsFor(gameId)}
+                    dragProps={sortBy === 'points' ? dragPropsFor(gameId) : undefined}
                     onPick={teamId => setWinners(w => togglePick(w, gameId, teamId))}
                     onMove={dir => move(gameId, dir)}
                     onSetPoints={points => moveToConfidence(gameId, points)}

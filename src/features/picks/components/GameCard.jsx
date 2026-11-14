@@ -59,7 +59,7 @@ export function GameCard({ game, total, points, result, live, picked, missed, lo
     </div>
   );
   return (
-    <div className={'game-card' + (chip ? ' whole' : '') + (bare ? ' teams' : '') + (!picked ? ' unpicked' : '') + (isLive ? ' live' : '')} draggable={!locked} {...(locked ? {} : dragProps)}>
+    <div className={'game-card' + (chip ? ' whole' : '') + (bare ? ' teams' : '') + (!picked ? ' unpicked' : '') + (isLive ? ' live' : '')} draggable={!locked && !!dragProps} {...(locked || !dragProps ? {} : dragProps)}>
       {!chip && meta}
       <MatchupPill game={game} picked={picked} disabled={locked} onPick={onPick} />
       {strip
