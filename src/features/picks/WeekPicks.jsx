@@ -194,7 +194,7 @@ export function WeekPicks({ week, userName, nameKey }) {
             <p className="sample-note">{viewing}'s {label} picks show once games lock. <button type="button" className="link" onClick={() => setViewing('')}>Show mine</button></p>
           )}
           {viewingOther && !viewed && (
-            <p className="sample-note">{sample?.hidden ? `Everyone's ${label} picks show after 9 PM Saturday.` : `No picks saved for ${viewing} in ${label}.`}</p>
+            <p className="sample-note">{sample?.hidden ? `Everyone's ${label} picks show after 8 PM Friday.` : `No picks saved for ${viewing} in ${label}.`}</p>
           )}
           {viewingOther && viewed?.isMock && <p className="sample-note">Some of {viewing}'s picks are simulated for this preview.</p>}
           {!viewing && !existing && sample && !sample.playerName && !sample.hidden && (

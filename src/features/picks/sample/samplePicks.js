@@ -40,8 +40,11 @@ function findGame(matchup, games) {
 // Before then: the same games with no picks on them (ready to fill in), and no one's picks
 // can be viewed.
 const HIDE_UNTIL = {
-  11: '2026-11-14T21:00:00-06:00' // Week 11: Saturday, Nov 14, 9 PM Central
+  11: '2026-11-13T20:00:00-06:00' // Week 11: Friday, Nov 13, 8 PM Central
 };
+// Weeks where only real ballots show: the rest of the pool's picks haven't come in yet, so
+// their simulated stand-ins stay out (those players just show no picks).
+const REAL_BALLOTS_ONLY = new Set([11]);
 
 let fileCache = null;
 async function loadFile() {
@@ -141,7 +144,7 @@ export async function samplePicksForWeek(week, games) {
   if (HIDE_UNTIL[week] && Date.now() < new Date(HIDE_UNTIL[week]).getTime()) {
     return { ...base, playerName: null, picks: {}, ballots: new Map(), hidden: true };
   }
-  const ballots = new Map(fileWeek.ballots.filter(b => b.entered && b.picks.length)
+  const ballots = new Map(fileWeek.ballots.filter(b => b.entered && b.picks.length && !(REAL_BALLOTS_ONLY.has(week) && b.isMockBallot))
     .map(b => [b.playerName.trim().toLowerCase(), ballotEntry(b, espnByFileId)]));
   const mine = ballots.get(DEFAULT_PLAYER.toLowerCase());
   // playerName null when Deandra didn't play that week (Week 0): blank cards, others viewable.
