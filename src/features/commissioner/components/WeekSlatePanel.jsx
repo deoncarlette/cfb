@@ -41,7 +41,7 @@ export function WeekSlatePanel() {
       <WeekSelect week={week} weeks={weeks} onChange={setWeek} />
       {frozen && (
         <p className="bk-notice">
-          {typeof week === 'number' ? `Week ${week}` : 'The postseason'} has started locking{slate.lock.mode === 'slate' && slate.lock.lockAt ? ` (${formatKickoff(slate.lock.lockAt)})` : ''}, so its settings are locked too. See how the pool picked under Insights.
+          {typeof week === 'number' ? `Week ${week}` : 'The postseason'} has started locking{slate.lock.mode === 'slate' && slate.lock.lockAt ? ` (${formatKickoff(slate.lock.lockAt)})` : ''}, so its settings are locked too. See how the pool picked on the Insights tab.
         </p>
       )}
       <div className={frozen ? 'slate-settings frozen' : 'slate-settings'}>

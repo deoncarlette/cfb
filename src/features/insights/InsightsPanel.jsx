@@ -9,7 +9,7 @@ import { sampleFileWeeks } from '@/features/picks/sample/samplePicks.js';
 import { weekInsights, agreementHistory } from './insightsLogic.js';
 import { PoolPicks } from '@/features/picks/components/details/PoolPicks.jsx';
 
-// Commish → Insights: how the pool picked a week, from LOCKED games only (open picks stay
+// Insights tab: how the pool picked a week, from LOCKED games only (open picks stay
 // private, same rule as everywhere else).
 export function InsightsPanel() {
   const { week, setWeek, weeks } = useWeekSelector(1);
