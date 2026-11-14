@@ -68,7 +68,7 @@ export function GameDetails({ game, pool }) {
           )}
           {started && <CompareRows title="Team stats" rows={s.stats} />}
           <Leaders leaders={s.leaders} started={started} />
-          {started && <Drives drives={s.driveLog} scoring={s.scoring} away={s.away} home={s.home} />}
+          {started && <Drives drives={s.driveLog} scoring={s.scoring} away={s.away} home={s.home} live={game.state === 'in'} />}
           {facts.length > 0 && <p className="gd-facts">{facts.map(f => <span key={f}>{f}</span>)}</p>}
         </>
       )}

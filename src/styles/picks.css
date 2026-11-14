@@ -156,7 +156,14 @@
 .sp-team{font-weight:700;}
 .sp-text{min-width:0;}
 .sp-score{font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap;}
-.scoring.drives li{grid-template-columns:62px 40px 1fr auto;}
+.scoring.drives li{grid-template-columns:44px 40px 1fr auto;}
+.drive-q{border-top:1px solid var(--line);}
+.drive-q:first-of-type{border-top:none;}
+.drive-q-head{display:flex; width:100%; justify-content:space-between; align-items:center; gap:8px; background:none; border:none; color:var(--text); font:inherit; font-size:13px; font-weight:700; padding:9px 4px; cursor:pointer; text-align:left;}
+.drive-q-sum{display:flex; align-items:center; gap:8px; font-size:12px; font-weight:500; color:var(--muted);}
+.drive-q-head .chev{font-size:10px; transition:transform .15s;}
+.drive-q.open .drive-q-head .chev{transform:rotate(180deg);}
+.drive-q .drives{margin-bottom:6px;}
 .drives .sp-text{display:flex; flex-direction:column; gap:1px;}
 .drive-result{font-weight:600;}
 .drive-result.score{color:var(--success);}
