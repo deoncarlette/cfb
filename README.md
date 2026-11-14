@@ -38,12 +38,11 @@ Planned with the Auth pass (player profiles):
   against their school or team (worth more attention the more points they put on it — e.g.
   Deandra picking against Texas). Maybe later: the same label on the game card.
 
-Commissioner defaults (doesn't need Auth — could ship any time):
-- **Pre-selected teams and categories.** The commish saves defaults once — teams that are always
-  in (today Howard and Northwestern) and categories to start checked (e.g. Top 25) — and every
-  newly loaded week starts with those games selected. The commish can still uncheck anything
-  for a given week; saved weeks keep their own selection. Pool alma maters & favorites could be
-  one of the default categories once profiles exist.
+Commissioner defaults — **built** (Commish → "Defaults for new weeks"): teams always in and
+categories checked to start. Any week without saved settings starts from them, on Commish and
+Picks; saved weeks keep their own games. Stored at `settings/slateDefaults`. With nothing saved
+the built-in start applies (Top 25, Howard, SEC, Big Ten). Once profiles exist, "Pool alma
+maters & favorites" can become one of the categories.
 
 ## 1. Create the Firebase project
 
