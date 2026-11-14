@@ -109,3 +109,49 @@ export function agreementHistory(fileWeeks, beforeWeek) {
   });
   return new Map([...totals].filter(([, t]) => t.n >= 10).map(([k, t]) => [k, { agree: t.agree / t.n, weeks: t.weeks.size }]));
 }
+
+// ---- Swing games: which undecided games move a player's place in the season standings ----
+// For each locked game that isn't final, compare how the player's gap to each nearby rival
+// changes if one team wins versus the other. Points only change hands when the two picked
+// differently or put different points on the same team, so a game where both made the same
+// pick with the same points never shows up.
+// totals: Map name → season points so far (finished games only, this week included).
+// people: [{ name, picks }] for this week. → { standing, rivals, games: [...] } or null.
+export function swingGames(games, people, totals, player) {
+  if (!totals.has(player)) return null;
+  const order = [...totals].sort((a, b) => b[1] - a[1]);
+  const mine = totals.get(player);
+  const rank = 1 + order.filter(([, s]) => s > mine).length;
+  // Nearby rivals: the closest player ahead and the closest behind (everyone tied with them too).
+  const ahead = order.filter(([n, s]) => n !== player && s >= mine);
+  const behind = order.filter(([n, s]) => n !== player && s < mine);
+  const nearestAhead = ahead.length ? Math.min(...ahead.map(([, s]) => s)) : null;
+  const nearestBehind = behind.length ? Math.max(...behind.map(([, s]) => s)) : null;
+  const rivals = order.filter(([n, s]) => n !== player && (s === nearestAhead || s === nearestBehind))
+    .map(([name, score]) => ({ name, score, gap: mine - score, rank: 1 + order.filter(([, x]) => x > score).length }));
+  const picksOf = name => people.find(p => p.name === name)?.picks || {};
+  const myPicks = picksOf(player);
+
+  const out = games.filter(g => !gameWinnerId(g) && !g.completed).map(game => {
+    const [a, b] = game.competitors;
+    const gain = (picks, team) => (picks[game.id]?.winner === team.id ? Number(picks[game.id].confidence) || 0 : 0);
+    const mineIf = { [a.id]: gain(myPicks, a), [b.id]: gain(myPicks, b) };
+    const vs = rivals.map(r => {
+      const rp = picksOf(r.name);
+      const afterA = r.gap + mineIf[a.id] - gain(rp, a);
+      const afterB = r.gap + mineIf[b.id] - gain(rp, b);
+      return { ...r, after: { [a.id]: afterA, [b.id]: afterB }, swing: Math.abs(afterA - afterB), better: afterA === afterB ? null : afterA > afterB ? a : b,
+        rivalPick: rp[game.id] ? { team: [a, b].find(t => t.id === rp[game.id].winner), confidence: Number(rp[game.id].confidence) || 0 } : null };
+    }).filter(v => v.swing > 0);
+    if (!vs.length) return null;
+    const myPick = myPicks[game.id] ? { team: [a, b].find(t => t.id === myPicks[game.id].winner), confidence: Number(myPicks[game.id].confidence) || 0 } : null;
+    // Which team is better for the player overall: the one that helps against the most rivals,
+    // weighted by how much.
+    const score = t => vs.reduce((s, v) => s + v.after[t.id] - v.after[(t === a ? b : a).id], 0);
+    const better = score(a) === score(b) ? null : score(a) > score(b) ? a : b;
+    const leader = game.state === 'in' && a.score != null && b.score != null && a.score !== b.score ? (a.score > b.score ? a : b) : null;
+    return { game, vs, myPick, better, leader, impact: Math.max(...vs.map(v => v.swing)) };
+  }).filter(Boolean).sort((x, y) => y.impact - x.impact);
+
+  return { player, rank, score: mine, rivals, games: out };
+}

@@ -7,6 +7,7 @@ import { usePicksWeek } from '@/features/picks/hooks/usePicksWeek.js';
 import { useOtherPlayers } from '@/features/picks/hooks/useOtherPlayers.js';
 import { sampleFileWeeks } from '@/features/picks/sample/samplePicks.js';
 import { weekInsights, agreementHistory } from './insightsLogic.js';
+import { SwingGames } from './SwingGames.jsx';
 import { PoolPicks } from '@/features/picks/components/details/PoolPicks.jsx';
 
 // Insights tab: how the pool picked a week, from LOCKED games only (open picks stay
@@ -43,6 +44,8 @@ export function InsightsPanel() {
             {ins.games} locked {ins.games === 1 ? 'game' : 'games'}, {ins.players} players.
             {ins.unanimous > 0 && ` ${ins.unanimous} unanimous ${ins.unanimous === 1 ? 'pick' : 'picks'}.`}
           </p>
+
+          <SwingGames week={week} games={lockedGames} people={people} />
 
           <Section title="Players to watch" empty="No one stands out yet.">
             {ins.flags.map((f, i) => (

@@ -54,3 +54,14 @@
 .ins-pool{margin-top:8px;}
 .ins-pool .gd-section{margin:0;}
 @media (prefers-reduced-motion: reduce){ .ins-game .chev{transition:none;} }
+
+/* Swing games */
+.swing-head{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;}
+.swing-head select{background:var(--raised); color:var(--text); border:1px solid var(--line-strong); border-radius:8px; padding:6px 8px; font:inherit; font-size:14px;}
+.swing-row.good{border-left-color:var(--success);}
+.swing-row.bad{border-left-color:var(--danger);}
+.swing-row .swing-headline{color:var(--text);}
+.swing-live{color:var(--text);}
+.swing-vs{margin:6px 0 0; padding:0 0 0 16px; font-size:13px; color:var(--muted); line-height:1.45;}
+.swing-vs strong{color:var(--text); font-weight:600;}
+.swing-foot{margin-top:4px;}
