@@ -119,7 +119,8 @@
           "teams": [
             "Colorado",
             "Georgia Tech"
-          ]
+          ],
+          "winner": "Colorado"
         },
         {
           "gameId": "2026-w00-g02",
@@ -128,7 +129,8 @@
           "teams": [
             "Howard",
             "Alabama A&M"
-          ]
+          ],
+          "winner": "Howard"
         },
         {
           "gameId": "2026-w00-g03",
@@ -137,7 +139,8 @@
           "teams": [
             "Illinois",
             "UAB"
-          ]
+          ],
+          "winner": "Illinois"
         },
         {
           "gameId": "2026-w00-g04",
@@ -146,7 +149,8 @@
           "teams": [
             "Minnesota",
             "Eastern Illinois"
-          ]
+          ],
+          "winner": "Minnesota"
         },
         {
           "gameId": "2026-w00-g05",
@@ -155,7 +159,8 @@
           "teams": [
             "North Carolina",
             "TCU"
-          ]
+          ],
+          "winner": "North Carolina"
         }
       ],
       "ballots": [
@@ -789,8 +794,8 @@
           "playerName": "Chat GPT",
           "entered": true,
           "participationSource": "chatgpt_preview",
-          "weeklyScore": null,
-          "isMockScore": true,
+          "weeklyScore": 3,
+          "isMockScore": false,
           "source": "chatgpt_preview",
           "isMockBallot": true,
           "validation": {
@@ -862,7 +867,8 @@
           "teams": [
             "Alabama",
             "East Carolina"
-          ]
+          ],
+          "winner": "Alabama"
         },
         {
           "gameId": "2026-w01-g02",
@@ -871,7 +877,8 @@
           "teams": [
             "Arkansas",
             "North Alabama"
-          ]
+          ],
+          "winner": "Arkansas"
         },
         {
           "gameId": "2026-w01-g03",
@@ -880,7 +887,8 @@
           "teams": [
             "Auburn",
             "Baylor"
-          ]
+          ],
+          "winner": "Auburn"
         },
         {
           "gameId": "2026-w01-g04",
@@ -889,7 +897,8 @@
           "teams": [
             "Clemson",
             "LSU"
-          ]
+          ],
+          "winner": "LSU"
         },
         {
           "gameId": "2026-w01-g05",
@@ -898,7 +907,8 @@
           "teams": [
             "Duke",
             "Tulane"
-          ]
+          ],
+          "winner": "Duke"
         },
         {
           "gameId": "2026-w01-g06",
@@ -907,7 +917,8 @@
           "teams": [
             "Florida",
             "Florida Atlantic"
-          ]
+          ],
+          "winner": "Florida"
         },
         {
           "gameId": "2026-w01-g07",
@@ -916,7 +927,8 @@
           "teams": [
             "Georgia",
             "Tennessee State"
-          ]
+          ],
+          "winner": "Georgia"
         },
         {
           "gameId": "2026-w01-g08",
@@ -925,7 +937,8 @@
           "teams": [
             "Houston",
             "Oregon State"
-          ]
+          ],
+          "winner": "Houston"
         },
         {
           "gameId": "2026-w01-g09",
@@ -934,7 +947,8 @@
           "teams": [
             "Howard",
             "Richmond"
-          ]
+          ],
+          "winner": "Richmond"
         },
         {
           "gameId": "2026-w01-g10",
@@ -943,7 +957,8 @@
           "teams": [
             "Indiana",
             "North Texas"
-          ]
+          ],
+          "winner": "Indiana"
         },
         {
           "gameId": "2026-w01-g11",
@@ -952,7 +967,8 @@
           "teams": [
             "Iowa",
             "Northern Illinois"
-          ]
+          ],
+          "winner": "Iowa"
         },
         {
           "gameId": "2026-w01-g12",
@@ -961,7 +977,8 @@
           "teams": [
             "Kentucky",
             "Youngstown State"
-          ]
+          ],
+          "winner": "Kentucky"
         },
         {
           "gameId": "2026-w01-g13",
@@ -970,7 +987,8 @@
           "teams": [
             "Miami",
             "Stanford"
-          ]
+          ],
+          "winner": "Miami"
         },
         {
           "gameId": "2026-w01-g14",
@@ -979,7 +997,8 @@
           "teams": [
             "Michigan State",
             "Toledo"
-          ]
+          ],
+          "winner": "Michigan State"
         },
         {
           "gameId": "2026-w01-g15",
@@ -988,7 +1007,8 @@
           "teams": [
             "Michigan",
             "Western Michigan"
-          ]
+          ],
+          "winner": "Michigan"
         },
         {
           "gameId": "2026-w01-g16",
@@ -997,7 +1017,8 @@
           "teams": [
             "Mississippi State",
             "Louisiana Monroe"
-          ]
+          ],
+          "winner": "Mississippi State"
         },
         {
           "gameId": "2026-w01-g17",
@@ -1006,7 +1027,8 @@
           "teams": [
             "Nebraska",
             "Ohio"
-          ]
+          ],
+          "winner": "Nebraska"
         },
         {
           "gameId": "2026-w01-g18",
@@ -1015,7 +1037,8 @@
           "teams": [
             "Notre Dame",
             "Wisconsin"
-          ]
+          ],
+          "winner": "Notre Dame"
         },
         {
           "gameId": "2026-w01-g19",
@@ -1024,7 +1047,8 @@
           "teams": [
             "Northwestern",
             "South Dakota State"
-          ]
+          ],
+          "winner": "Northwestern"
         },
         {
           "gameId": "2026-w01-g20",
@@ -1033,7 +1057,8 @@
           "teams": [
             "Ohio State",
             "Ball State"
-          ]
+          ],
+          "winner": "Ohio State"
         },
         {
           "gameId": "2026-w01-g21",
@@ -1042,7 +1067,8 @@
           "teams": [
             "Oklahoma",
             "UTEP"
-          ]
+          ],
+          "winner": "Oklahoma"
         },
         {
           "gameId": "2026-w01-g22",
@@ -1051,7 +1077,8 @@
           "teams": [
             "Ole Miss",
             "Louisville"
-          ]
+          ],
+          "winner": "Ole Miss"
         },
         {
           "gameId": "2026-w01-g23",
@@ -1060,7 +1087,8 @@
           "teams": [
             "Oregon",
             "Boise State"
-          ]
+          ],
+          "winner": "Oregon"
         },
         {
           "gameId": "2026-w01-g24",
@@ -1069,7 +1097,8 @@
           "teams": [
             "Penn State",
             "Marshall"
-          ]
+          ],
+          "winner": "Penn State"
         },
         {
           "gameId": "2026-w01-g25",
@@ -1078,7 +1107,8 @@
           "teams": [
             "Purdue",
             "Indiana State"
-          ]
+          ],
+          "winner": "Purdue"
         },
         {
           "gameId": "2026-w01-g26",
@@ -1087,7 +1117,8 @@
           "teams": [
             "South Carolina",
             "Kent State"
-          ]
+          ],
+          "winner": "South Carolina"
         },
         {
           "gameId": "2026-w01-g27",
@@ -1096,7 +1127,8 @@
           "teams": [
             "Tennessee",
             "Furman"
-          ]
+          ],
+          "winner": "Tennessee"
         },
         {
           "gameId": "2026-w01-g28",
@@ -1105,7 +1137,8 @@
           "teams": [
             "Texas A&M",
             "Missouri State"
-          ]
+          ],
+          "winner": "Texas A&M"
         },
         {
           "gameId": "2026-w01-g29",
@@ -1114,7 +1147,8 @@
           "teams": [
             "Texas Tech",
             "Abilene Christian"
-          ]
+          ],
+          "winner": "Texas Tech"
         },
         {
           "gameId": "2026-w01-g30",
@@ -1123,7 +1157,8 @@
           "teams": [
             "Texas",
             "Texas State"
-          ]
+          ],
+          "winner": "Texas"
         },
         {
           "gameId": "2026-w01-g31",
@@ -1132,7 +1167,8 @@
           "teams": [
             "Vanderbilt",
             "Austin Peay"
-          ]
+          ],
+          "winner": "Vanderbilt"
         }
       ],
       "ballots": [
@@ -5028,8 +5064,8 @@
           "playerName": "Chat GPT",
           "entered": true,
           "participationSource": "chatgpt_preview",
-          "weeklyScore": null,
-          "isMockScore": true,
+          "weeklyScore": 183,
+          "isMockScore": false,
           "source": "chatgpt_preview",
           "isMockBallot": true,
           "validation": {
@@ -5335,7 +5371,8 @@
           "teams": [
             "Alabama",
             "Kentucky"
-          ]
+          ],
+          "winner": "Alabama"
         },
         {
           "gameId": "2026-w02-g02",
@@ -5344,7 +5381,8 @@
           "teams": [
             "Arkansas",
             "Utah"
-          ]
+          ],
+          "winner": "Utah"
         },
         {
           "gameId": "2026-w02-g03",
@@ -5353,7 +5391,8 @@
           "teams": [
             "Auburn",
             "Southern Miss"
-          ]
+          ],
+          "winner": "Auburn"
         },
         {
           "gameId": "2026-w02-g04",
@@ -5362,7 +5401,8 @@
           "teams": [
             "Clemson",
             "Georgia Southern"
-          ]
+          ],
+          "winner": "Clemson"
         },
         {
           "gameId": "2026-w02-g05",
@@ -5371,7 +5411,8 @@
           "teams": [
             "Colorado",
             "Weber State"
-          ]
+          ],
+          "winner": "Colorado"
         },
         {
           "gameId": "2026-w02-g06",
@@ -5380,7 +5421,8 @@
           "teams": [
             "Duke",
             "Illinois"
-          ]
+          ],
+          "winner": "Duke"
         },
         {
           "gameId": "2026-w02-g07",
@@ -5389,7 +5431,8 @@
           "teams": [
             "Florida",
             "Campbell"
-          ]
+          ],
+          "winner": "Florida"
         },
         {
           "gameId": "2026-w02-g08",
@@ -5398,7 +5441,8 @@
           "teams": [
             "Georgia",
             "Western Kentucky"
-          ]
+          ],
+          "winner": "Georgia"
         },
         {
           "gameId": "2026-w02-g09",
@@ -5407,7 +5451,8 @@
           "teams": [
             "Houston",
             "Southern Utah"
-          ]
+          ],
+          "winner": "Houston"
         },
         {
           "gameId": "2026-w02-g10",
@@ -5416,7 +5461,8 @@
           "teams": [
             "Howard",
             "Indiana"
-          ]
+          ],
+          "winner": "Indiana"
         },
         {
           "gameId": "2026-w02-g11",
@@ -5425,7 +5471,8 @@
           "teams": [
             "Iowa",
             "Iowa State"
-          ]
+          ],
+          "winner": "Iowa"
         },
         {
           "gameId": "2026-w02-g12",
@@ -5434,7 +5481,8 @@
           "teams": [
             "LSU",
             "Louisiana Tech"
-          ]
+          ],
+          "winner": "LSU"
         },
         {
           "gameId": "2026-w02-g13",
@@ -5443,7 +5491,8 @@
           "teams": [
             "Miami",
             "Florida A&M"
-          ]
+          ],
+          "winner": "Miami"
         },
         {
           "gameId": "2026-w02-g14",
@@ -5452,7 +5501,8 @@
           "teams": [
             "Michigan",
             "Oklahoma"
-          ]
+          ],
+          "winner": "Michigan"
         },
         {
           "gameId": "2026-w02-g15",
@@ -5461,7 +5511,8 @@
           "teams": [
             "Michigan State",
             "Eastern Michigan"
-          ]
+          ],
+          "winner": "Michigan State"
         },
         {
           "gameId": "2026-w02-g16",
@@ -5470,7 +5521,8 @@
           "teams": [
             "Minnesota",
             "Mississippi State"
-          ]
+          ],
+          "winner": "Mississippi State"
         },
         {
           "gameId": "2026-w02-g17",
@@ -5479,7 +5531,8 @@
           "teams": [
             "Nebraska",
             "Bowling Green"
-          ]
+          ],
+          "winner": "Nebraska"
         },
         {
           "gameId": "2026-w02-g18",
@@ -5488,7 +5541,8 @@
           "teams": [
             "Notre Dame",
             "Rice"
-          ]
+          ],
+          "winner": "Notre Dame"
         },
         {
           "gameId": "2026-w02-g19",
@@ -5497,7 +5551,8 @@
           "teams": [
             "Ohio State",
             "Texas"
-          ]
+          ],
+          "winner": "Texas"
         },
         {
           "gameId": "2026-w02-g20",
@@ -5506,7 +5561,8 @@
           "teams": [
             "Ole Miss",
             "Charlotte"
-          ]
+          ],
+          "winner": "Ole Miss"
         },
         {
           "gameId": "2026-w02-g21",
@@ -5515,7 +5571,8 @@
           "teams": [
             "Oregon",
             "Oklahoma State"
-          ]
+          ],
+          "winner": "Oklahoma State"
         },
         {
           "gameId": "2026-w02-g22",
@@ -5524,7 +5581,8 @@
           "teams": [
             "Penn State",
             "Temple"
-          ]
+          ],
+          "winner": "Penn State"
         },
         {
           "gameId": "2026-w02-g23",
@@ -5533,7 +5591,8 @@
           "teams": [
             "Purdue",
             "Wake Forest"
-          ]
+          ],
+          "winner": "Wake Forest"
         },
         {
           "gameId": "2026-w02-g24",
@@ -5542,7 +5601,8 @@
           "teams": [
             "South Carolina",
             "Towson"
-          ]
+          ],
+          "winner": "South Carolina"
         },
         {
           "gameId": "2026-w02-g25",
@@ -5551,7 +5611,8 @@
           "teams": [
             "Tennessee",
             "Georgia Tech"
-          ]
+          ],
+          "winner": "Tennessee"
         },
         {
           "gameId": "2026-w02-g26",
@@ -5560,7 +5621,8 @@
           "teams": [
             "Texas A&M",
             "Arizona State"
-          ]
+          ],
+          "winner": "Texas A&M"
         },
         {
           "gameId": "2026-w02-g27",
@@ -5569,7 +5631,8 @@
           "teams": [
             "Texas Tech",
             "Oregon State"
-          ]
+          ],
+          "winner": "Texas Tech"
         },
         {
           "gameId": "2026-w02-g28",
@@ -5578,7 +5641,8 @@
           "teams": [
             "UNC",
             "East Tennessee State"
-          ]
+          ],
+          "winner": "UNC"
         },
         {
           "gameId": "2026-w02-g29",
@@ -5587,7 +5651,8 @@
           "teams": [
             "Vanderbilt",
             "Delaware"
-          ]
+          ],
+          "winner": "Vanderbilt"
         },
         {
           "gameId": "2026-w02-g30",
@@ -5596,7 +5661,8 @@
           "teams": [
             "Wisconsin",
             "Western Illinois"
-          ]
+          ],
+          "winner": "Wisconsin"
         }
       ],
       "ballots": [
@@ -8540,8 +8606,8 @@
           "playerName": "Chat GPT",
           "entered": true,
           "participationSource": "chatgpt_preview",
-          "weeklyScore": null,
-          "isMockScore": true,
+          "weeklyScore": 241,
+          "isMockScore": false,
           "source": "chatgpt_preview",
           "isMockBallot": true,
           "validation": {
@@ -8838,7 +8904,8 @@
           "teams": [
             "Alabama",
             "Florida State"
-          ]
+          ],
+          "winner": "Alabama"
         },
         {
           "gameId": "2026-w03-g02",
@@ -8847,7 +8914,8 @@
           "teams": [
             "Arkansas",
             "Georgia"
-          ]
+          ],
+          "winner": "Georgia"
         },
         {
           "gameId": "2026-w03-g03",
@@ -8856,7 +8924,8 @@
           "teams": [
             "Auburn",
             "Florida"
-          ]
+          ],
+          "winner": "Florida"
         },
         {
           "gameId": "2026-w03-g04",
@@ -8865,7 +8934,8 @@
           "teams": [
             "Clemson",
             "UNC"
-          ]
+          ],
+          "winner": "Clemson"
         },
         {
           "gameId": "2026-w03-g05",
@@ -8874,7 +8944,8 @@
           "teams": [
             "Colorado",
             "Northwestern"
-          ]
+          ],
+          "winner": "Northwestern"
         },
         {
           "gameId": "2026-w03-g06",
@@ -8883,7 +8954,8 @@
           "teams": [
             "Duke",
             "Stanford"
-          ]
+          ],
+          "winner": "Duke"
         },
         {
           "gameId": "2026-w03-g07",
@@ -8892,7 +8964,8 @@
           "teams": [
             "Houston",
             "Texas Tech"
-          ]
+          ],
+          "winner": "Texas Tech"
         },
         {
           "gameId": "2026-w03-g08",
@@ -8901,7 +8974,8 @@
           "teams": [
             "Illinois",
             "Southern Illinois"
-          ]
+          ],
+          "winner": "Illinois"
         },
         {
           "gameId": "2026-w03-g09",
@@ -8910,7 +8984,8 @@
           "teams": [
             "Indiana",
             "Western Kentucky"
-          ]
+          ],
+          "winner": "Indiana"
         },
         {
           "gameId": "2026-w03-g10",
@@ -8919,7 +8994,8 @@
           "teams": [
             "Iowa",
             "Northern Iowa"
-          ]
+          ],
+          "winner": "Iowa"
         },
         {
           "gameId": "2026-w03-g11",
@@ -8928,7 +9004,8 @@
           "teams": [
             "Kentucky",
             "Texas A&M"
-          ]
+          ],
+          "winner": "Kentucky"
         },
         {
           "gameId": "2026-w03-g12",
@@ -8937,7 +9014,8 @@
           "teams": [
             "LSU",
             "Ole Miss"
-          ]
+          ],
+          "winner": "Ole Miss"
         },
         {
           "gameId": "2026-w03-g13",
@@ -8946,7 +9024,8 @@
           "teams": [
             "Miami",
             "Wake Forest"
-          ]
+          ],
+          "winner": "Miami"
         },
         {
           "gameId": "2026-w03-g14",
@@ -8955,7 +9034,8 @@
           "teams": [
             "Michigan",
             "UTEP"
-          ]
+          ],
+          "winner": "Michigan"
         },
         {
           "gameId": "2026-w03-g15",
@@ -8964,7 +9044,8 @@
           "teams": [
             "Michigan State",
             "Notre Dame"
-          ]
+          ],
+          "winner": "Notre Dame"
         },
         {
           "gameId": "2026-w03-g16",
@@ -8973,7 +9054,8 @@
           "teams": [
             "Minnesota",
             "Akron"
-          ]
+          ],
+          "winner": "Minnesota"
         },
         {
           "gameId": "2026-w03-g17",
@@ -8982,7 +9064,8 @@
           "teams": [
             "Mississippi State",
             "South Carolina"
-          ]
+          ],
+          "winner": "Mississippi State"
         },
         {
           "gameId": "2026-w03-g18",
@@ -8991,7 +9074,8 @@
           "teams": [
             "Nebraska",
             "North Dakota"
-          ]
+          ],
+          "winner": "Nebraska"
         },
         {
           "gameId": "2026-w03-g19",
@@ -9000,7 +9084,8 @@
           "teams": [
             "Ohio State",
             "Kent State"
-          ]
+          ],
+          "winner": "Ohio State"
         },
         {
           "gameId": "2026-w03-g20",
@@ -9009,7 +9094,8 @@
           "teams": [
             "Oklahoma",
             "New Mexico"
-          ]
+          ],
+          "winner": "Oklahoma"
         },
         {
           "gameId": "2026-w03-g21",
@@ -9018,7 +9104,8 @@
           "teams": [
             "Oregon",
             "Portland State"
-          ]
+          ],
+          "winner": "Oregon"
         },
         {
           "gameId": "2026-w03-g22",
@@ -9027,7 +9114,8 @@
           "teams": [
             "Penn State",
             "Buffalo"
-          ]
+          ],
+          "winner": "Penn State"
         },
         {
           "gameId": "2026-w03-g23",
@@ -9036,7 +9124,8 @@
           "teams": [
             "Purdue",
             "UCLA"
-          ]
+          ],
+          "winner": "UCLA"
         },
         {
           "gameId": "2026-w03-g24",
@@ -9045,7 +9134,8 @@
           "teams": [
             "Tennessee",
             "Kennesaw State"
-          ]
+          ],
+          "winner": "Tennessee"
         },
         {
           "gameId": "2026-w03-g25",
@@ -9054,7 +9144,8 @@
           "teams": [
             "Texas",
             "UTSA"
-          ]
+          ],
+          "winner": "Texas"
         },
         {
           "gameId": "2026-w03-g26",
@@ -9063,7 +9154,8 @@
           "teams": [
             "Vanderbilt",
             "NC State"
-          ]
+          ],
+          "winner": "Vanderbilt"
         },
         {
           "gameId": "2026-w03-g27",
@@ -9072,7 +9164,8 @@
           "teams": [
             "Wisconsin",
             "Eastern Michigan"
-          ]
+          ],
+          "winner": "Wisconsin"
         }
       ],
       "ballots": [
@@ -11246,8 +11339,8 @@
           "playerName": "Chat GPT",
           "entered": true,
           "participationSource": "chatgpt_preview",
-          "weeklyScore": null,
-          "isMockScore": true,
+          "weeklyScore": 225,
+          "isMockScore": false,
           "source": "chatgpt_preview",
           "isMockBallot": true,
           "validation": {
@@ -11517,7 +11610,8 @@
           "teams": [
             "Alabama",
             "South Carolina"
-          ]
+          ],
+          "winner": "Alabama"
         },
         {
           "gameId": "2026-w04-g02",
@@ -11526,7 +11620,8 @@
           "teams": [
             "Arkansas",
             "Tulsa"
-          ]
+          ],
+          "winner": "Arkansas"
         },
         {
           "gameId": "2026-w04-g03",
@@ -11535,7 +11630,8 @@
           "teams": [
             "Auburn",
             "Vanderbilt"
-          ]
+          ],
+          "winner": "Auburn"
         },
         {
           "gameId": "2026-w04-g04",
@@ -11544,7 +11640,8 @@
           "teams": [
             "Clemson",
             "California"
-          ]
+          ],
+          "winner": "Clemson"
         },
         {
           "gameId": "2026-w04-g05",
@@ -11553,7 +11650,8 @@
           "teams": [
             "Colorado",
             "Baylor"
-          ]
+          ],
+          "winner": "Baylor"
         },
         {
           "gameId": "2026-w04-g06",
@@ -11562,7 +11660,8 @@
           "teams": [
             "Duke",
             "William & Mary"
-          ]
+          ],
+          "winner": "Duke"
         },
         {
           "gameId": "2026-w04-g07",
@@ -11571,7 +11670,8 @@
           "teams": [
             "Florida",
             "Ole Miss"
-          ]
+          ],
+          "winner": "Florida"
         },
         {
           "gameId": "2026-w04-g08",
@@ -11580,7 +11680,8 @@
           "teams": [
             "Georgia",
             "Oklahoma"
-          ]
+          ],
+          "winner": "Georgia"
         },
         {
           "gameId": "2026-w04-g09",
@@ -11589,7 +11690,8 @@
           "teams": [
             "Houston",
             "Georgia Southern"
-          ]
+          ],
+          "winner": "Houston"
         },
         {
           "gameId": "2026-w04-g10",
@@ -11598,7 +11700,8 @@
           "teams": [
             "Howard",
             "Rutgers"
-          ]
+          ],
+          "winner": "Rutgers"
         },
         {
           "gameId": "2026-w04-g11",
@@ -11607,7 +11710,8 @@
           "teams": [
             "Illinois",
             "Ohio State"
-          ]
+          ],
+          "winner": "Ohio State"
         },
         {
           "gameId": "2026-w04-g12",
@@ -11616,7 +11720,8 @@
           "teams": [
             "Indiana",
             "Northwestern"
-          ]
+          ],
+          "winner": "Indiana"
         },
         {
           "gameId": "2026-w04-g13",
@@ -11625,7 +11730,8 @@
           "teams": [
             "Iowa",
             "Michigan"
-          ]
+          ],
+          "winner": "Iowa"
         },
         {
           "gameId": "2026-w04-g14",
@@ -11634,7 +11740,8 @@
           "teams": [
             "Kentucky",
             "South Alabama"
-          ]
+          ],
+          "winner": "Kentucky"
         },
         {
           "gameId": "2026-w04-g15",
@@ -11643,7 +11750,8 @@
           "teams": [
             "LSU",
             "Texas A&M"
-          ]
+          ],
+          "winner": "LSU"
         },
         {
           "gameId": "2026-w04-g16",
@@ -11652,7 +11760,8 @@
           "teams": [
             "Miami",
             "Central Michigan"
-          ]
+          ],
+          "winner": "Miami"
         },
         {
           "gameId": "2026-w04-g17",
@@ -11661,7 +11770,8 @@
           "teams": [
             "Michigan State",
             "Nebraska"
-          ]
+          ],
+          "winner": "Nebraska"
         },
         {
           "gameId": "2026-w04-g18",
@@ -11670,7 +11780,8 @@
           "teams": [
             "Minnesota",
             "Washington"
-          ]
+          ],
+          "winner": "Minnesota"
         },
         {
           "gameId": "2026-w04-g19",
@@ -11679,7 +11790,8 @@
           "teams": [
             "Mississippi State",
             "Missouri"
-          ]
+          ],
+          "winner": "Mississippi State"
         },
         {
           "gameId": "2026-w04-g20",
@@ -11688,7 +11800,8 @@
           "teams": [
             "Notre Dame",
             "Purdue"
-          ]
+          ],
+          "winner": "Notre Dame"
         },
         {
           "gameId": "2026-w04-g21",
@@ -11697,7 +11810,8 @@
           "teams": [
             "Oregon",
             "USC"
-          ]
+          ],
+          "winner": "Oregon"
         },
         {
           "gameId": "2026-w04-g22",
@@ -11706,7 +11820,8 @@
           "teams": [
             "Penn State",
             "Wisconsin"
-          ]
+          ],
+          "winner": "Wisconsin"
         },
         {
           "gameId": "2026-w04-g23",
@@ -11715,7 +11830,8 @@
           "teams": [
             "Tennessee",
             "Texas"
-          ]
+          ],
+          "winner": "Texas"
         },
         {
           "gameId": "2026-w04-g24",
@@ -11724,7 +11840,8 @@
           "teams": [
             "Texas Tech",
             "Sam Houston"
-          ]
+          ],
+          "winner": "Texas Tech"
         }
       ],
       "ballots": [
@@ -14375,8 +14492,8 @@
           "playerName": "Chat GPT",
           "entered": true,
           "participationSource": "chatgpt_preview",
-          "weeklyScore": null,
-          "isMockScore": true,
+          "weeklyScore": 206,
+          "isMockScore": false,
           "source": "chatgpt_preview",
           "isMockBallot": true,
           "validation": {
@@ -14619,7 +14736,8 @@
           "teams": [
             "Alabama",
             "Mississippi State"
-          ]
+          ],
+          "winner": "Alabama"
         },
         {
           "gameId": "2026-w05-g02",
@@ -14628,7 +14746,8 @@
           "teams": [
             "Arkansas",
             "Texas A&M"
-          ]
+          ],
+          "winner": "Texas A&M"
         },
         {
           "gameId": "2026-w05-g03",
@@ -14637,7 +14756,8 @@
           "teams": [
             "Auburn",
             "Tennessee"
-          ]
+          ],
+          "winner": "Tennessee"
         },
         {
           "gameId": "2026-w05-g04",
@@ -14646,7 +14766,8 @@
           "teams": [
             "Clemson",
             "Miami"
-          ]
+          ],
+          "winner": "Miami"
         },
         {
           "gameId": "2026-w05-g05",
@@ -14655,7 +14776,8 @@
           "teams": [
             "Colorado",
             "Texas Tech"
-          ]
+          ],
+          "winner": "Texas Tech"
         },
         {
           "gameId": "2026-w05-g06",
@@ -14664,7 +14786,8 @@
           "teams": [
             "Florida",
             "Missouri"
-          ]
+          ],
+          "winner": "Missouri"
         },
         {
           "gameId": "2026-w05-g07",
@@ -14673,7 +14796,8 @@
           "teams": [
             "Georgia",
             "Vanderbilt"
-          ]
+          ],
+          "winner": "Georgia"
         },
         {
           "gameId": "2026-w05-g08",
@@ -14682,7 +14806,8 @@
           "teams": [
             "Houston",
             "UCF"
-          ]
+          ],
+          "winner": "Houston"
         },
         {
           "gameId": "2026-w05-g09",
@@ -14691,7 +14816,8 @@
           "teams": [
             "Howard",
             "Hampton"
-          ]
+          ],
+          "winner": "Howard"
         },
         {
           "gameId": "2026-w05-g10",
@@ -14700,7 +14826,8 @@
           "teams": [
             "Illinois",
             "Purdue"
-          ]
+          ],
+          "winner": "Purdue"
         },
         {
           "gameId": "2026-w05-g11",
@@ -14709,7 +14836,8 @@
           "teams": [
             "Indiana",
             "Rutgers"
-          ]
+          ],
+          "winner": "Indiana"
         },
         {
           "gameId": "2026-w05-g12",
@@ -14718,7 +14846,8 @@
           "teams": [
             "Iowa",
             "Ohio State"
-          ]
+          ],
+          "winner": "Ohio State"
         },
         {
           "gameId": "2026-w05-g13",
@@ -14727,7 +14856,8 @@
           "teams": [
             "Kentucky",
             "South Carolina"
-          ]
+          ],
+          "winner": "Kentucky"
         },
         {
           "gameId": "2026-w05-g14",
@@ -14736,7 +14866,8 @@
           "teams": [
             "LSU",
             "McNeese State"
-          ]
+          ],
+          "winner": "LSU"
         },
         {
           "gameId": "2026-w05-g15",
@@ -14745,7 +14876,8 @@
           "teams": [
             "Michigan",
             "Minnesota"
-          ]
+          ],
+          "winner": "Minnesota"
         },
         {
           "gameId": "2026-w05-g16",
@@ -14754,7 +14886,8 @@
           "teams": [
             "Michigan State",
             "Wisconsin"
-          ]
+          ],
+          "winner": "Wisconsin"
         },
         {
           "gameId": "2026-w05-g17",
@@ -14763,7 +14896,8 @@
           "teams": [
             "Nebraska",
             "Maryland"
-          ]
+          ],
+          "winner": "Nebraska"
         },
         {
           "gameId": "2026-w05-g18",
@@ -14772,7 +14906,8 @@
           "teams": [
             "Notre Dame",
             "UNC"
-          ]
+          ],
+          "winner": "Notre Dame"
         },
         {
           "gameId": "2026-w05-g19",
@@ -14781,7 +14916,8 @@
           "teams": [
             "Northwestern",
             "Penn State"
-          ]
+          ],
+          "winner": "Northwestern"
         }
       ],
       "ballots": [
@@ -16913,8 +17049,8 @@
           "playerName": "Chat GPT",
           "entered": true,
           "participationSource": "chatgpt_preview",
-          "weeklyScore": null,
-          "isMockScore": true,
+          "weeklyScore": 68,
+          "isMockScore": false,
           "source": "chatgpt_preview",
           "isMockBallot": true,
           "validation": {
@@ -17112,7 +17248,8 @@
           "teams": [
             "Ohio State",
             "Maryland"
-          ]
+          ],
+          "winner": "Ohio State"
         },
         {
           "gameId": "2026-w06-g02",
@@ -17121,7 +17258,8 @@
           "teams": [
             "Northwestern",
             "Ball State"
-          ]
+          ],
+          "winner": "Northwestern"
         },
         {
           "gameId": "2026-w06-g03",
@@ -17130,7 +17268,8 @@
           "teams": [
             "Notre Dame",
             "Stanford"
-          ]
+          ],
+          "winner": "Notre Dame"
         },
         {
           "gameId": "2026-w06-g04",
@@ -17139,7 +17278,8 @@
           "teams": [
             "Tennessee",
             "Arkansas"
-          ]
+          ],
+          "winner": "Tennessee"
         },
         {
           "gameId": "2026-w06-g05",
@@ -17148,7 +17288,8 @@
           "teams": [
             "Ole Miss",
             "Vanderbilt"
-          ]
+          ],
+          "winner": "Ole Miss"
         },
         {
           "gameId": "2026-w06-g06",
@@ -17157,7 +17298,8 @@
           "teams": [
             "Houston",
             "Kansas State"
-          ]
+          ],
+          "winner": "Houston"
         },
         {
           "gameId": "2026-w06-g07",
@@ -17166,7 +17308,8 @@
           "teams": [
             "LSU",
             "Kentucky"
-          ]
+          ],
+          "winner": "Kentucky"
         },
         {
           "gameId": "2026-w06-g08",
@@ -17175,7 +17318,8 @@
           "teams": [
             "Minnesota",
             "Purdue"
-          ]
+          ],
+          "winner": "Purdue"
         },
         {
           "gameId": "2026-w06-g09",
@@ -17184,7 +17328,8 @@
           "teams": [
             "Indiana",
             "Nebraska"
-          ]
+          ],
+          "winner": "Indiana"
         },
         {
           "gameId": "2026-w06-g10",
@@ -17193,7 +17338,8 @@
           "teams": [
             "Duke",
             "Georgia Tech"
-          ]
+          ],
+          "winner": "Georgia Tech"
         },
         {
           "gameId": "2026-w06-g11",
@@ -17202,7 +17348,8 @@
           "teams": [
             "Florida",
             "South Carolina"
-          ]
+          ],
+          "winner": "South Carolina"
         },
         {
           "gameId": "2026-w06-g12",
@@ -17211,7 +17358,8 @@
           "teams": [
             "Texas",
             "Oklahoma"
-          ]
+          ],
+          "winner": "Oklahoma"
         },
         {
           "gameId": "2026-w06-g13",
@@ -17220,7 +17368,8 @@
           "teams": [
             "Iowa",
             "Washington"
-          ]
+          ],
+          "winner": "Iowa"
         },
         {
           "gameId": "2026-w06-g14",
@@ -17229,7 +17378,8 @@
           "teams": [
             "UNC",
             "Pitt"
-          ]
+          ],
+          "winner": "UNC"
         },
         {
           "gameId": "2026-w06-g15",
@@ -17238,7 +17388,8 @@
           "teams": [
             "USC",
             "Penn State"
-          ]
+          ],
+          "winner": "USC"
         },
         {
           "gameId": "2026-w06-g16",
@@ -17247,7 +17398,8 @@
           "teams": [
             "Oregon",
             "UCLA"
-          ]
+          ],
+          "winner": "UCLA"
         },
         {
           "gameId": "2026-w06-g17",
@@ -17256,7 +17408,8 @@
           "teams": [
             "Howard",
             "Penn"
-          ]
+          ],
+          "winner": "Penn"
         },
         {
           "gameId": "2026-w06-g18",
@@ -17265,7 +17418,8 @@
           "teams": [
             "Missouri",
             "Texas A&M"
-          ]
+          ],
+          "winner": "Missouri"
         },
         {
           "gameId": "2026-w06-g19",
@@ -17274,7 +17428,8 @@
           "teams": [
             "Georgia",
             "Alabama"
-          ]
+          ],
+          "winner": "Georgia"
         },
         {
           "gameId": "2026-w06-g20",
@@ -17283,7 +17438,8 @@
           "teams": [
             "Michigan State",
             "Illinois"
-          ]
+          ],
+          "winner": "Illinois"
         }
       ],
       "ballots": [
@@ -19888,8 +20044,8 @@
           "playerName": "Chat GPT",
           "entered": true,
           "participationSource": "chatgpt_preview",
-          "weeklyScore": null,
-          "isMockScore": true,
+          "weeklyScore": 103,
+          "isMockScore": false,
           "source": "chatgpt_preview",
           "isMockBallot": false,
           "validation": {
@@ -20096,7 +20252,8 @@
           "teams": [
             "Texas A&M",
             "The Citadel"
-          ]
+          ],
+          "winner": "Texas A&M"
         },
         {
           "gameId": "2026-w07-g02",
@@ -20105,7 +20262,8 @@
           "teams": [
             "Texas Tech",
             "Arizona State"
-          ]
+          ],
+          "winner": "Texas Tech"
         },
         {
           "gameId": "2026-w07-g03",
@@ -20114,7 +20272,8 @@
           "teams": [
             "Miami",
             "Florida State"
-          ]
+          ],
+          "winner": "Miami"
         },
         {
           "gameId": "2026-w07-g04",
@@ -20123,7 +20282,8 @@
           "teams": [
             "Clemson",
             "Charleston Southern"
-          ]
+          ],
+          "winner": "Clemson"
         },
         {
           "gameId": "2026-w07-g05",
@@ -20132,7 +20292,8 @@
           "teams": [
             "Northwestern",
             "Michigan State"
-          ]
+          ],
+          "winner": "Northwestern"
         },
         {
           "gameId": "2026-w07-g06",
@@ -20141,7 +20302,8 @@
           "teams": [
             "Houston",
             "Oklahoma State"
-          ]
+          ],
+          "winner": "Houston"
         },
         {
           "gameId": "2026-w07-g07",
@@ -20150,7 +20312,8 @@
           "teams": [
             "Georgia",
             "Auburn"
-          ]
+          ],
+          "winner": "Auburn"
         },
         {
           "gameId": "2026-w07-g08",
@@ -20159,7 +20322,8 @@
           "teams": [
             "Notre Dame",
             "BYU"
-          ]
+          ],
+          "winner": "BYU"
         },
         {
           "gameId": "2026-w07-g09",
@@ -20168,7 +20332,8 @@
           "teams": [
             "Vanderbilt",
             "Arkansas"
-          ]
+          ],
+          "winner": "Arkansas"
         },
         {
           "gameId": "2026-w07-g10",
@@ -20177,7 +20342,8 @@
           "teams": [
             "Duke",
             "UNC"
-          ]
+          ],
+          "winner": "UNC"
         },
         {
           "gameId": "2026-w07-g11",
@@ -20186,7 +20352,8 @@
           "teams": [
             "Utah",
             "Colorado"
-          ]
+          ],
+          "winner": "Utah"
         },
         {
           "gameId": "2026-w07-g12",
@@ -20195,7 +20362,8 @@
           "teams": [
             "LSU",
             "Mississippi State"
-          ]
+          ],
+          "winner": "LSU"
         },
         {
           "gameId": "2026-w07-g13",
@@ -20204,7 +20372,8 @@
           "teams": [
             "Ole Miss",
             "Missouri"
-          ]
+          ],
+          "winner": "Ole Miss"
         },
         {
           "gameId": "2026-w07-g14",
@@ -20213,7 +20382,8 @@
           "teams": [
             "Ohio State",
             "Indiana"
-          ]
+          ],
+          "winner": "Ohio State"
         },
         {
           "gameId": "2026-w07-g15",
@@ -20222,7 +20392,8 @@
           "teams": [
             "Alabama",
             "Tennessee"
-          ]
+          ],
+          "winner": "Tennessee"
         },
         {
           "gameId": "2026-w07-g16",
@@ -20231,7 +20402,8 @@
           "teams": [
             "Purdue",
             "Washington"
-          ]
+          ],
+          "winner": "Washington"
         },
         {
           "gameId": "2026-w07-g17",
@@ -20240,7 +20412,8 @@
           "teams": [
             "Kentucky",
             "Oklahoma"
-          ]
+          ],
+          "winner": "Kentucky"
         },
         {
           "gameId": "2026-w07-g18",
@@ -20249,7 +20422,8 @@
           "teams": [
             "Nebraska",
             "Oregon"
-          ]
+          ],
+          "winner": "Oregon"
         },
         {
           "gameId": "2026-w07-g19",
@@ -20258,7 +20432,8 @@
           "teams": [
             "UCLA",
             "Wisconsin"
-          ]
+          ],
+          "winner": "UCLA"
         },
         {
           "gameId": "2026-w07-g20",
@@ -20267,7 +20442,8 @@
           "teams": [
             "Texas",
             "Florida"
-          ]
+          ],
+          "winner": "Florida"
         },
         {
           "gameId": "2026-w07-g21",
@@ -20276,7 +20452,8 @@
           "teams": [
             "Howard",
             "Morehouse"
-          ]
+          ],
+          "winner": "Howard"
         },
         {
           "gameId": "2026-w07-g22",
@@ -20285,7 +20462,8 @@
           "teams": [
             "Michigan",
             "Penn State"
-          ]
+          ],
+          "winner": "Michigan"
         }
       ],
       "ballots": [
@@ -22305,8 +22483,8 @@
           "playerName": "Chat GPT",
           "entered": true,
           "participationSource": "chatgpt_preview",
-          "weeklyScore": null,
-          "isMockScore": true,
+          "weeklyScore": 166,
+          "isMockScore": false,
           "source": "chatgpt_preview",
           "isMockBallot": false,
           "validation": {
@@ -22531,7 +22709,8 @@
           "teams": [
             "Miami",
             "Pitt"
-          ]
+          ],
+          "winner": "Miami"
         },
         {
           "gameId": "2026-w08-g02",
@@ -22540,7 +22719,8 @@
           "teams": [
             "Northwestern",
             "Rutgers"
-          ]
+          ],
+          "winner": "Northwestern"
         },
         {
           "gameId": "2026-w08-g03",
@@ -22549,7 +22729,8 @@
           "teams": [
             "Texas Tech",
             "Cincinnati"
-          ]
+          ],
+          "winner": "Cincinnati"
         },
         {
           "gameId": "2026-w08-g04",
@@ -22558,7 +22739,8 @@
           "teams": [
             "Indiana",
             "Michigan"
-          ]
+          ],
+          "winner": "Indiana"
         },
         {
           "gameId": "2026-w08-g05",
@@ -22567,7 +22749,8 @@
           "teams": [
             "UCLA",
             "Michigan State"
-          ]
+          ],
+          "winner": "UCLA"
         },
         {
           "gameId": "2026-w08-g06",
@@ -22576,7 +22759,8 @@
           "teams": [
             "Alabama",
             "Texas A&M"
-          ]
+          ],
+          "winner": "Alabama"
         },
         {
           "gameId": "2026-w08-g07",
@@ -22585,7 +22769,8 @@
           "teams": [
             "Iowa",
             "Minnesota"
-          ]
+          ],
+          "winner": "Minnesota"
         },
         {
           "gameId": "2026-w08-g08",
@@ -22594,7 +22779,8 @@
           "teams": [
             "Houston",
             "Utah"
-          ]
+          ],
+          "winner": "Utah"
         },
         {
           "gameId": "2026-w08-g09",
@@ -22603,7 +22789,8 @@
           "teams": [
             "UNC",
             "Syracuse"
-          ]
+          ],
+          "winner": "Syracuse"
         },
         {
           "gameId": "2026-w08-g10",
@@ -22612,7 +22799,8 @@
           "teams": [
             "Duke",
             "Virginia"
-          ]
+          ],
+          "winner": "Duke"
         },
         {
           "gameId": "2026-w08-g11",
@@ -22621,7 +22809,8 @@
           "teams": [
             "Oregon",
             "Illinois"
-          ]
+          ],
+          "winner": "Illinois"
         },
         {
           "gameId": "2026-w08-g12",
@@ -22630,7 +22819,8 @@
           "teams": [
             "Oklahoma State",
             "Colorado"
-          ]
+          ],
+          "winner": "Oklahoma State"
         },
         {
           "gameId": "2026-w08-g13",
@@ -22639,7 +22829,8 @@
           "teams": [
             "Mississippi State",
             "Oklahoma"
-          ]
+          ],
+          "winner": "Oklahoma"
         },
         {
           "gameId": "2026-w08-g14",
@@ -22648,7 +22839,8 @@
           "teams": [
             "USC",
             "Wisconsin"
-          ]
+          ],
+          "winner": "Wisconsin"
         },
         {
           "gameId": "2026-w08-g15",
@@ -22657,7 +22849,8 @@
           "teams": [
             "Clemson",
             "Virginia Tech"
-          ]
+          ],
+          "winner": "Virginia Tech"
         },
         {
           "gameId": "2026-w08-g16",
@@ -22666,7 +22859,8 @@
           "teams": [
             "LSU",
             "Auburn"
-          ]
+          ],
+          "winner": "LSU"
         },
         {
           "gameId": "2026-w08-g17",
@@ -22675,7 +22869,8 @@
           "teams": [
             "Kentucky",
             "Vanderbilt"
-          ]
+          ],
+          "winner": "Kentucky"
         },
         {
           "gameId": "2026-w08-g18",
@@ -22684,7 +22879,8 @@
           "teams": [
             "Morgan State",
             "Howard"
-          ]
+          ],
+          "winner": "Howard"
         },
         {
           "gameId": "2026-w08-g19",
@@ -22693,7 +22889,8 @@
           "teams": [
             "Tennessee",
             "South Carolina"
-          ]
+          ],
+          "winner": "South Carolina"
         },
         {
           "gameId": "2026-w08-g20",
@@ -22702,7 +22899,8 @@
           "teams": [
             "Texas",
             "Ole Miss"
-          ]
+          ],
+          "winner": "Texas"
         }
       ],
       "ballots": [
@@ -25307,8 +25505,8 @@
           "playerName": "Chat GPT",
           "entered": true,
           "participationSource": "chatgpt_preview",
-          "weeklyScore": null,
-          "isMockScore": true,
+          "weeklyScore": 91,
+          "isMockScore": false,
           "source": "chatgpt_preview",
           "isMockBallot": true,
           "validation": {
@@ -25515,7 +25713,8 @@
           "teams": [
             "Notre Dame",
             "Navy"
-          ]
+          ],
+          "winner": "Notre Dame"
         },
         {
           "gameId": "2026-w09-g02",
@@ -25524,7 +25723,8 @@
           "teams": [
             "Michigan",
             "Rutgers"
-          ]
+          ],
+          "winner": "Michigan"
         },
         {
           "gameId": "2026-w09-g03",
@@ -25533,7 +25733,8 @@
           "teams": [
             "Missouri",
             "Arkansas"
-          ]
+          ],
+          "winner": "Missouri"
         },
         {
           "gameId": "2026-w09-g04",
@@ -25542,7 +25743,8 @@
           "teams": [
             "Miami",
             "UNC"
-          ]
+          ],
+          "winner": "Miami"
         },
         {
           "gameId": "2026-w09-g05",
@@ -25551,7 +25753,8 @@
           "teams": [
             "Georgia",
             "Florida"
-          ]
+          ],
+          "winner": "Georgia"
         },
         {
           "gameId": "2026-w09-g06",
@@ -25560,7 +25763,8 @@
           "teams": [
             "Indiana",
             "Minnesota"
-          ]
+          ],
+          "winner": "Indiana"
         },
         {
           "gameId": "2026-w09-g07",
@@ -25569,7 +25773,8 @@
           "teams": [
             "Texas Tech",
             "Arizona"
-          ]
+          ],
+          "winner": "Texas Tech"
         },
         {
           "gameId": "2026-w09-g08",
@@ -25578,7 +25783,8 @@
           "teams": [
             "Duke",
             "Boston College"
-          ]
+          ],
+          "winner": "Duke"
         },
         {
           "gameId": "2026-w09-g09",
@@ -25587,7 +25793,8 @@
           "teams": [
             "Illinois",
             "Maryland"
-          ]
+          ],
+          "winner": "Illinois"
         },
         {
           "gameId": "2026-w09-g10",
@@ -25596,7 +25803,8 @@
           "teams": [
             "Clemson",
             "Florida State"
-          ]
+          ],
+          "winner": "Clemson"
         },
         {
           "gameId": "2026-w09-g11",
@@ -25605,7 +25813,8 @@
           "teams": [
             "Ohio State",
             "USC"
-          ]
+          ],
+          "winner": "USC"
         },
         {
           "gameId": "2026-w09-g12",
@@ -25614,7 +25823,8 @@
           "teams": [
             "Texas",
             "Mississippi State"
-          ]
+          ],
+          "winner": "Texas"
         },
         {
           "gameId": "2026-w09-g13",
@@ -25623,7 +25833,8 @@
           "teams": [
             "Oregon",
             "Northwestern"
-          ]
+          ],
+          "winner": "Oregon"
         },
         {
           "gameId": "2026-w09-g14",
@@ -25632,7 +25843,8 @@
           "teams": [
             "Nebraska",
             "Washington"
-          ]
+          ],
+          "winner": "Washington"
         },
         {
           "gameId": "2026-w09-g15",
@@ -25641,7 +25853,8 @@
           "teams": [
             "Howard",
             "NC Central"
-          ]
+          ],
+          "winner": "NC Central"
         },
         {
           "gameId": "2026-w09-g16",
@@ -25650,7 +25863,8 @@
           "teams": [
             "Wisconsin",
             "Iowa"
-          ]
+          ],
+          "winner": "Iowa"
         },
         {
           "gameId": "2026-w09-g17",
@@ -25659,7 +25873,8 @@
           "teams": [
             "Penn State",
             "Purdue"
-          ]
+          ],
+          "winner": "Penn State"
         },
         {
           "gameId": "2026-w09-g18",
@@ -25668,7 +25883,8 @@
           "teams": [
             "South Carolina",
             "Oklahoma"
-          ]
+          ],
+          "winner": "South Carolina"
         },
         {
           "gameId": "2026-w09-g19",
@@ -25677,7 +25893,8 @@
           "teams": [
             "Ole Miss",
             "Auburn"
-          ]
+          ],
+          "winner": "Ole Miss"
         },
         {
           "gameId": "2026-w09-g20",
@@ -25686,7 +25903,8 @@
           "teams": [
             "Colorado",
             "Kansas State"
-          ]
+          ],
+          "winner": "Colorado"
         }
       ],
       "ballots": [
@@ -27917,8 +28135,8 @@
           "playerName": "Chat GPT",
           "entered": true,
           "participationSource": "chatgpt_preview",
-          "weeklyScore": null,
-          "isMockScore": true,
+          "weeklyScore": 172,
+          "isMockScore": false,
           "source": "chatgpt_preview",
           "isMockBallot": false,
           "validation": {
@@ -28125,7 +28343,8 @@
           "teams": [
             "Wisconsin",
             "Rutgers"
-          ]
+          ],
+          "winner": "Wisconsin"
         },
         {
           "gameId": "2026-w10-g02",
@@ -28134,7 +28353,8 @@
           "teams": [
             "Michigan",
             "Michigan State"
-          ]
+          ],
+          "winner": "Michigan State"
         },
         {
           "gameId": "2026-w10-g03",
@@ -28143,7 +28363,8 @@
           "teams": [
             "Duke",
             "NC State"
-          ]
+          ],
+          "winner": "Duke"
         },
         {
           "gameId": "2026-w10-g04",
@@ -28152,7 +28373,8 @@
           "teams": [
             "Texas Tech",
             "West Virginia"
-          ]
+          ],
+          "winner": "Texas Tech"
         },
         {
           "gameId": "2026-w10-g05",
@@ -28161,7 +28383,8 @@
           "teams": [
             "Florida",
             "Oklahoma"
-          ]
+          ],
+          "winner": "Oklahoma"
         },
         {
           "gameId": "2026-w10-g06",
@@ -28170,7 +28393,8 @@
           "teams": [
             "Houston",
             "Cincinnati"
-          ]
+          ],
+          "winner": "Houston"
         },
         {
           "gameId": "2026-w10-g07",
@@ -28179,7 +28403,8 @@
           "teams": [
             "Georgia",
             "Ole Miss"
-          ]
+          ],
+          "winner": "Georgia"
         },
         {
           "gameId": "2026-w10-g08",
@@ -28188,7 +28413,8 @@
           "teams": [
             "UCLA",
             "Minnesota"
-          ]
+          ],
+          "winner": "UCLA"
         },
         {
           "gameId": "2026-w10-g09",
@@ -28197,7 +28423,8 @@
           "teams": [
             "Auburn",
             "Arkansas"
-          ]
+          ],
+          "winner": "Auburn"
         },
         {
           "gameId": "2026-w10-g10",
@@ -28206,7 +28433,8 @@
           "teams": [
             "Ohio State",
             "Oregon"
-          ]
+          ],
+          "winner": "Oregon"
         },
         {
           "gameId": "2026-w10-g11",
@@ -28215,7 +28443,8 @@
           "teams": [
             "Mississippi State",
             "Vanderbilt"
-          ]
+          ],
+          "winner": "Vanderbilt"
         },
         {
           "gameId": "2026-w10-g12",
@@ -28224,7 +28453,8 @@
           "teams": [
             "Clemson",
             "Syracuse"
-          ]
+          ],
+          "winner": "Clemson"
         },
         {
           "gameId": "2026-w10-g13",
@@ -28233,7 +28463,8 @@
           "teams": [
             "Purdue",
             "Maryland"
-          ]
+          ],
+          "winner": "Maryland"
         },
         {
           "gameId": "2026-w10-g14",
@@ -28242,7 +28473,8 @@
           "teams": [
             "Nebraska",
             "Illinois"
-          ]
+          ],
+          "winner": "Illinois"
         },
         {
           "gameId": "2026-w10-g15",
@@ -28251,7 +28483,8 @@
           "teams": [
             "Alabama",
             "LSU"
-          ]
+          ],
+          "winner": "Alabama"
         },
         {
           "gameId": "2026-w10-g16",
@@ -28260,7 +28493,8 @@
           "teams": [
             "UNC",
             "UConn"
-          ]
+          ],
+          "winner": "UNC"
         },
         {
           "gameId": "2026-w10-g17",
@@ -28269,7 +28503,8 @@
           "teams": [
             "South Carolina",
             "Texas A&M"
-          ]
+          ],
+          "winner": "South Carolina"
         },
         {
           "gameId": "2026-w10-g18",
@@ -28278,7 +28513,8 @@
           "teams": [
             "Texas",
             "Missouri"
-          ]
+          ],
+          "winner": "Texas"
         },
         {
           "gameId": "2026-w10-g19",
@@ -28287,7 +28523,8 @@
           "teams": [
             "Northwestern",
             "Iowa"
-          ]
+          ],
+          "winner": "Iowa"
         },
         {
           "gameId": "2026-w10-g20",
@@ -28296,7 +28533,8 @@
           "teams": [
             "Washington",
             "Penn State"
-          ]
+          ],
+          "winner": "Penn State"
         },
         {
           "gameId": "2026-w10-g21",
@@ -28305,7 +28543,8 @@
           "teams": [
             "Tennessee",
             "Kentucky"
-          ]
+          ],
+          "winner": "Tennessee"
         },
         {
           "gameId": "2026-w10-g22",
@@ -28314,7 +28553,8 @@
           "teams": [
             "Colorado",
             "Arizona State"
-          ]
+          ],
+          "winner": "Arizona State"
         },
         {
           "gameId": "2026-w10-g23",
@@ -28323,7 +28563,8 @@
           "teams": [
             "Miami",
             "Notre Dame"
-          ]
+          ],
+          "winner": "Notre Dame"
         },
         {
           "gameId": "2026-w10-g24",
@@ -28332,7 +28573,8 @@
           "teams": [
             "Howard",
             "South Carolina State"
-          ]
+          ],
+          "winner": "South Carolina State"
         }
       ],
       "ballots": [
@@ -30893,8 +31135,8 @@
           "playerName": "Chat GPT",
           "entered": true,
           "participationSource": "chatgpt_preview",
-          "weeklyScore": null,
-          "isMockScore": true,
+          "weeklyScore": 165,
+          "isMockScore": false,
           "source": "chatgpt_preview",
           "isMockBallot": true,
           "validation": {
