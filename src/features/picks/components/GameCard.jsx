@@ -47,15 +47,15 @@ export function GameCard({ game, total, points, result, live, picked, missed, lo
   const status = game.completed
     ? <span><strong className="game-final">Final</strong> {formatGameDay(game.date)}</span>
     : isLive
-      ? <span><strong className="live-badge">Live</strong> {game.status}</span>
+      // No "Live" badge here (the Live section says it): the clock plus who has the ball.
+      ? <span className="strip-status">{game.status}<Possession game={game} /></span>
       : <span>{game.timeTbd ? formatTbdDay(game.date) : formatKickoff(game.date)}</span>;
   // Whole-card strip, right side: before lock the spread and O/U; once locked just the network
   // (the spread and O/U move into the expansion).
   const lockedPregame = locked && !started;
   const lineInside = lockedPregame && line && (line.spread || line.overUnder != null);
-  const stripInfo = (gameName || (!started && !locked) || isLive || lineInside) && (
+  const stripInfo = (gameName || (!started && !locked) || lineInside) && (
     <div className="bare-info strip-info">
-      {isLive && <Possession game={game} />}
       <div className="bare-names">
         {gameName && <span className="venue-name game-title">{gameName}</span>}
         {!started && !locked && <span className="venue-name">{game.broadcast || game.venue}</span>}

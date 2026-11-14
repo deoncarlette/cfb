@@ -233,7 +233,9 @@
 .game-card.whole .game-strip .chev{font-size:10px; color:var(--muted); margin-left:2px; transition:transform .15s;}
 .game-card.whole .game-strip[aria-expanded="true"] .chev{transform:rotate(180deg);}
 .strip-info{padding-top:0;}
-.strip-info .possession{font-size:12px; margin-left:0;}
+.game-strip .strip-status{min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;}
+.game-strip .strip-status .possession{margin-left:8px;}
+.game-strip .game-line{flex:none;}
 .game-card.whole .game-venue{padding:2px 14px 0;}
 .game-card.whole .matchup{display:contents;}
 .game-card.whole .matchup-side{height:66px; border-radius:0; margin:0; container:side / inline-size;}
