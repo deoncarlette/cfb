@@ -48,7 +48,8 @@ function Quarter({ period, drives, abbr, startOpen }) {
                   <span className={'drive-result ' + k}>{k === 'current' ? 'In progress' : d.result || '—'}</span>
                   {d.description && <span className="drive-desc">{d.description}</span>}
                 </span>
-                <span className="sp-score">{k === 'score' && d.score ? `${d.score.away}–${d.score.home}` : ''}</span>
+                {/* Score after scoring drives, and turnovers returned for a score (pick-six, scoop-and-score). */}
+                <span className="sp-score">{(k === 'score' || k === 'turnover') && d.score ? `${d.score.away}–${d.score.home}` : ''}</span>
               </li>
             );
           })}

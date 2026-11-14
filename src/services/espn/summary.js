@@ -117,7 +117,24 @@ export function parseSummary(data) {
       // The drive log for the Drives list: who had it, when it started, how it ended (ESPN's
       // result: Touchdown, Field Goal, Punt, Interception, Fumble, Downs, …), its summary
       // ("8 plays, 75 yards, 3:21") and the score after it.
-      const lastScore = d => { const ps = (d.plays || []).filter(p => p.awayScore != null && p.homeScore != null); const p = ps[ps.length - 1]; return p ? { away: p.awayScore, home: p.homeScore } : null; };
+      // The score after a drive comes from ESPN's official scoring plays (they account for missed
+      // PATs and 2-point tries; a drive's own play scores don't always): the last scoring play
+      // between the drive's start and end. Only if there are no scoring plays, the drive's plays.
+      const secs = c => { const m = /^(\d+):(\d{2})$/.exec(c || ''); return m ? +m[1] * 60 + +m[2] : null; };
+      const at = (period, clock) => (period && secs(clock) != null ? (period - 1) * 900 + (900 - secs(clock)) : null);
+      const scored = (data.scoringPlays || []).map(p => ({ t: at(p.period?.number, p.clock?.displayValue), away: p.awayScore, home: p.homeScore })).filter(p => p.t != null);
+      const lastScore = d => {
+        const from = at(d.start?.period?.number ?? d.plays?.[0]?.period?.number, d.start?.clock?.displayValue || d.plays?.[0]?.clock?.displayValue);
+        const to = at(d.end?.period?.number, d.end?.clock?.displayValue);
+        if (scored.length) {
+          if (from == null || to == null) return null;
+          // After the drive starts (a score at its very first second belongs to the drive before).
+          const hits = scored.filter(p => p.t > from && p.t <= to);
+          return hits.length ? { away: hits[hits.length - 1].away, home: hits[hits.length - 1].home } : null;
+        }
+        const ps = (d.plays || []).filter(p => p.awayScore != null && p.homeScore != null); const p = ps[ps.length - 1];
+        return p ? { away: p.awayScore, home: p.homeScore } : null;
+      };
       // A drive just underway may not have its start filled in yet — use its first play's.
       const firstPlay = d => (d.plays || [])[0];
       const driveLog = all.map((d, i) => ({
@@ -127,7 +144,7 @@ export function parseSummary(data) {
         endPeriod: d.end?.period?.number, endClock: d.end?.clock?.displayValue || '',
         result: d.displayResult || d.result || '',
         isScore: !!d.isScore,
-        description: d.description || '',
+        description: /^0 plays\b/.test(d.description || '') ? '' : d.description || '',
         current: !!cur && i === all.length - 1 && !(data.header?.competitions?.[0]?.status?.type?.completed),
         score: lastScore(d)
       })).filter(d => d.teamId && d.period);
