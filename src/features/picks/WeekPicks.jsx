@@ -157,18 +157,27 @@ export function WeekPicks({ week, userName, nameKey }) {
   };
   const totals = weekTotals(games, shown.winners, pointsFor);
 
-  // Locked week with games underway or done: group into Live / Completed / Upcoming, each by
-  // points (highest first). Otherwise one list in confidence order (drag-to-rank stays intact).
+  // Locked week with games underway or done: group into Live / Completed / Upcoming. Live and
+  // Completed go by points (highest first). Upcoming goes by kickoff (points break ties) once
+  // every game in it is locked — what's next matters more than rank then; while any of them
+  // can still be edited it stays in points order, so the ↑/↓ arrows visibly move cards.
+  // Otherwise one list in confidence order (drag-to-rank stays intact), or by kickoff if the
+  // whole slate is locked before anything has started.
   const visible = shown.order.filter(id => gameById[id]);
   const anyStarted = games.some(g => g.completed || g.state === 'in');
   const byPoints = ids => [...ids].sort((a, b) => pointsFor(b) - pointsFor(a));
+  const kickoff = id => new Date(gameById[id].date).getTime() || 0;
+  const byKickoffWhenLocked = ids => (ids.length && ids.every(isLocked)
+    ? [...ids].sort((a, b) => kickoff(a) - kickoff(b) || pointsFor(b) - pointsFor(a))
+    : null);
+  const upcoming = visible.filter(id => !gameById[id].completed && gameById[id].state !== 'in');
   const groups = lock.anyLocked && anyStarted
     ? [
         { id: 'live', label: 'Live', ids: byPoints(visible.filter(id => gameById[id].state === 'in')) },
         { id: 'done', label: 'Completed', ids: byPoints(visible.filter(id => gameById[id].completed)) },
-        { id: 'next', label: 'Upcoming', ids: byPoints(visible.filter(id => !gameById[id].completed && gameById[id].state !== 'in')) }
+        { id: 'next', label: 'Upcoming', ids: byKickoffWhenLocked(upcoming) || byPoints(upcoming) }
       ].filter(g => g.ids.length)
-    : [{ id: 'all', label: null, ids: visible }];
+    : [{ id: 'all', label: null, ids: (lock.anyLocked && byKickoffWhenLocked(visible)) || visible }];
 
   const label = week === 'bowls' ? 'the bowl games' : weekLabel(week);
   return (
