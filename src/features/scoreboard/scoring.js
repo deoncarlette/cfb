@@ -2,7 +2,7 @@ import { getAllPicksForWeek } from '@/services/data/index.js';
 import { REPLAY_WEEK } from '@/config.js';
 import { fetchGamesFor, applyRankOverlay, gameWinnerId } from '@/services/espn/index.js';
 import { replayGames, loadReplaySummaries } from '@/services/espn/replay.js';
-import { samplePicksForWeek } from '@/features/picks/sample/samplePicks.js';
+import { samplePicksForWeek, sampleFileWeeks } from '@/features/picks/sample/samplePicks.js';
 import mock from './mockScores.json';
 
 // Weekly scores come from mockScores.json (recorded/reconciled weeks 0–10, made-up Week 11)
@@ -67,19 +67,45 @@ export async function replayProgress(week) {
   return { final, total, replay: week === REPLAY_WEEK };
 }
 
-async function weekRows(week) {
-  if (isLiveScoredWeek(week)) {
-    try { return (await replayRecords(week)).rows; } catch (e) { /* ESPN unreachable → recorded scores */ }
-  }
+// Players in the picks file with no recorded score that week (added after the sheet, like
+// Chat GPT): scored here from their picks against ESPN's finals. Cached per week.
+const unrecordedCache = new Map();
+function unrecordedRows(week, recorded) {
+  if (!unrecordedCache.has(week)) unrecordedCache.set(week, (async () => {
+    const fileWeek = (await sampleFileWeeks()).find(w => w.week === week);
+    const have = new Set(recorded.map(r => r.user_name.toLowerCase()));
+    const extra = (fileWeek?.ballots || []).filter(b => b.entered && b.picks.length && !have.has(b.playerName.toLowerCase()));
+    if (!extra.length) return [];
+    const games = await fetchGamesFor(week, [80, 81]);
+    const sample = await samplePicksForWeek(week, games);
+    const winners = new Map(games.map(g => [g.id, gameWinnerId(g)]).filter(([, w]) => w));
+    return extra.map(b => {
+      const entry = sample?.ballots.get(b.playerName.toLowerCase());
+      let score = 0;
+      Object.entries(entry?.picks || {}).forEach(([gid, p]) => { if (winners.get(gid) === p.winner) score += Number(p.confidence) || 0; });
+      return { user_name: b.playerName, score, entered: true };
+    });
+  })().catch(e => { unrecordedCache.delete(week); return []; }));
+  return unrecordedCache.get(week);
+}
+
+function recordedRows(week) {
   const w = mockWeek(week);
   return w ? w.standings.map(s => ({ user_name: s.userName, score: s.weeklyScore, entered: s.entered })) : null;
 }
 
+async function weekRows(week) {
+  if (isLiveScoredWeek(week)) {
+    try { return (await replayRecords(week)).rows; } catch (e) { /* ESPN unreachable → recorded scores */ }
+  }
+  const rows = recordedRows(week);
+  return rows ? [...rows, ...await unrecordedRows(week, rows)] : null;
+}
+
 // Rows: { user_name, score, entered } — entered === false means they didn't play that week.
 export async function recordsForWeek(week) {
-  if (isLiveScoredWeek(week)) { const rows = await weekRows(week); if (rows) return rows; }
-  const w = mockWeek(week);
-  if (w) return w.standings.map(s => ({ user_name: s.userName, score: s.weeklyScore, entered: s.entered }));
+  const scored = await weekRows(week);
+  if (scored) return scored;
   const picks = await getAllPicksForWeek(week);
   const submitted = new Set(picks.map(p => p.user_name));
   const rows = picks.map(p => ({ user_name: p.user_name, score: undefined, submitted: true }));

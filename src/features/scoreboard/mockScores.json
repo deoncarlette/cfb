@@ -65,6 +65,10 @@
     {
       "id": "vinny",
       "name": "Vinny"
+    },
+    {
+      "id": "chat-gpt",
+      "name": "Chat GPT"
     }
   ],
   "weekMaxPoints": {
