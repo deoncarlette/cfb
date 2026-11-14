@@ -218,11 +218,11 @@
 .layout-trial .subtab-btn{font-size:12px; padding:6px 8px;}
 
 .game-card.whole{
-  grid-template-columns:1fr 1fr; grid-template-areas:"meta meta" "away home" "venue venue";
-  column-gap:0; row-gap:6px; padding:9px 0 6px; overflow:hidden;
+  grid-template-columns:1fr 1fr; grid-template-areas:"away home" "meta meta" "venue venue";
+  column-gap:0; row-gap:0; padding:0 0 6px; overflow:hidden;
 }
-.game-card.whole .game-meta{padding:0 14px;}
-.game-card.whole .game-venue{padding:0 14px;}
+.game-card.whole .game-meta{padding:9px 14px 0;} /* the data strip under the teams */
+.game-card.whole .game-venue{padding:2px 14px 0;}
 .game-card.whole .matchup{display:contents;}
 .game-card.whole .matchup-side{height:66px; border-radius:0; margin:0; container:side / inline-size;}
 .game-card.whole .matchup-side.away{grid-area:away; clip-path:polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%); margin-right:-8px; padding:0 44px 0 14px;}
@@ -241,7 +241,7 @@
 }
 /* The points chip on the seam (where the old clock chip sat). */
 .game-card.whole .pts-chip{
-  grid-row:2; grid-column:1 / -1; justify-self:center; align-self:center; z-index:2;
+  grid-row:1; grid-column:1 / -1; justify-self:center; align-self:center; z-index:2;
   display:flex; flex-direction:column; align-items:center; border-radius:12px;
   background:var(--surface); box-shadow:0 2px 8px rgba(0,0,0,.35);
 }
@@ -255,7 +255,7 @@
 .game-card.whole .pts-chip.editable button{width:44px; height:16px; padding:0; border:none; background:none; color:var(--muted); font-size:11px; line-height:1;}
 .game-card.whole .pts-chip.editable button:disabled{opacity:.25;}
 @media (max-width:440px){
-  .game-card.whole{padding:8px 0 5px;}
+  .game-card.whole{padding:0 0 5px;}
   .game-card.whole .matchup-side{height:60px; gap:5px;}
   .game-card.whole .matchup-side.away{padding:0 34px 0 10px;}
   .game-card.whole .matchup-side.home{padding:0 10px 0 34px;}
