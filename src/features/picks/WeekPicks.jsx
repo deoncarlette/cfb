@@ -160,19 +160,20 @@ export function WeekPicks({ week, userName, nameKey }) {
   const totals = weekTotals(games, shown.winners, pointsFor);
 
   // Locked week with games underway or done: group into Live / Completed / Upcoming; otherwise
-  // one list. Sorted by points (highest first; for the single list, the confidence order itself,
-  // so drag-to-rank stays intact) or by kickoff (earliest first, points break ties).
+  // one list (all upcoming). Live and Completed always go by points (highest first). Upcoming
+  // follows the Sort switch: points (for the single list, the confidence order itself, so
+  // drag-to-rank stays intact) or kickoff (earliest first, points break ties).
   const visible = shown.order.filter(id => gameById[id]);
   const anyStarted = games.some(g => g.completed || g.state === 'in');
   const byPoints = ids => [...ids].sort((a, b) => pointsFor(b) - pointsFor(a));
   const kickoff = id => new Date(gameById[id].date).getTime() || 0;
   const byKickoff = ids => [...ids].sort((a, b) => kickoff(a) - kickoff(b) || pointsFor(b) - pointsFor(a));
-  const sorted = sortBy === 'kickoff' ? byKickoff : byPoints;
+  const upcomingSort = sortBy === 'kickoff' ? byKickoff : byPoints;
   const groups = lock.anyLocked && anyStarted
     ? [
-        { id: 'live', label: 'Live', ids: sorted(visible.filter(id => gameById[id].state === 'in')) },
-        { id: 'done', label: 'Completed', ids: sorted(visible.filter(id => gameById[id].completed)) },
-        { id: 'next', label: 'Upcoming', ids: sorted(visible.filter(id => !gameById[id].completed && gameById[id].state !== 'in')) }
+        { id: 'live', label: 'Live', ids: byPoints(visible.filter(id => gameById[id].state === 'in')) },
+        { id: 'done', label: 'Completed', ids: byPoints(visible.filter(id => gameById[id].completed)) },
+        { id: 'next', label: 'Upcoming', ids: upcomingSort(visible.filter(id => !gameById[id].completed && gameById[id].state !== 'in')) }
       ].filter(g => g.ids.length)
     : [{ id: 'all', label: null, ids: sortBy === 'kickoff' ? byKickoff(visible) : visible }];
 
@@ -249,10 +250,10 @@ export function WeekPicks({ week, userName, nameKey }) {
             <span>Card layout (trial)</span>
             <Segmented label="Card layout" options={[['pill', 'Pill'], ['whole', 'Whole card'], ['teams', 'Teams only']]} value={cardLayout} onChange={setCardLayout} />
           </div>
-          <div className="layout-trial">
-            <span>Sort by</span>
-            <Segmented label="Sort games by" options={[['points', 'Points'], ['kickoff', 'Kickoff']]} value={sortBy} onChange={setSortBy} />
-          </div>
+          {visible.some(id => !gameById[id].completed && gameById[id].state !== 'in') && <div className="layout-trial">
+            <span>Sort upcoming by</span>
+            <Segmented label="Sort upcoming games by" options={[['points', 'Points'], ['kickoff', 'Kickoff']]} value={sortBy} onChange={setSortBy} />
+          </div>}
           {!(viewingOther && !viewed) && groups.map(group => (
             <section key={group.id} className="game-group">
               {group.label && <h3 className="game-group-head">{group.label} <span>{group.ids.length}</span></h3>}
