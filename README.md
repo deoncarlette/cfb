@@ -34,8 +34,9 @@ Planned with the Auth pass (player profiles):
   Commish gets a "Pool alma maters & favorites" category alongside Top 25 / P4 / MEAC / FBS /
   FCS / All Other: every game that week involving someone's school or team, labeled with whose
   it is (e.g. "Nicole's alma mater", "Bean's team"), so the commish can pull them into the slate.
-  Possible extras later: the same label on the game card, and an Insights note when a player
-  picks against their own school.
+  Also planned: an Insights "Picked against their own" call-out whenever a player picks
+  against their school or team (worth more attention the more points they put on it — e.g.
+  Deandra picking against Texas). Maybe later: the same label on the game card.
 
 ## 1. Create the Firebase project
 
