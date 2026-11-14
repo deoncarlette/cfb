@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { getSlateDefaults, saveSlateDefaults } from '@/services/data/index.js';
-import { P4_ORDER } from '@/services/espn/index.js';
+import { P4_ORDER, FBS_ORDER, FCS_ORDER } from '@/services/espn/index.js';
 
 // Commish defaults for new weeks: teams that are always in and categories that start checked.
 // A week nobody has saved yet starts from these (on Commish and on Picks); saved weeks keep
 // their own selection. With nothing saved, the built-in rule applies (Top 25, Howard, SEC,
 // Big Ten), and the editor starts from a suggestion: Howard, Northwestern and Top 25.
 const SUGGESTED = { teams: ['Howard', 'Northwestern'], conferences: [], categories: ['top25'] };
-const CONFERENCES = [...P4_ORDER, 'MEAC'];
+// Every conference, grouped for the dropdown (independents aren't a conference).
+const CONF_GROUPS = [['Power 4', P4_ORDER], ['FBS', FBS_ORDER.filter(c => c !== 'FBS Independents')], ['FCS', FCS_ORDER]];
+const CONFERENCES = CONF_GROUPS.flatMap(([, list]) => list);
 const confsOf = d => CONFERENCES.filter(c => (d.conferences || []).includes(c));
 const key = d => JSON.stringify([[...d.teams.map(t => String(t.id))].sort(), [...confsOf(d)].sort(), [...d.categories].sort()]);
 
@@ -85,7 +87,11 @@ export function SlateDefaults({ games, categories, disabled, onSaved }) {
           <select aria-label="Add a conference" value="" disabled={disabled}
             onChange={e => { const c = e.target.value; if (c) setDraft(d => ({ ...d, conferences: [...confsOf(d), c] })); }}>
             <option value="">Add a conference…</option>
-            {CONFERENCES.filter(c => !confsOf(draft).includes(c)).map(c => <option key={c} value={c}>{c}</option>)}
+            {CONF_GROUPS.map(([group, list]) => (
+              <optgroup key={group} label={group}>
+                {list.filter(c => !confsOf(draft).includes(c)).map(c => <option key={c} value={c}>{c}</option>)}
+              </optgroup>
+            ))}
           </select>
 
           <label>Start with these categories checked</label>
