@@ -40,12 +40,15 @@ export function bestRealRank(game) {
 }
 
 // The starting slate for a week nobody has set up yet. defaults (saved by the commish): {
-// teams: [{ id, name }] always in, categories: ['top25' | 'power4' | 'meac' | 'fbs' | 'fcs' |
-// 'other'] checked to start } — or null for the built-in rule above.
+// teams: [{ id, name }] always in, conferences: ['SEC', 'MEAC', …] — any game with a team from
+// one (ranked or not), categories: ['top25' | 'power4' | 'meac' | 'fbs' | 'fcs' | 'other']
+// checked to start } — or null for the built-in rule above.
 export function isStartingSlateGame(game, defaults) {
   if (!defaults) return isDefaultSlateGame(game);
   const ids = new Set((defaults.teams || []).map(t => String(t.id)));
-  return game.competitors.some(c => ids.has(String(c.id))) || (defaults.categories || []).includes(gameCategory(game));
+  const confs = new Set(defaults.conferences || []);
+  return game.competitors.some(c => ids.has(String(c.id)) || confs.has(conferenceOf(c)))
+    || (defaults.categories || []).includes(gameCategory(game));
 }
 
 // Commish sections, first match wins: 'top25' (a ranked team) | 'power4' | 'meac' |

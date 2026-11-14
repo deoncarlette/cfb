@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { getSlateDefaults, saveSlateDefaults } from '@/services/data/index.js';
+import { P4_ORDER } from '@/services/espn/index.js';
 
 // Commish defaults for new weeks: teams that are always in and categories that start checked.
 // A week nobody has saved yet starts from these (on Commish and on Picks); saved weeks keep
 // their own selection. With nothing saved, the built-in rule applies (Top 25, Howard, SEC,
 // Big Ten), and the editor starts from a suggestion: Howard, Northwestern and Top 25.
-const SUGGESTED = { teams: ['Howard', 'Northwestern'], categories: ['top25'] };
-const key = d => JSON.stringify([[...d.teams.map(t => String(t.id))].sort(), [...d.categories].sort()]);
+const SUGGESTED = { teams: ['Howard', 'Northwestern'], conferences: [], categories: ['top25'] };
+const CONFERENCES = [...P4_ORDER, 'MEAC'];
+const confsOf = d => CONFERENCES.filter(c => (d.conferences || []).includes(c));
+const key = d => JSON.stringify([[...d.teams.map(t => String(t.id))].sort(), [...confsOf(d)].sort(), [...d.categories].sort()]);
 
 export function SlateDefaults({ games, categories, disabled, onSaved }) {
   const [open, setOpen] = useState(false);
@@ -25,20 +28,20 @@ export function SlateDefaults({ games, categories, disabled, onSaved }) {
     if (saved) { setDraft(saved); return; }
     if (!teams.size) return;
     const byName = name => [...teams.values()].find(t => t.name === name);
-    setDraft({ teams: SUGGESTED.teams.map(byName).filter(Boolean), categories: SUGGESTED.categories });
+    setDraft({ teams: SUGGESTED.teams.map(byName).filter(Boolean), conferences: SUGGESTED.conferences, categories: SUGGESTED.categories });
   }, [saved, teams.size]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!draft) return null;
   const dirty = !saved || key(saved) !== key(draft);
   const chosen = new Set(draft.teams.map(t => String(t.id)));
   const summary = [
-    draft.teams.length ? `Always in: ${draft.teams.map(t => t.name).join(', ')}` : 'No teams always in',
+    draft.teams.length || confsOf(draft).length ? `Always in: ${[...draft.teams.map(t => t.name), ...confsOf(draft)].join(', ')}` : 'No teams or conferences always in',
     draft.categories.length ? `Start checked: ${categories.filter(c => draft.categories.includes(c.key)).map(c => c.label).join(', ')}` : null
   ].filter(Boolean).join(' · ');
 
   async function save() {
     setBusy(true);
-    const d = { teams: draft.teams.map(t => ({ id: String(t.id), name: t.name })), categories: [...draft.categories] };
+    const d = { teams: draft.teams.map(t => ({ id: String(t.id), name: t.name })), conferences: [...confsOf(draft)], categories: [...draft.categories] };
     await saveSlateDefaults(d);
     setSaved(d); setBusy(false);
     onSaved?.(d);
@@ -69,10 +72,26 @@ export function SlateDefaults({ games, categories, disabled, onSaved }) {
             {[...teams.values()].filter(t => !chosen.has(t.id)).sort((a, b) => a.name.localeCompare(b.name)).map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
           </select>
 
+          <label>Always include these conferences</label>
+          <p className="muted small">Every game with a team from the conference, ranked or not.</p>
+          <div className="chip-row">
+            {confsOf(draft).map(c => (
+              <span key={c} className="chip">{c}
+                <button type="button" aria-label={`Remove ${c}`} disabled={disabled} onClick={() => setDraft(d => ({ ...d, conferences: confsOf(d).filter(x => x !== c) }))}>×</button>
+              </span>
+            ))}
+            {!confsOf(draft).length && <span className="muted small">None</span>}
+          </div>
+          <select aria-label="Add a conference" value="" disabled={disabled}
+            onChange={e => { const c = e.target.value; if (c) setDraft(d => ({ ...d, conferences: [...confsOf(d), c] })); }}>
+            <option value="">Add a conference…</option>
+            {CONFERENCES.filter(c => !confsOf(draft).includes(c)).map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+
           <label>Start with these categories checked</label>
           <p className="muted small">Same as the sections below — a game with a ranked team counts as Top 25, not its conference.</p>
           <div className="defaults-cats">
-            {categories.map(c => (
+            {categories.filter(c => c.key !== 'meac').map(c => ( /* MEAC is a conference choice above */
               <label key={c.key} className="check">
                 <input type="checkbox" disabled={disabled} checked={draft.categories.includes(c.key)}
                   onChange={e => setDraft(d => ({ ...d, categories: e.target.checked ? [...d.categories, c.key] : d.categories.filter(k => k !== c.key) }))} />

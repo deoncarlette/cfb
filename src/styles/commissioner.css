@@ -73,7 +73,7 @@
 .slate-defaults-toggle .chev{font-size:11px; color:var(--muted); transition:transform .15s;}
 .slate-defaults.open .slate-defaults-toggle .chev{transform:rotate(180deg);}
 .slate-defaults-body{padding:0 14px 14px;}
-.slate-defaults-body select{width:100%; margin-top:8px;}
+.slate-defaults-body select{width:100%; margin:8px 0 14px;}
 .chip-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;}
 .chip{display:inline-flex; align-items:center; gap:4px; background:var(--surface); border:1px solid var(--line-strong); border-radius:999px; padding:3px 4px 3px 10px; font-size:13px;}
 .chip button{background:none; border:none; color:var(--muted); font-size:15px; line-height:1; padding:0 4px; cursor:pointer;}
