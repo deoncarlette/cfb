@@ -133,7 +133,7 @@ export function parseSummary(data) {
         if (/kick|pat|extra point/i.test(t)) return failed ? 'PAT missed' : 'PAT good';
         return null;
       };
-      const scored = (data.scoringPlays || []).map(p => ({ t: at(p.period?.number, p.clock?.displayValue), away: p.awayScore, home: p.homeScore, conversion: conversion(p.text) })).filter(p => p.t != null);
+      const scored = (data.scoringPlays || []).map(p => ({ t: at(p.period?.number, p.clock?.displayValue), away: p.awayScore, home: p.homeScore, conversion: conversion(p.text), teamId: String(p.team?.id ?? ''), text: p.text || '', type: p.type?.text || '' })).filter(p => p.t != null);
       const lastScore = d => {
         const from = at(d.start?.period?.number ?? d.plays?.[0]?.period?.number, d.start?.clock?.displayValue || d.plays?.[0]?.clock?.displayValue);
         const to = at(d.end?.period?.number, d.end?.clock?.displayValue);
@@ -142,15 +142,29 @@ export function parseSummary(data) {
           // After the drive starts (a score at its very first second belongs to the drive before).
           const hits = scored.filter(p => p.t > from && p.t <= to);
           const h = hits[hits.length - 1];
-          return h ? { away: h.away, home: h.home, conversion: h.conversion } : null;
+          return h ? { away: h.away, home: h.home, conversion: h.conversion, teamId: h.teamId, how: `${h.type} ${h.text}` } : null;
         }
         const ps = (d.plays || []).filter(p => p.awayScore != null && p.homeScore != null); const p = ps[ps.length - 1];
         return p ? { away: p.awayScore, home: p.homeScore } : null;
       };
       // A drive just underway may not have its start filled in yet — use its first play's.
       const firstPlay = d => (d.plays || [])[0];
-      const driveLog = all.map((d, i) => ({
-        teamId: String(d.team?.id ?? ''),
+      // When the other team scores on a drive (punt return, pick-six, fumble return, blocked
+      // kick, safety), ESPN still marks the drive a score; say what happened and who scored.
+      const againstLabel = how => (/safety/i.test(how) ? 'Safety' : /punt/i.test(how) ? 'Punt return TD'
+        : /interception|int return/i.test(how) ? 'Pick-six' : /fumble/i.test(how) ? 'Fumble return TD'
+        : /block/i.test(how) ? 'Blocked kick TD' : /kickoff/i.test(how) ? 'Kickoff return TD' : 'Opponent score');
+      const driveLog = all.map((d, i) => {
+        const score = lastScore(d);
+        let team = String(d.team?.id ?? '');
+        let against = !!(score?.teamId && team && score.teamId !== team);
+        // An ordinary offensive score credited to the other team means ESPN has the drive's
+        // team wrong: trust the scoring play.
+        if (against && againstLabel(score.how) === 'Opponent score') { team = score.teamId; against = false; }
+        return {
+        againstBy: against ? score.teamId : null,
+        againstLabel: against ? againstLabel(score.how) : null,
+        teamId: team,
         period: d.start?.period?.number ?? firstPlay(d)?.period?.number,
         clock: d.start?.clock?.displayValue || firstPlay(d)?.clock?.displayValue || '',
         endPeriod: d.end?.period?.number, endClock: d.end?.clock?.displayValue || '',
@@ -158,8 +172,8 @@ export function parseSummary(data) {
         isScore: !!d.isScore,
         description: /^0 plays\b/.test(d.description || '') ? '' : d.description || '',
         current: !!cur && i === all.length - 1 && !(data.header?.competitions?.[0]?.status?.type?.completed),
-        score: lastScore(d)
-      })).filter(d => d.teamId && d.period);
+        score
+      }; }).filter(d => d.teamId && d.period);
       return { drives, plays, driveLog };
     })(),
     // Home win % after each play, in order (used by the test replay to rewind win probability).

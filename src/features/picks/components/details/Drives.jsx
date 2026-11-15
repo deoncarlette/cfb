@@ -5,7 +5,9 @@ import { useState } from 'react';
 import { ScoringPlays } from './ScoringPlays.jsx';
 
 const TURNOVER = /interception|fumble|downs|\bint\b|\bfum\b/i;
-const kind = d => (d.current && !d.result ? 'current' : d.isScore || /touchdown|field goal|safety/i.test(d.result) && !/missed|blocked/i.test(d.result) ? 'score' : TURNOVER.test(d.result) ? 'turnover' : '');
+// 'against': the other team scored on this drive (punt/kick return, pick-six, fumble return,
+// safety) — red like a turnover, counted as a score in the quarter summary.
+const kind = d => (d.current && !d.result ? 'current' : d.againstBy ? 'against' : d.isScore || /touchdown|field goal|safety/i.test(d.result) && !/missed|blocked/i.test(d.result) ? 'score' : TURNOVER.test(d.result) ? 'turnover' : '');
 
 const qName = p => (p <= 4 ? ['1st', '2nd', '3rd', '4th'][p - 1] + ' Quarter' : p === 5 ? 'Overtime' : `${p - 4}OT`);
 
@@ -28,7 +30,9 @@ export function Drives({ drives, scoring, away, home, live }) {
 function Quarter({ period, drives, abbr, startOpen }) {
   const [open, setOpen] = useState(startOpen);
   const kinds = drives.map(kind);
-  const scores = kinds.filter(k => k === 'score').length, tos = kinds.filter(k => k === 'turnover').length;
+  // A pick-six or fumble return is both a turnover and a score; a punt return or safety is just a score.
+  const scores = kinds.filter(k => k === 'score' || k === 'against').length;
+  const tos = drives.filter((d, i) => kinds[i] === 'turnover' || (kinds[i] === 'against' && /pick|fumble/i.test(d.againstLabel))).length;
   const summary = [`${drives.length} ${drives.length === 1 ? 'drive' : 'drives'}`, scores && `${scores} ${scores === 1 ? 'score' : 'scores'}`, tos && `${tos} ${tos === 1 ? 'turnover' : 'turnovers'}`].filter(Boolean).join(' · ');
   return (
     <div className={'drive-q' + (open ? ' open' : '')}>
@@ -45,11 +49,11 @@ function Quarter({ period, drives, abbr, startOpen }) {
                 <span className="sp-when">{d.clock}</span>
                 <span className="sp-team">{abbr(d.teamId)}</span>
                 <span className="sp-text">
-                  <span className={'drive-result ' + k}>{k === 'current' ? 'In progress' : d.result || '—'}{d.score?.conversion && (k === 'score' || k === 'turnover') && <span className="drive-try"> · {d.score.conversion}</span>}</span>
+                  <span className={'drive-result ' + k}>{k === 'current' ? 'In progress' : d.againstBy ? `${d.againstLabel} · ${abbr(d.againstBy)}` : d.result || '—'}{d.score?.conversion && (k === 'score' || k === 'turnover' || k === 'against') && <span className="drive-try"> · {d.score.conversion}</span>}</span>
                   {d.description && <span className="drive-desc">{d.description}</span>}
                 </span>
                 {/* Score after scoring drives, and turnovers returned for a score (pick-six, scoop-and-score). */}
-                <span className="sp-score">{(k === 'score' || k === 'turnover') && d.score ? `${d.score.away}–${d.score.home}` : ''}</span>
+                <span className="sp-score">{(k === 'score' || k === 'turnover' || k === 'against') && d.score ? `${d.score.away}–${d.score.home}` : ''}</span>
               </li>
             );
           })}
