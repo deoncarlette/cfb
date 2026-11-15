@@ -9,7 +9,13 @@ import mock from './mockScores.json';
 // until there's a real engine scoring every player's picks against results. Weeks not in the
 // file show who has submitted picks so far.
 
-export const SEASON_ROSTER = mock.players.map(p => p.name);
+// Players kept out of the standings (their picks and scores stay in the data): Chat GPT, a test
+// player from this preview, so the people in the pool get the rankings to themselves. Take a
+// name out of this set to put them back.
+const HIDDEN_FROM_STANDINGS = new Set(['chat gpt']);
+const shown = row => !HIDDEN_FROM_STANDINGS.has(String(row.user_name ?? row).toLowerCase());
+
+export const SEASON_ROSTER = mock.players.map(p => p.name).filter(shown);
 const mockWeek = week => mock.weeks.find(w => w.week === week);
 
 // { possible, isSample } for the week's header, or null if the file doesn't have it.
@@ -94,12 +100,13 @@ function recordedRows(week) {
   return w ? w.standings.map(s => ({ user_name: s.userName, score: s.weeklyScore, entered: s.entered })) : null;
 }
 
-async function weekRows(week) {
+async function weekRows(week, includeHidden = false) {
+  const keep = rows => (rows && !includeHidden ? rows.filter(shown) : rows);
   if (isLiveScoredWeek(week)) {
-    try { return (await replayRecords(week)).rows; } catch (e) { /* ESPN unreachable → recorded scores */ }
+    try { return keep((await replayRecords(week)).rows); } catch (e) { /* ESPN unreachable → recorded scores */ }
   }
   const rows = recordedRows(week);
-  return rows ? [...rows, ...await unrecordedRows(week, rows)] : null;
+  return rows ? keep([...rows, ...await unrecordedRows(week, rows)]) : null;
 }
 
 // Rows: { user_name, score, entered } — entered === false means they didn't play that week.
@@ -108,16 +115,17 @@ export async function recordsForWeek(week) {
   if (scored) return scored;
   const picks = await getAllPicksForWeek(week);
   const submitted = new Set(picks.map(p => p.user_name));
-  const rows = picks.map(p => ({ user_name: p.user_name, score: undefined, submitted: true }));
+  const rows = picks.filter(shown).map(p => ({ user_name: p.user_name, score: undefined, submitted: true }));
   SEASON_ROSTER.filter(n => !submitted.has(n)).forEach(n => rows.push({ user_name: n, score: undefined, submitted: false }));
   return rows;
 }
 
-// Season totals through a week (sum of every scored week up to it).
-export async function computeOverallStandings(throughWeek) {
+// Season totals through a week (sum of every scored week up to it). includeHidden: also total
+// players kept out of the standings (for showing their own season on Picks).
+export async function computeOverallStandings(throughWeek, { includeHidden = false } = {}) {
   const totals = new Map(SEASON_ROSTER.map(name => [name, { user_name: name, score: 0 }]));
   for (const w of mock.weeks.filter(w => w.week <= throughWeek)) {
-    const rows = await weekRows(w.week);
+    const rows = await weekRows(w.week, includeHidden);
     rows.forEach(s => {
       const entry = totals.get(s.user_name) || { user_name: s.user_name, score: 0 };
       entry.score += Number(s.score) || 0;

@@ -12,7 +12,7 @@ export function useSeasonStats(week, name) {
     setStats(null);
     if (typeof week !== 'number' || !name) return;
     const key = name.toLowerCase();
-    Promise.all([week > 0 ? computeOverallStandings(week - 1) : Promise.resolve([]), sampleFileWeeks()])
+    Promise.all([week > 0 ? computeOverallStandings(week - 1, { includeHidden: true }) : Promise.resolve([]), sampleFileWeeks()])
       .then(([rows, fileWeeks]) => {
         const points = Number(rows.find(r => r.user_name.toLowerCase() === key)?.score) || 0;
         let right = 0, wrong = 0;
