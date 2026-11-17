@@ -44,7 +44,7 @@ const HIDE_UNTIL = {
 };
 // Weeks where only real ballots show: the rest of the pool's picks haven't come in yet, so
 // their simulated stand-ins stay out (those players just show no picks).
-const REAL_BALLOTS_ONLY = new Set([11]);
+const REAL_BALLOTS_ONLY = new Set([11, 12]);
 
 let fileCache = null;
 async function loadFile() {

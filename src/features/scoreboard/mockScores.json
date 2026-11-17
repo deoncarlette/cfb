@@ -2543,6 +2543,192 @@
           "isMock": true
         }
       ]
+    },
+    {
+      "week": 12,
+      "label": "Week 12",
+      "possiblePoints": 351,
+      "status": "mock_upcoming",
+      "source": "live_from_picks",
+      "notes": "Week 12 slate from the Google Form; scored live from picks once they are loaded.",
+      "standings": [
+        {
+          "userId": "bean",
+          "userName": "Bean",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "morgan",
+          "userName": "Morgan",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "deandra",
+          "userName": "Deandra",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "madelyn",
+          "userName": "Madelyn",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "tara",
+          "userName": "Tara",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "joseph",
+          "userName": "Joseph",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "lucy",
+          "userName": "Lucy",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "nicole",
+          "userName": "Nicole",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "mary",
+          "userName": "Mary",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "savannah",
+          "userName": "Savannah",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "luis",
+          "userName": "Luis",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "cynthia",
+          "userName": "Cynthia",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "brian",
+          "userName": "Brian",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "chat-gpt",
+          "userName": "Chat GPT",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "sedrick",
+          "userName": "Sedrick",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        },
+        {
+          "userId": "vinny",
+          "userName": "Vinny",
+          "weeklyScore": 0,
+          "cumulativeScore": null,
+          "weeklyRank": null,
+          "overallRank": null,
+          "entered": false,
+          "scoreSource": "pending",
+          "isMock": false
+        }
+      ]
     }
   ]
 }
