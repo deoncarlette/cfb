@@ -1,6 +1,6 @@
 import { ESPN_BASE } from './client.js';
 import { cfpPollAtOrBefore } from './rankings.js';
-import { SEASON, CFP_SWITCH_WEEK } from '@/config.js';
+import { SEASON } from '@/config.js';
 import { hexColor } from '@/shared/utils/colors.js';
 import { formatKickoff, formatTbdDay } from '@/shared/utils/dates.js';
 import { simulatedBowls, hasTbdTeam } from './simulatedBowls.js';
@@ -148,13 +148,14 @@ async function fetchWeekZero(groups) {
   return [...zero, ...one].filter(g => !seen.has(g.id) && seen.add(g.id));
 }
 
-// From the first CFP week on, ranks come only from the committee's poll: this week's, or the
+// Once the committee has published a CFP poll, ranks come only from it: this week's, or the
 // latest earlier one until this week's is out (Tuesday nights). Teams outside it are unranked
-// (no AP rank leaking through). Which poll was used: rankSourceFor(week).
+// (no AP rank leaking through). Before the first CFP poll: ESPN's own (AP) ranks. Which poll
+// was used: rankSourceFor(week).
 const rankSource = new Map();
 export function rankSourceFor(week) { return rankSource.get(week) || null; }
 export async function applyRankOverlay(gamesList, week) {
-  if (typeof week !== 'number' || week < CFP_SWITCH_WEEK) return gamesList;
+  if (typeof week !== 'number') return gamesList;
   const hit = await cfpPollAtOrBefore(week);
   if (!hit) { rankSource.set(week, { poll: 'AP', week }); return gamesList; }
   const map = new Map(hit.poll.ranks.filter(e => e.team?.id).map(e => [String(e.team.id), e.current]));

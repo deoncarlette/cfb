@@ -1,6 +1,5 @@
 import { ESPN_BASE } from './client.js';
 import { hexColor } from '@/shared/utils/colors.js';
-import { CFP_SWITCH_WEEK } from '@/config.js';
 
 const pollLabel = p => `${p.shortName || ''} ${p.name || ''} ${p.type || ''}`.toLowerCase();
 const isCfpPoll = p => /cfp|playoff/.test(pollLabel(p));
@@ -20,17 +19,22 @@ function pollsFor(week) {
   return pollsCache.get(key);
 }
 
-// From the first CFP week on, the committee's poll is the ranking — never AP. This finds the CFP
-// poll for a week, or the most recent earlier one when this week's isn't out yet (it comes out
-// Tuesday nights). → { poll, week } or null (before the first CFP poll, or ESPN unreachable).
+// Once the committee has published a CFP poll, it's the ranking — never AP. No fixed start
+// week: this finds the CFP poll for a week, or the most recent earlier one when this week's
+// isn't out yet (it comes out Tuesday nights). Looks back past a week only while that week has
+// no polls at all; an earlier week with polls but no CFP means the CFP hadn't started (it never
+// stops once it starts), so at most a couple of requests. → { poll, week } or null (no CFP poll
+// yet this season, or ESPN unreachable).
 const cfpCache = new Map();
 export function cfpPollAtOrBefore(week) {
-  if (typeof week !== 'number' || week < CFP_SWITCH_WEEK) return Promise.resolve(null);
+  if (typeof week !== 'number') return Promise.resolve(null);
   if (!cfpCache.has(week)) {
     cfpCache.set(week, (async () => {
-      for (let w = week; w >= CFP_SWITCH_WEEK; w--) {
-        const poll = (await pollsFor(w)).find(isCfpPoll);
+      for (let w = week; w >= 0; w--) {
+        const polls = await pollsFor(w);
+        const poll = polls.find(isCfpPoll);
         if (poll?.ranks?.length) return { poll, week: w };
+        if (w < week && polls.length) return null;
       }
       return null;
     })());
@@ -113,9 +117,9 @@ function teamFromRankEntry(entry) {
   };
 }
 
-// Latest published rankings (no week param = ESPN's current set). The CFP committee poll —
-// from currentWeek on (a week number, or 'postseason'), the most recent CFP poll even when the
-// latest set doesn't have one yet; AP only before the committee starts publishing. Returns
+// Latest published rankings (no week param = ESPN's current set). The CFP committee poll — the
+// most recent one, even when the latest set doesn't have one yet (currentWeek: a week number,
+// or 'postseason', to look back from); AP only before the committee's first poll. Returns
 // { pollName, isCfp, teams: [...] } sorted by rank, or null if ESPN doesn't answer.
 export async function fetchCurrentRankings(currentWeek = null) {
   try {
@@ -126,9 +130,8 @@ export async function fetchCurrentRankings(currentWeek = null) {
       const hit = await cfpPollAtOrBefore(typeof currentWeek === 'number' ? currentWeek : 17);
       poll = hit?.poll; fromWeek = hit?.week ?? null;
     }
-    const cfpSeason = typeof currentWeek !== 'number' || currentWeek >= CFP_SWITCH_WEEK;
-    if (!poll && cfpSeason && currentWeek != null) return null; // no CFP to project from; never AP
-    poll ||= polls.find(p => pollLabel(p).includes('ap')) || polls[0];
+    // No CFP poll yet this season → AP (the only time AP is used).
+    poll ||= polls.find(isApPoll) || polls[0];
     if (!poll?.ranks?.length) return null;
     const teams = poll.ranks.map(teamFromRankEntry).filter(t => t.id && t.id !== 'undefined')
       .sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99));
