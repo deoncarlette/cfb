@@ -1,5 +1,5 @@
 import { ESPN_BASE } from './client.js';
-import { fetchPollRankMap } from './rankings.js';
+import { cfpPollAtOrBefore } from './rankings.js';
 import { SEASON, CFP_SWITCH_WEEK } from '@/config.js';
 import { hexColor } from '@/shared/utils/colors.js';
 import { formatKickoff, formatTbdDay } from '@/shared/utils/dates.js';
@@ -148,14 +148,18 @@ async function fetchWeekZero(groups) {
   return [...zero, ...one].filter(g => !seen.has(g.id) && seen.add(g.id));
 }
 
-// Once the CFP committee starts publishing (after CFP_SWITCH_WEEK), its rankings replace the
-// AP-style curatedRank on each team. If ESPN doesn't have the poll, this quietly does
-// nothing and every game keeps the rank it already had.
+// From the first CFP week on, ranks come only from the committee's poll: this week's, or the
+// latest earlier one until this week's is out (Tuesday nights). Teams outside it are unranked
+// (no AP rank leaking through). Which poll was used: rankSourceFor(week).
+const rankSource = new Map();
+export function rankSourceFor(week) { return rankSource.get(week) || null; }
 export async function applyRankOverlay(gamesList, week) {
-  if (typeof week !== 'number' || week <= CFP_SWITCH_WEEK) return gamesList;
-  const cfpMap = (await fetchPollRankMap(week, 'cfp')) || (await fetchPollRankMap(week, 'playoff'));
-  if (!cfpMap) return gamesList;
-  gamesList.forEach(game => game.competitors.forEach(c => { if (cfpMap.has(c.id)) c.rank = cfpMap.get(c.id); }));
+  if (typeof week !== 'number' || week < CFP_SWITCH_WEEK) return gamesList;
+  const hit = await cfpPollAtOrBefore(week);
+  if (!hit) { rankSource.set(week, { poll: 'AP', week }); return gamesList; }
+  const map = new Map(hit.poll.ranks.filter(e => e.team?.id).map(e => [String(e.team.id), e.current]));
+  gamesList.forEach(game => game.competitors.forEach(c => { c.rank = map.get(String(c.id)) ?? null; }));
+  rankSource.set(week, { poll: 'CFP', week: hit.week });
   return gamesList;
 }
 

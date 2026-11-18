@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { SEASON } from '@/config.js';
-import { fetchCurrentRankings } from '@/services/espn/index.js';
+import { fetchCurrentRankings, fetchCurrentWeek } from '@/services/espn/index.js';
 import { getPlayoffConfig, getAllBrackets } from '@/services/data/index.js';
 import { seedMap, eliminatedTeams, projectField } from '../bracketLogic.js';
 import { isPast } from '@/shared/utils/dates.js';
@@ -32,7 +32,7 @@ export function useBracketData() {
         let field = cfg.seeds;
         let proj = null;
         if (field.length !== 12) {
-          const ranked = await fetchCurrentRankings();
+          const ranked = await fetchCurrentWeek().catch(() => null).then(w => fetchCurrentRankings(w));
           if (ranked?.teams?.length >= 12) { field = projectedSeeds(ranked.teams); proj = { pollName: ranked.pollName }; }
           else field = [];
         }

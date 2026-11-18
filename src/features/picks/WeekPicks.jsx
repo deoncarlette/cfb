@@ -11,7 +11,7 @@ import { DEFAULT_PLAYER } from './sample/samplePicks.js';
 import { useNav, navigate } from '@/shared/nav.js';
 import { Segmented } from '@/shared/components/Segmented.jsx';
 import { useStoredState } from '@/shared/hooks/useStoredState.js';
-import { fetchPollScores } from '@/services/espn/index.js';
+import { fetchPollScores, rankSourceFor } from '@/services/espn/index.js';
 import { ReplayScheduleToggle } from '@/shared/components/ReplayScheduleToggle.jsx';
 import { replaySchedule } from '@/services/espn/replay.js';
 import { shuffled, quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding } from './picksLogic.js';
@@ -216,6 +216,14 @@ export function WeekPicks({ week, userName, nameKey }) {
               {`Showing ${sample.playerName}'s picks${sample.isMock ? ' (some simulated for this preview)' : ''}`}{sample.missing.length ? ` (${sample.matched} of ${sample.total} games found on ESPN)` : ''}.
             </p>
           )}
+          {(() => {
+            // Rankings on the cards: from the first CFP week on, the CFP poll only — the latest
+            // earlier one until this week's comes out (Tuesday nights).
+            const rs = typeof week === 'number' && games.length ? rankSourceFor(week) : null;
+            return rs?.poll === 'CFP' && rs.week < week
+              ? <p className="sample-note">Rankings shown are the Week {rs.week} CFP rankings. This week's come out Tuesday night. Open a game to compare the AP and Coaches polls.</p>
+              : null;
+          })()}
           {games.some(g => g.simulated) && (
             <p className="sample-note">Simulated bowl matchups: ESPN hasn't set this season's bowl teams yet, so these are built from current rankings and records. The real matchups replace them once ESPN has them (usually early December).</p>
           )}
@@ -272,6 +280,7 @@ export function WeekPicks({ week, userName, nameKey }) {
                 return (
                   <GameCard
                     key={gameId}
+                    week={week}
                     game={game}
                     total={order.length}
                     points={pointsFor(gameId)}

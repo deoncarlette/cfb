@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { SEASON } from '@/config.js';
-import { fetchCurrentRankings } from '@/services/espn/index.js';
+import { fetchCurrentRankings, fetchCurrentWeek } from '@/services/espn/index.js';
 import { getPlayoffConfig, savePlayoffConfig, getAllBrackets } from '@/services/data/index.js';
 import { GAMES, seedMap, setPick, pruneInvalidPicks, projectField } from '@/features/bracket/bracketLogic.js';
 import { toDatetimeLocal } from '@/shared/utils/dates.js';
@@ -30,7 +30,7 @@ export function usePlayoffAdmin() {
   useEffect(() => {
     (async () => {
       const [cfg, ranked, brackets] = await Promise.all([
-        getPlayoffConfig(SEASON), fetchCurrentRankings(), getAllBrackets(SEASON).catch(() => [])
+        getPlayoffConfig(SEASON), fetchCurrentWeek().catch(() => null).then(w => fetchCurrentRankings(w)), getAllBrackets(SEASON).catch(() => [])
       ]);
       const pool = [...(ranked?.teams || [])];
       cfg.seeds.forEach(t => { if (!pool.some(p => p.id === t.id)) pool.push(t); });

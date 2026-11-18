@@ -15,7 +15,7 @@ import { ConfidenceControl } from './ConfidenceControl.jsx';
 // betting line on the right until kickoff and the network after; game name, network before
 // kickoff and who has the ball move into the expansion) or 'teams' (whole, but nothing else on the card: kickoff, line, game name
 // and network move into the expansion, opened by the small handle under the teams).
-export function GameCard({ game, total, points, result, live, picked, missed, locked, canUp, canDown, pool, dragProps, onPick, onMove, onSetPoints, layout = 'pill' }) {
+export function GameCard({ game, total, points, result, live, picked, missed, locked, canUp, canDown, pool, dragProps, onPick, onMove, onSetPoints, layout = 'pill', week }) {
   const [open, setOpen] = useState(false);
   const isLive = game.state === 'in';
   const started = game.completed || isLive;
@@ -107,7 +107,7 @@ export function GameCard({ game, total, points, result, live, picked, missed, lo
       />
       {open && strip && stripInfo}
       {open && bare && <div className="bare-info">{meta}<div className="bare-names">{names}</div></div>}
-      {open && <GameDetails game={game} pool={pool} />}
+      {open && <GameDetails game={game} pool={pool} week={week} />}
     </div>
   );
 }

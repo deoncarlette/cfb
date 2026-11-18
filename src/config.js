@@ -1,8 +1,9 @@
 // Season-wide settings. Bump SEASON each year.
 export const SEASON = 2026;
 
-// After this week, the CFP committee's rankings replace the AP-style rank shown on game
-// cards (see services/espn/games.js → applyRankOverlay).
+// The first week with a CFP committee poll. From this week on, every ranking comes from the
+// latest CFP poll (this week's, or the previous one until it's out) — never AP. See
+// services/espn/rankings.js → cfpPollAtOrBefore and games.js → applyRankOverlay.
 export const CFP_SWITCH_WEEK = 10;
 
 

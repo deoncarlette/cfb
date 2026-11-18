@@ -7,6 +7,7 @@ import { LineScore } from './LineScore.jsx';
 import { Leaders } from './Leaders.jsx';
 import { LastFive } from './LastFive.jsx';
 import { Drives } from './Drives.jsx';
+import { PollRanks } from './PollRanks.jsx';
 import { PoolPicks } from './PoolPicks.jsx';
 
 const ml = v => (v == null ? null : v > 0 ? `+${v}` : String(v));
@@ -16,7 +17,7 @@ const ml = v => (v == null ? null : v > 0 ? `+${v}` : String(v));
 // Live / final: line score, win probability, pool picks | More: team stats, leaders, drives
 // (how each ended — scores and turnovers included), notes. (The TV network is on the card itself; the stadium is in the notes.)
 // pool: everyone's picks on this game (only passed once it locks) → Pool picks section.
-export function GameDetails({ game, pool }) {
+export function GameDetails({ game, pool, week }) {
   const [more, setMore] = useState(false);
   const started = game.completed || game.state === 'in';
   // Test replay: the real box score rewound to the replayed game clock (the card's refresh
@@ -66,6 +67,7 @@ export function GameDetails({ game, pool }) {
           {s.replay?.estimatedStats && game.state === 'in' && (
             <p className="gd-note">Test replay: score, quarters and drives are exact to the game clock. Team stats and leaders are the final totals scaled to the share of the game played.</p>
           )}
+          <PollRanks game={game} week={week} />
           {started && <CompareRows title="Team stats" rows={s.stats} />}
           <Leaders leaders={s.leaders} started={started} />
           {started && <Drives drives={s.driveLog} scoring={s.scoring} away={s.away} home={s.home} live={game.state === 'in'} />}
