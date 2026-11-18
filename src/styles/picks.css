@@ -127,6 +127,9 @@
 /* Game details panel (box score / matchup) — spans the whole card. */
 .game-details{grid-column:1 / -1; border-top:1px solid var(--line); margin-top:6px; padding-top:12px; cursor:default;}
 .gd-teams{display:flex; justify-content:space-between; gap:12px; padding:0 4px 6px; font-family:var(--display); font-weight:800; font-style:italic; font-size:18px; text-transform:uppercase;}
+.gd-teams > span{display:flex; flex-direction:column; gap:2px;}
+.gd-teams > span:last-child{align-items:flex-end; text-align:right;}
+.gd-conf{font-family:var(--font); font-style:normal; font-weight:500; font-size:12px; text-transform:none; color:var(--muted); letter-spacing:0;}
 .gd-section{margin-bottom:14px;}
 .gd-section h4{margin:0 0 8px; font-size:12px; font-weight:600; color:var(--muted); text-align:center;}
 .compare{display:flex; flex-direction:column;}

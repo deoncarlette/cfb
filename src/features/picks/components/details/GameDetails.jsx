@@ -1,3 +1,4 @@
+import { conferenceOf } from '@/services/espn/index.js';
 import { useState } from 'react';
 import { useGameSummary } from '../../hooks/useGameSummary.js';
 import { rewindSummary } from '@/services/espn/replay.js';
@@ -28,7 +29,14 @@ export function GameDetails({ game, pool, week }) {
   // Full names up top (the pill uses short names on phones) — straight from the card, so they
   // show while the details load.
   const [cardAway, cardHome] = game.competitors;
-  const header = <div className="gd-teams"><span>{cardAway.name}</span><span>{cardHome.name}</span></div>;
+  // Conference under each name ("Independent" for FBS independents).
+  const conf = c => { const x = conferenceOf(c); return x === 'FBS Independents' ? 'Independent' : x; };
+  const header = (
+    <div className="gd-teams">
+      <span>{cardAway.name}{conf(cardAway) && <small className="gd-conf">{conf(cardAway)}</small>}</span>
+      <span>{cardHome.name}{conf(cardHome) && <small className="gd-conf">{conf(cardHome)}</small>}</span>
+    </div>
+  );
   const poolSection = pool?.length ? <PoolPicks game={game} pool={pool} /> : null;
   if (error) return <div className="game-details">{header}{poolSection}<p className="muted small center">{error}</p></div>;
   if (!s) return <div className="game-details">{header}{poolSection}<p className="muted small center">Loading…</p></div>;
