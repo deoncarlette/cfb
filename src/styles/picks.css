@@ -319,3 +319,10 @@
 .game-card.whole.teams .bare-info + .game-details{border-top:none; margin-top:2px;}
 @media (max-width:440px){ .game-card.whole.teams .matchup-side{height:72px;} .game-card.whole.teams .pts-chip{margin-top:5px;} }
 
+
+/* Common opponents */
+.co-results{display:inline-flex; flex-direction:column; gap:2px;}
+.cv.home .co-results{align-items:flex-end;}
+.co-res{font-variant-numeric:tabular-nums; font-weight:600;}
+.co-res.w{color:var(--success);}
+.co-res.l{color:var(--danger);}

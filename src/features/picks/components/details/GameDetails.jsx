@@ -8,6 +8,7 @@ import { Leaders } from './Leaders.jsx';
 import { LastFive } from './LastFive.jsx';
 import { Drives } from './Drives.jsx';
 import { PollRanks } from './PollRanks.jsx';
+import { CommonOpponents } from './CommonOpponents.jsx';
 import { PoolPicks } from './PoolPicks.jsx';
 
 const ml = v => (v == null ? null : v > 0 ? `+${v}` : String(v));
@@ -69,6 +70,7 @@ export function GameDetails({ game, pool, week }) {
           )}
           <PollRanks game={game} week={week} />
           {started && <CompareRows title="Team stats" rows={s.stats} />}
+          {!started && <CommonOpponents game={game} />}
           <Leaders leaders={s.leaders} started={started} />
           {started && <Drives drives={s.driveLog} scoring={s.scoring} away={s.away} home={s.home} live={game.state === 'in'} />}
           {facts.length > 0 && <p className="gd-facts">{facts.map(f => <span key={f}>{f}</span>)}</p>}
