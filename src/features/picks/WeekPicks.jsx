@@ -14,7 +14,7 @@ import { useStoredState } from '@/shared/hooks/useStoredState.js';
 import { fetchPollScores, rankSourceFor, commonOpponents } from '@/services/espn/index.js';
 import { ReplayScheduleToggle } from '@/shared/components/ReplayScheduleToggle.jsx';
 import { replaySchedule } from '@/services/espn/replay.js';
-import { shuffled, quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding, needsRankTiebreak, needsFavoriteTiebreak } from './picksLogic.js';
+import { shuffled, quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding, needsRankTiebreak } from './picksLogic.js';
 import { WeekResults } from './components/WeekResults.jsx';
 import { useSeasonStats } from './hooks/useSeasonStats.js';
 import { QuickPicks } from './components/QuickPicks.jsx';
@@ -251,23 +251,17 @@ export function WeekPicks({ week, userName, nameKey }) {
               <QuickPicks
                 onPick={async mode => {
                   // Higher ranked needs this week's polls (the ones out before its games).
-                  let polls = mode === 'ranked' ? await fetchPollScores(typeof week === 'number' ? Math.max(1, week) : null) : null;
+                  // Higher ranked, favorites and underdogs use this week's polls (the ones out
+                  // before its games), and common opponents for games the polls and line can't settle.
+                  let polls = ['ranked', 'favorites', 'underdogs'].includes(mode) ? await fetchPollScores(typeof week === 'number' ? Math.max(1, week) : null) : null;
                   if (polls) {
-                    // Common opponents only for games the polls and the line can't settle.
                     const tied = openGames.filter(g => needsRankTiebreak(g, polls));
                     const lists = await Promise.all(tied.map(g => commonOpponents(g.competitors[0].id, g.competitors[1].id).catch(() => [])));
                     polls = { ...polls, common: new Map(tied.map((g, i) => [g.id, lists[i]])) };
                   }
-                  // Favorites/underdogs: common opponents only where the line and ranks can't decide.
-                  let common = null;
-                  if (mode === 'favorites' || mode === 'underdogs') {
-                    const tied = openGames.filter(needsFavoriteTiebreak);
-                    const lists = await Promise.all(tied.map(g => commonOpponents(g.competitors[0].id, g.competitors[1].id).catch(() => [])));
-                    common = new Map(tied.map((g, i) => [g.id, lists[i]]));
-                  }
                   setWinners(w => mode === 'clear'
                     ? Object.fromEntries(Object.entries(w).filter(([id]) => isLocked(id)))
-                    : { ...w, ...quickPickWinners(openGames, mode, polls, common) });
+                    : { ...w, ...quickPickWinners(openGames, mode, polls) });
                 }}
                 disabled={lock.allLocked}
               />
