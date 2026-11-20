@@ -9,10 +9,10 @@ import mock from './mockScores.json';
 // until there's a real engine scoring every player's picks against results. Weeks not in the
 // file show who has submitted picks so far.
 
-// Players kept out of the standings (their picks and scores stay in the data): Chat GPT, a test
-// player from this preview, so the people in the pool get the rankings to themselves. Take a
-// name out of this set to put them back.
-const HIDDEN_FROM_STANDINGS = new Set(['chat gpt']);
+// Players kept out of the standings (their picks and scores stay in the data). Chat GPT, a test
+// player from this preview, goes in here when a week wraps up so the people in the pool get
+// credit for their wins: new Set(['chat gpt']). Empty = everyone ranked.
+const HIDDEN_FROM_STANDINGS = new Set([]);
 const shown = row => !HIDDEN_FROM_STANDINGS.has(String(row.user_name ?? row).toLowerCase());
 
 export const SEASON_ROSTER = mock.players.map(p => p.name).filter(shown);
