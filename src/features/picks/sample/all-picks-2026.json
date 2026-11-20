@@ -34926,7 +34926,500 @@
           ]
         }
       ],
-      "ballots": []
+      "ballots": [
+        {
+          "playerId": "deandra",
+          "playerName": "Deandra",
+          "entered": true,
+          "participationSource": "pool_sheet",
+          "weeklyScore": null,
+          "isMockScore": false,
+          "source": "pool_sheet",
+          "isMockBallot": false,
+          "picks": [
+            {
+              "gameId": "2026-w12-g01",
+              "gameNumber": 1,
+              "matchup": "Alabama vs Chattanooga",
+              "pick": "Alabama",
+              "confidence": 26,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g02",
+              "gameNumber": 2,
+              "matchup": "Arkansas vs Texas",
+              "pick": "Texas",
+              "confidence": 19,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g03",
+              "gameNumber": 3,
+              "matchup": "Auburn vs Samford",
+              "pick": "Auburn",
+              "confidence": 24,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g04",
+              "gameNumber": 4,
+              "matchup": "Clemson vs Duke",
+              "pick": "Duke",
+              "confidence": 14,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g05",
+              "gameNumber": 5,
+              "matchup": "Colorado vs Cincinnati",
+              "pick": "Colorado",
+              "confidence": 4,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g06",
+              "gameNumber": 6,
+              "matchup": "Florida vs Vanderbilt",
+              "pick": "Florida",
+              "confidence": 17,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g07",
+              "gameNumber": 7,
+              "matchup": "Georgia vs South Carolina",
+              "pick": "Georgia",
+              "confidence": 18,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g08",
+              "gameNumber": 8,
+              "matchup": "Houston vs West Virginia",
+              "pick": "Houston",
+              "confidence": 8,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g09",
+              "gameNumber": 9,
+              "matchup": "Howard vs Norfolk State",
+              "pick": "Howard",
+              "confidence": 7,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g10",
+              "gameNumber": 10,
+              "matchup": "Iowa vs Illinois",
+              "pick": "Iowa",
+              "confidence": 10,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g11",
+              "gameNumber": 11,
+              "matchup": "Indiana vs Washington",
+              "pick": "Indiana",
+              "confidence": 13,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g12",
+              "gameNumber": 12,
+              "matchup": "Kentucky vs Missouri",
+              "pick": "Kentucky",
+              "confidence": 6,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g13",
+              "gameNumber": 13,
+              "matchup": "LSU vs Tennessee",
+              "pick": "Tennessee",
+              "confidence": 1,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g14",
+              "gameNumber": 14,
+              "matchup": "Miami vs Virginia Tech",
+              "pick": "Miami",
+              "confidence": 23,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g15",
+              "gameNumber": 15,
+              "matchup": "Michigan vs UCLA",
+              "pick": "UCLA",
+              "confidence": 12,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g16",
+              "gameNumber": 16,
+              "matchup": "Michigan State vs Oregon",
+              "pick": "Oregon",
+              "confidence": 16,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g17",
+              "gameNumber": 17,
+              "matchup": "Minnesota vs Northwestern",
+              "pick": "Minnesota",
+              "confidence": 3,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g18",
+              "gameNumber": 18,
+              "matchup": "Mississippi State vs Tennessee Tech",
+              "pick": "Mississippi State",
+              "confidence": 20,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g19",
+              "gameNumber": 19,
+              "matchup": "Nebraska vs Ohio State",
+              "pick": "Ohio State",
+              "confidence": 15,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g20",
+              "gameNumber": 20,
+              "matchup": "Notre Dame vs SMU",
+              "pick": "Notre Dame",
+              "confidence": 22,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g21",
+              "gameNumber": 21,
+              "matchup": "Oklahoma vs Texas A&M",
+              "pick": "Oklahoma",
+              "confidence": 2,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g22",
+              "gameNumber": 22,
+              "matchup": "Ole Miss vs Wofford",
+              "pick": "Ole Miss",
+              "confidence": 25,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g23",
+              "gameNumber": 23,
+              "matchup": "Penn State vs Rutgers",
+              "pick": "Penn State",
+              "confidence": 21,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g24",
+              "gameNumber": 24,
+              "matchup": "Wisconsin vs Purdue",
+              "pick": "Wisconsin",
+              "confidence": 9,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g25",
+              "gameNumber": 25,
+              "matchup": "Texas Tech vs Baylor",
+              "pick": "Texas Tech",
+              "confidence": 11,
+              "source": "pool_sheet",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g26",
+              "gameNumber": 26,
+              "matchup": "UNC vs Virginia",
+              "pick": "UNC",
+              "confidence": 5,
+              "source": "pool_sheet",
+              "isMock": false
+            }
+          ]
+        },
+        {
+          "playerId": "chat-gpt",
+          "playerName": "Chat GPT",
+          "entered": true,
+          "participationSource": "pool_sheet",
+          "weeklyScore": null,
+          "isMockScore": false,
+          "source": "pool_sheet",
+          "isMockBallot": false,
+          "picks": [
+            {
+              "gameId": "2026-w12-g01",
+              "gameNumber": 1,
+              "matchup": "Alabama vs Chattanooga",
+              "pick": "Alabama",
+              "confidence": 26,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g02",
+              "gameNumber": 2,
+              "matchup": "Arkansas vs Texas",
+              "pick": "Texas",
+              "confidence": 19,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g03",
+              "gameNumber": 3,
+              "matchup": "Auburn vs Samford",
+              "pick": "Auburn",
+              "confidence": 24,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g04",
+              "gameNumber": 4,
+              "matchup": "Clemson vs Duke",
+              "pick": "Duke",
+              "confidence": 16,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g05",
+              "gameNumber": 5,
+              "matchup": "Colorado vs Cincinnati",
+              "pick": "Cincinnati",
+              "confidence": 4,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g06",
+              "gameNumber": 6,
+              "matchup": "Florida vs Vanderbilt",
+              "pick": "Florida",
+              "confidence": 15,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g07",
+              "gameNumber": 7,
+              "matchup": "Georgia vs South Carolina",
+              "pick": "Georgia",
+              "confidence": 18,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g08",
+              "gameNumber": 8,
+              "matchup": "Houston vs West Virginia",
+              "pick": "Houston",
+              "confidence": 12,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g09",
+              "gameNumber": 9,
+              "matchup": "Howard vs Norfolk State",
+              "pick": "Norfolk State",
+              "confidence": 8,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g10",
+              "gameNumber": 10,
+              "matchup": "Iowa vs Illinois",
+              "pick": "Iowa",
+              "confidence": 14,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g11",
+              "gameNumber": 11,
+              "matchup": "Indiana vs Washington",
+              "pick": "Indiana",
+              "confidence": 13,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g12",
+              "gameNumber": 12,
+              "matchup": "Kentucky vs Missouri",
+              "pick": "Missouri",
+              "confidence": 10,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g13",
+              "gameNumber": 13,
+              "matchup": "LSU vs Tennessee",
+              "pick": "Tennessee",
+              "confidence": 1,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g14",
+              "gameNumber": 14,
+              "matchup": "Miami vs Virginia Tech",
+              "pick": "Miami",
+              "confidence": 21,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g15",
+              "gameNumber": 15,
+              "matchup": "Michigan vs UCLA",
+              "pick": "UCLA",
+              "confidence": 6,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g16",
+              "gameNumber": 16,
+              "matchup": "Michigan State vs Oregon",
+              "pick": "Oregon",
+              "confidence": 17,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g17",
+              "gameNumber": 17,
+              "matchup": "Minnesota vs Northwestern",
+              "pick": "Northwestern",
+              "confidence": 7,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g18",
+              "gameNumber": 18,
+              "matchup": "Mississippi State vs Tennessee Tech",
+              "pick": "Mississippi State",
+              "confidence": 23,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g19",
+              "gameNumber": 19,
+              "matchup": "Nebraska vs Ohio State",
+              "pick": "Ohio State",
+              "confidence": 3,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g20",
+              "gameNumber": 20,
+              "matchup": "Notre Dame vs SMU",
+              "pick": "Notre Dame",
+              "confidence": 20,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g21",
+              "gameNumber": 21,
+              "matchup": "Oklahoma vs Texas A&M",
+              "pick": "Oklahoma",
+              "confidence": 11,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g22",
+              "gameNumber": 22,
+              "matchup": "Ole Miss vs Wofford",
+              "pick": "Ole Miss",
+              "confidence": 25,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g23",
+              "gameNumber": 23,
+              "matchup": "Penn State vs Rutgers",
+              "pick": "Penn State",
+              "confidence": 22,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g24",
+              "gameNumber": 24,
+              "matchup": "Wisconsin vs Purdue",
+              "pick": "Wisconsin",
+              "confidence": 9,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g25",
+              "gameNumber": 25,
+              "matchup": "Texas Tech vs Baylor",
+              "pick": "Texas Tech",
+              "confidence": 5,
+              "source": "chatgpt_pick",
+              "isMock": false
+            },
+            {
+              "gameId": "2026-w12-g26",
+              "gameNumber": 26,
+              "matchup": "UNC vs Virginia",
+              "pick": "Virginia",
+              "confidence": 2,
+              "source": "chatgpt_pick",
+              "isMock": false
+            }
+          ]
+        }
+      ]
     }
   ]
 }
