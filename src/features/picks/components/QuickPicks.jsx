@@ -1,7 +1,7 @@
 // Fill in every open game at once (or clear them), from one dropdown. Choosing an option applies
 // it and the menu goes back to its prompt. Games that have locked aren't touched.
 // Favorites: the betting favorite, else the Higher ranked order below (underdogs: the other team).
-// Higher ranked: CFP rankings → AP points → Coaches points → the favorite → win % vs common opponents → season win % → a coin flip.
+// Higher ranked: CFP rankings → AP points → Coaches points → the favorite → P4 > FBS > FCS → win % vs common opponents → season win % → a coin flip.
 const OPTIONS = [
   ['random', 'Random'], ['home', 'All home'], ['away', 'All away'],
   ['favorites', 'All favorites'], ['underdogs', 'All underdogs'], ['ranked', 'Higher ranked'],

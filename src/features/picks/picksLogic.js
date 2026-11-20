@@ -1,4 +1,4 @@
-import { isStartingSlateGame, gameWinnerId, POSTSEASON } from '@/services/espn/index.js';
+import { isStartingSlateGame, gameWinnerId, POSTSEASON, isP4, isFbsTeam } from '@/services/espn/index.js';
 
 // Plain functions for the Picks tab — no React, easy to test.
 
@@ -71,15 +71,18 @@ export function needsRankTiebreak(game, polls) {
   for (const map of [polls?.cfp, polls?.ap, polls?.coaches]) {
     if (map && (map.get(away.id) || 0) !== (map.get(home.id) || 0)) return false;
   }
-  return !game.line?.favorite;
+  return !game.line?.favorite && tier(away) === tier(home);
 }
+
+// Level of play: Power 4 (and Notre Dame) 3, other FBS 2, FCS and below 1.
+const tier = t => (isP4(t.name) || t.name === 'Notre Dame' ? 3 : isFbsTeam(t) ? 2 : 1);
 
 // Win % from a list of results ({ won }), or null if none.
 const resultsPct = games => (games?.length ? games.filter(g => g.won).length / games.length : null);
 
 // The higher-ranked team's id, by the first source that tells them apart: CFP rankings → AP
-// points (receiving-votes points count) → Coaches points → the betting favorite → win % against
-// common opponents → season win % → a coin flip.
+// points (receiving-votes points count) → Coaches points → the betting favorite → level of play
+// (Power 4 > other FBS > FCS) → win % against common opponents → season win % → a coin flip.
 // polls: { cfp, ap, coaches } from fetchPollScores (Maps teamId → score; higher = better), plus
 // common: Map gameId → [{ away: [results], home: [results] }] (commonOpponents) for the games
 // that reach that step.
@@ -91,6 +94,7 @@ export function higherRankedId(game, polls) {
     if (a !== h) return a > h ? away.id : home.id;
   }
   if (game.line?.favorite) return game.line.favorite;
+  if (tier(away) !== tier(home)) return tier(away) > tier(home) ? away.id : home.id;
   const common = polls?.common?.get(game.id);
   if (common?.length) {
     const ca = resultsPct(common.flatMap(r => r.away)), ch = resultsPct(common.flatMap(r => r.home));
@@ -103,7 +107,7 @@ export function higherRankedId(game, polls) {
 
 // mode: 'home' | 'away' | 'random' | 'favorites' | 'underdogs' | 'ranked' → { gameId: teamId }
 // Favorites (and underdogs, the other team): the betting favorite, else the Higher ranked
-// progression (CFP → AP → Coaches → common opponents → season win % → coin flip). favoriteId
+// progression (CFP → AP → Coaches → level of play → common opponents → season win % → coin flip). favoriteId
 // above stays deterministic for Insights. ('ranked', 'favorites', 'underdogs' need polls, with
 // polls.common for the games that reach the common-opponent step.)
 export function quickPickWinners(games, mode, polls = null) {
