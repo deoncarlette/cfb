@@ -57,8 +57,16 @@ export function favoriteId(game) {
   return home.id;
 }
 
+// Season win percentage from a "7-3" (or "7-3-1", ties as half) record; null if unknown.
+function winPct(record) {
+  const [w, l, t = 0] = String(record || '').split('-').map(Number);
+  if ([w, l, t].some(Number.isNaN) || w + l + t === 0) return null;
+  return (w + t / 2) / (w + l + t);
+}
+
 // The higher-ranked team's id, by the first source that tells them apart: CFP rankings → AP
-// points (receiving-votes points count) → Coaches points → the betting favorite → a coin flip.
+// points (receiving-votes points count) → Coaches points → the betting favorite → season win
+// percentage → a coin flip.
 // polls: { cfp, ap, coaches } from fetchPollScores (Maps teamId → score; higher = better).
 export function higherRankedId(game, polls) {
   const [away, home] = game.competitors;
@@ -68,6 +76,8 @@ export function higherRankedId(game, polls) {
     if (a !== h) return a > h ? away.id : home.id;
   }
   if (game.line?.favorite) return game.line.favorite;
+  const wa = winPct(away.record), wh = winPct(home.record);
+  if (wa != null && wh != null && wa !== wh) return wa > wh ? away.id : home.id;
   return Math.random() < 0.5 ? away.id : home.id;
 }
 
