@@ -11,10 +11,10 @@ import { DEFAULT_PLAYER } from './sample/samplePicks.js';
 import { useNav, navigate } from '@/shared/nav.js';
 import { Segmented } from '@/shared/components/Segmented.jsx';
 import { useStoredState } from '@/shared/hooks/useStoredState.js';
-import { fetchPollScores, rankSourceFor } from '@/services/espn/index.js';
+import { fetchPollScores, rankSourceFor, commonOpponents } from '@/services/espn/index.js';
 import { ReplayScheduleToggle } from '@/shared/components/ReplayScheduleToggle.jsx';
 import { replaySchedule } from '@/services/espn/replay.js';
-import { shuffled, quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding } from './picksLogic.js';
+import { shuffled, quickPickWinners, buildPicksMap, restoreSavedPicks, togglePick, pickResult, weekTotals, liveStanding, needsRankTiebreak } from './picksLogic.js';
 import { WeekResults } from './components/WeekResults.jsx';
 import { useSeasonStats } from './hooks/useSeasonStats.js';
 import { QuickPicks } from './components/QuickPicks.jsx';
@@ -251,7 +251,13 @@ export function WeekPicks({ week, userName, nameKey }) {
               <QuickPicks
                 onPick={async mode => {
                   // Higher ranked needs this week's polls (the ones out before its games).
-                  const polls = mode === 'ranked' ? await fetchPollScores(typeof week === 'number' ? Math.max(1, week) : null) : null;
+                  let polls = mode === 'ranked' ? await fetchPollScores(typeof week === 'number' ? Math.max(1, week) : null) : null;
+                  if (polls) {
+                    // Common opponents only for games the polls and the line can't settle.
+                    const tied = openGames.filter(g => needsRankTiebreak(g, polls));
+                    const lists = await Promise.all(tied.map(g => commonOpponents(g.competitors[0].id, g.competitors[1].id).catch(() => [])));
+                    polls = { ...polls, common: new Map(tied.map((g, i) => [g.id, lists[i]])) };
+                  }
                   setWinners(w => mode === 'clear'
                     ? Object.fromEntries(Object.entries(w).filter(([id]) => isLocked(id)))
                     : { ...w, ...quickPickWinners(openGames, mode, polls) });

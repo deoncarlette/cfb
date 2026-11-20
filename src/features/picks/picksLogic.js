@@ -64,10 +64,25 @@ function winPct(record) {
   return (w + t / 2) / (w + l + t);
 }
 
+// The polls and the line can't tell the two teams apart (Higher ranked then needs the common
+// opponents, which take a fetch, before falling back to records).
+export function needsRankTiebreak(game, polls) {
+  const [away, home] = game.competitors;
+  for (const map of [polls?.cfp, polls?.ap, polls?.coaches]) {
+    if (map && (map.get(away.id) || 0) !== (map.get(home.id) || 0)) return false;
+  }
+  return !game.line?.favorite;
+}
+
+// Win % from a list of results ({ won }), or null if none.
+const resultsPct = games => (games?.length ? games.filter(g => g.won).length / games.length : null);
+
 // The higher-ranked team's id, by the first source that tells them apart: CFP rankings → AP
-// points (receiving-votes points count) → Coaches points → the betting favorite → season win
-// percentage → a coin flip.
-// polls: { cfp, ap, coaches } from fetchPollScores (Maps teamId → score; higher = better).
+// points (receiving-votes points count) → Coaches points → the betting favorite → win % against
+// common opponents → season win % → a coin flip.
+// polls: { cfp, ap, coaches } from fetchPollScores (Maps teamId → score; higher = better), plus
+// common: Map gameId → [{ away: [results], home: [results] }] (commonOpponents) for the games
+// that reach that step.
 export function higherRankedId(game, polls) {
   const [away, home] = game.competitors;
   for (const map of [polls?.cfp, polls?.ap, polls?.coaches]) {
@@ -76,6 +91,11 @@ export function higherRankedId(game, polls) {
     if (a !== h) return a > h ? away.id : home.id;
   }
   if (game.line?.favorite) return game.line.favorite;
+  const common = polls?.common?.get(game.id);
+  if (common?.length) {
+    const ca = resultsPct(common.flatMap(r => r.away)), ch = resultsPct(common.flatMap(r => r.home));
+    if (ca != null && ch != null && ca !== ch) return ca > ch ? away.id : home.id;
+  }
   const wa = winPct(away.record), wh = winPct(home.record);
   if (wa != null && wh != null && wa !== wh) return wa > wh ? away.id : home.id;
   return Math.random() < 0.5 ? away.id : home.id;
