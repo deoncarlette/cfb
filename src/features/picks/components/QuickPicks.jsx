@@ -1,6 +1,6 @@
 // Fill in every open game at once (or clear them), from one dropdown. Choosing an option applies
 // it and the menu goes back to its prompt. Games that have locked aren't touched.
-// Favorites come from the betting line; games without one use the better-ranked team, then home.
+// Favorites: the betting line → the better rank → win % vs common opponents → season win % → a coin flip.
 // Higher ranked: CFP rankings → AP points → Coaches points → the favorite → win % vs common opponents → season win % → a coin flip.
 const OPTIONS = [
   ['random', 'Random'], ['home', 'All home'], ['away', 'All away'],

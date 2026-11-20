@@ -101,13 +101,37 @@ export function higherRankedId(game, polls) {
   return Math.random() < 0.5 ? away.id : home.id;
 }
 
+// Whether the line and the ranks can't name a favorite (All favorites / All underdogs then need
+// the common opponents, which take a fetch).
+export function needsFavoriteTiebreak(game) {
+  const [away, home] = game.competitors;
+  return !game.line?.favorite && (Number(away.rank) || 99) === (Number(home.rank) || 99);
+}
+
+// Favorite for the quick picks: the line → the better rank → win % against common opponents →
+// season win % → a coin flip. (favoriteId above stays deterministic — home team last — for
+// Insights and the other places that label underdogs.)
+// common: Map gameId → commonOpponents rows, for the games that reach that step.
+function quickFavoriteId(game, common) {
+  if (!needsFavoriteTiebreak(game)) return favoriteId(game);
+  const [away, home] = game.competitors;
+  const rows = common?.get(game.id);
+  if (rows?.length) {
+    const ca = resultsPct(rows.flatMap(r => r.away)), ch = resultsPct(rows.flatMap(r => r.home));
+    if (ca != null && ch != null && ca !== ch) return ca > ch ? away.id : home.id;
+  }
+  const wa = winPct(away.record), wh = winPct(home.record);
+  if (wa != null && wh != null && wa !== wh) return wa > wh ? away.id : home.id;
+  return Math.random() < 0.5 ? away.id : home.id;
+}
+
 // mode: 'home' | 'away' | 'random' | 'favorites' | 'underdogs' | 'ranked' → { gameId: teamId }
-// ('ranked' needs polls.)
-export function quickPickWinners(games, mode, polls = null) {
+// ('ranked' needs polls; polls.common / common: common-opponent rows for tie-breaking.)
+export function quickPickWinners(games, mode, polls = null, common = null) {
   const next = {};
   games.forEach(g => {
     const [away, home] = g.competitors;
-    const fav = favoriteId(g);
+    const fav = mode === 'favorites' || mode === 'underdogs' ? quickFavoriteId(g, common) : null;
     if (mode === 'home') next[g.id] = home.id;
     else if (mode === 'away') next[g.id] = away.id;
     else if (mode === 'random') next[g.id] = Math.random() < 0.5 ? away.id : home.id;
