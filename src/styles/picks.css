@@ -68,13 +68,12 @@
 /* Score sits by the seam; the losing team's score dims. */
 .team-score{position:relative; z-index:1; font-family:var(--display); font-weight:800; font-size:28px; line-height:1; font-variant-numeric:tabular-nums;}
 .matchup-side.lost .team-score{opacity:.5;}
-/* Possession: a small football just inside the score, on the side with the ball. White on dark
-   sides, the side's ink on light fills; laces cut out in the side's background. */
-.has-ball{flex:none; width:17px; height:10px; margin:0 -2px 0 2px; color:#fff; --ball-lace:#111; filter:drop-shadow(0 1px 1px rgba(0,0,0,.45)); position:relative; z-index:1;}
+/* Possession: a small football just inside the score, on the side with the ball — the same
+   color as the score (it inherits the side's text color), laces cut out in the side's fill. */
+.has-ball{flex:none; width:17px; height:10px; margin:0 -2px 0 2px; color:inherit; --ball-lace:var(--pill-side); position:relative; z-index:1;}
 .matchup-side.home .has-ball{margin:0 2px 0 -2px;}
-.matchup-side.sel .has-ball{color:var(--fill-ink); --ball-lace:var(--fill);}
-:root[data-theme="light"] .matchup-side:not(.sel) .has-ball{color:var(--text); --ball-lace:var(--pill-side);}
-@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]) .matchup-side:not(.sel) .has-ball{color:var(--text); --ball-lace:var(--pill-side);} }
+.matchup-side.sel .has-ball{--ball-lace:var(--fill);}
+.matchup-side.lost .has-ball{opacity:.5;}
 .team-rank{flex-shrink:0; font-family:var(--display); font-style:italic; font-size:15px; font-weight:600; color:var(--pill-rank);}
 .matchup-side.sel .team-rank{color:inherit; opacity:.85;}
 /* Short name (MICH) — used on phones. */
