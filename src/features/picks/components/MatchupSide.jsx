@@ -7,7 +7,15 @@ import { useDocTheme } from '@/shared/hooks/useDocTheme.js';
 // One half of the matchup pill. Not picked: plain name (white in dark mode) with the team's logo.
 // Picked: filled with the team's color. Tap again to clear.
 // side: 'away' (left) or 'home' (right, mirrored). score shows once the game has started.
-export function MatchupSide({ team, side, selected, lost, score, disabled, onClick }) {
+// hasBall: live game, this team has possession → a small football just inside the score.
+const Football = () => (
+  <svg className="has-ball" viewBox="0 0 24 14" aria-hidden="true">
+    <ellipse cx="12" cy="7" rx="11" ry="6.2" fill="currentColor" />
+    <path d="M7.5 7h9M10 5.4v3.2M12 5.2v3.6M14 5.4v3.2" stroke="var(--ball-lace)" strokeWidth="1.2" strokeLinecap="round" />
+  </svg>
+);
+
+export function MatchupSide({ team, side, selected, lost, score, hasBall, disabled, onClick }) {
   const rank = displayRank(team);
   const fill = teamFill(team);
   const ink = textForBackground(fill);
@@ -34,7 +42,7 @@ export function MatchupSide({ team, side, selected, lost, score, disabled, onCli
       className={`matchup-side ${side}` + (selected ? ' sel' : '') + (lost ? ' lost' : '')}
       style={{ '--fill': fill, '--fill-ink': ink }}
       aria-pressed={selected}
-      aria-label={`${team.name}${score != null ? ` ${score}` : ''}${selected ? ', your pick' : ''}`}
+      aria-label={`${team.name}${score != null ? ` ${score}` : ''}${hasBall ? ', has the ball' : ''}${selected ? ', your pick' : ''}`}
       disabled={disabled}
       onClick={onClick}
     >
@@ -45,6 +53,7 @@ export function MatchupSide({ team, side, selected, lost, score, disabled, onCli
         <span className="team-name team-abbr">{team.abbr || team.name}</span>
         {team.record && <span className="team-record">{team.record}</span>}
       </span>
+      {hasBall && <Football />}
       {score != null && <span className="team-score">{score}</span>}
     </button>
   );
