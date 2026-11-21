@@ -204,9 +204,6 @@ export function WeekPicks({ week, userName, nameKey }) {
           {viewing && !lock.anyLocked && (
             <p className="sample-note">{viewing}'s {label} picks show once games lock. <button type="button" className="link" onClick={() => setViewing('')}>Show mine</button></p>
           )}
-          {viewingOther && !viewed && (
-            <p className="sample-note">{sample?.hidden ? `Everyone's ${label} picks show after 8 PM Friday.` : `No picks saved for ${viewing} in ${label}.`}</p>
-          )}
           {viewingOther && viewed?.isMock && <p className="sample-note">Some of {viewing}'s picks are simulated for this preview.</p>}
           {!viewing && !existing && sample && !sample.playerName && !sample.hidden && (
             <p className="sample-note">{DEFAULT_PLAYER} didn't play {label}. Choose a player above to see their picks.</p>
@@ -234,11 +231,20 @@ export function WeekPicks({ week, userName, nameKey }) {
               <ReplayScheduleToggle />
             </div>
           )}
-          {(!viewingOther || viewed) && (totals.decided > 0 || anyLive || season) && (
-            <WeekResults totals={totals} season={season} showWeek={totals.decided > 0 || anyLive} />
+          {/* A player with no picks this week still gets their stats: 0–0 this week (nothing in
+              play) and their season, then the note. */}
+          {(totals.decided > 0 || anyLive || season) && (
+            <WeekResults
+              totals={viewingOther && !viewed ? { right: 0, wrong: 0, earned: 0, maxPossible: 0, total: 0, decided: totals.decided, noPicks: true } : totals}
+              season={season}
+              showWeek={totals.decided > 0 || anyLive}
+            />
           )}
           {anyLive && updatedAt && (
             <p className="muted small center live-updated">Live scores update every 30 seconds. Last updated {updatedAt.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}.</p>
+          )}
+          {viewingOther && !viewed && (
+            <p className="sample-note">{sample?.hidden ? `Everyone's ${label} picks show after 8 PM Friday.` : `No picks saved for ${viewing} in ${label}.`}</p>
           )}
           {!lock.allLocked && !viewingOther && (
             <>

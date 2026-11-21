@@ -5,7 +5,7 @@
 // are added on so the second row reads "season so far".
 export function WeekResults({ totals, season, showWeek = true }) {
   const inPlay = totals.maxPossible - totals.earned;
-  const allDone = inPlay === 0;
+  const allDone = inPlay === 0 && !totals.noPicks;
   return (
     <>
       {showWeek && (
