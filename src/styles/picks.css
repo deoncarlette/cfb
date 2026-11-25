@@ -119,6 +119,18 @@
   .team-name{display:none;}
   .team-abbr{display:block;}
 }
+/* Same, by screen width, for phones whose browser doesn't do container queries (older iOS,
+   e.g. an iPhone X that stopped at an older Safari) — and as a backstop on every phone. */
+@media (max-width:430px){
+  .team-name{display:none;}
+  .team-abbr{display:block;}
+}
+@supports not (container-type: inline-size){
+  @media (max-width:600px){
+    .team-name{display:none;}
+    .team-abbr{display:block;}
+  }
+}
 
 /* Live games */
 .live-badge{display:inline-flex; align-items:center; gap:5px; color:var(--danger); font-weight:700; margin-right:4px;}
