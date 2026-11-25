@@ -20,6 +20,7 @@ import { useSeasonStats } from './hooks/useSeasonStats.js';
 import { QuickPicks } from './components/QuickPicks.jsx';
 import { GameCard } from './components/GameCard.jsx';
 import { SubmitPicks } from './components/SubmitPicks.jsx';
+import { loadDraft, saveDraft, clearDraft } from './pickDrafts.js';
 
 // One week's picks (or the bowl games): choose a winner on each game card, then order the
 // cards by confidence. Once games go final, each card shows the score and the points earned.
@@ -32,6 +33,7 @@ export function WeekPicks({ week, userName, nameKey }) {
   const [existing, setExisting] = useState(null);
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState(null);
+  const [draft, setDraft] = useState(null); // unsubmitted picks saved on this device
   // Whose picks are on the cards: '' = yours; else another player's (in the address, so the
   // Scoreboard can link here and Back returns).
   const nav = useNav();
@@ -51,6 +53,18 @@ export function WeekPicks({ week, userName, nameKey }) {
     const restored = restoreSavedPicks(entry, games);
     setWinners(restored.winners);
     setOrder(withMissedAtBottom(restored.order, entry));
+  }
+
+  // A draft saved on this device goes on top of whatever entry is showing: its picks for games
+  // still open, and its card order if it's for the same set of games.
+  function applyDraft(d = loadDraft(week), source = savedSource()) {
+    setDraft(d);
+    if (!d) return;
+    const ids = new Set(games.map(g => g.id));
+    const open = Object.entries(d.winners || {}).filter(([id]) => ids.has(id) && !isLocked(id));
+    setWinners(w => ({ ...Object.fromEntries(Object.entries(w).filter(([id]) => isLocked(id))), ...Object.fromEntries(open) }));
+    const sameGames = d.order?.length === ids.size && d.order.every(id => ids.has(id));
+    if (sameGames) setOrder(withMissedAtBottom(d.order, source));
   }
 
   // Missed games — locked with no saved pick (none saved, or only picked on the page and never
@@ -88,6 +102,7 @@ export function WeekPicks({ week, userName, nameKey }) {
   useEffect(() => {
     setExisting(null);
     showEntry(sample);
+    applyDraft(loadDraft(week), sample);
     if (games.length && userName.trim()) loadExistingPicks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slateKey]);
@@ -103,7 +118,7 @@ export function WeekPicks({ week, userName, nameKey }) {
       : {};
     const mine = saved && Object.keys(fill).length ? { ...saved, picks: { ...fill, ...saved.picks } } : saved;
     setExisting(mine);
-    if (mine) showEntry(mine); // nothing saved under this name: leave the cards as they are
+    if (mine) { showEntry(mine); applyDraft(loadDraft(week), mine); } // nothing saved under this name: leave the cards as they are
   }
 
   async function handleSubmit() {
@@ -116,9 +131,20 @@ export function WeekPicks({ week, userName, nameKey }) {
       if (lockedSource?.picks?.[id]) picksMap[id] = lockedSource.picks[id]; else delete picksMap[id];
     });
     await submitPicks(week, userName, picksMap);
+    clearDraft(week); setDraft(null);
     setExisting({ picks: picksMap });
     setSavedAt(Date.now());
     setSaving(false);
+  }
+
+  function handleSaveDraft() {
+    const open = Object.fromEntries(Object.entries(winners).filter(([id]) => !isLocked(id)));
+    setDraft(saveDraft(week, open, order));
+  }
+  // Clear: drop the draft and every pick on a game that's still open.
+  function handleClearDraft() {
+    clearDraft(week); setDraft(null);
+    setWinners(w => Object.fromEntries(Object.entries(w).filter(([id]) => isLocked(id))));
   }
 
   const gameById = useMemo(() => Object.fromEntries(games.map(g => [g.id, g])), [games]);
@@ -324,6 +350,10 @@ export function WeekPicks({ week, userName, nameKey }) {
               locked={false}
               saved={!!savedAt}
               onSubmit={handleSubmit}
+              draftAt={draft?.savedAt}
+              canSaveDraft={openGames.some(g => winners[g.id])}
+              onSaveDraft={handleSaveDraft}
+              onClear={handleClearDraft}
             />
           )}
           {lock.allLocked && <p className="muted small center">Picks are locked.</p>}
