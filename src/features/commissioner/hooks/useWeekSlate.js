@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { lockInfo } from '@/features/picks/picksLogic.js';
 import { fetchGamesFor, applyRankOverlay, isStartingSlateGame, POSTSEASON } from '@/services/espn/index.js';
-import { getWeekConfig, saveWeekConfig, getSlateDefaults } from '@/services/data/index.js';
+import { getWeekConfig, saveWeekConfig, clearWeekConfig, getSlateDefaults } from '@/services/data/index.js';
 import { toDatetimeLocal } from '@/shared/utils/dates.js';
 import { weekLabel } from '@/shared/components/WeekSelect.jsx';
 import { samplePicksForWeek } from '@/features/picks/sample/samplePicks.js';
@@ -72,6 +72,16 @@ export function useWeekSlate(week) {
     setSaving(false);
   }
 
+  // Undo this week's saved settings: back to the week's loaded slate (or the defaults) and its
+  // default lock. Reloads everything from scratch.
+  async function reset() {
+    setSaving(true);
+    await clearWeekConfig(week);
+    setSaving(false);
+    await pullGames();
+    setStatus(`${weekLabel(week)} is back to its starting games and lock time.`);
+  }
+
   const dirty = savedKey !== slateKey([...includedIds], lockMode, deadline);
   // Once the week starts locking (by the SAVED settings — what players see; with none saved,
   // the default: first kickoff of the selected games), its settings are frozen too.
@@ -82,5 +92,5 @@ export function useWeekSlate(week) {
     if (savedCfg || week === POSTSEASON) return;
     setIncludedIds(new Set(games.filter(g => isStartingSlateGame(g, defaults)).map(g => g.id)));
   }
-  return { applyDefaults, saved: !!savedCfg, games, includedIds, deadline, setDeadline, lockMode, setLockMode, status, pulling, saving, dirty, lock, pullGames, toggle, selectAll, deselectAll, save };
+  return { applyDefaults, saved: !!savedCfg, games, includedIds, deadline, setDeadline, lockMode, setLockMode, status, pulling, saving, dirty, lock, pullGames, toggle, selectAll, deselectAll, save, reset };
 }

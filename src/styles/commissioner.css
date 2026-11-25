@@ -80,3 +80,5 @@
 .defaults-cats{display:grid; grid-template-columns:1fr 1fr; gap:6px 12px; margin:6px 0 12px;}
 .defaults-cats .check{display:flex; align-items:center; justify-content:flex-start; gap:8px; font-size:14px; font-weight:500; color:var(--text); margin:0; text-align:left;}
 .defaults-cats .check input{width:auto; flex:none; margin:0;}
+
+.reset-week{display:block; margin:10px auto 0; font-size:13px;}

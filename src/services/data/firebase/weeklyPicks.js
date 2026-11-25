@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc, collection, getDocs } from 'firebase/firestore';
+import { doc, getDoc, setDoc, deleteDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from './client.js';
 import { slugify } from '@/shared/utils/slugify.js';
 
@@ -16,6 +16,11 @@ export async function getWeekConfig(week) {
   if (!snap.exists()) return { includedGameIds: null, deadlineIso: null, lockMode: 'slate' };
   const data = snap.data();
   return { includedGameIds: data.includedGameIds ?? null, deadlineIso: data.deadlineIso ?? null, lockMode: data.lockMode === 'kickoff' ? 'kickoff' : 'slate' };
+}
+
+// Forget a week's saved settings: it goes back to its loaded slate (or the defaults).
+export async function clearWeekConfig(week) {
+  await deleteDoc(doc(db, 'weeks', String(week)));
 }
 
 // lockMode: 'slate' = every game locks at once (deadlineIso, or the first kickoff);

@@ -110,6 +110,11 @@ export function WeekSlatePanel() {
           {slate.saving ? 'Saving…' : slate.dirty ? "Save this week's settings" : 'Saved'}
         </button>
       )}
+      {!frozen && slate.saved && (
+        <button type="button" className="link reset-week" onClick={slate.reset} disabled={slate.saving}>
+          Reset to the starting games and lock time
+        </button>
+      )}
     </div>
   );
 }

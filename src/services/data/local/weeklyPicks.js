@@ -6,6 +6,10 @@ export async function getWeekConfig(week) {
   const w = load().weeks?.[week];
   return withPreset(week, { includedGameIds: w?.includedGameIds ?? null, deadlineIso: w?.deadlineIso ?? null, lockMode: w?.lockMode === 'kickoff' ? 'kickoff' : 'slate' });
 }
+// Forget a week's saved settings: it goes back to its loaded slate (or the defaults).
+export async function clearWeekConfig(week) {
+  const d = load(); if (d.weeks) delete d.weeks[week]; save(d);
+}
 export async function saveWeekConfig(week, includedGameIds, deadlineIso, lockMode = 'slate') {
   const d = load(); d.weeks = d.weeks || {};
   d.weeks[week] = { ...(d.weeks[week] || {}), includedGameIds: includedGameIds ?? null, deadlineIso: deadlineIso ?? null, lockMode: lockMode === 'kickoff' ? 'kickoff' : 'slate' };
