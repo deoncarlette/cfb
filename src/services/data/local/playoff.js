@@ -3,7 +3,7 @@ import { slugify } from '@/shared/utils/slugify.js';
 
 export async function getPlayoffConfig(season) {
   const p = load().playoff?.[season] || {};
-  return { seeds: p.seeds ?? [], lockIso: p.lockIso ?? null, results: p.results ?? {}, championshipTotal: p.championshipTotal ?? null };
+  return { seeds: p.seeds ?? [], lockIso: p.lockIso ?? null, results: p.results ?? {}, championshipTotal: p.championshipTotal ?? null, bowls: p.bowls ?? {} };
 }
 export async function savePlayoffConfig(season, config) {
   const d = load(); d.playoff = d.playoff || {};

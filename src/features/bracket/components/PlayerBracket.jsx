@@ -2,7 +2,7 @@ import { pickStatus } from '../bracketLogic.js';
 import { BracketView } from './BracketView.jsx';
 
 // Read-only view of someone else's bracket (opened from Standings after lock).
-export function PlayerBracket({ entry, seeds, results, anyResults, eliminated, onClose }) {
+export function PlayerBracket({ entry, seeds, results, anyResults, eliminated, bowls, onClose }) {
   const picks = entry.picks || {};
   return (
     <>
@@ -18,6 +18,7 @@ export function PlayerBracket({ entry, seeds, results, anyResults, eliminated, o
           winners={picks}
           statusFor={anyResults ? key => pickStatus(key, picks, results, eliminated) : null}
           locked
+          bowls={bowls}
         />
       </div>
     </>

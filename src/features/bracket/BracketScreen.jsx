@@ -48,6 +48,7 @@ export function BracketScreen({ userName = '', nameKey = 0 }) {
               onPick={my.pick}
               statusFor={anyResults ? key => pickStatus(key, my.picks, results, eliminated) : null}
               locked={locked}
+              bowls={config?.bowls}
             />
           </div>
           <BracketActions my={my} projection={projection} locked={locked} />
@@ -67,7 +68,7 @@ export function BracketScreen({ userName = '', nameKey = 0 }) {
       )}
 
       {view === 'standings' && viewing && (
-        <PlayerBracket entry={viewing} seeds={seeds} results={results} anyResults={anyResults} eliminated={eliminated} onClose={() => setViewing(null)} />
+        <PlayerBracket entry={viewing} seeds={seeds} results={results} anyResults={anyResults} eliminated={eliminated} bowls={config?.bowls} onClose={() => setViewing(null)} />
       )}
     </div>
   );

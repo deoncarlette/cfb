@@ -39,11 +39,31 @@ export function projectField(teams) {
 }
 
 export const ROUNDS = [
-  { id: 'r1', label: 'First Round', short: 'R1' },
-  { id: 'qf', label: 'Quarterfinals', short: 'QF' },
-  { id: 'sf', label: 'Semifinals', short: 'SF' },
-  { id: 'nc', label: 'Championship', short: 'Title' }
+  { id: 'r1', label: 'First Round', short: 'R1', when: 'Dec 18–19 · on campus' },
+  { id: 'qf', label: 'Quarterfinals', short: 'QF', when: 'Dec 30 – Jan 1 · bowls' },
+  { id: 'sf', label: 'Semifinals', short: 'SF', when: 'Jan 14–15 · bowls' },
+  { id: 'nc', label: 'Championship', short: 'Title', when: 'Jan 25 · Las Vegas' }
 ];
+
+// 2026–27 CFP bowl rotation. Which seed plays in which bowl is set on Selection Day, so the
+// commissioner assigns them per game (playoff config `bowls: { gameKey: bowlId }`).
+// The title game is fixed: Allegiant Stadium, Las Vegas.
+export const CFP_BOWLS = [
+  { id: 'fiesta', name: 'Fiesta Bowl', round: 'qf', date: 'Wed, Dec 30', place: 'Glendale, AZ' },
+  { id: 'peach', name: 'Peach Bowl', round: 'qf', date: 'Fri, Jan 1', place: 'Atlanta' },
+  { id: 'rose', name: 'Rose Bowl', round: 'qf', date: 'Fri, Jan 1', place: 'Pasadena, CA' },
+  { id: 'cotton', name: 'Cotton Bowl', round: 'qf', date: 'Fri, Jan 1', place: 'Arlington, TX' },
+  { id: 'orange', name: 'Orange Bowl', round: 'sf', date: 'Thu, Jan 14', place: 'Miami Gardens, FL' },
+  { id: 'sugar', name: 'Sugar Bowl', round: 'sf', date: 'Fri, Jan 15', place: 'New Orleans' }
+];
+export const BOWL_BY_ID = Object.fromEntries(CFP_BOWLS.map(b => [b.id, b]));
+export const TITLE_GAME = { name: 'National Championship', date: 'Mon, Jan 25', place: 'Las Vegas' };
+
+// The bowl (or title game) for one bracket game, given the saved assignments.
+export function bowlFor(gameKey, bowls) {
+  if (gameKey === 'nc') return TITLE_GAME;
+  return BOWL_BY_ID[bowls?.[gameKey]] || null;
+}
 
 // Doubles each round, March Madness style. Max possible = 4*10 + 4*20 + 2*40 + 80 = 280.
 // Change these freely — every score is computed live from this table, nothing is stored.

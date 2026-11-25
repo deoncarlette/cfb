@@ -3,7 +3,7 @@
 .bracket-page{padding-bottom:40px;}
 .bracket-pad{padding-bottom:0;}
 .bracket-pad .panel:last-child{margin-bottom:0;}
-.bracket-wrap{max-width:1320px; margin:16px auto; padding:0 16px;}
+.bracket-wrap{max-width:1100px; margin:16px auto; padding:0 16px;}
 .bracket-wrap.in-panel{padding:0; margin:14px 0;}
 .bk-notice{font-size:13px; line-height:1.5; color:var(--muted); background:var(--raised); border-radius:10px; padding:10px 12px; margin:0 0 14px;}
 
@@ -11,16 +11,27 @@
 /* Phones: one round per swipe, the next round peeking in from the right. */
 .bk-grid.narrow{grid-auto-flow:column; grid-auto-columns:84%; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:8px; -webkit-overflow-scrolling:touch;}
 .bk-grid.narrow .bk-col{scroll-snap-align:start;}
-/* Wide screens: symmetric, title game in the middle. */
-.bk-grid.wide{grid-template-columns:repeat(3, minmax(0,1fr)) minmax(0,1.2fr) repeat(3, minmax(0,1fr)); gap:12px;}
+/* With room: rounds left to right, four rows (one per quarterfinal). Each game centers in its
+   rows, so a semifinal sits between its two quarterfinals and the title game in the middle. */
+.bk-grid.wide{grid-template-columns:repeat(4, minmax(0,1fr)); grid-template-rows:auto repeat(4, minmax(118px, auto)); gap:14px 22px;}
+.bk-grid.wide .bk-cell{align-self:center; display:flex; flex-direction:column; gap:14px; min-width:0;}
+.bk-grid.wide .bk-record{display:none;}
+.bk-grid.wide.roomy .bk-record{display:inline;}
+/* A short rule from each game toward the next round. */
+.bk-grid.wide .bk-cell:not(.bk-nc) .bk-match{position:relative;}
+.bk-grid.wide .bk-cell:not(.bk-nc) .bk-match::after{content:''; position:absolute; left:100%; top:50%; width:22px; border-top:1px solid var(--line-strong);}
 
 .bk-col{display:flex; flex-direction:column; min-width:0;}
-.bk-col-head{font-size:13px; font-weight:700; color:var(--muted); text-align:center; padding-bottom:10px;}
+.bk-col-head{display:flex; flex-direction:column; align-items:center; gap:2px; font-size:13px; font-weight:700; color:var(--text); text-align:center; padding-bottom:10px;}
+.bk-col-when{font-size:12px; font-weight:500; color:var(--muted);}
 /* space-around keeps each later-round game vertically centered between its two feeders. */
-.bk-col-body{flex:1; display:flex; flex-direction:column; justify-content:space-around; gap:12px;}
-.bk-grid.wide .bk-col-body{min-height:520px;}
-.bk-grid.wide .bk-record{display:none;}
+.bk-col-body{flex:1; display:flex; flex-direction:column; justify-content:space-around; gap:14px;}
 .bk-nc .bk-col-body{justify-content:center; gap:16px;}
+
+.bk-game{display:flex; flex-direction:column; gap:5px; min-width:0;}
+.bk-bowl{display:flex; justify-content:space-between; gap:8px; padding:0 4px; font-size:12px; color:var(--muted); white-space:nowrap;}
+.bk-bowl-name{font-weight:700; color:var(--text); overflow:hidden; text-overflow:ellipsis;}
+.bk-bowl.tba .bk-bowl-name{font-weight:500; color:var(--muted);}
 
 .bk-match{display:flex; flex-direction:column; gap:3px; padding:4px; background:var(--surface); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow);}
 .bk-match.title{border-color:var(--accent);}
@@ -62,6 +73,9 @@
 .seed-row{display:flex; align-items:center; gap:10px;}
 .seed-row select{margin:0;}
 .seed-num{font-family:var(--display); font-weight:800; font-style:italic; font-size:18px; min-width:22px; text-align:right;}
+/* Bowl assignments: fixed label column so the dropdowns line up. */
+.bowl-row{display:grid; grid-template-columns:96px minmax(0,1fr);}
+.bowl-game{font-size:13px; font-weight:600; white-space:nowrap;}
 @media (max-width:480px){ .seed-grid{grid-template-columns:1fr;} }
 
 /* Bracket standings */
