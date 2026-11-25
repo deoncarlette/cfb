@@ -10,11 +10,8 @@ export const SEED_NUMBERS = Array.from({ length: 12 }, (_, i) => i + 1);
 
 // Commissioner's playoff setup: the 12 seeds, lock time, and results as games finish.
 // The playoff settings Save would write, as a comparable string.
-const playoffKey = (seeds, lock, results, title, bowls) =>
-  JSON.stringify([seeds, lock || '', Object.entries(results || {}).sort(), title, BOWL_GAMES.map(k => bowls?.[k] || null)]);
-
-// Bracket games played in a bowl (the commissioner assigns which bowl after Selection Day).
-export const BOWL_GAMES = ['qf1', 'qf2', 'qf3', 'qf4', 'sf1', 'sf2'];
+const playoffKey = (seeds, lock, results, title) =>
+  JSON.stringify([seeds, lock || '', Object.entries(results || {}).sort(), title]);
 
 export function usePlayoffAdmin() {
   const [candidates, setCandidates] = useState([]); // ranked teams to choose seeds from
@@ -24,7 +21,6 @@ export function usePlayoffAdmin() {
   const [lock, setLock] = useState('');
   const [results, setResults] = useState({});
   const [titleTotal, setTitleTotal] = useState('');
-  const [bowls, setBowls] = useState({}); // { gameKey: bowlId }
   const [entryCount, setEntryCount] = useState(0);
   const [status, setStatus] = useState('Loading…');
   const [busy, setBusy] = useState(false);
@@ -45,9 +41,8 @@ export function usePlayoffAdmin() {
       setLock(toDatetimeLocal(cfg.lockIso));
       setResults(cfg.results);
       setTitleTotal(cfg.championshipTotal ?? '');
-      setBowls(cfg.bowls || {});
       setSavedLock({ lockIso: cfg.lockIso, results: Object.keys(cfg.results || {}).length, seeds: cfg.seeds.length });
-      setSavedKey(playoffKey(cfg.seeds.map(t => [t.seed, t.id]), toDatetimeLocal(cfg.lockIso), cfg.seeds.length === 12 ? cfg.results : {}, cfg.championshipTotal ?? null, cfg.bowls));
+      setSavedKey(playoffKey(cfg.seeds.map(t => [t.seed, t.id]), toDatetimeLocal(cfg.lockIso), cfg.seeds.length === 12 ? cfg.results : {}, cfg.championshipTotal ?? null));
       setEntryCount(brackets.length);
       setStatus(cfg.seeds.length === 12 ? 'Field is set.' : 'No field saved yet.');
     })().catch(() => setStatus("Couldn't load playoff settings."));
@@ -86,17 +81,6 @@ export function usePlayoffAdmin() {
       : setPick(prev, gameKey, teamId, bySeed));
   }
 
-  // Picking a bowl another game already has swaps the two.
-  function assignBowl(gameKey, bowlId) {
-    setBowls(prev => {
-      const next = { ...prev };
-      const other = BOWL_GAMES.find(k => k !== gameKey && next[k] === bowlId);
-      if (other && bowlId) next[other] = prev[gameKey] || null;
-      next[gameKey] = bowlId || null;
-      return next;
-    });
-  }
-
   async function syncFromEspn() {
     setBusy(true); setStatus('Checking ESPN…');
     try {
@@ -116,8 +100,7 @@ export function usePlayoffAdmin() {
       seeds: toSave,
       lockIso: lock ? new Date(lock).toISOString() : null,
       results: fieldComplete ? results : {},
-      championshipTotal: titleTotal === '' ? null : Number(titleTotal),
-      bowls: Object.fromEntries(BOWL_GAMES.map(k => [k, bowls[k] || null]))
+      championshipTotal: titleTotal === '' ? null : Number(titleTotal)
     });
     setSavedSeeds(toSave);
     setSavedKey(currentKey);
@@ -126,7 +109,7 @@ export function usePlayoffAdmin() {
     setBusy(false);
   }
 
-  const currentKey = playoffKey(fieldComplete ? seeds.map(t => [t.seed, t.id]) : [], lock, fieldComplete ? results : {}, titleTotal === '' ? null : Number(titleTotal), bowls);
+  const currentKey = playoffKey(fieldComplete ? seeds.map(t => [t.seed, t.id]) : [], lock, fieldComplete ? results : {}, titleTotal === '' ? null : Number(titleTotal));
   const dirty = savedKey !== undefined && savedKey !== currentKey;
   // Once brackets lock (saved lock time passed, or a result recorded), the field and the lock
   // time are frozen; results and the title-game total stay editable.
@@ -134,7 +117,7 @@ export function usePlayoffAdmin() {
 
   return {
     dirty, fieldLocked, candidates, pollName, seedIds, seeds, fieldComplete, seedsChanged, entryCount,
-    lock, setLock, results, titleTotal, setTitleTotal, status, busy, bowls, assignBowl,
+    lock, setLock, results, titleTotal, setTitleTotal, status, busy,
     fillFromRankings, assignSeed, markResult, syncFromEspn, save
   };
 }

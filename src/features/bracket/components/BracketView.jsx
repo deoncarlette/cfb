@@ -1,5 +1,5 @@
 import { useElementWidth } from '@/shared/hooks/useElementWidth.js';
-import { GAMES, ROUNDS, CHAMPIONSHIP_KEY, bowlFor } from '../bracketLogic.js';
+import { GAMES, ROUNDS, CHAMPIONSHIP_KEY } from '../bracketLogic.js';
 import { Matchup } from './Matchup.jsx';
 import { ChampionCard } from './ChampionCard.jsx';
 
@@ -17,13 +17,12 @@ const WIDE_ROWS = {
 //
 // winners decides who advances on screen — a player's picks, or the real results in the
 // Commissioner panel. statusFor(gameKey) optionally marks right/wrong picks.
-// bowls is the commissioner's { gameKey: bowlId } assignment, shown above each game.
-export function BracketView({ seeds, winners, onPick, statusFor, locked, bowls }) {
+export function BracketView({ seeds, winners, onPick, statusFor, locked }) {
   const [ref, width] = useElementWidth();
   const wide = width >= 760;
   const bySeed = Object.fromEntries(seeds.map(t => [t.seed, t]));
   const teamById = Object.fromEntries(seeds.map(t => [t.id, t]));
-  const shared = { bySeed, teamById, winners, statusFor, onPick, locked, bowls };
+  const shared = { bySeed, teamById, winners, statusFor, onPick, locked };
   const champion = winners[CHAMPIONSHIP_KEY] ? teamById[winners[CHAMPIONSHIP_KEY]] : null;
 
   const head = r => (
@@ -69,5 +68,3 @@ function bumpRow(spec) {
   const [start, rest] = spec.split(' / ');
   return `${Number(start) + 1}${rest ? ' / ' + rest : ''}`;
 }
-
-

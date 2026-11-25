@@ -3,8 +3,7 @@ import { db } from './client.js';
 import { slugify } from '@/shared/utils/slugify.js';
 
 // playoff/{season}                  -> { seeds: [{ seed, id, name, abbr, logo, color, altColor, record }] | [],
-//                                        lockIso, results: { [gameKey]: teamId }, championshipTotal,
-//                                        bowls: { [gameKey]: bowlId } }
+//                                        lockIso, results: { [gameKey]: teamId }, championshipTotal }
 // playoff/{season}/brackets/{slug}  -> { user_name, picks: { [gameKey]: teamId }, tiebreaker, submittedAt }
 // Same no-Auth, name-slug tradeoff as weekly picks.
 
@@ -15,8 +14,7 @@ export async function getPlayoffConfig(season) {
     seeds: data.seeds ?? [],
     lockIso: data.lockIso ?? null,
     results: data.results ?? {},
-    championshipTotal: data.championshipTotal ?? null,
-    bowls: data.bowls ?? {}
+    championshipTotal: data.championshipTotal ?? null
   };
 }
 

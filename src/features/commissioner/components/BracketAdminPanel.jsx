@@ -1,8 +1,7 @@
 import { Segmented } from '@/shared/components/Segmented.jsx';
 import { toDatetimeLocal } from '@/shared/utils/dates.js';
 import { BracketView } from '@/features/bracket/components/BracketView.jsx';
-import { usePlayoffAdmin, BOWL_GAMES } from '../hooks/usePlayoffAdmin.js';
-import { CFP_BOWLS, GAME_BY_KEY, slotPlaceholder } from '@/features/bracket/bracketLogic.js';
+import { usePlayoffAdmin } from '../hooks/usePlayoffAdmin.js';
 import { SeedPicker } from './SeedPicker.jsx';
 
 // Set all 12 seeds on Selection Day, when brackets lock, and the winners as games finish.
@@ -40,20 +39,6 @@ export function BracketAdminPanel() {
       {admin.lock && <input type="datetime-local" aria-label="Brackets lock at" disabled={admin.fieldLocked} value={admin.lock} onChange={e => e.target.value && admin.setLock(e.target.value)} />}
       <p className="muted small">{admin.lock ? 'Set this to the first first-round kickoff. ' : ''}Brackets also lock as soon as any result is recorded.</p>
 
-      <div className="section-heading"><span className="section-label">Bowls</span></div>
-      <p className="muted small">The CFP announces which bowl hosts each quarterfinal and semifinal on Selection Day. Picking a bowl another game has swaps them.</p>
-      <div className="seed-grid">
-        {BOWL_GAMES.map(key => (
-          <div className="seed-row bowl-row" key={key}>
-            <span className="bowl-game">{bowlGameLabel(key, admin.seeds)}</span>
-            <select aria-label={`Bowl for ${bowlGameLabel(key, admin.seeds)}`} value={admin.bowls[key] || ''} onChange={e => admin.assignBowl(key, e.target.value)}>
-              <option value="">Not set</option>
-              {CFP_BOWLS.filter(b => b.round === GAME_BY_KEY[key].round).map(b => <option key={b.id} value={b.id}>{b.name} · {b.date}</option>)}
-            </select>
-          </div>
-        ))}
-      </div>
-
       {admin.fieldComplete && (
         <>
           <div className="section-heading">
@@ -68,7 +53,7 @@ export function BracketAdminPanel() {
       {admin.fieldComplete && (
         <>
           <div className="bracket-wrap in-panel">
-            <BracketView seeds={admin.seeds} winners={admin.results} onPick={admin.markResult} bowls={admin.bowls} />
+            <BracketView seeds={admin.seeds} winners={admin.results} onPick={admin.markResult} />
           </div>
           <label>Title game total points (tiebreaker)</label>
           <input type="number" inputMode="numeric" value={admin.titleTotal} onChange={e => admin.setTitleTotal(e.target.value)} placeholder="Filled in after the title game" />
@@ -78,12 +63,4 @@ export function BracketAdminPanel() {
       <button className="primary big" onClick={admin.save} disabled={admin.busy || !admin.dirty}>{admin.busy ? 'Working…' : admin.dirty ? 'Save playoff settings' : 'Saved'}</button>
     </div>
   );
-}
-
-// "OSU vs 8/9" for quarterfinals (seed number until the field is set); "SF · 1/4 side" for semis.
-function bowlGameLabel(key, seeds) {
-  const g = GAME_BY_KEY[key];
-  if (g.round === 'sf') return key === 'sf1' ? 'SF · 1/4 side' : 'SF · 2/3 side';
-  const top = seeds.find(t => t.seed === g.top.seed);
-  return `${top ? top.abbr || top.name : g.top.seed} vs ${slotPlaceholder(g.bottom).replace('Winner ', '')}`;
 }
