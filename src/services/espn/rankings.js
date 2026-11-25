@@ -6,14 +6,28 @@ const isCfpPoll = p => /cfp|playoff/.test(pollLabel(p));
 const isApPoll = p => /\bap\b/.test(pollLabel(p)) && !isCfpPoll(p);
 const isCoachesPoll = p => /coach|afca|usa today/.test(pollLabel(p));
 
+// The week a poll belongs to, from ESPN's poll data ("occurrence"), or null if it doesn't say.
+const pollWeekOf = p => { const n = Number(p?.occurrence?.number ?? p?.occurrence?.value); return Number.isFinite(n) && n > 0 ? n : null; };
+
+// The current regular-season week (cached), or null in the postseason / if ESPN doesn't say.
+let currentWeekP = null;
+function currentWeek() {
+  currentWeekP ||= import('./games.js').then(m => m.fetchCurrentWeek()).then(w => (typeof w === 'number' ? w : null)).catch(() => null);
+  return currentWeekP;
+}
+
 // Every poll ESPN has for a week (week null = its latest set), cached. [] if unavailable.
+// ESPN can answer a past week with its *current* polls, so for weeks before this one only polls
+// that say they're from that week are kept (a past week never shows today's rankings).
 const pollsCache = new Map();
 function pollsFor(week) {
   const key = week ?? 'latest';
   if (!pollsCache.has(key)) {
-    pollsCache.set(key, fetch(`${ESPN_BASE}/rankings${week == null ? '' : `?week=${week}&seasontype=2`}`)
-      .then(r => (r.ok ? r.json() : { rankings: [] }))
-      .then(d => d.rankings || [])
+    pollsCache.set(key, Promise.all([
+      fetch(`${ESPN_BASE}/rankings${week == null ? '' : `?week=${week}&seasontype=2`}`)
+        .then(r => (r.ok ? r.json() : { rankings: [] })).then(d => d.rankings || []),
+      week == null ? null : currentWeek()
+    ]).then(([polls, cur]) => (week != null && cur != null && week < cur ? polls.filter(p => pollWeekOf(p) === week) : polls))
       .catch(() => { pollsCache.delete(key); return []; }));
   }
   return pollsCache.get(key);

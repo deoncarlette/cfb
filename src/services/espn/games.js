@@ -153,9 +153,17 @@ async function fetchWeekZero(groups) {
 // (no AP rank leaking through). Before the first CFP poll: ESPN's own (AP) ranks. Which poll
 // was used: rankSourceFor(week).
 const rankSource = new Map();
+let currentWeekMemo = null;
 export function rankSourceFor(week) { return rankSource.get(week) || null; }
 export async function applyRankOverlay(gamesList, week) {
   if (typeof week !== 'number') return gamesList;
+  // Past weeks keep the ranks ESPN's scoreboard had for those games (the rankings out that
+  // week: AP early on, CFP once it's out) — never today's.
+  // (The current week, remembered for 10 minutes so each week's load doesn't re-ask ESPN.)
+  if (!currentWeekMemo || Date.now() - currentWeekMemo.at > 600000) currentWeekMemo = { at: Date.now(), p: fetchCurrentWeek() };
+  const current = await currentWeekMemo.p;
+  if (typeof current === 'number' && week < current) { rankSource.set(week, { poll: 'as played', week }); return gamesList; }
+  if (current === POSTSEASON) { rankSource.set(week, { poll: 'as played', week }); return gamesList; }
   const hit = await cfpPollAtOrBefore(week);
   if (!hit) { rankSource.set(week, { poll: 'AP', week }); return gamesList; }
   const map = new Map(hit.poll.ranks.filter(e => e.team?.id).map(e => [String(e.team.id), e.current]));
