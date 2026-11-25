@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Week 12 Picks — Quick Tool</title>
+<title>Week 13 Picks — Hate Week — Quick Tool</title>
 <script>
   (function () {
     try {
@@ -95,7 +95,7 @@
 <body>
 <header>
   <button class="theme-btn" id="themeBtn">Theme</button>
-  <h1>Week 12 Picks</h1>
+  <h1>Week 13 Picks — Hate Week</h1>
   <p>Pick a winner on each card, then drag, use the arrows, or type a number to set confidence.</p>
 </header>
 <main>
@@ -129,32 +129,31 @@ applyTheme(currentMode());
 
 // ---- Games (this week's full slate — page 2 of the form is confidence points only) ----
 const games = [
-  ["Alabama","Chattanooga"],
-  ["Arkansas","UTexas"],
-  ["Auburn","Samford"],
-  ["Clemson","Duke"],
-  ["Colorado","Cincinnati"],
-  ["Florida","Vanderbilt"],
-  ["Georgia","South Carolina"],
-  ["Houston","West Virginia"],
-  ["Howard","Norfolk State"],
-  ["Iowa","Illinois"],
-  ["Indiana","Washington"],
-  ["Kentucky","Missouri"],
-  ["LSU","Tennessee"],
-  ["UMiami","VA Tech"],
-  ["Michigan","UCLA"],
-  ["Michigan State","Oregon"],
-  ["Minnesota","Northwestern"],
-  ["MS State","TN Tech"],
-  ["Nebraska","Ohio State"],
-  ["Notre Dame","SMU"],
-  ["Oklahoma","Texas A&M"],
-  ["Ole Miss","Wofford"],
-  ["Penn State","Rutgers"],
-  ["Wisconsin","Purdue"],
-  ["TX Tech","Baylor"],
-  ["UNC","UVA"]
+  ["Alabama","Auburn"],
+  ["Arkansas","LSU"],
+  ["Clemson","South Carolina"],
+  ["Colorado","UCF"],
+  ["Duke","Wake Forest"],
+  ["Florida","FSU"],
+  ["Georgia","GA Tech"],
+  ["Houston","Baylor"],
+  ["Northwestern","Illinois"],
+  ["Indiana","Purdue"],
+  ["Iowa","Nebraska"],
+  ["Kentucky","Louisville"],
+  ["UMiami","Boston College"],
+  ["Michigan","Ohio State"],
+  ["Michigan State","Rutgers"],
+  ["Minnesota","Wisconsin"],
+  ["MS State","Ole Miss"],
+  ["Notre Dame","Syracuse"],
+  ["Oklahoma","Missouri"],
+  ["Oregon","Washington"],
+  ["Penn State","Maryland"],
+  ["Vanderbilt","Tennessee"],
+  ["UTexas","Texas A&M"],
+  ["TX Tech","TCU"],
+  ["UNC","NC State"]
 ].map((pair, i) => ({ id: 'g' + i, team1: pair[0], team2: pair[1] }));
 
 let order = games.map(g => g.id);
