@@ -61,7 +61,7 @@ export function ConfidenceControl({ points, max, canUp, canDown, locked, result,
 
 // The point-value box. Typing only edits the box; the card moves when you're done — Enter
 // (Done/Go on a phone keypad) or leaving the box — so typing "12" doesn't jump to 1 first.
-// Blank or out-of-range input goes back to the card's current value.
+// Too high goes to the top (max), too low to the bottom (1); blank leaves the card where it is.
 function PointsInput({ points, max, onSetPoints }) {
   const [text, setText] = useState(String(points));
   const [editing, setEditing] = useState(false);
@@ -70,9 +70,11 @@ function PointsInput({ points, max, onSetPoints }) {
   function commit() {
     setEditing(false);
     if (cancelled.current) { cancelled.current = false; setText(String(points)); return; }
-    const n = Number(text);
-    if (text !== '' && Number.isInteger(n) && n >= 1 && n <= max && n !== points) onSetPoints(n);
-    else setText(String(points));
+    const n = Math.round(Number(text));
+    if (text.trim() === '' || !Number.isFinite(n)) { setText(String(points)); return; }
+    const clamped = Math.min(max, Math.max(1, n));
+    setText(String(clamped));
+    if (clamped !== points) onSetPoints(clamped);
   }
   return (
     <input
