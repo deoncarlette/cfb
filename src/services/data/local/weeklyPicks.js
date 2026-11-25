@@ -1,9 +1,10 @@
+import { withPreset } from '../weekPresets.js';
 import { load, save, clone } from './storage.js';
 import { slugify } from '@/shared/utils/slugify.js';
 
 export async function getWeekConfig(week) {
   const w = load().weeks?.[week];
-  return { includedGameIds: w?.includedGameIds ?? null, deadlineIso: w?.deadlineIso ?? null, lockMode: w?.lockMode === 'kickoff' ? 'kickoff' : 'slate' };
+  return withPreset(week, { includedGameIds: w?.includedGameIds ?? null, deadlineIso: w?.deadlineIso ?? null, lockMode: w?.lockMode === 'kickoff' ? 'kickoff' : 'slate' });
 }
 export async function saveWeekConfig(week, includedGameIds, deadlineIso, lockMode = 'slate') {
   const d = load(); d.weeks = d.weeks || {};
