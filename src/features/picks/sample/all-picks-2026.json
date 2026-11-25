@@ -37880,6 +37880,240 @@
           ]
         }
       ]
+    },
+    {
+      "week": 13,
+      "gameCount": 25,
+      "possiblePoints": 325,
+      "gameSlateSource": "week13_html_picks_page",
+      "games": [
+        {
+          "gameId": "2026-w13-g01",
+          "gameNumber": 1,
+          "matchup": "Alabama vs Auburn",
+          "teams": [
+            "Alabama",
+            "Auburn"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g02",
+          "gameNumber": 2,
+          "matchup": "Arkansas vs LSU",
+          "teams": [
+            "Arkansas",
+            "LSU"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g03",
+          "gameNumber": 3,
+          "matchup": "Clemson vs South Carolina",
+          "teams": [
+            "Clemson",
+            "South Carolina"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g04",
+          "gameNumber": 4,
+          "matchup": "Colorado vs UCF",
+          "teams": [
+            "Colorado",
+            "UCF"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g05",
+          "gameNumber": 5,
+          "matchup": "Duke vs Wake Forest",
+          "teams": [
+            "Duke",
+            "Wake Forest"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g06",
+          "gameNumber": 6,
+          "matchup": "Florida vs Florida State",
+          "teams": [
+            "Florida",
+            "Florida State"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g07",
+          "gameNumber": 7,
+          "matchup": "Georgia vs Georgia Tech",
+          "teams": [
+            "Georgia",
+            "Georgia Tech"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g08",
+          "gameNumber": 8,
+          "matchup": "Houston vs Baylor",
+          "teams": [
+            "Houston",
+            "Baylor"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g09",
+          "gameNumber": 9,
+          "matchup": "Northwestern vs Illinois",
+          "teams": [
+            "Northwestern",
+            "Illinois"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g10",
+          "gameNumber": 10,
+          "matchup": "Indiana vs Purdue",
+          "teams": [
+            "Indiana",
+            "Purdue"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g11",
+          "gameNumber": 11,
+          "matchup": "Iowa vs Nebraska",
+          "teams": [
+            "Iowa",
+            "Nebraska"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g12",
+          "gameNumber": 12,
+          "matchup": "Kentucky vs Louisville",
+          "teams": [
+            "Kentucky",
+            "Louisville"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g13",
+          "gameNumber": 13,
+          "matchup": "Miami vs Boston College",
+          "teams": [
+            "Miami",
+            "Boston College"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g14",
+          "gameNumber": 14,
+          "matchup": "Michigan vs Ohio State",
+          "teams": [
+            "Michigan",
+            "Ohio State"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g15",
+          "gameNumber": 15,
+          "matchup": "Michigan State vs Rutgers",
+          "teams": [
+            "Michigan State",
+            "Rutgers"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g16",
+          "gameNumber": 16,
+          "matchup": "Minnesota vs Wisconsin",
+          "teams": [
+            "Minnesota",
+            "Wisconsin"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g17",
+          "gameNumber": 17,
+          "matchup": "Mississippi State vs Ole Miss",
+          "teams": [
+            "Mississippi State",
+            "Ole Miss"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g18",
+          "gameNumber": 18,
+          "matchup": "Notre Dame vs Syracuse",
+          "teams": [
+            "Notre Dame",
+            "Syracuse"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g19",
+          "gameNumber": 19,
+          "matchup": "Oklahoma vs Missouri",
+          "teams": [
+            "Oklahoma",
+            "Missouri"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g20",
+          "gameNumber": 20,
+          "matchup": "Oregon vs Washington",
+          "teams": [
+            "Oregon",
+            "Washington"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g21",
+          "gameNumber": 21,
+          "matchup": "Penn State vs Maryland",
+          "teams": [
+            "Penn State",
+            "Maryland"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g22",
+          "gameNumber": 22,
+          "matchup": "Vanderbilt vs Tennessee",
+          "teams": [
+            "Vanderbilt",
+            "Tennessee"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g23",
+          "gameNumber": 23,
+          "matchup": "Texas vs Texas A&M",
+          "teams": [
+            "Texas",
+            "Texas A&M"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g24",
+          "gameNumber": 24,
+          "matchup": "Texas Tech vs TCU",
+          "teams": [
+            "Texas Tech",
+            "TCU"
+          ]
+        },
+        {
+          "gameId": "2026-w13-g25",
+          "gameNumber": 25,
+          "matchup": "UNC vs NC State",
+          "teams": [
+            "UNC",
+            "NC State"
+          ]
+        }
+      ],
+      "ballots": []
     }
   ]
 }
