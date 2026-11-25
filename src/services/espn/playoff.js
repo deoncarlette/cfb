@@ -6,11 +6,9 @@ import { SEASON } from '@/config.js';
 // [{ key, teams: [idA, idB] }] for games whose participants are already known. Also returns
 // the title game's combined score (for the tiebreaker) when it's final.
 export async function fetchPlayoffResults(matchups) {
-  // Before the postseason starts ESPN may answer with an error (no postseason games exist yet);
-  // that just means nothing's been played — only a failed connection is an error.
   const response = await fetch(`${ESPN_BASE}/scoreboard?limit=300&seasontype=3&dates=${SEASON}1201-${SEASON + 1}0131&groups=80`);
-  if (!response.ok) return { results: {}, championshipTotal: null, nonePlayed: true };
-  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error('Postseason scoreboard unavailable');
+  const data = await response.json();
   const finals = (data.events || []).map(event => {
     const comp = event.competitions?.[0];
     const sides = (comp?.competitors || []).map(c => ({ id: String(c.team?.id), score: Number(c.score) || 0, winner: c.winner === true }));
@@ -26,5 +24,5 @@ export async function fetchPlayoffResults(matchups) {
     results[key] = winner.id;
     if (key === 'nc') championshipTotal = match.sides[0].score + match.sides[1].score;
   });
-  return { results, championshipTotal, nonePlayed: !finals.length };
+  return { results, championshipTotal };
 }
