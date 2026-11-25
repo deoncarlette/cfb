@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react';
+
 // Right side of a game card.
 // Before lock: the point value (type a number to jump there) with ↑/↓ under it.
 // Game final: your confidence, filled green if the pick won and red if it lost.
@@ -15,7 +17,7 @@ export function ConfidenceControl({ points, max, canUp, canDown, locked, result,
     return (
       <span className="pts-chip editable">
         <button type="button" aria-label="Move up" onClick={onUp} disabled={!canUp}>&#9652;</button>
-        <input type="number" className="pts-input" aria-label="Confidence points" min={1} max={max} value={points} onChange={e => onSetPoints(Number(e.target.value))} />
+        <PointsInput points={points} max={max} onSetPoints={onSetPoints} />
         <button type="button" aria-label="Move down" onClick={onDown} disabled={!canDown}>&#9662;</button>
       </span>
     );
@@ -48,19 +50,47 @@ export function ConfidenceControl({ points, max, canUp, canDown, locked, result,
   if (locked) return <span className="pts-badge">{points}</span>;
   return (
     <>
-      <input
-        type="number"
-        className="pts-input"
-        aria-label="Confidence points"
-        min={1}
-        max={max}
-        value={points}
-        onChange={e => onSetPoints(Number(e.target.value))}
-      />
+      <PointsInput points={points} max={max} onSetPoints={onSetPoints} />
       <span className="arrows">
         <button type="button" aria-label="Move up" onClick={onUp} disabled={!canUp}>&uarr;</button>
         <button type="button" aria-label="Move down" onClick={onDown} disabled={!canDown}>&darr;</button>
       </span>
     </>
+  );
+}
+
+// The point-value box. Typing only edits the box; the card moves when you're done — Enter
+// (Done/Go on a phone keypad) or leaving the box — so typing "12" doesn't jump to 1 first.
+// Blank or out-of-range input goes back to the card's current value.
+function PointsInput({ points, max, onSetPoints }) {
+  const [text, setText] = useState(String(points));
+  const [editing, setEditing] = useState(false);
+  const cancelled = useRef(false);
+  useEffect(() => { if (!editing) setText(String(points)); }, [points, editing]);
+  function commit() {
+    setEditing(false);
+    if (cancelled.current) { cancelled.current = false; setText(String(points)); return; }
+    const n = Number(text);
+    if (text !== '' && Number.isInteger(n) && n >= 1 && n <= max && n !== points) onSetPoints(n);
+    else setText(String(points));
+  }
+  return (
+    <input
+      type="number"
+      inputMode="numeric"
+      enterKeyHint="done"
+      className="pts-input"
+      aria-label="Confidence points"
+      min={1}
+      max={max}
+      value={text}
+      onFocus={e => { setEditing(true); e.target.select(); }}
+      onChange={e => setText(e.target.value)}
+      onBlur={commit}
+      onKeyDown={e => {
+        if (e.key === 'Enter') e.currentTarget.blur();
+        if (e.key === 'Escape') { cancelled.current = true; e.currentTarget.blur(); }
+      }}
+    />
   );
 }
