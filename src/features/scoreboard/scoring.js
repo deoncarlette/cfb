@@ -57,7 +57,9 @@ async function replayRecords(week = REPLAY_WEEK) {
   const saved = new Map((await getAllPicksForWeek(week).catch(() => [])).map(e => [norm(e.user_name), e]));
   saved.forEach(e => { if (!names.has(norm(e.user_name))) names.set(norm(e.user_name), e.user_name); });
   const rows = [...names.entries()].map(([key, name]) => {
-    const ballot = saved.get(key) || sample?.ballots.get(key);
+    const fromFile = sample?.ballots.get(key);
+    // Real pool-sheet ballots win; app-saved picks stand in for anyone else (or mock ballots).
+    const ballot = fromFile && !fromFile.isMock ? fromFile : saved.get(key) || fromFile;
     if (!ballot) return { user_name: name, score: 0, entered: false };
     let score = 0;
     Object.entries(ballot.picks).forEach(([gid, p]) => { if (winners.get(gid) === p.winner) score += Number(p.confidence) || 0; });
