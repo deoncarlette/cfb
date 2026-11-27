@@ -43,6 +43,10 @@ export function WeekPicks({ week, userName, nameKey }) {
   const viewing = nav.player;
   const setViewing = name => navigate({ player: name });
 
+  // Once a week with real ballots in the file locks, the file (the pool sheet) is the source of
+  // truth for your picks: anything submitted or drafted on this device is ignored.
+  const fileRules = !!sample?.playerName && !sample.isMock && lock.anyLocked;
+
   // Show a saved entry's picks (yours, or the sample picks) on the cards; null = blank cards.
   // No picks yet on an open week: the cards come up in a random order, so people who skip
   // ranking (or quick-pick) don't all end up with the same confidence order.
@@ -58,6 +62,7 @@ export function WeekPicks({ week, userName, nameKey }) {
   // A draft saved on this device goes on top of whatever entry is showing: its picks for games
   // still open, and its card order if it's for the same set of games.
   function applyDraft(d = loadDraft(week), source = savedSource()) {
+    if (fileRules) d = null;
     setDraft(d);
     if (!d) return;
     const ids = new Set(games.map(g => g.id));
@@ -96,6 +101,13 @@ export function WeekPicks({ week, userName, nameKey }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lockKey, existing, sample]);
 
+  useEffect(() => {
+    if (!fileRules) return;
+    setExisting(null); setDraft(null);
+    showEntry(sample);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fileRules, sample]);
+
   // New week / slate loaded → the sample picks (if this week has them), then yours if you've
   // saved any. Keyed on the game ids, so live score refreshes don't reset anything.
   const slateKey = `${week}:${games.map(g => g.id).join(',')}`;
@@ -109,7 +121,7 @@ export function WeekPicks({ week, userName, nameKey }) {
   useEffect(() => { if (nameKey) loadExistingPicks(); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [nameKey]);
 
   async function loadExistingPicks() {
-    if (!userName.trim() || games.length === 0) return;
+    if (!userName.trim() || games.length === 0 || fileRules) return;
     const saved = await getMyPicks(week, userName);
     // Picks saved before per-game locking kept locked games out; fill those from the sample
     // ballot that was on screen, so they keep their pick and points.
@@ -154,7 +166,7 @@ export function WeekPicks({ week, userName, nameKey }) {
 
   // Once a game locks, show the confidence actually submitted for it (it can differ from card
   // position if a game was dropped from the slate). Before that, position = points.
-  const own = existing || sample; // your picks on the cards
+  const own = (fileRules ? null : existing) || sample; // your picks on the cards
 
   // Once games lock: look at another player's picks instead (read-only) — only on games that
   // have locked, so nobody sees picks they could still copy.
